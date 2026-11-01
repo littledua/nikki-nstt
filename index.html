@@ -1,0 +1,1095 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Phòng Thay Đồ NSTT</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500;1,9..144,700&display=swap&subset=vietnamese">
+<style>
+/* Layout: phòng thử đồ — cột trái là bảng chọn màn (vé màn chơi), cột phải là "gương" hiện bộ đồ và điểm. */
+:root {
+  --bg: #FAF6F8;
+  --surface: #FFFFFF;
+  --sunk: #F4EDF2;
+  --ink: #2B2130;
+  --muted: #6E6173;
+  --line: #E7DDE4;
+  --accent: #9B3D73;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #F7E4EF;
+  --own: #2E7A6A;
+  --own-soft: #DDF0EA;
+  --warn: #9C5A12;
+  --warn-soft: #FBEBD6;
+  --f-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --f-body: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --r: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #17121A; --surface: #211A25; --sunk: #1B1520; --ink: #F3EAF1; --muted: #B4A7B7; --line: #3A2F3F;
+    --accent: #E391BE; --accent-ink: #2A1323; --accent-soft: #3B2234; --own: #74CDB8; --own-soft: #1D3631;
+    --warn: #E8A962; --warn-soft: #3A2A17; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #17121A; --surface: #211A25; --sunk: #1B1520; --ink: #F3EAF1; --muted: #B4A7B7; --line: #3A2F3F;
+  --accent: #E391BE; --accent-ink: #2A1323; --accent-soft: #3B2234; --own: #74CDB8; --own-soft: #1D3631;
+  --warn: #E8A962; --warn-soft: #3A2A17; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 48px;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 1180px; margin: 0 auto; }
+.num { font-variant-numeric: tabular-nums; }
+
+/* Thanh trên cùng */
+.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg);
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; padding-block: 14px 12px; border-bottom: 1px solid var(--line);
+}
+.brand { display: flex; align-items: baseline; gap: 10px; margin-right: auto; }
+.brand h1 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: 1.45rem; letter-spacing: -0.01em; }
+.brand h1 em { color: var(--accent); font-style: italic; font-weight: 500; }
+.brand small { color: var(--muted); font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; }
+nav.tabs { display: flex; gap: 4px; background: var(--sunk); padding: 4px; border-radius: 999px; }
+nav.tabs a { text-decoration: none; color: var(--muted); padding: 6px 14px; border-radius: 999px; font-weight: 500; font-size: .92rem; white-space: nowrap; }
+nav.tabs a[aria-current="page"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.chip-status { display: inline-flex; align-items: center; gap: 6px; font-size: .82rem; padding: 4px 10px; border-radius: 999px; background: var(--warn-soft); color: var(--warn); }
+.chip-status.ok { background: var(--own-soft); color: var(--own); }
+.chip-status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+
+/* Khung chung */
+.view { padding-top: 22px; }
+.grid { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 22px; align-items: start; }
+@media (max-width: 860px) {
+  .grid { grid-template-columns: minmax(0, 1fr); }
+  /* Điện thoại: chọn ải → kết quả ngay bên dưới → thẻ ải để sau */
+  #view-phoi-do .grid > .stack { display: contents; }
+  #mirror { order: 2; }
+  #ticketPanel { order: 3; }
+  nav.tabs { flex-wrap: wrap; border-radius: 16px; }
+  .top { position: static; }
+}
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 18px; min-width: 0; }
+.stack { display: flex; flex-direction: column; gap: 16px; }
+.label { font-size: .74rem; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin: 0 0 8px; }
+h2.sec { font-family: var(--f-display); font-weight: 700; font-size: 1.2rem; margin: 0 0 12px; text-wrap: balance; }
+.muted { color: var(--muted); }
+.small { font-size: .85rem; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.btn { border: 1px solid var(--line); background: var(--surface); padding: 7px 14px; border-radius: 10px; font-weight: 500; }
+.btn:hover { border-color: var(--accent); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn.ghost { background: transparent; }
+.btn.danger { color: #B3261E; }
+:root[data-theme="dark"] .btn.danger { color: #F2B8B5; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn.danger { color: #F2B8B5; } }
+.btn[disabled] { opacity: .5; cursor: default; }
+select, input[type="text"], input[type="search"], input[type="number"] {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 7px 10px; min-width: 0; max-width: 100%;
+}
+.field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.field > span { font-size: .8rem; color: var(--muted); }
+.fields3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.check { display: flex; gap: 8px; align-items: flex-start; font-size: .9rem; }
+.check input { margin-top: 4px; accent-color: var(--accent); }
+
+/* Chọn loại màn */
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg button { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 5px 12px; font-size: .88rem; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+/* Vé màn chơi */
+.ticket { border: 1px dashed var(--line); border-radius: 12px; padding: 14px; background: var(--sunk); }
+.ticket .code { font-size: .75rem; letter-spacing: .1em; color: var(--muted); text-transform: uppercase; }
+.ticket .name { font-family: var(--f-display); font-size: 1.15rem; font-weight: 700; margin: 2px 0 12px; text-wrap: balance; }
+.pairs { display: grid; gap: 7px; }
+.pair { display: grid; grid-template-columns: 1fr 96px 1fr; align-items: center; gap: 8px; font-size: .85rem; }
+.pair .l { text-align: right; }
+.pair .on { color: var(--ink); font-weight: 600; }
+.pair .off { color: var(--muted); }
+.bar { position: relative; height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; }
+.bar i { position: absolute; top: 0; bottom: 0; background: var(--accent); border-radius: 3px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.tag { font-size: .78rem; padding: 2px 9px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); color: var(--muted); }
+.tag.hot { background: var(--accent-soft); color: var(--accent); border-color: transparent; font-weight: 600; }
+
+/* Tự đặt */
+.custom { display: grid; gap: 8px; }
+.custom .crow { display: grid; grid-template-columns: minmax(0,1fr) auto minmax(0,1fr) 64px; gap: 6px; align-items: center; font-size: .85rem; }
+.custom .crow label { display: flex; gap: 4px; align-items: center; }
+.custom input[type="number"] { width: 64px; padding: 5px 6px; }
+
+/* Gương: kết quả */
+.srcbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-bottom: 16px; }
+.srcbar .seg button { padding: 8px 14px; font-size: .92rem; font-weight: 600; }
+.srcbar a { color: var(--accent); font-weight: 600; }
+.mirror-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 14px; }
+.total { font-family: var(--f-display); font-style: italic; font-weight: 700; font-size: clamp(2.4rem, 7vw, 3.6rem); line-height: 1; letter-spacing: -0.02em; }
+.split { display: flex; gap: 20px; flex-wrap: wrap; }
+.split div { display: flex; flex-direction: column; }
+.split b { font-size: 1.05rem; }
+.split span { font-size: .78rem; color: var(--muted); }
+.note { font-size: .85rem; padding: 8px 12px; border-radius: 10px; background: var(--warn-soft); color: var(--warn); }
+.note.ok { background: var(--own-soft); color: var(--own); }
+.slots { width: 100%; border-collapse: collapse; margin-top: 8px; }
+.slots-wrap { overflow-x: auto; }
+.slots th { text-align: left; font-size: .72rem; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); font-weight: 600; padding: 10px 8px 6px; border-bottom: 1px solid var(--line); }
+.slots td { padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.slots td.score { text-align: right; white-space: nowrap; }
+.slots tr.pick { cursor: pointer; }
+.slots tr.pick:hover td { background: var(--sunk); }
+.slots tr.dropped td { color: var(--muted); }
+.slots tr.dropped .iname { text-decoration: line-through; }
+.slotname { color: var(--muted); font-size: .88rem; white-space: nowrap; }
+.iname { font-weight: 500; }
+.mini { font-size: .7rem; padding: 1px 7px; border-radius: 999px; margin-left: 6px; vertical-align: 1px; }
+.mini.tag { background: var(--accent-soft); color: var(--accent); border: 0; font-weight: 600; }
+.mini.no { background: var(--warn-soft); color: var(--warn); }
+.mini.mine { background: var(--own-soft); color: var(--own); }
+.alts td { background: var(--sunk); padding: 6px 8px 12px; }
+.altlist { display: grid; gap: 4px; }
+.alt { display: grid; grid-template-columns: minmax(0,1fr) auto auto; gap: 10px; align-items: center; padding: 6px 10px; border-radius: 8px; background: var(--surface); border: 1px solid var(--line); font-size: .9rem; }
+.alt.cur { border-color: var(--accent); }
+.alt button { padding: 3px 10px; font-size: .82rem; }
+.groupcap td { font-size: .72rem; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); font-weight: 600; padding-top: 18px; }
+
+/* Tủ đồ */
+.drop { border: 2px dashed var(--line); border-radius: 14px; padding: 22px; text-align: center; background: var(--sunk); cursor: pointer; }
+.drop.over { border-color: var(--accent); background: var(--accent-soft); }
+.drop b { display: block; font-size: 1rem; }
+.stat { font-family: var(--f-display); font-size: 1.6rem; font-weight: 700; }
+.how ol { margin: 6px 0 0; padding-left: 20px; display: grid; gap: 4px; font-size: .88rem; }
+.how code { font-size: .8rem; background: var(--sunk); padding: 1px 5px; border-radius: 5px; word-break: break-all; }
+/* Cùng một khung cho 2 trang: Tủ đồ (chỉ đồ đã có, kèm chỗ nhập file) và Kho đồ (toàn bộ đồ) */
+#view-tu-do.kho .grid { grid-template-columns: minmax(0, 1fr); }
+#view-tu-do.kho .import-col { display: none; }
+#view-tu-do:not(.kho) #fOwn { display: none; }
+.filters { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.filters .q { grid-column: 1 / -1; }
+/* Thẻ món đồ */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 176px), 1fr)); gap: 12px; margin-top: 12px; }
+@media (max-width: 480px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; } }
+.icard { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.icard.has { border-color: var(--own); }
+.icard .pic { position: relative; aspect-ratio: 1 / 1; background: var(--sunk); display: grid; place-items: center; }
+.icard .pic img { width: 76%; height: 76%; object-fit: contain; }
+.icard .slot { position: absolute; top: 8px; left: 8px; font-size: .66rem; letter-spacing: .05em; text-transform: uppercase; padding: 1px 8px; border-radius: 999px; background: var(--surface); color: var(--muted); border: 1px solid var(--line); max-width: calc(100% - 64px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.icard .badge { position: absolute; top: 8px; right: 8px; font-size: .7rem; font-weight: 700; padding: 1px 8px; border-radius: 999px; background: var(--own); color: var(--surface); }
+.icard .hearts { position: absolute; bottom: 6px; left: 8px; color: var(--accent); font-size: .72rem; letter-spacing: -1px; }
+.icard .iid { position: absolute; bottom: 6px; right: 8px; font-size: .66rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.icard .body { padding: 10px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.icard .nm { font-weight: 600; text-align: center; font-size: .92rem; line-height: 1.3; overflow-wrap: anywhere; }
+.icard .attrs { justify-content: center; }
+.icard .own { margin-top: auto; width: 100%; padding: 6px; }
+.cards .empty { grid-column: 1 / -1; }
+.attrs { display: flex; flex-wrap: wrap; gap: 4px; }
+.attrs span { font-size: .75rem; padding: 1px 7px; border-radius: 6px; background: var(--sunk); white-space: nowrap; }
+.attrs span.best { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.own { border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; font-size: .8rem; background: var(--surface); white-space: nowrap; }
+.own[aria-pressed="true"] { background: var(--own-soft); color: var(--own); border-color: transparent; font-weight: 600; }
+.pager { display: flex; gap: 8px; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-top: 12px; }
+
+/* Bộ đã lưu */
+.saved { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.card .t { font-family: var(--f-display); font-weight: 700; font-size: 1.1rem; }
+.card .sc { font-family: var(--f-display); font-style: italic; font-size: 1.7rem; font-weight: 700; color: var(--accent); }
+.card ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; font-size: .86rem; }
+.card li { display: grid; grid-template-columns: 110px minmax(0,1fr); gap: 8px; }
+.card li span:first-child { color: var(--muted); }
+.card input[type="text"] { width: 100%; }
+.empty { text-align: center; padding: 40px 16px; color: var(--muted); border: 1px dashed var(--line); border-radius: var(--r); }
+.empty b { display: block; color: var(--ink); font-family: var(--f-display); font-size: 1.15rem; margin-bottom: 4px; }
+
+.loading { padding: 60px 0; text-align: center; color: var(--muted); }
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); background: var(--ink); color: var(--bg); padding: 9px 16px; border-radius: 10px; font-size: .9rem; z-index: 20; max-width: calc(100% - 32px); }
+footer { margin-top: 36px; padding-top: 14px; border-top: 1px solid var(--line); font-size: .8rem; color: var(--muted); }
+footer a { color: inherit; }
+@media (prefers-reduced-motion: no-preference) { .alts td, .toast { animation: rise .18s ease-out; } @keyframes rise { from { opacity: .4; transform: translateY(4px); } } .toast { animation: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><h1>Phòng <em>Thay Đồ</em></h1><small>NSTT · server VN</small></div>
+    <nav class="tabs" aria-label="Các trang">
+      <a href="#phoi-do" data-view="phoi-do">Phối đồ</a>
+      <a href="#tu-do" data-view="tu-do">Tủ đồ cá nhân</a>
+      <a href="#kho-do" data-view="kho-do">Kho đồ chung</a>
+      <a href="#bo-da-luu" data-view="bo-da-luu">Bộ đã lưu</a>
+    </nav>
+    <span class="chip-status" id="wardChip">Chưa nhập tủ đồ</span>
+  </header>
+
+  <div class="loading" id="loading">Đang tải dữ liệu đồ của server Việt Nam…</div>
+
+  <!-- PHỐI ĐỒ -->
+  <section class="view" id="view-phoi-do" hidden>
+    <div class="grid">
+      <div class="stack">
+        <div class="panel">
+          <p class="label" data-term="stageTypes">Loại ải</p>
+          <div class="seg" id="typeSeg" role="group" aria-label="Loại ải"></div>
+          <div id="stagePickers" class="stack" style="margin-top:14px"></div>
+        </div>
+        <div class="panel" id="ticketPanel"></div>
+      </div>
+      <div class="panel" id="mirror"></div>
+    </div>
+  </section>
+
+  <!-- TỦ ĐỒ -->
+  <section class="view" id="view-tu-do" hidden>
+    <div class="grid">
+      <div class="stack import-col">
+        <div class="panel stack">
+          <h2 class="sec">Nhập tủ đồ từ Nox</h2>
+          <div class="drop" id="drop" tabindex="0" role="button" aria-label="Chọn file clothes_date">
+            <b>Kéo thả file clothes_date vào đây</b>
+            <span class="muted small">hoặc bấm để chọn file</span>
+          </div>
+          <input type="file" id="fileIn" hidden>
+          <div id="wardInfo"></div>
+          <details class="how">
+            <summary class="small">File này lấy ở đâu?</summary>
+            <ol>
+              <li>Bật Root trong cài đặt Nox (tab Cơ bản).</li>
+              <li>Mở game, vào Tủ đồ cho game tải dữ liệu, rồi tắt game.</li>
+              <li>Mở Amaze, vào <code>/data/data/com.vng.ngoisaothoitrang/files/usrdat</code></li>
+              <li>Sao chép file <code>clothes_date…</code> sang <code>/mnt/shared/Other</code>, rồi lấy ra từ thư mục <code>Nox_share</code> trên máy tính.</li>
+            </ol>
+          </details>
+        </div>
+      </div>
+      <div class="panel">
+        <h2 class="sec" id="listTitle">Kho đồ</h2>
+        <div class="filters">
+          <input class="q" type="search" id="fQ" placeholder="Tìm theo tên đồ…" aria-label="Tìm theo tên đồ">
+          <select id="fSlot" aria-label="Lọc theo ô đồ"></select>
+          <select id="fOwn" aria-label="Lọc theo đã có">
+            <option value="all">Tất cả</option><option value="own">Đã có</option><option value="miss">Chưa có</option>
+          </select>
+          <select id="fTag" aria-label="Lọc theo tag"></select>
+          <select id="fRare" aria-label="Lọc theo độ hiếm"></select>
+          <select id="fSort" aria-label="Sắp xếp"></select>
+        </div>
+        <p class="muted small" id="fCount" style="margin:10px 0 0"></p>
+        <div class="cards" id="itemRows"></div>
+        <div class="pager"><button class="btn" id="pPrev">← Trang trước</button><span class="muted small num" id="pInfo"></span><button class="btn" id="pNext">Trang sau →</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BỘ ĐÃ LƯU -->
+  <section class="view" id="view-bo-da-luu" hidden>
+    <h2 class="sec">Bộ đã lưu</h2>
+    <div id="savedList"></div>
+  </section>
+
+  <footer>Web làm cho vui, không liên quan nhà phát hành.</footer>
+</div>
+
+<script>
+/*ENGINE-START*/
+/* ===== BẢNG CHỮ =====
+   Mọi tên gọi lấy theo game NSTT đều nằm ở đây. Muốn đổi chữ trên web thì chỉ sửa trong TERMS.
+   Bảng đối chiếu và nguồn của từng chữ: docs/thuat-ngu.md */
+var TERMS = {
+  /* 10 phong cách (thuộc tính), theo cặp: [0]↔[1], [2]↔[3], ... — đúng chữ trong ô Tìm của game */
+  attr: ['Quý phái', 'Đơn giản', 'Thanh lịch', 'Năng động', 'Trưởng thành', 'Dễ thương', 'Gợi cảm', 'Trong sáng', 'Giữ ấm', 'Mát mẻ'],
+  attrGroup: 'Phong cách',
+  /* Loại ải (chế độ chơi) */
+  type: { Maiden: 'Thiếu Nữ', Princess: 'Công Chúa', Commission: 'Ải Hội', Arena: 'Khu Thi Đấu', Custom: 'Tự đặt' },
+  stageTypes: 'Loại ải',
+  /* Cách gọi các cấp: game ghi "Chặng 15 …", "P.2-15-5 …" (web ghi Q.2-15-5: Quyển 2, Chặng 15, Ải 5), ải nhánh "Q.1-14-.1", Ải Hội "6-5 …" */
+  vol: 'Quyển', chapter: 'Chặng', stage: 'Ải', side: 'Ải nhánh', guildLevel: 'Chặng', theme: 'Chủ đề', customStage: 'Ải tự đặt',
+  /* Nhóm đồ */
+  wardrobe: 'Tủ đồ', mainGroup: 'Đồ chính', acc: 'Trang sức', slot: 'Ô đồ', tag: 'Tag', skill: 'Kỹ năng', tagBonus: 'Điểm cộng',
+  /* Tên ô đồ (khóa lấy theo data.json) */
+  slots: {
+    hair: 'Tóc', dress: 'Đầm', coat: 'Áo khoác', top: 'Áo', bottom: 'Quần', leglet: 'Phụ kiện chân', hosiery: 'Vớ',
+    shoes: 'Giày', makeup: 'Mặt', dreamweaver: 'Hồn Đom Đóm', hairorn: 'Phụ Kiện Tóc', veil: 'Khăn Trùm Đầu', hairpin: 'Kẹp Tóc',
+    ear: 'Tai', earring: 'Hoa tai', scarf: 'Khăn Choàng', necklace: 'Dây Chuyền', rhandorn: 'Vòng Tay Phải', lhandorn: 'Vòng Tay Trái',
+    gloves: 'Găng Tay', rhand: 'Túi xách Tay Phải', lhand: 'Túi xách Tay Trái', bhand: 'Túi xách Hai Tay', waist: 'Dây lưng', face: 'Mặt Nạ', brooch: 'Cài Áo',
+    tattoo: 'Hình Xăm', wing: 'Cánh', tail: 'Đuôi', foreground: 'Nền Trước', background: 'Nền Sau', headorn: 'Đỉnh Đầu', ground: 'Mặt Đất', skin: 'Da'
+  },
+  /* Tag đặc biệt (mã số theo data.json) — chữ theo mục "Nhóm" trong ô Tìm của game.
+     Cách ghép từng mã với chữ game: xem docs/thuat-ngu.md */
+  tags: { 11: 'Vận động', 12: 'POP', 13: 'Ở nhà', 14: 'Trung cổ', 15: 'Văn phòng', 16: 'Học đường', 17: 'Cổ xưa', 18: 'Cổ tích', 19: 'Âu cổ', 20: 'Jeans', 21: 'Đồ ngủ', 22: 'Dance', 23: 'Anh quốc', 24: 'Rock', 25: 'Đầm Nai', 26: 'Nữ thần', 27: 'Tắm', 28: 'Động vật', 29: 'Mưa', 30: 'Đồ bơi', 31: 'Nền hoa', 32: 'Chống nắng', 33: 'Tạp dề', 34: 'Y tế', 35: 'Dạ hội', 36: 'Nàng Thỏ', 37: 'Gothic', 38: 'Tiểu thư', 39: 'Maid', 40: 'Đông', 41: 'Bohemian', 42: 'Hiệp khách', 43: 'Hiện đại', 44: 'Nhật', 45: 'Lolita', 46: 'Áo cưới', 47: 'Cận đại', 48: 'Sườn xám', 49: 'Đa Văn Hóa', 50: 'Dân tộc', 51: 'Quân phục', 52: 'Thủy thủ', 53: 'Tương lai', 54: 'Trào lưu' },
+  /* Kỹ năng đối thủ (mã số theo data.json) — chữ theo bảng Kỹ năng trong game, ghép theo hình biểu tượng */
+  skills: { 10: 'Mỉm Cười', 11: 'Khắt Khe', 13: 'Khắt Khe-Miễn', 14: 'Mi Gió', 15: 'Ngủ Mê', 16: 'Nụ Hôn', 17: 'Vớ Noel', 18: 'Lọ Lem', 21: 'Khắt Khe-Phản' }
+};
+/* Luật trừ điểm trang sức: đeo càng nhiều thì phần điểm không phải tag của trang sức nhân hệ số càng nhỏ (bảng Penalty, ≥16 món ×0,4). Đổi thành false để tắt. */
+var ACC_PENALTY = true;
+var ATTR = TERMS.attr, TAG_VI = TERMS.tags, SKILL_VI = TERMS.skills;
+
+function buildDb(raw) {
+  var db = {};
+  db.slots = raw.slots.map(function (s) { return { key: s[0], en: s[1], vi: TERMS.slots[s[0]] || s[2], group: s[3], mult: s[4], codes: s[5] }; });
+  db.depthToSlot = {};
+  db.slots.forEach(function (s) { s.codes.forEach(function (c) { db.depthToSlot[c] = s; }); });
+  db.fallbackSlot = db.slots.filter(function (s) { return s.key === 'dreamweaver'; })[0] || db.slots[db.slots.length - 1];
+  db.clothes = raw.clothes.map(function (c) {
+    var it = { id: String(c[0]), name: c[1], depth: c[2], a: c.slice(3, 13), sp1: c[13], sp2: c[14], rare: c[15] || 0 };
+    it.slot = db.depthToSlot[it.depth] || db.fallbackSlot;
+    return it;
+  });
+  /* Món chưa có ở server VN (tên tiếng Trung, không tìm được tên Việt): không gợi ý, trừ khi có trong tủ đồ */
+  db.hidden = {};
+  (raw.hidden || []).forEach(function (id) { db.hidden[String(id)] = true; });
+  db.clothes.forEach(function (c) { c.hidden = !!db.hidden[c.id]; });
+  db.byId = {};
+  db.clothes.forEach(function (c) { db.byId[c.id] = c; });
+  db.bonuses = {};
+  (raw.bonuses || []).forEach(function (b) { db.bonuses[b[0]] = b[1]; });
+  db.penalty = ACC_PENALTY ? raw.penalty.slice().sort(function (a, b) { return b[0] - a[0]; }) : [];
+  db.stages = raw.stages.map(function (s) { return { code: s.c, type: s.t, name: s.n, w: s.w, tag: s.tg, tw: s.tw, sk: s.sk }; });
+  db.stageByCode = {};
+  db.stages.forEach(function (s) { db.stageByCode[s.code] = s; });
+  db.tagName = {};
+  (raw.tags || []).forEach(function (t) { db.tagName[t[0]] = TAG_VI[t[0]] || t[1]; });
+  return db;
+}
+
+function penaltyFor(db, n) {
+  for (var i = 0; i < db.penalty.length; i++) if (n >= db.penalty[i][0]) return db.penalty[i][1];
+  return 1;
+}
+
+function scoreItem(db, item, stage) {
+  var s = 0, a = item.a, w = stage.w;
+  for (var i = 0; i < 10; i++) s += w[i] * (a[i] || 0);
+  var slot = item.slot, tagPart = 0;
+  for (var t = 0; t < 2; t++) {
+    var tg = stage.tag[t];
+    if (tg && (item.sp1 === tg || item.sp2 === tg)) tagPart += stage.tw[t] * slot.mult;
+  }
+  s += tagPart;
+  if (slot === db.fallbackSlot && db.bonuses[item.name] != null) s += db.bonuses[item.name];
+  return { score: Math.trunc(s), tagPart: tagPart, tagHit: tagPart > 0 };
+}
+
+function entryFor(db, item, stage, owned) {
+  var r = scoreItem(db, item, stage);
+  return { item: item, score: r.score, tagPart: r.tagPart, tagHit: r.tagHit, needed: false, notOwned: !!owned && !owned.has(item.id) };
+}
+
+function rankAll(db, stage, owned, mine) {
+  var bySlot = {};
+  db.slots.forEach(function (s) { bySlot[s.key] = []; });
+  for (var i = 0; i < db.clothes.length; i++) {
+    var it = db.clothes[i];
+    if (owned ? !owned.has(it.id) : (it.hidden && !(mine && mine.has(it.id)))) continue;
+    bySlot[it.slot.key].push(entryFor(db, it, stage, owned ? null : mine)); /* phối từ toàn bộ đồ: đánh dấu món chưa có trong tủ */
+  }
+  Object.keys(bySlot).forEach(function (k) { bySlot[k].sort(function (a, b) { return b.score - a.score; }); });
+  return bySlot;
+}
+
+function evalAcc(db, list) {
+  var raw = 0, tag = 0;
+  list.forEach(function (x) { raw += x.e.score; tag += x.e.tagPart; });
+  var m = penaltyFor(db, list.length);
+  return { list: list.slice(), dropped: [], raw: raw, tag: tag, mult: m, total: (raw - tag) * m + tag };
+}
+
+function optimizeAcc(db, pool, forced) {
+  var must = pool.filter(function (x) { return forced[x.slot.key]; });
+  var rest = pool.filter(function (x) { return !forced[x.slot.key]; });
+  var best = null;
+  for (var n = 0; n <= rest.length; n++) {
+    var m = penaltyFor(db, must.length + n);
+    var sorted = rest.slice().sort(function (a, b) {
+      return ((b.e.score - b.e.tagPart) * m + b.e.tagPart) - ((a.e.score - a.e.tagPart) * m + a.e.tagPart);
+    });
+    var r = evalAcc(db, must.concat(sorted.slice(0, n)));
+    if (!best || r.total > best.total + 1e-9) { r.dropped = sorted.slice(n); best = r; }
+  }
+  return best;
+}
+
+/* Ghép bộ đồ: ov: {slotKey: entry | 'none'} */
+function buildOutfit(db, ranked, opts) {
+  opts = opts || {};
+  var ov = opts.overrides || {};
+  function pick(key) {
+    if (ov[key] === 'none') return null;
+    if (ov[key]) return ov[key];
+    return (ranked[key] && ranked[key][0]) || null;
+  }
+  var forced = {};
+  Object.keys(ov).forEach(function (k) { if (ov[k] && ov[k] !== 'none') forced[k] = true; });
+  var main = [], acc = [], hands = { r: null, l: null, b: null };
+  var dress = null, top = null, bottom = null, dressKey, topKey, bottomKey, rKey, lKey, bKey;
+  db.slots.forEach(function (s) {
+    var e = pick(s.key);
+    if (s.group === 'dress') { dress = e; dressKey = s.key; }
+    else if (s.group === 'top') { top = e; topKey = s.key; }
+    else if (s.group === 'bottom') { bottom = e; bottomKey = s.key; }
+    else if (s.group === 'hand-right') { hands.r = e; rKey = s.key; }
+    else if (s.group === 'hand-left') { hands.l = e; lKey = s.key; }
+    else if (s.group === 'hand-both') { hands.b = e; bKey = s.key; }
+    else if (e) (s.group === 'accessory' ? acc : main).push({ slot: s, e: e });
+  });
+  var slotByKey = {};
+  db.slots.forEach(function (s) { slotByKey[s.key] = s; });
+
+  var tb = (top ? top.score : 0) + (bottom ? bottom.score : 0);
+  var useDress = dress && (!top && !bottom ? true : dress.score > tb);
+  if (forced[dressKey]) useDress = true;
+  if (forced[topKey] || forced[bottomKey]) useDress = false;
+  var mainList = [];
+  db.slots.forEach(function (s) {
+    if (s.group === 'dress' && useDress && dress) mainList.push({ slot: s, e: dress });
+    else if (s.group === 'top' && !useDress && top) mainList.push({ slot: s, e: top });
+    else if (s.group === 'bottom' && !useDress && bottom) mainList.push({ slot: s, e: bottom });
+    else main.forEach(function (m) { if (m.slot === s) mainList.push(m); });
+  });
+  var mainSum = mainList.reduce(function (t, m) { return t + m.e.score; }, 0);
+
+  var rl = [];
+  if (hands.r) rl.push({ slot: slotByKey[rKey], e: hands.r });
+  if (hands.l) rl.push({ slot: slotByKey[lKey], e: hands.l });
+  var both = hands.b ? [{ slot: slotByKey[bKey], e: hands.b }] : [];
+  var handOpts;
+  if (forced[bKey]) handOpts = [both];
+  else if (forced[rKey] || forced[lKey]) handOpts = [rl];
+  else if (!opts.optimize) {
+    var bs = hands.b ? hands.b.score : -1, rs = rl.reduce(function (t, x) { return t + x.e.score; }, 0);
+    handOpts = [hands.b && (rl.length === 0 || bs > rs) ? both : rl];
+  } else handOpts = [both, rl];
+
+  var best = null;
+  handOpts.forEach(function (h) {
+    var pool = acc.concat(h);
+    var res = opts.optimize ? optimizeAcc(db, pool, forced) : evalAcc(db, pool);
+    if (!best || res.total > best.total) best = res;
+  });
+  if (!best) best = evalAcc(db, []);
+  var order = {};
+  db.slots.forEach(function (s, i) { order[s.key] = i; });
+  best.list.sort(function (a, b) { return order[a.slot.key] - order[b.slot.key]; });
+  best.dropped.sort(function (a, b) { return order[a.slot.key] - order[b.slot.key]; });
+  return {
+    main: mainList, mainSum: mainSum, useDress: !!useDress,
+    acc: best.list, accDropped: best.dropped, accCount: best.list.length, accMult: best.mult,
+    accTotal: best.total, total: mainSum + best.total
+  };
+}
+
+/* Giải mã file clothes_date (base64 + RC4). */
+var WARDROBE_KEY = 'ELPSsYasdaKONGROO';
+function decodeClothesDate(text) {
+  var B64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+  var bytes = [], buf = 0, bits = 0, i;
+  for (i = 0; i < text.length; i++) {
+    var v = B64.indexOf(text[i]);
+    if (v < 0) continue;
+    buf = (buf << 6) | v; bits += 6;
+    if (bits >= 8) { bits -= 8; bytes.push((buf >> bits) & 255); buf &= (1 << bits) - 1; }
+  }
+  var S = [], k = [], j = 0;
+  for (i = 0; i < WARDROBE_KEY.length; i++) k.push(WARDROBE_KEY.charCodeAt(i));
+  for (i = 0; i < 256; i++) S[i] = i;
+  for (i = 0; i < 256; i++) { j = (j + S[i] + k[i % k.length]) % 256; var t = S[i]; S[i] = S[j]; S[j] = t; }
+  i = 0; j = 0;
+  var out = '';
+  for (var n = 0; n < bytes.length; n++) {
+    i = (i + 1) % 256; j = (j + S[i]) % 256;
+    var t2 = S[i]; S[i] = S[j]; S[j] = t2;
+    out += String.fromCharCode(bytes[n] ^ S[(S[i] + S[j]) % 256]);
+  }
+  var ids = [], re = /\[(\d+)\]/g, m;
+  while ((m = re.exec(out))) ids.push(m[1]);
+  return ids;
+}
+/*ENGINE-END*/
+
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var fmt = function (n) { return Math.round(n).toLocaleString('vi-VN'); };
+  var fmt1 = function (n) { return (Math.round(n * 10) / 10).toLocaleString('vi-VN'); };
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var T = TERMS, TYPE_VI = TERMS.type;
+  var lc = function (s) { return String(s).toLowerCase(); };
+  /* Điền chữ từ TERMS vào các chỗ viết sẵn trong HTML (data-term; thêm data-lc để viết thường) */
+  function applyTerms() {
+    document.querySelectorAll('[data-term]').forEach(function (el) {
+      var v = T[el.getAttribute('data-term')];
+      if (typeof v === 'string') el.textContent = el.hasAttribute('data-lc') ? lc(v) : v;
+    });
+  }
+  var TYPES = ['Maiden', 'Princess', 'Commission', 'Arena', 'Custom'];
+
+  /* ---------- Lưu trữ: db của artifact nếu có, luôn kèm bản sao trong trình duyệt ---------- */
+  var LS = {
+    get: function (k, d) { try { var v = localStorage.getItem('nstt.' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+    set: function (k, v) { try { localStorage.setItem('nstt.' + k, JSON.stringify(v)); } catch (e) {} }
+  };
+  var cloud = { db: null, uid: null };
+  function wardDoc() { return cloud.db.doc('data/users/' + cloud.uid + '/wardrobe'); }
+  function outfitsDoc() { return cloud.db.doc('data/users/' + cloud.uid + '/outfits'); }
+  var writing = Promise.resolve();
+  function cloudWrite(fn) {
+    if (!cloud.db) return;
+    writing = writing.then(fn).catch(function (e) {
+      if (e && e.code === 'quota_exceeded') toast('Kho lưu trữ đã đầy, dữ liệu chỉ được giữ trên thiết bị này.');
+    });
+  }
+
+  var state = {
+    db: null, owned: null, ownedRaw: [], unknown: 0,
+    type: LS.get('type', 'Maiden'), code: LS.get('code', ''),
+    custom: LS.get('custom', { w: [0, 20, 0, 20, 0, 20, 0, 20, 0, 20], tag: [0, 0], tw: [0, 0] }),
+    onlyOwned: LS.get('onlyOwned', true), optimize: ACC_PENALTY && LS.get('optimize', true),
+    ov: {}, open: null, last: null, outfits: LS.get('outfits', []),
+    f: { q: '', slot: '', own: 'all', sort: 'name', tag: '', rare: '', page: 0 }
+  };
+
+  function setWardrobe(ids, persist) {
+    var set = new Set(ids.map(String));
+    state.ownedRaw = Array.from(set);
+    state.owned = set.size ? set : null;
+    state.unknown = state.ownedRaw.filter(function (id) { return !state.db.byId[id]; }).length;
+    if (persist) {
+      var body = { ids: state.ownedRaw.join(','), count: state.ownedRaw.length, at: Date.now() };
+      LS.set('ward', body);
+      cloudWrite(function () { return wardDoc().set(body); });
+    }
+  }
+  function saveOutfits() {
+    LS.set('outfits', state.outfits);
+    var list = state.outfits.slice();
+    cloudWrite(function () { return outfitsDoc().set({ list: list }); });
+  }
+
+  /* ---------- Điều hướng ---------- */
+  var VIEWS = ['phoi-do', 'tu-do', 'kho-do', 'bo-da-luu'];
+  var SECTION = { 'kho-do': 'tu-do' }; /* Kho đồ dùng chung khung với Tủ đồ */
+  function route() {
+    var v = (location.hash || '').slice(1);
+    if (VIEWS.indexOf(v) < 0) v = 'phoi-do';
+    ['phoi-do', 'tu-do', 'bo-da-luu'].forEach(function (x) { $('view-' + x).hidden = x !== (SECTION[v] || v); });
+    state.kho = v === 'kho-do';
+    $('view-tu-do').classList.toggle('kho', state.kho);
+    $('listTitle').textContent = state.kho ? 'Kho đồ chung' : 'Đồ của bạn';
+    state.f.page = 0;
+    document.querySelectorAll('nav.tabs a').forEach(function (a) {
+      if (a.getAttribute('data-view') === v) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+    if (v === 'tu-do' || v === 'kho-do') renderItems();
+    if (v === 'bo-da-luu') renderSaved();
+  }
+  window.addEventListener('hashchange', route);
+
+  var toastTimer;
+  function toast(msg) {
+    var d = document.querySelector('.toast');
+    if (!d) { d = document.createElement('div'); d.className = 'toast'; d.setAttribute('role', 'status'); document.body.appendChild(d); }
+    d.textContent = msg;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { d.remove(); }, 2400);
+  }
+
+  function renderChip() {
+    var c = $('wardChip');
+    if (state.owned) { c.className = 'chip-status ok'; c.textContent = T.wardrobe + ': ' + fmt(state.ownedRaw.length) + ' món'; }
+    else { c.className = 'chip-status'; c.textContent = 'Chưa nhập ' + lc(T.wardrobe); }
+  }
+
+  /* ---------- Chỉ mục màn chơi ---------- */
+  var idx;
+  function indexStages() {
+    idx = { Maiden: {}, Princess: {}, Commission: {}, Arena: [] };
+    state.db.stages.forEach(function (s) {
+      var m;
+      if (/[\u1100-\u11ff\u3040-\u30ff\u3130-\u318f\u3400-\u9fff\uac00-\ud7af]/.test(s.name)) return; /* ải tên tiếng Trung/Nhật/Hàn: chưa ra ở server VN */
+      if ((s.type === 'Maiden' || s.type === 'Princess') && (m = /^[MP]V(\d+)C(\d+)(SS|S)(\d+)(T\d+)?$/.exec(s.code))) {
+        var V = idx[s.type][m[1]] = idx[s.type][m[1]] || {};
+        (V[m[2]] = V[m[2]] || []).push({ s: s, n: +m[4], side: m[3] === 'SS', tier: m[5] || '' });
+      } else if (s.type === 'Commission' && (m = /^GA(\d+)S(\d+)$/.exec(s.code))) {
+        (idx.Commission[m[1]] = idx.Commission[m[1]] || []).push({ s: s, n: +m[2] });
+      } else if (s.type === 'Arena') idx.Arena.push(s);
+    });
+    var numcode = function (a, b) { return (parseInt(a.code.replace(/\D/g, ''), 10) || 0) - (parseInt(b.code.replace(/\D/g, ''), 10) || 0); };
+    idx.Arena.sort(numcode);
+    /* Số ải hiển thị: mã ...S101 trong dữ liệu là ải nối tiếp ải cuối chặng → đánh số tiếp theo (vd. ải 9 xong là ải 10), không ghi "101" */
+    idx.label = {};
+    ['Maiden', 'Princess'].forEach(function (t) {
+      Object.keys(idx[t]).forEach(function (V) { Object.keys(idx[t][V]).forEach(function (C) {
+        var list = idx[t][V][C], last = 0;
+        list.forEach(function (x) { if (!x.side && x.n < 100) last = Math.max(last, x.n); });
+        list.forEach(function (x) { x.lbl = x.n >= 100 ? String(last + 1) : String(x.n); idx.label[x.s.code] = x.lbl; });
+      }); });
+    });
+  }
+  var keysNum = function (o) { return Object.keys(o).sort(function (a, b) { return a - b; }); };
+
+  function currentStage() {
+    if (state.type === 'Custom') return { code: 'TU-DAT', type: 'Custom', name: T.customStage, w: state.custom.w, tag: state.custom.tag, tw: state.custom.tw, sk: [] };
+    var s = state.db.stageByCode[state.code];
+    return s && s.type === state.type ? s : null;
+  }
+  function ensureStage() {
+    if (state.type === 'Custom' || currentStage()) return;
+    var t = state.type, first = null;
+    if (t === 'Maiden' || t === 'Princess') { var V = keysNum(idx[t])[0]; if (V) { var C = keysNum(idx[t][V])[0]; first = idx[t][V][C][0].s; } }
+    else if (t === 'Commission') { var G = keysNum(idx.Commission)[0]; if (G) first = idx.Commission[G][0].s; }
+    else first = idx[t][0];
+    state.code = first ? first.code : '';
+  }
+
+  function renderTypeSeg() {
+    $('typeSeg').innerHTML = TYPES.map(function (t) {
+      return '<button type="button" data-t="' + t + '" aria-pressed="' + (state.type === t) + '">' + TYPE_VI[t] + '</button>';
+    }).join('');
+  }
+
+  function opt(v, label, sel) { return '<option value="' + esc(v) + '"' + (sel ? ' selected' : '') + '>' + esc(label) + '</option>'; }
+
+  function renderPickers() {
+    var box = $('stagePickers'), t = state.type, s = currentStage(), html = '';
+    if (t === 'Maiden' || t === 'Princess') {
+      var m = s ? /^[MP]V(\d+)C(\d+)/.exec(s.code) : null, V = m ? m[1] : '', C = m ? m[2] : '';
+      var vols = keysNum(idx[t]), chs = V ? keysNum(idx[t][V]) : [];
+      var list = (V && C && idx[t][V][C]) ? idx[t][V][C].slice().sort(function (a, b) { return (a.side - b.side) || (a.n - b.n) || a.tier.localeCompare(b.tier); }) : [];
+      html = '<div class="fields3">' +
+        '<label class="field"><span>' + T.vol + '</span><select id="pV">' + vols.map(function (v) { return opt(v, T.vol + ' ' + v, v === V); }).join('') + '</select></label>' +
+        '<label class="field"><span>' + T.chapter + '</span><select id="pC">' + chs.map(function (c) { return opt(c, T.chapter + ' ' + c, c === C); }).join('') + '</select></label>' +
+        '<label class="field"><span>' + T.stage + '</span><select id="pS">' + list.map(function (x) { return opt(x.s.code, (x.side ? T.side : T.stage) + ' ' + x.lbl + (x.tier ? ' (' + x.tier + ')' : '') + ' · ' + x.s.name, x.s.code === state.code); }).join('') + '</select></label></div>';
+    } else if (t === 'Commission') {
+      var g = s ? /^GA(\d+)/.exec(s.code)[1] : '', gs = keysNum(idx.Commission), ls = g ? idx.Commission[g].slice().sort(function (a, b) { return a.n - b.n; }) : [];
+      html = '<div class="fields3">' +
+        '<label class="field"><span>' + T.type.Commission + '</span><select id="pG">' + gs.map(function (x) { return opt(x, T.guildLevel + ' ' + x, x === g); }).join('') + '</select></label>' +
+        '<label class="field" style="grid-column: span 2"><span>' + T.stage + '</span><select id="pS">' + ls.map(function (x) { return opt(x.s.code, g + '-' + x.n + ' · ' + x.s.name, x.s.code === state.code); }).join('') + '</select></label></div>';
+    } else if (t === 'Arena') {
+      html = '<label class="field"><span>' + T.theme + '</span><select id="pS">' + idx[t].map(function (x) { return opt(x.code, x.name, x.code === state.code); }).join('') + '</select></label>';
+    } else {
+      var w = state.custom.w, rows = '';
+      for (var p = 0; p < 5; p++) {
+        var a = p * 2, b = a + 1, side = w[b] > 0 ? b : a;
+        rows += '<div class="crow"><label><input type="radio" name="cs' + p + '" value="' + a + '"' + (side === a ? ' checked' : '') + '>' + ATTR[a] + '</label>' +
+          '<span class="muted small">hay</span><label><input type="radio" name="cs' + p + '" value="' + b + '"' + (side === b ? ' checked' : '') + '>' + ATTR[b] + '</label>' +
+          '<input type="number" min="0" max="100" id="cw' + p + '" value="' + (w[side] || 0) + '" aria-label="Trọng số"></div>';
+      }
+      var tagOpts = function (cur) { return opt(0, '(không có)', !cur) + Object.keys(state.db.tagName).map(function (k) { return opt(k, state.db.tagName[k], +k === cur); }).join(''); };
+      html = '<div class="custom">' + rows + '</div><div class="fields3">' +
+        '<label class="field" style="grid-column: span 2"><span>' + T.tag + ' 1</span><select id="ct1">' + tagOpts(state.custom.tag[0]) + '</select></label>' +
+        '<label class="field"><span>' + T.tagBonus + '</span><input type="number" id="ctw1" min="0" value="' + (state.custom.tw[0] || 0) + '"></label>' +
+        '<label class="field" style="grid-column: span 2"><span>' + T.tag + ' 2</span><select id="ct2">' + tagOpts(state.custom.tag[1]) + '</select></label>' +
+        '<label class="field"><span>' + T.tagBonus + '</span><input type="number" id="ctw2" min="0" value="' + (state.custom.tw[1] || 0) + '"></label></div>';
+    }
+    box.innerHTML = html;
+  }
+
+  function readCustom() {
+    var w = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    for (var p = 0; p < 5; p++) {
+      var r = document.querySelector('input[name="cs' + p + '"]:checked');
+      w[r ? +r.value : p * 2] = Math.max(0, +$('cw' + p).value || 0);
+    }
+    state.custom = { w: w, tag: [+$('ct1').value || 0, +$('ct2').value || 0], tw: [+$('ctw1').value || 0, +$('ctw2').value || 0] };
+    LS.set('custom', state.custom);
+  }
+
+  /* Mã ải viết giống trong game: Thiếu Nữ/Công Chúa "Q.2-15-5" (Q = Quyển), Ải Hội "6-5"; còn lại giữ mã dữ liệu */
+  function gameCode(s) {
+    var m = /^[MP]V(\d+)C(\d+)(SS|S)(\d+)(T\d+)?$/.exec(s.code);
+    if (m) return 'Q.' + m[1] + '-' + m[2] + '-' + (m[3] === 'SS' ? '.' : '') + ((idx && idx.label[s.code]) || m[4]) + (m[5] ? ' (' + m[5] + ')' : '');
+    if ((m = /^GA(\d+)S(\d+)$/.exec(s.code))) return m[1] + '-' + m[2];
+    return s.code;
+  }
+
+  function renderTicket(s) {
+    var p = $('ticketPanel');
+    if (!s) { p.innerHTML = '<p class="muted">Chưa chọn ' + lc(T.stage) + '.</p>'; return; }
+    var max = Math.max.apply(null, s.w.concat([1])), pairs = '';
+    for (var i = 0; i < 5; i++) {
+      var a = s.w[i * 2], b = s.w[i * 2 + 1], val = a || b, left = a > 0;
+      var pct = Math.round(val / max * 50);
+      var bar = val ? '<i style="' + (left ? 'right:50%;width:' + pct + '%' : 'left:50%;width:' + pct + '%') + '"></i>' : '';
+      pairs += '<div class="pair"><span class="l ' + (a ? 'on' : 'off') + '">' + ATTR[i * 2] + (a ? ' <b class="num">' + a + '</b>' : '') + '</span>' +
+        '<span class="bar">' + bar + '</span><span class="' + (b ? 'on' : 'off') + '">' + ATTR[i * 2 + 1] + (b ? ' <b class="num">' + b + '</b>' : '') + '</span></div>';
+    }
+    var chips = '';
+    for (var t = 0; t < 2; t++) if (s.tag[t]) chips += '<span class="tag hot">' + esc(state.db.tagName[s.tag[t]] || (T.tag + ' ' + s.tag[t])) + ' +' + fmt(s.tw[t]) + '</span>';
+    (s.sk || []).forEach(function (c) { if (c) { var k = Math.floor(c / 100); chips += '<span class="tag">' + esc(SKILL_VI[k] || T.skill + ' ' + k) + '</span>'; } });
+    p.innerHTML = '<div class="ticket"><div class="code">' + TYPE_VI[s.type] + ' · ' + esc(gameCode(s)) + '</div><div class="name">' + esc(s.name) + '</div>' +
+      '<div class="pairs">' + pairs + '</div>' + (chips ? '<div class="tags">' + chips + '</div>' : '') + '</div>';
+  }
+
+  /* ---------- Tính và vẽ bộ đồ ---------- */
+  var ranked = null;
+  function compute() {
+    var s = currentStage();
+    renderTicket(s);
+    if (!s) { $('mirror').innerHTML = '<div class="empty"><b>Chưa có ' + lc(T.stage) + '</b>Chọn một ' + lc(T.stage) + ' ở cột bên trái.</div>'; return; }
+    var owned = state.onlyOwned ? state.owned : null;
+    ranked = rankAll(state.db, s, owned, state.owned);
+    var ov = {};
+    Object.keys(state.ov).forEach(function (k) {
+      var id = state.ov[k];
+      if (id === 'none') { ov[k] = 'none'; return; }
+      var hit = (ranked[k] || []).filter(function (e) { return e.item.id === id; })[0];
+      var it = state.db.byId[id];
+      if (hit) ov[k] = hit; else if (it) ov[k] = entryFor(state.db, it, s, state.owned);
+    });
+    var o = buildOutfit(state.db, ranked, { overrides: ov, optimize: state.optimize });
+    state.last = { stage: s, outfit: o };
+    renderMirror(s, o);
+  }
+
+  function itemTags(e) {
+    var tags = '';
+    if (e.tagHit) tags += '<span class="mini tag">' + esc(lc(T.tag)) + '</span>';
+    if (e.notOwned) tags += '<span class="mini no">chưa có</span>';
+    return tags;
+  }
+
+  function slotRows(list, cls) {
+    return list.map(function (x) {
+      var k = x.slot.key, open = state.open === k;
+      var row = '<tr class="pick ' + (cls || '') + '" data-slot="' + k + '" tabindex="0" aria-expanded="' + open + '"><td class="slotname">' + esc(x.slot.vi) + '</td>' +
+        '<td><span class="iname">' + esc(x.e.item.name) + '</span>' + itemTags(x.e) + '</td><td class="score num">' + fmt(x.e.score) + '</td></tr>';
+      return row + (open ? altRow(k, x.e.item.id) : '');
+    }).join('');
+  }
+
+  function altRow(k, curId) {
+    var list = (ranked[k] || []).slice(0, 8);
+    var items = list.map(function (e) {
+      return '<div class="alt' + (e.item.id === curId ? ' cur' : '') + '"><span><span class="iname">' + esc(e.item.name) + '</span>' + itemTags(e) + '</span>' +
+        '<span class="num muted small">' + fmt(e.score) + '</span>' +
+        (e.item.id === curId ? '<span class="small muted">đang mặc</span>' : '<button class="btn" data-use="' + k + '|' + e.item.id + '">Mặc món này</button>') + '</div>';
+    }).join('');
+    var foot = '<div class="row" style="margin-top:6px">' + (state.ov[k] ? '<button class="btn ghost" data-use="' + k + '|auto">Tự chọn lại</button>' : '') +
+      '<button class="btn ghost" data-use="' + k + '|none">Bỏ trống ô này</button></div>';
+    return '<tr class="alts"><td colspan="3"><div class="altlist">' + (items || '<span class="muted small">Không có món nào cho ô này.</span>') + '</div>' + foot + '</td></tr>';
+  }
+
+  function emptySlots(o) {
+    var used = {};
+    o.main.concat(o.acc, o.accDropped).forEach(function (x) { used[x.slot.key] = 1; });
+    return state.db.slots.filter(function (s) {
+      if (used[s.key]) return false;
+      if (s.group === 'top' || s.group === 'bottom') return !o.useDress;
+      if (s.group === 'dress') return o.useDress;
+      return state.ov[s.key] === 'none';
+    });
+  }
+
+  function renderMirror(s, o) {
+    var noteHtml = '';
+    if (state.owned && !state.onlyOwned) noteHtml = '<div class="note">Đang gợi ý từ toàn bộ đồ trong game. Món nào bạn chưa có sẽ ghi "chưa có".</div>';
+    var empties = emptySlots(o).map(function (sl) {
+      return '<tr class="pick" data-slot="' + sl.key + '" tabindex="0" aria-expanded="' + (state.open === sl.key) + '"><td class="slotname">' + esc(sl.vi) + '</td><td class="muted">—</td><td></td></tr>' +
+        (state.open === sl.key ? altRow(sl.key, null) : '');
+    }).join('');
+    /* Nút chọn nguồn đồ: để ngay đầu khung kết quả cho dễ thấy (cả trên điện thoại) */
+    var mine = state.owned && state.onlyOwned;
+    var srcbar = '<div class="srcbar"><span class="label" style="margin:0">Phối từ</span>' +
+      (state.owned
+        ? '<div class="seg" role="group" aria-label="Phối từ"><button type="button" data-src="own" aria-pressed="' + !!mine + '">Đồ của bạn (' + fmt(state.ownedRaw.length) + ' món)</button>' +
+          '<button type="button" data-src="all" aria-pressed="' + !mine + '">Toàn bộ đồ trong game</button></div>'
+        : '<span class="small">toàn bộ đồ trong game · <a href="#tu-do">Nhập tủ đồ cá nhân</a> để phối từ đồ của bạn</span>') + '</div>';
+    $('mirror').innerHTML = srcbar +
+      '<div class="mirror-head"><div><p class="label">Điểm gốc</p><div class="total num">' + fmt(o.total) + '</div>' +
+      '<div class="muted small" style="margin-top:6px">' + esc(s.name) + ' · chưa tính điểm kỹ năng khi thi</div></div>' +
+      '<div class="split num"><div><b>' + fmt(o.mainSum) + '</b><span>' + T.mainGroup + '</span></div><div><b>' + fmt1(o.accTotal) + '</b><span>' + T.acc + '</span></div>' +
+      '<div><b>' + o.accCount + (o.accMult !== 1 ? ' × ' + String(o.accMult).replace('.', ',') : '') + '</b><span>Số ' + lc(T.acc) + (o.accMult !== 1 ? ' × hệ số' : '') + '</span></div></div></div>' +
+      (ACC_PENALTY ? '<label class="check" style="margin-top:14px"><input type="checkbox" id="optAcc"' + (state.optimize ? ' checked' : '') + '> <span>Tự bỏ bớt ' + lc(T.acc) + ' nếu được điểm cao hơn<br><span class="muted small">Đeo càng nhiều ' + lc(T.acc) + ' thì hệ số điểm ' + lc(T.acc) + ' càng giảm.</span></span></label>' : '') +
+      (noteHtml ? '<div style="margin-top:14px">' + noteHtml + '</div>' : '') +
+      '<div class="row" style="margin-top:14px"><button class="btn primary" id="saveBtn">Lưu bộ này</button><button class="btn" id="copyBtn">Chép danh sách đồ</button>' +
+      (Object.keys(state.ov).length ? '<button class="btn ghost" id="resetOv">Tự chọn lại tất cả</button>' : '') + '</div>' +
+      '<p class="muted small" style="margin:12px 0 0">Bấm vào một dòng để xem món khác điểm cao cho ô đó.</p>' +
+      '<div class="slots-wrap"><table class="slots"><thead><tr><th>' + T.slot + '</th><th>Món đồ</th><th style="text-align:right">Điểm</th></tr></thead><tbody>' +
+      '<tr class="groupcap"><td colspan="3">' + T.mainGroup + '</td></tr>' + slotRows(o.main) +
+      '<tr class="groupcap"><td colspan="3">' + T.acc + '</td></tr>' + slotRows(o.acc) +
+      (o.accDropped.length ? '<tr class="groupcap"><td colspan="3">' + T.acc + ' bỏ ra cho điểm cao hơn</td></tr>' + slotRows(o.accDropped, 'dropped') : '') +
+      (empties ? '<tr class="groupcap"><td colspan="3">' + T.slot + ' đang trống</td></tr>' + empties : '') +
+      '</tbody></table></div>';
+  }
+
+  function outfitText() {
+    var L = state.last; if (!L) return '';
+    var lines = ['Bộ phối cho ' + lc(T.stage) + ': ' + L.stage.name + ' (' + TYPE_VI[L.stage.type] + ' ' + gameCode(L.stage) + ')', 'Điểm gốc: ' + fmt(L.outfit.total)];
+    L.outfit.main.concat(L.outfit.acc).forEach(function (x) { lines.push(x.slot.vi + ': ' + x.e.item.name); });
+    return lines.join('\n');
+  }
+
+  function saveCurrent() {
+    var L = state.last; if (!L) return;
+    var s = L.stage, o = L.outfit;
+    var rec = {
+      id: 'b' + Date.now().toString(36), name: s.name, at: Date.now(), type: s.type, code: s.code, stageName: s.name,
+      custom: s.type === 'Custom' ? state.custom : null, total: Math.round(o.total),
+      items: o.main.concat(o.acc).map(function (x) { return { k: x.slot.key, slot: x.slot.vi, id: x.e.item.id, name: x.e.item.name }; })
+    };
+    state.outfits.unshift(rec);
+    saveOutfits();
+    toast('Đã lưu bộ "' + s.name + '"');
+  }
+
+  function openSaved(rec) {
+    if (rec.type !== 'Custom' && !state.db.stageByCode[rec.code]) { toast(T.stage + ' của bộ này không còn trên web nên không mở lại được.'); return; }
+    state.type = rec.type;
+    if (rec.type === 'Custom' && rec.custom) state.custom = rec.custom; else state.code = rec.code;
+    var ov = {}, have = {};
+    rec.items.forEach(function (x) { ov[x.k] = x.id; have[x.k] = 1; });
+    state.db.slots.forEach(function (s) {
+      if (have[s.key]) return;
+      if (s.group === 'accessory' || s.group.indexOf('hand') === 0 || s.group === 'main') ov[s.key] = 'none';
+    });
+    state.ov = ov; state.open = null;
+    persistStage(); renderTypeSeg(); renderPickers(); compute();
+    location.hash = 'phoi-do';
+  }
+
+  function persistStage() { LS.set('type', state.type); LS.set('code', state.code); }
+
+  /* ---------- Sự kiện trang Phối đồ ---------- */
+  $('typeSeg').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-t]'); if (!b) return;
+    state.type = b.getAttribute('data-t'); state.ov = {}; state.open = null;
+    ensureStage(); persistStage(); renderTypeSeg(); renderPickers(); compute();
+  });
+  $('stagePickers').addEventListener('change', function (e) {
+    var id = e.target.id, t = state.type;
+    if (t === 'Custom') { readCustom(); compute(); return; }
+    if (id === 'pV') { var V = e.target.value, C = keysNum(idx[t][V])[0]; state.code = idx[t][V][C][0].s.code; }
+    else if (id === 'pC') { var V2 = $('pV').value; state.code = idx[t][V2][e.target.value][0].s.code; }
+    else if (id === 'pG') { state.code = idx.Commission[e.target.value][0].s.code; }
+    else if (id === 'pS') state.code = e.target.value;
+    state.ov = {}; state.open = null;
+    persistStage(); renderPickers(); compute();
+  });
+  $('stagePickers').addEventListener('input', function (e) { if (state.type === 'Custom' && e.target.type === 'number') { readCustom(); compute(); } });
+  $('mirror').addEventListener('click', function (e) {
+    var u = e.target.closest('[data-use]');
+    if (u) {
+      var p = u.getAttribute('data-use').split('|');
+      if (p[1] === 'auto') delete state.ov[p[0]]; else state.ov[p[0]] = p[1];
+      state.open = null; compute(); return;
+    }
+    if (e.target.id === 'optAcc') { state.optimize = e.target.checked; LS.set('optimize', state.optimize); compute(); return; }
+    var src = e.target.closest('[data-src]');
+    if (src) { state.onlyOwned = src.getAttribute('data-src') === 'own'; LS.set('onlyOwned', state.onlyOwned); state.open = null; compute(); return; }
+    if (e.target.id === 'saveBtn') { saveCurrent(); return; }
+    if (e.target.id === 'resetOv') { state.ov = {}; state.open = null; compute(); return; }
+    if (e.target.id === 'copyBtn') {
+      var txt = outfitText();
+      try { navigator.clipboard.writeText(txt).then(function () { toast('Đã chép danh sách đồ'); }, function () { toast('Trình duyệt chưa cho chép. Bạn bấm lại thử nhé.'); }); }
+      catch (er) { toast('Trình duyệt chưa cho chép. Bạn bấm lại thử nhé.'); }
+      return;
+    }
+    var tr = e.target.closest('tr.pick');
+    if (tr) { var k = tr.getAttribute('data-slot'); state.open = state.open === k ? null : k; renderMirror(state.last.stage, state.last.outfit); }
+  });
+  $('mirror').addEventListener('keydown', function (e) {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('tr.pick')) { e.preventDefault(); e.target.click(); }
+  });
+
+  /* ---------- Trang Tủ đồ ---------- */
+  function renderWardInfo(msg, bad) {
+    var html = '';
+    if (state.owned) {
+      html = '<div class="row" style="justify-content:space-between"><div><div class="stat num">' + fmt(state.ownedRaw.length) + '</div><div class="muted small">món trong tủ của bạn</div></div>' +
+        '<div><div class="stat num">' + fmt(state.ownedRaw.length - state.unknown) + '</div><div class="muted small">món có dữ liệu điểm</div></div></div>' +
+        (state.unknown ? '<p class="muted small" style="margin:8px 0 0">' + fmt(state.unknown) + ' món chưa có trong bảng dữ liệu (thường là đồ rất mới) nên chưa tính điểm được.</p>' : '');
+    } else html = '<p class="muted small" style="margin:0">Chưa có tủ đồ. Khi chưa nhập, trang Phối đồ sẽ gợi ý từ toàn bộ đồ trong game.</p>';
+    if (msg) html += '<div class="note' + (bad ? '' : ' ok') + '" style="margin-top:10px">' + esc(msg) + '</div>';
+    $('wardInfo').innerHTML = html;
+  }
+
+  function handleFile(f) {
+    var r = new FileReader();
+    r.onload = function () {
+      var ids = [];
+      try { ids = decodeClothesDate(String(r.result)); } catch (e) { ids = []; }
+      if (ids.length < 5) { renderWardInfo('Không đọc được file này. Bạn chọn đúng file clothes_date nhé (không phải furniture_date).', true); return; }
+      setWardrobe(ids, true);
+      state.onlyOwned = true; LS.set('onlyOwned', true); /* vừa nhập tủ đồ thì phối từ đồ của mình */
+      state.ov = {};
+      renderChip(); renderWardInfo('Đã nhập ' + fmt(ids.length) + ' món từ file ' + f.name + '.'); compute(); renderItems();
+    };
+    r.onerror = function () { renderWardInfo('Không mở được file. Bạn thử chọn lại nhé.', true); };
+    r.readAsText(f);
+  }
+  var drop = $('drop');
+  drop.addEventListener('click', function () { $('fileIn').click(); });
+  drop.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); $('fileIn').click(); } });
+  ['dragenter', 'dragover'].forEach(function (n) { drop.addEventListener(n, function (e) { e.preventDefault(); drop.classList.add('over'); }); });
+  ['dragleave', 'drop'].forEach(function (n) { drop.addEventListener(n, function (e) { e.preventDefault(); drop.classList.remove('over'); }); });
+  drop.addEventListener('drop', function (e) { var f = e.dataTransfer.files[0]; if (f) handleFile(f); });
+  $('fileIn').addEventListener('change', function (e) { var f = e.target.files[0]; if (f) handleFile(f); e.target.value = ''; });
+
+  var PAGE = 48, filtered = [];
+  /* Hình món đồ: img/<mã>.webp; lỗi hình thì để khung trống */
+  var IMG_BASE = 'img/';
+  function setupFilters() {
+    var seen = {}, opts = opt('', 'Mọi ' + lc(T.slot), true);
+    state.db.slots.forEach(function (s) { if (!seen[s.key]) { seen[s.key] = 1; opts += opt(s.key, s.vi, false); } });
+    $('fSlot').innerHTML = opts;
+    var tags = Object.keys(state.db.tagName).sort(function (a, b) { return state.db.tagName[a].localeCompare(state.db.tagName[b], 'vi'); });
+    $('fTag').innerHTML = opt('', 'Mọi ' + lc(T.tag), true) + tags.map(function (k) { return opt(k, state.db.tagName[k], false); }).join('');
+    $('fRare').innerHTML = opt('', 'Mọi độ hiếm', true) + [6, 5, 4, 3, 2, 1].map(function (n) { return opt(n, new Array(n + 1).join('♥') + ' (' + n + ' tim)', false); }).join('');
+    $('fSort').innerHTML = opt('name', 'Xếp theo tên', true) + opt('rare', 'Độ hiếm cao nhất', false) + ATTR.map(function (a, i) { return opt('a' + i, a + ' cao nhất', false); }).join('');
+  }
+  function applyFilters() {
+    var f = state.f, q = f.q.trim().toLowerCase(), own = state.kho ? f.own : 'own';
+    var ow = state.owned;
+    filtered = state.db.clothes.filter(function (it) {
+      if (it.hidden && !(ow && ow.has(it.id))) return false;
+      if (f.slot && it.slot.key !== f.slot) return false;
+      if (f.tag && it.sp1 !== +f.tag && it.sp2 !== +f.tag) return false;
+      if (f.rare && it.rare !== +f.rare) return false;
+      if (own === 'own' && !(ow && ow.has(it.id))) return false;
+      if (own === 'miss' && ow && ow.has(it.id)) return false;
+      if (q && it.name.toLowerCase().indexOf(q) < 0) return false;
+      return true;
+    });
+    if (f.sort === 'name') filtered.sort(function (a, b) { return a.name.localeCompare(b.name, 'vi'); });
+    else if (f.sort === 'rare') filtered.sort(function (a, b) { return (b.rare - a.rare) || (a.id - b.id); });
+    else { var i = +f.sort.slice(1); filtered.sort(function (a, b) { return (b.a[i] || 0) - (a.a[i] || 0); }); }
+  }
+  /* 2 phong cách cao nhất + tag của món */
+  function cardChips(it) {
+    var idx2 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].filter(function (i) { return it.a[i]; }).sort(function (x, y) { return it.a[y] - it.a[x]; }).slice(0, 2);
+    var out = idx2.map(function (i, n) { return '<span class="' + (n === 0 ? 'best' : '') + '">' + ATTR[i] + ' ' + it.a[i] + '</span>'; });
+    [it.sp1, it.sp2].forEach(function (t) { if (t > 0) out.push('<span class="best">' + esc(state.db.tagName[t] || T.tag + ' ' + t) + '</span>'); });
+    return '<div class="attrs">' + out.join('') + '</div>';
+  }
+  function itemCard(it, has) {
+    return '<article class="icard' + (has ? ' has' : '') + '"><div class="pic"><img loading="lazy" decoding="async" alt="" src="' + IMG_BASE + it.id + '.webp" onerror="this.remove()">' +
+      '<span class="slot">' + esc(it.slot.vi) + '</span>' + (has ? '<span class="badge">✓ Có</span>' : '') +
+      (it.rare ? '<span class="hearts" title="' + it.rare + ' tim">' + new Array(it.rare + 1).join('♥') + '</span>' : '') + '<span class="iid">' + it.id + '</span></div>' +
+      '<div class="body"><div class="nm">' + esc(it.name) + '</div>' + cardChips(it) +
+      '<button class="own" data-own="' + it.id + '" aria-pressed="' + has + '">' + (has ? '✓ Đã có trong tủ' : '+ Thêm vào tủ') + '</button></div></article>';
+  }
+  function renderItems(refilter) {
+    if (!state.db) return;
+    if (refilter !== false) applyFilters();
+    var pages = Math.max(1, Math.ceil(filtered.length / PAGE));
+    state.f.page = Math.min(state.f.page, pages - 1);
+    var start = state.f.page * PAGE, ow = state.owned;
+    $('itemRows').innerHTML = filtered.slice(start, start + PAGE).map(function (it) { return itemCard(it, !!(ow && ow.has(it.id))); }).join('') ||
+      '<div class="empty">' + (!state.kho && !ow ? '<b>Chưa có đồ nào</b>Bạn nhập file clothes_date ở khung bên cạnh, hoặc qua trang Kho đồ chung bấm "Thêm vào tủ".' : '<b>Không có món nào khớp</b>Bạn thử bỏ bớt bộ lọc nhé.') + '</div>';
+    $('fCount').textContent = fmt(filtered.length) + ' món';
+    $('pInfo').textContent = 'Trang ' + (state.f.page + 1) + ' / ' + pages;
+    $('pPrev').disabled = state.f.page === 0;
+    $('pNext').disabled = state.f.page >= pages - 1;
+  }
+  var qTimer;
+  $('fQ').addEventListener('input', function (e) { clearTimeout(qTimer); qTimer = setTimeout(function () { state.f.q = e.target.value; state.f.page = 0; renderItems(); }, 150); });
+  ['fSlot', 'fOwn', 'fSort', 'fTag', 'fRare'].forEach(function (id) {
+    $(id).addEventListener('change', function (e) { state.f[{ fSlot: 'slot', fOwn: 'own', fSort: 'sort', fTag: 'tag', fRare: 'rare' }[id]] = e.target.value; state.f.page = 0; renderItems(); });
+  });
+  $('pPrev').addEventListener('click', function () { state.f.page--; renderItems(false); });
+  $('pNext').addEventListener('click', function () { state.f.page++; renderItems(false); });
+  var ownTimer;
+  $('itemRows').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-own]'); if (!b) return;
+    var id = b.getAttribute('data-own'), list = state.ownedRaw.slice(), at = list.indexOf(id);
+    if (at >= 0) list.splice(at, 1); else list.push(id);
+    setWardrobe(list, false);
+    var has = !!(state.owned && state.owned.has(id));
+    var card = b.closest('.icard'); if (card) card.outerHTML = itemCard(state.db.byId[id], has);
+    renderChip();
+    clearTimeout(ownTimer);
+    ownTimer = setTimeout(function () { setWardrobe(state.ownedRaw, true); renderWardInfo(); compute(); }, 700);
+  });
+
+  /* ---------- Trang Bộ đã lưu ---------- */
+  var confirmDel = null;
+  function renderSaved() {
+    var box = $('savedList');
+    if (!state.outfits.length) {
+      box.innerHTML = '<div class="empty"><b>Chưa có bộ nào</b>Phối xong một ' + lc(T.stage) + ' ở trang Phối đồ, bấm "Lưu bộ này" là bộ đó hiện ở đây.</div>';
+      return;
+    }
+    box.innerHTML = '<div class="saved">' + state.outfits.map(function (r) {
+      var d = new Date(r.at);
+      return '<article class="card" data-id="' + r.id + '"><input type="text" value="' + esc(r.name) + '" data-rename="' + r.id + '" aria-label="Tên bộ">' +
+        '<div class="row" style="justify-content:space-between"><span class="sc num">' + fmt(r.total) + '</span><span class="muted small">' + (TYPE_VI[r.type] || T.type.Arena) + ' · ' + d.toLocaleDateString('vi-VN') + '</span></div>' +
+        '<div class="muted small">' + esc(r.stageName) + '</div>' +
+        '<ul>' + r.items.map(function (x) { return '<li><span>' + esc(x.slot) + '</span><span>' + esc(x.name) + '</span></li>'; }).join('') + '</ul>' +
+        '<div class="row">' + (confirmDel === r.id
+          ? '<span class="small">Xóa bộ này? Xóa rồi không lấy lại được.</span><button class="btn danger" data-del2="' + r.id + '">Xóa bộ</button><button class="btn ghost" data-cancel="1">Giữ lại</button>'
+          : '<button class="btn primary" data-open="' + r.id + '">Mở lại để chỉnh</button><button class="btn ghost danger" data-del="' + r.id + '">Xóa</button>') +
+        '</div></article>';
+    }).join('') + '</div>';
+  }
+  $('savedList').addEventListener('click', function (e) {
+    var t = e.target, id;
+    if ((id = t.getAttribute('data-open'))) { openSaved(state.outfits.filter(function (r) { return r.id === id; })[0]); return; }
+    if ((id = t.getAttribute('data-del'))) { confirmDel = id; renderSaved(); return; }
+    if (t.getAttribute('data-cancel')) { confirmDel = null; renderSaved(); return; }
+    if ((id = t.getAttribute('data-del2'))) {
+      state.outfits = state.outfits.filter(function (r) { return r.id !== id; }); confirmDel = null; saveOutfits(); renderSaved(); toast('Đã xóa bộ');
+    }
+  });
+  $('savedList').addEventListener('change', function (e) {
+    var id = e.target.getAttribute('data-rename'); if (!id) return;
+    state.outfits.forEach(function (r) { if (r.id === id) r.name = e.target.value.trim() || r.stageName; });
+    saveOutfits(); toast('Đã đổi tên');
+  });
+
+  /* ---------- Khởi động ---------- */
+  function start(raw) {
+    state.db = buildDb(raw);
+    indexStages();
+    if (TYPES.indexOf(state.type) < 0) state.type = 'Maiden';
+    ensureStage();
+    var w = LS.get('ward', null);
+    if (w && w.ids) setWardrobe(String(w.ids).split(','), false);
+    $('loading').hidden = true;
+    applyTerms();
+    renderChip(); renderTypeSeg(); renderPickers(); setupFilters(); renderWardInfo(); compute(); route();
+    connectCloud();
+  }
+
+  function connectCloud() {
+    if (!window.claude || typeof window.claude.use !== 'function') return;
+    Promise.all([window.claude.use('db'), window.claude.use('user')]).then(function (r) {
+      var db = r[0], user = r[1];
+      if (!db || !user) return null;
+      return user.id().then(function (uid) {
+        if (!uid) return;
+        cloud.db = db; cloud.uid = uid;
+        return Promise.all([wardDoc().get(), outfitsDoc().get()]).then(function (snaps) {
+          var w = snaps[0].exists ? snaps[0].data() : null, o = snaps[1].exists ? snaps[1].data() : null;
+          if (w && w.ids) {
+            setWardrobe(String(w.ids).split(','), false);
+            LS.set('ward', w);
+            renderChip(); renderWardInfo(); compute(); if (!$('view-tu-do').hidden) renderItems();
+          }
+          if (o && Array.isArray(o.list)) {
+            state.outfits = o.list.slice(); LS.set('outfits', state.outfits);
+            if (!$('view-bo-da-luu').hidden) renderSaved();
+          }
+        });
+      });
+    }).catch(function () {});
+  }
+
+  fetch('data.json').then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(start).catch(function () {
+    $('loading').textContent = 'Không tải được dữ liệu đồ. Bạn kiểm tra mạng rồi tải lại trang nhé.';
+  });
+})();
+</script>
+
+</body>
+</html>
