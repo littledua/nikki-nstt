@@ -154,7 +154,15 @@ select, input[type="text"], input[type="search"], input[type="number"] {
 .slots tr.dropped td { color: var(--muted); }
 .slots tr.dropped .iname { text-decoration: line-through; }
 .slotname { color: var(--muted); font-size: .88rem; white-space: nowrap; }
+.slots td.slotname, .slots th:first-child { width: 1%; }
+@media (max-width: 480px) { .slots td { padding: 8px 4px; } .alt { grid-template-columns: minmax(0,1fr) auto; } .alt > :last-child { grid-column: 1 / -1; justify-self: end; } }
 .iname { font-weight: 500; }
+/* Hình nhỏ cạnh tên món (Phối đồ, Bộ đã lưu) */
+.thumb { width: 36px; height: 36px; object-fit: contain; border-radius: 8px; background: var(--sunk); flex: none; }
+.withthumb { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.withthumb > span { min-width: 0; }
+.alt .thumb { width: 30px; height: 30px; }
+.card li .thumb { width: 28px; height: 28px; }
 .mini { font-size: .7rem; padding: 1px 7px; border-radius: 999px; margin-left: 6px; vertical-align: 1px; }
 .mini.tag { background: var(--accent-soft); color: var(--accent); border: 0; font-weight: 600; }
 .mini.no { background: var(--warn-soft); color: var(--warn); }
@@ -208,7 +216,7 @@ select, input[type="text"], input[type="search"], input[type="number"] {
 .card .t { font-family: var(--f-display); font-weight: 700; font-size: 1.1rem; }
 .card .sc { font-family: var(--f-display); font-style: italic; font-size: 1.7rem; font-weight: 700; color: var(--accent); }
 .card ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; font-size: .86rem; }
-.card li { display: grid; grid-template-columns: 110px minmax(0,1fr); gap: 8px; }
+.card li { display: grid; grid-template-columns: 110px minmax(0,1fr); gap: 8px; align-items: center; }
 .card li span:first-child { color: var(--muted); }
 .card input[type="text"] { width: 100%; }
 .empty { text-align: center; padding: 40px 16px; color: var(--muted); border: 1px dashed var(--line); border-radius: var(--r); }
@@ -759,11 +767,12 @@ function decodeClothesDate(text) {
     return tags;
   }
 
+  function thumb(id) { return '<img class="thumb" loading="lazy" decoding="async" alt="" src="' + IMG_BASE + id + '.webp" onerror="this.style.visibility=\'hidden\'">'; }
   function slotRows(list, cls) {
     return list.map(function (x) {
       var k = x.slot.key, open = state.open === k;
       var row = '<tr class="pick ' + (cls || '') + '" data-slot="' + k + '" tabindex="0" aria-expanded="' + open + '"><td class="slotname">' + esc(x.slot.vi) + '</td>' +
-        '<td><span class="iname">' + esc(x.e.item.name) + '</span>' + itemTags(x.e) + '</td><td class="score num">' + fmt(x.e.score) + '</td></tr>';
+        '<td><div class="withthumb">' + thumb(x.e.item.id) + '<span><span class="iname">' + esc(x.e.item.name) + '</span>' + itemTags(x.e) + '</span></div></td><td class="score num">' + fmt(x.e.score) + '</td></tr>';
       return row + (open ? altRow(k, x.e.item.id) : '');
     }).join('');
   }
@@ -771,7 +780,7 @@ function decodeClothesDate(text) {
   function altRow(k, curId) {
     var list = (ranked[k] || []).slice(0, 8);
     var items = list.map(function (e) {
-      return '<div class="alt' + (e.item.id === curId ? ' cur' : '') + '"><span><span class="iname">' + esc(e.item.name) + '</span>' + itemTags(e) + '</span>' +
+      return '<div class="alt' + (e.item.id === curId ? ' cur' : '') + '"><span class="withthumb">' + thumb(e.item.id) + '<span><span class="iname">' + esc(e.item.name) + '</span>' + itemTags(e) + '</span></span>' +
         '<span class="num muted small">' + fmt(e.score) + '</span>' +
         (e.item.id === curId ? '<span class="small muted">đang mặc</span>' : '<button class="btn" data-use="' + k + '|' + e.item.id + '">Mặc món này</button>') + '</div>';
     }).join('');
@@ -1025,7 +1034,7 @@ function decodeClothesDate(text) {
       return '<article class="card" data-id="' + r.id + '"><input type="text" value="' + esc(r.name) + '" data-rename="' + r.id + '" aria-label="Tên bộ">' +
         '<div class="row" style="justify-content:space-between"><span class="sc num">' + fmt(r.total) + '</span><span class="muted small">' + (TYPE_VI[r.type] || T.type.Arena) + ' · ' + d.toLocaleDateString('vi-VN') + '</span></div>' +
         '<div class="muted small">' + esc(r.stageName) + '</div>' +
-        '<ul>' + r.items.map(function (x) { return '<li><span>' + esc(x.slot) + '</span><span>' + esc(x.name) + '</span></li>'; }).join('') + '</ul>' +
+        '<ul>' + r.items.map(function (x) { return '<li><span>' + esc(x.slot) + '</span><span class="withthumb">' + thumb(x.id) + '<span>' + esc(x.name) + '</span></span></li>'; }).join('') + '</ul>' +
         '<div class="row">' + (confirmDel === r.id
           ? '<span class="small">Xóa bộ này? Xóa rồi không lấy lại được.</span><button class="btn danger" data-del2="' + r.id + '">Xóa bộ</button><button class="btn ghost" data-cancel="1">Giữ lại</button>'
           : '<button class="btn primary" data-open="' + r.id + '">Mở lại để chỉnh</button><button class="btn ghost danger" data-del="' + r.id + '">Xóa</button>') +
