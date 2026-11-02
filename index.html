@@ -210,6 +210,27 @@ select, input[type="text"], input[type="search"], input[type="number"] {
 .own[aria-pressed="true"] { background: var(--own-soft); color: var(--own); border-color: transparent; font-weight: 600; }
 .pager { display: flex; gap: 8px; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-top: 12px; }
 
+/* Lịch sự kiện */
+.evtop { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 12px; }
+.evbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 4px 0 14px; }
+.evbar input { flex: 1 1 220px; }
+.evcard { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); padding: 14px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.evcard.now { border-color: var(--own); }
+.evcard .t { font-weight: 700; font-size: 1rem; line-height: 1.35; }
+.evcard .d { font-size: .85rem; color: var(--muted); }
+.evcard .how { font-size: .88rem; }
+.evcard .sets { font-size: .82rem; }
+.evcard .meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.evtype { font-size: .72rem; font-weight: 700; padding: 2px 9px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+.evstate { font-size: .72rem; font-weight: 700; padding: 2px 9px; border-radius: 999px; background: var(--own-soft); color: var(--own); }
+.evstate.soon { background: var(--warn-soft); color: var(--warn); }
+.evcb { font-size: .8rem; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 6px; }
+.evcb b { color: var(--ink); }
+.evcard a { color: var(--accent); font-size: .82rem; }
+.evmonth { font-family: var(--f-display); font-weight: 700; font-size: 1.05rem; margin: 22px 0 10px; }
+.rhythm { width: 100%; border-collapse: collapse; font-size: .88rem; }
+.rhythm th { text-align: left; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 6px 8px; border-bottom: 1px solid var(--line); }
+.rhythm td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
 /* Bộ đã lưu */
 .saved { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 16px; }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
@@ -238,6 +259,7 @@ footer a { color: inherit; }
       <a href="#tu-do" data-view="tu-do">Tủ đồ cá nhân</a>
       <a href="#kho-do" data-view="kho-do">Kho đồ chung</a>
       <a href="#bo-da-luu" data-view="bo-da-luu">Bộ đã lưu</a>
+      <a href="#su-kien" data-view="su-kien">Lịch sự kiện</a>
     </nav>
     <span class="chip-status" id="wardChip">Chưa nhập tủ đồ</span>
   </header>
@@ -299,6 +321,12 @@ footer a { color: inherit; }
         <div class="pager"><button class="btn" id="pPrev">← Trang trước</button><span class="muted small num" id="pInfo"></span><button class="btn" id="pNext">Trang sau →</button></div>
       </div>
     </div>
+  </section>
+
+  <!-- LỊCH SỰ KIỆN -->
+  <section class="view" id="view-su-kien" hidden>
+    <h2 class="sec">Lịch sự kiện</h2>
+    <div id="evBody"><p class="muted">Đang tải lịch sự kiện…</p></div>
   </section>
 
   <!-- BỘ ĐÃ LƯU -->
@@ -585,12 +613,12 @@ function decodeClothesDate(text) {
   }
 
   /* ---------- Điều hướng ---------- */
-  var VIEWS = ['phoi-do', 'tu-do', 'kho-do', 'bo-da-luu'];
+  var VIEWS = ['phoi-do', 'tu-do', 'kho-do', 'bo-da-luu', 'su-kien'];
   var SECTION = { 'kho-do': 'tu-do' }; /* Kho đồ dùng chung khung với Tủ đồ */
   function route() {
     var v = (location.hash || '').slice(1);
     if (VIEWS.indexOf(v) < 0) v = 'phoi-do';
-    ['phoi-do', 'tu-do', 'bo-da-luu'].forEach(function (x) { $('view-' + x).hidden = x !== (SECTION[v] || v); });
+    ['phoi-do', 'tu-do', 'bo-da-luu', 'su-kien'].forEach(function (x) { $('view-' + x).hidden = x !== (SECTION[v] || v); });
     state.kho = v === 'kho-do';
     $('view-tu-do').classList.toggle('kho', state.kho);
     $('listTitle').textContent = state.kho ? 'Kho đồ chung' : 'Đồ của bạn';
@@ -600,6 +628,7 @@ function decodeClothesDate(text) {
     });
     if (v === 'tu-do' || v === 'kho-do') renderItems();
     if (v === 'bo-da-luu') renderSaved();
+    if (v === 'su-kien') loadEvents();
   }
   window.addEventListener('hashchange', route);
 
@@ -1019,6 +1048,87 @@ function decodeClothesDate(text) {
     renderChip();
     clearTimeout(ownTimer);
     ownTimer = setTimeout(function () { setWardrobe(state.ownedRaw, true); renderWardInfo(); compute(); }, 700);
+  });
+
+  /* ---------- Trang Lịch sự kiện ----------
+     Dữ liệu: file su-kien.txt (mỗi dòng: Tên | Loại | Ngày mở | Ngày đóng | Bộ đồ | Cách chơi | Bản tin | Link). Dòng # là ghi chú.
+     Comeback tính theo đúng tên sự kiện; "nhịp theo loại" tính khoảng cách giữa các lần mở của cùng một loại. */
+  var EV = { list: null, type: '', q: '' };
+  var EV_TYPES = ['Big Event', 'Linh Cảm Không Gian', 'Gacha', 'Hồn Đom Đóm', '6 Bước Chọn', 'Đóng gói', 'Tiêu tim', 'Tiêu kim cương', 'Khác'];
+  var DAY = 86400000;
+  function evDate(t) { var m = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec((t || '').trim()); return m ? new Date(+m[3], +m[2] - 1, +m[1]) : null; }
+  function evFmt(d) { return d ? d.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '?'; }
+  function today() { var n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); }
+  function parseEvents(txt) {
+    return txt.split(/\r?\n/).filter(function (l) { return l.trim() && l.trim()[0] !== '#'; }).map(function (l) {
+      var c = l.split('|').map(function (x) { return x.trim(); });
+      return { name: c[0] || '', type: c[1] || 'Khác', start: evDate(c[2]), end: evDate(c[3]), sets: c[4] || '', how: c[5] || '', news: c[6] || '', link: c[7] || '' };
+    }).filter(function (e) { return e.name; });
+  }
+  function loadEvents() {
+    if (EV.list) { renderEvents(); return; }
+    fetch('su-kien.txt', { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw 0; return r.text(); }).then(function (t) {
+      EV.list = parseEvents(t); renderEvents();
+    }).catch(function () { $('evBody').innerHTML = '<p class="muted">Chưa tải được lịch sự kiện. Bạn tải lại trang thử nhé.</p>'; });
+  }
+  function evState(e, now) {
+    if (e.start && e.start > now) return { cls: 'soon', txt: 'Sắp mở' };
+    /* không có ngày đóng: chỉ coi là đang diễn ra trong 14 ngày đầu */
+    if (e.start && e.start <= now && (e.end ? e.end >= now : (now - e.start) / DAY <= 14)) return { cls: '', txt: e.end ? 'Đang diễn ra · còn ' + Math.round((e.end - now) / DAY + 1) + ' ngày' : 'Đang diễn ra' };
+    return null;
+  }
+  /* Thống kê comeback: các lần mở của cùng tên (hoặc cùng loại) → lần gần nhất, khoảng cách TB, dự kiến lần tới */
+  function gapStats(starts) {
+    var d = starts.filter(Boolean).sort(function (a, b) { return a - b; });
+    var gaps = []; for (var i = 1; i < d.length; i++) gaps.push((d[i] - d[i - 1]) / DAY);
+    var avg = gaps.length ? gaps.reduce(function (a, b) { return a + b; }, 0) / gaps.length : 0;
+    return { n: d.length, last: d[d.length - 1] || null, avg: avg, next: gaps.length ? new Date(d[d.length - 1].getTime() + avg * DAY) : null };
+  }
+  function evCard(e, byName, now) {
+    var st = evState(e, now), runs = byName[e.name] || [e], g = gapStats(runs.map(function (x) { return x.start; }));
+    var cb = runs.length > 1
+      ? 'Đã mở <b>' + runs.length + ' lần</b> · cách nhau trung bình <b>' + Math.round(g.avg) + ' ngày</b>' + (g.next && g.next > now ? ' · dự kiến lần tới khoảng <b>' + evFmt(g.next) + '</b> (ước tính)' : '')
+      : 'Mới mở 1 lần' + (e.start && e.start <= now ? ' · cách đây <b>' + Math.round((now - e.start) / DAY) + ' ngày</b>' : '');
+    return '<article class="evcard' + (st && !st.cls ? ' now' : '') + '"><div class="meta"><span class="evtype">' + esc(e.type) + '</span>' + (st ? '<span class="evstate ' + st.cls + '">' + st.txt + '</span>' : '') + '</div>' +
+      '<div class="t">' + esc(e.name) + '</div><div class="d">' + evFmt(e.start) + ' – ' + (e.end ? evFmt(e.end) : 'chưa rõ ngày đóng') + (e.news ? ' · Bản tin ' + esc(e.news) : '') + '</div>' +
+      (e.sets ? '<div class="sets"><b>Bộ đồ:</b> ' + esc(e.sets) + '</div>' : '') + (e.how ? '<div class="how">' + esc(e.how) + '</div>' : '') +
+      '<div class="evcb">' + cb + '</div>' + (/^https?:\/\//.test(e.link) ? '<a href="' + esc(e.link) + '" target="_blank" rel="noopener">Xem bài đăng</a>' : '') + '</article>';
+  }
+  function renderEvents() {
+    var now = today(), all = EV.list || [], byName = {};
+    all.forEach(function (e) { (byName[e.name] = byName[e.name] || []).push(e); });
+    var types = EV_TYPES.filter(function (t) { return all.some(function (e) { return e.type === t; }); });
+    all.forEach(function (e) { if (types.indexOf(e.type) < 0) types.push(e.type); });
+    var q = EV.q.trim().toLowerCase();
+    var list = all.filter(function (e) {
+      return (!EV.type || e.type === EV.type) && (!q || (e.name + ' ' + e.sets).toLowerCase().indexOf(q) >= 0);
+    }).sort(function (a, b) { return (b.start || 0) - (a.start || 0); });
+    var live = list.filter(function (e) { return evState(e, now); });
+    var html = '<div class="evbar"><input type="search" id="evQ" placeholder="Tìm tên sự kiện hoặc bộ đồ…" value="' + esc(EV.q) + '" aria-label="Tìm sự kiện">' +
+      '<div class="seg" id="evType"><button type="button" data-ev="" aria-pressed="' + !EV.type + '">Tất cả</button>' +
+      types.map(function (t) { return '<button type="button" data-ev="' + esc(t) + '" aria-pressed="' + (EV.type === t) + '">' + esc(t) + '</button>'; }).join('') + '</div></div>';
+    if (live.length) html += '<div class="evmonth">Đang diễn ra & sắp mở</div><div class="evtop">' + live.map(function (e) { return evCard(e, byName, now); }).join('') + '</div>';
+    /* Nhịp theo loại */
+    var rows = types.filter(function (t) { return !EV.type || t === EV.type; }).map(function (t) {
+      var g = gapStats(all.filter(function (e) { return e.type === t; }).map(function (e) { return e.start; }));
+      return '<tr><td><b>' + esc(t) + '</b></td><td class="num">' + g.n + '</td><td>' + evFmt(g.last) + '</td><td class="num">' + (g.avg ? Math.round(g.avg) + ' ngày' : '—') + '</td><td>' + (g.next ? evFmt(g.next) + (g.next < now ? ' (đã qua)' : '') : '—') + '</td></tr>';
+    }).join('');
+    html += '<div class="evmonth">Nhịp mở theo loại</div><div class="panel" style="padding:8px 10px"><div class="slots-wrap"><table class="rhythm"><thead><tr><th>Loại</th><th>Số lần</th><th>Lần gần nhất</th><th>Cách nhau TB</th><th>Dự kiến lần tới</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
+      '<p class="muted small" style="margin:8px 4px 2px">Dự kiến chỉ là ước tính theo khoảng cách trung bình giữa các lần mở trước.</p></div>';
+    var month = '';
+    list.forEach(function (e) {
+      var m = e.start ? 'Tháng ' + (e.start.getMonth() + 1) + '/' + e.start.getFullYear() : 'Chưa rõ ngày';
+      if (m !== month) { html += (month ? '</div>' : '') + '<div class="evmonth">' + m + '</div><div class="evtop">'; month = m; }
+      html += evCard(e, byName, now);
+    });
+    if (month) html += '</div>'; else html += '<div class="empty"><b>Không có sự kiện nào khớp</b>Bạn thử bỏ bớt bộ lọc nhé.</div>';
+    $('evBody').innerHTML = html;
+  }
+  $('evBody').addEventListener('click', function (e) { var b = e.target.closest('[data-ev]'); if (b) { EV.type = b.getAttribute('data-ev'); renderEvents(); } });
+  var evTimer;
+  $('evBody').addEventListener('input', function (e) {
+    if (e.target.id !== 'evQ') return;
+    clearTimeout(evTimer); evTimer = setTimeout(function () { EV.q = e.target.value; renderEvents(); var i = $('evQ'); i.focus(); i.setSelectionRange(i.value.length, i.value.length); }, 250);
   });
 
   /* ---------- Trang Bộ đã lưu ---------- */
