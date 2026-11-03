@@ -7,11 +7,11 @@
 # Ngày dạng dd/mm/yyyy. Cột nào chưa biết thì để trống (vẫn giữ dấu |).
 # Sự kiện mở lại (comeback): thêm một dòng mới, GIỮ Y HỆT tên cũ.
 # Sự kiện được đưa vào Linh Cảm Không Gian: ghi ở cột Cách chơi của dòng Linh Cảm Không Gian, ví dụ "Gồm: Tên sự kiện A, Tên sự kiện B".
-# Sự kiện 100 ngày: nếu để trống ngày đóng, web tự tính ngày mở + 100 ngày. Khi fanpage báo mở ở Vô Cùng Quý Giá, thêm một dòng loại "Vô Cùng Quý Giá".
+# Sự kiện 100 ngày (dòng Ánh Sáng Lấp Lánh Kỳ N): nếu để trống ngày đóng, web tự tính ngày mở + 100 ngày. Khi fanpage báo mở ở Vô Cùng Quý Giá, thêm một dòng loại "Vô Cùng Quý Giá" GIỮ Y tên kỳ đó (mở vĩnh viễn, không tính comeback).
 # Không ghi: Lầu, Shop Vạn Năng, Mở Bán Shop Thần Bí, cập nhật chặng mới.
 # Dòng bắt đầu bằng # là ghi chú, web bỏ qua.
 
-Ánh Sáng Lấp Lánh Kỳ 4 | Sự kiện 100 ngày |  |  | Hương Hoa Thức Giấc | Vượt ải mỗi ngày để tích 7500 Lụa Ánh Sáng đổi trang phục. Mỗi ngày có 5 lượt miễn phí, lượt thêm tốn 30 Tim, sự kiện kéo dài 100 ngày. | Kỳ 3 - 11.6.0 | https://www.facebook.com/1751643037078949 | Ra mắt
+Ánh Sáng Lấp Lánh Kỳ 4 | Vô Cùng Quý Giá |  |  | Hương Hoa Thức Giấc | Ánh Sáng Lấp Lánh Kỳ 4 mở ở Vô Cùng Quý Giá (bản chưa chế màu, miễn phí): vào Thành Tựu > Vô Cùng Quý Giá > Ánh Sáng Lấp Lánh, vượt ải tích 7500 Lụa Ánh Sáng đổi trang phục. Mỗi ngày 5 lượt miễn phí, lượt thêm tốn 30 Tim. | Kỳ 3 - 11.6.0 | https://www.facebook.com/1751643037078949 | Ra mắt
 Đăng Nhập Nhận Quà - Halloween | Event ngày lễ | 30/10/2026 | 05/11/2026 | Hồn Ma Lang Thang, Yêu Quái Đáng Yêu | Đăng nhập trong thời gian sự kiện để nhận quà. |  | https://www.facebook.com/1779128387663747
 Đôi Cánh Thần Kỳ | Khác | 30/10/2026 | 08/11/2026 | Đôi Cánh U Mộng | Vượt các ải theo yêu cầu để thu thập 58 Lông Đêm U Mộng và nguyên liệu, rồi chế tạo trang phục. Sự kiện miễn phí. | Kỳ 9 - 11.6.0 | https://www.facebook.com/1777422497834336
 Tiếng Én Mùa Xuân | Khác | 29/10/2026 | 06/11/2026 | Tiếng Én Mùa Xuân | Hoàn thành từng phần trang phục để nhận thưởng theo 3 giai đoạn gồm Tim, Vàng, Thẻ May Mắn, Thẻ Sao. |  | https://www.facebook.com/1776988197877766
@@ -51,7 +51,7 @@ Hương Bánh Lan Tỏa | Tiêu tim | 05/07/2026 | 14/07/2026 | Lò Bánh Kỳ D
 Tiệc Trà Gió Xuân | Khác | 03/07/2026 | 09/07/2026 | Cuộc Hẹn Nắng Xuân | Vượt ải trên bản đồ, gồm ải phối đồ và trả lời câu hỏi, để nhận Bưu Thiếp Ngày Xuân. Có lượt miễn phí mỗi ngày, lượt thêm 5 Kim Cương. | Kỳ 5 - 11.3.0 | https://www.facebook.com/1589817423261512
 Quyển Sách Mơ Ước | Big Event | 24/06/2026 | 03/07/2026 |  | Tốn 30 Kim Cương cho mỗi lượt tìm, tích đủ lượt theo mốc để mở khóa trang phục. Mỗi ngày có lượt miễn phí. | Kỳ 4 - 11.3.0 | https://www.facebook.com/1579774727599115 | Comeback
 Thuyền Hoa Dạo Biển | 6 Bước Chọn | 18/06/2026 | 27/06/2026 | Ánh Đèn Khuya, Thuyền Mộng Phiêu Du | Sự kiện 6 bước chọn, phối theo chủ đề để tích Hoa Mộng Rực Rỡ đổi trang phục. Cả 2 bộ tốn khoảng 3330 Kim Cương vào ngày cuối. | Kỳ 2 - 11.3.0 | https://www.facebook.com/1566271152282806
-Theo Đuổi Ánh Sáng | Khác | 17/06/2026 | 28/09/2026 | Hoa Ngọc Say Giấc | Làm nhiệm vụ tuần, sưu tầm và đặc biệt để nhận Lụa Hoàn Mỹ đổi các món. Đủ 3500 Lụa nhận thêm Khung Tinh Hoa Phản Chiếu. | Kỳ 3 - 11.3.0 | https://www.facebook.com/1567980948778493
+Ánh Sáng Lấp Lánh Kỳ 4 | Sự kiện 100 ngày | 17/06/2026 | 28/09/2026 | Hoa Ngọc Say Giấc | Trong game tên "Theo Đuổi Ánh Sáng". Làm nhiệm vụ tuần, sưu tầm và đặc biệt để nhận Lụa Hoàn Mỹ đổi các món. Đủ 3500 Lụa nhận thêm Khung Tinh Hoa Phản Chiếu. | Kỳ 3 - 11.3.0 | https://www.facebook.com/1567980948778493
 Hồi Ức Khó Quên | Khác | 05/06/2026 | 11/06/2026 | Ngày Chờ Mong, Ước Hẹn Mùa Hoa | Thi đấu phối đồ 1vs1 để tích Nhẫn Ước Nguyện, mỗi lượt tốn 10 Kim Cương và 4 Tim. Đạt mốc nhận trang phục. | Kỳ 6 - 11.2.0 | https://www.facebook.com/1551670633742858 | Comeback
 Ban Mai Rung Động | Big Event | 19/05/2026 | 28/05/2026 |  | Tốn 30 Kim Cương cho mỗi lượt tìm, tích đủ lượt theo mốc để mở khóa trang phục. Mỗi ngày có lượt miễn phí. | Kỳ 4 - 11.2.0 | https://www.facebook.com/1526340636275858 | Comeback
 Hành Trình Thời Không | Gacha | 29/04/2026 | 05/05/2026 | Vang Khúc Hư Không, Hương Vị Tự Nhiên, Tín Hiệu Không Ngừng | Dùng 30 Kim Cương mua Khóa Bảo Mật để rút, sau 15 lần cứ 3 lần có món mới. Cả 3 bộ tốn khoảng 2.000-2.500 Kim Cương. | Kỳ 11 - 11.1.0 | https://www.facebook.com/1495474269362495
