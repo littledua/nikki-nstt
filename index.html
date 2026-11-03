@@ -1054,7 +1054,7 @@ function decodeClothesDate(text) {
      Dữ liệu: file su-kien.txt (mỗi dòng: Tên | Loại | Ngày mở | Ngày đóng | Bộ đồ | Cách chơi | Bản tin | Link). Dòng # là ghi chú.
      Comeback tính theo đúng tên sự kiện; "nhịp theo loại" tính khoảng cách giữa các lần mở của cùng một loại. */
   var EV = { list: null, type: '', q: '' };
-  var EV_TYPES = ['Big Event', 'Linh Cảm Không Gian', 'Gacha', 'Hồn Đom Đóm', '6 Bước Chọn', 'Đóng gói', 'Tiêu tim', 'Tiêu kim cương', 'Khác'];
+  var EV_TYPES = ['Big Event', 'Linh Cảm Không Gian', 'Sự kiện 100 ngày', 'Vô Cùng Quý Giá', 'Gacha', 'Hồn Đom Đóm', '6 Bước Chọn', 'Đóng gói', 'Tiêu tim', 'Tiêu kim cương', 'Khác'];
   var DAY = 86400000;
   function evDate(t) { var m = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec((t || '').trim()); return m ? new Date(+m[3], +m[2] - 1, +m[1]) : null; }
   function evFmt(d) { return d ? d.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '?'; }
@@ -1062,7 +1062,10 @@ function decodeClothesDate(text) {
   function parseEvents(txt) {
     return txt.split(/\r?\n/).filter(function (l) { return l.trim() && l.trim()[0] !== '#'; }).map(function (l) {
       var c = l.split('|').map(function (x) { return x.trim(); });
-      return { name: c[0] || '', type: c[1] || 'Khác', start: evDate(c[2]), end: evDate(c[3]), sets: c[4] || '', how: c[5] || '', news: c[6] || '', link: c[7] || '' };
+      var e = { name: c[0] || '', type: c[1] || 'Khác', start: evDate(c[2]), end: evDate(c[3]), sets: c[4] || '', how: c[5] || '', news: c[6] || '', link: c[7] || '' };
+      /* Sự kiện 100 ngày chưa ghi ngày đóng: tự tính ngày mở + 100 ngày (dự kiến) */
+      if (e.type === 'Sự kiện 100 ngày' && e.start && !e.end) { e.end = new Date(e.start.getTime() + 99 * DAY); e.endGuess = true; }
+      return e;
     }).filter(function (e) { return e.name; });
   }
   function loadEvents() {
@@ -1090,8 +1093,9 @@ function decodeClothesDate(text) {
       ? 'Đã mở <b>' + runs.length + ' lần</b> · cách nhau trung bình <b>' + Math.round(g.avg) + ' ngày</b>' + (g.next && g.next > now ? ' · dự kiến lần tới khoảng <b>' + evFmt(g.next) + '</b> (ước tính)' : '')
       : 'Mới mở 1 lần' + (e.start && e.start <= now ? ' · cách đây <b>' + Math.round((now - e.start) / DAY) + ' ngày</b>' : '');
     return '<article class="evcard' + (st && !st.cls ? ' now' : '') + '"><div class="meta"><span class="evtype">' + esc(e.type) + '</span>' + (st ? '<span class="evstate ' + st.cls + '">' + st.txt + '</span>' : '') + '</div>' +
-      '<div class="t">' + esc(e.name) + '</div><div class="d">' + evFmt(e.start) + ' – ' + (e.end ? evFmt(e.end) : 'chưa rõ ngày đóng') + (e.news ? ' · Bản tin ' + esc(e.news) : '') + '</div>' +
+      '<div class="t">' + esc(e.name) + '</div><div class="d">' + evFmt(e.start) + ' – ' + (e.end ? evFmt(e.end) + (e.endGuess ? ' (dự kiến)' : '') : 'chưa rõ ngày đóng') + (e.news ? ' · Bản tin ' + esc(e.news) : '') + '</div>' +
       (e.sets ? '<div class="sets"><b>Bộ đồ:</b> ' + esc(e.sets) + '</div>' : '') + (e.how ? '<div class="how">' + esc(e.how) + '</div>' : '') +
+      (e.type === 'Sự kiện 100 ngày' ? '<div class="how muted small">Đồ nhận ở đây là bản đã chế màu. Sau khi kết thúc, bản chưa chế màu sẽ mở miễn phí ở Vô Cùng Quý Giá (đợi fanpage báo ngày).</div>' : '') +
       '<div class="evcb">' + cb + '</div>' + (/^https?:\/\//.test(e.link) ? '<a href="' + esc(e.link) + '" target="_blank" rel="noopener">Xem bài đăng</a>' : '') + '</article>';
   }
   function renderEvents() {
