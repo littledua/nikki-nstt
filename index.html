@@ -249,8 +249,14 @@ select, input[type="text"], input[type="search"], input[type="number"] {
 .empty b { display: block; color: var(--ink); font-family: var(--f-display); font-size: 1.15rem; margin-bottom: 4px; }
 
 .loading { padding: 60px 0; text-align: center; color: var(--muted); }
+.gyfab { position: fixed; right: calc(16px + env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 15; width: 48px; height: 48px; border-radius: 50%; border: 0; background: var(--accent); color: var(--accent-ink); display: grid; place-items: center; cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,.18); }
+.gyfab:hover { filter: brightness(1.08); }
+.gyfab:focus-visible { outline: 3px solid var(--accent-soft); outline-offset: 2px; }
+.gydlg { width: min(480px, calc(100% - 32px)); max-height: calc(100% - 32px); border: 1px solid var(--line); border-radius: 16px; background: var(--surface); color: var(--ink); padding: 18px; }
+.gydlg::backdrop { background: rgba(20,10,20,.45); }
+.gyhead { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
 .toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); background: var(--ink); color: var(--bg); padding: 9px 16px; border-radius: 10px; font-size: .9rem; z-index: 20; max-width: calc(100% - 32px); }
-footer { margin-top: 36px; padding-top: 14px; border-top: 1px solid var(--line); font-size: .8rem; color: var(--muted); }
+footer { margin-bottom: 64px; margin-top: 36px; padding-top: 14px; border-top: 1px solid var(--line); font-size: .8rem; color: var(--muted); }
 footer a { color: inherit; }
 @media (prefers-reduced-motion: no-preference) { .alts td, .toast { animation: rise .18s ease-out; } @keyframes rise { from { opacity: .4; transform: translateY(4px); } } .toast { animation: none; } }
 </style>
@@ -265,7 +271,6 @@ footer a { color: inherit; }
       <a href="#kho-do" data-view="kho-do">Kho đồ chung</a>
       <a href="#bo-da-luu" data-view="bo-da-luu">Bộ đã lưu</a>
       <a href="#su-kien" data-view="su-kien">Lịch sự kiện</a>
-      <a href="#gop-y" data-view="gop-y">Góp ý</a>
     </nav>
     <span class="chip-status" id="wardChip">Chưa nhập tủ đồ</span>
   </header>
@@ -341,21 +346,20 @@ footer a { color: inherit; }
     <div id="savedList"></div>
   </section>
 
-  <!-- GÓP Ý -->
-  <section class="view" id="view-gop-y" hidden>
-    <h2 class="sec">Góp ý</h2>
-    <div class="panel gopy">
-      <p class="muted" style="margin-top:0">Bạn thấy web sai chỗ nào, muốn thêm gì, hay chỉ muốn nhắn vài lời thì gửi ở đây nhé. Góp ý chỉ chủ web đọc được.</p>
-      <form id="gyForm" class="evform" novalidate>
-        <label class="field wide"><span>Tên hoặc biệt danh (không bắt buộc)</span><input id="gyName" maxlength="60" autocomplete="nickname"></label>
-        <label class="field wide"><span>Nội dung góp ý *</span><textarea id="gyMsg" rows="5" maxlength="3000" required></textarea></label>
-        <input type="checkbox" id="gyBot" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">
-        <div class="wide"><button type="submit" class="btn primary" id="gyGo">Gửi góp ý</button> <span class="muted small" id="gyNote" role="status"></span></div>
-      </form>
-    </div>
-  </section>
+  <!-- GÓP Ý: nút tròn nhỏ ở góc, bấm mở khung -->
+  <button type="button" class="gyfab" id="gyOpen" aria-label="Góp ý" title="Góp ý"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 11h7M8.5 14.5h4.5"/></svg></button>
+  <dialog class="gydlg" id="gyDlg" aria-labelledby="gyTitle">
+    <div class="gyhead"><h2 class="sec" id="gyTitle" style="margin:0">Góp ý</h2><button type="button" class="btn" id="gyClose" aria-label="Đóng">✕</button></div>
+    <p class="muted" style="margin:6px 0 10px">Bạn thấy web sai chỗ nào, muốn thêm gì, hay chỉ muốn nhắn vài lời thì gửi ở đây nhé. Góp ý chỉ chủ web đọc được.</p>
+    <form id="gyForm" class="evform" novalidate style="margin:0">
+      <label class="field wide"><span>Tên hoặc biệt danh (không bắt buộc)</span><input id="gyName" maxlength="60" autocomplete="nickname"></label>
+      <label class="field wide"><span>Nội dung góp ý *</span><textarea id="gyMsg" rows="5" maxlength="3000" required></textarea></label>
+      <input type="checkbox" id="gyBot" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">
+      <div class="wide"><button type="submit" class="btn primary" id="gyGo">Gửi góp ý</button> <span class="muted small" id="gyNote" role="status"></span></div>
+    </form>
+  </dialog>
 
-  <footer>Web làm cho vui, không liên quan nhà phát hành. · <a href="#gop-y">Góp ý</a></footer>
+  <footer>Web làm cho vui, không liên quan nhà phát hành.</footer>
 </div>
 
 <script>
@@ -633,12 +637,13 @@ function decodeClothesDate(text) {
   }
 
   /* ---------- Điều hướng ---------- */
-  var VIEWS = ['phoi-do', 'tu-do', 'kho-do', 'bo-da-luu', 'su-kien', 'gop-y'];
+  var VIEWS = ['phoi-do', 'tu-do', 'kho-do', 'bo-da-luu', 'su-kien'];
   var SECTION = { 'kho-do': 'tu-do' }; /* Kho đồ dùng chung khung với Tủ đồ */
   function route() {
     var v = (location.hash || '').slice(1);
+    if (v === 'gop-y') { gyShow(); history.replaceState(null, '', location.pathname + location.search); v = ''; } /* link cũ #gop-y: mở khung góp ý */
     if (VIEWS.indexOf(v) < 0) v = 'phoi-do';
-    ['phoi-do', 'tu-do', 'bo-da-luu', 'su-kien', 'gop-y'].forEach(function (x) { $('view-' + x).hidden = x !== (SECTION[v] || v); });
+    ['phoi-do', 'tu-do', 'bo-da-luu', 'su-kien'].forEach(function (x) { $('view-' + x).hidden = x !== (SECTION[v] || v); });
     state.kho = v === 'kho-do';
     $('view-tu-do').classList.toggle('kho', state.kho);
     $('listTitle').textContent = state.kho ? 'Kho đồ chung' : 'Đồ của bạn';
@@ -653,6 +658,10 @@ function decodeClothesDate(text) {
   window.addEventListener('hashchange', route);
 
   /* Góp ý: gửi qua Web3Forms về email chủ web */
+  function gyShow() { var d = $('gyDlg'); if (!d.open) { $('gyNote').textContent = ''; d.showModal(); if (!matchMedia('(pointer: coarse)').matches) $('gyMsg').focus(); } } /* điện thoại: không tự bật bàn phím */ 
+  $('gyOpen').addEventListener('click', gyShow);
+  $('gyClose').addEventListener('click', function () { $('gyDlg').close(); });
+  $('gyDlg').addEventListener('click', function (e) { if (e.target === this) this.close(); }); /* bấm ra ngoài để đóng */
   var GOPY_KEY = 'b20d8c78-eade-4bac-a747-c321eada10ed';
   $('gyForm').addEventListener('submit', function (ev) {
     ev.preventDefault();
