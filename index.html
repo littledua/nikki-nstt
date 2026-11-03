@@ -1059,7 +1059,7 @@ function decodeClothesDate(text) {
      Dữ liệu: file su-kien.txt (mỗi dòng: Tên | Loại | Ngày mở | Ngày đóng | Bộ đồ | Cách chơi | Bản tin | Link | Lần mở). Dòng # là ghi chú.
      Comeback tính theo đúng tên sự kiện (cột 9 "Lần mở": Ra mắt / Comeback, không bắt buộc). */
   var EV = { list: null, type: '', q: '', lckg: {}, vcqg: {} };
-  var EV_TYPES = ['Big Event', 'Event ngày lễ', 'Linh Cảm Không Gian', 'Sự kiện 100 ngày', 'Vô Cùng Quý Giá', 'Gacha', 'Hồn Đom Đóm', '6 Bước Chọn', 'Đóng gói', 'Tiêu tim', 'Tiêu kim cương', 'Khác'];
+  var EV_TYPES = ['Big Event', 'Event ngày lễ', 'Linh Cảm Không Gian', 'Sự kiện 100 ngày', 'Vô Cùng Quý Giá', 'Gacha', 'Hồn Đom Đóm', '6 Bước Chọn', 'Đóng gói', 'Tiêu tim', 'Tiêu kim cương', 'Đồng Thoại Mộng Ảo', 'Event lẻ'];
   var DAY = 86400000;
   function evDate(t) { var m = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec((t || '').trim()); return m ? new Date(+m[3], +m[2] - 1, +m[1]) : null; }
   function evFmt(d) { return d ? d.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '?'; }
@@ -1067,7 +1067,7 @@ function decodeClothesDate(text) {
   function parseEvents(txt) {
     return txt.split(/\r?\n/).filter(function (l) { return l.trim() && l.trim()[0] !== '#'; }).map(function (l) {
       var c = l.split('|').map(function (x) { return x.trim(); });
-      var e = { name: c[0] || '', type: c[1] || 'Khác', start: evDate(c[2]), end: evDate(c[3]), sets: c[4] || '', how: c[5] || '', news: c[6] || '', link: c[7] || '', run: (c[8] || '').toLowerCase() };
+      var e = { name: c[0] || '', type: (!c[1] || c[1] === 'Khác') ? 'Event lẻ' : c[1], start: evDate(c[2]), end: evDate(c[3]), sets: c[4] || '', how: c[5] || '', news: c[6] || '', link: c[7] || '', run: (c[8] || '').toLowerCase() };
       /* Sự kiện 100 ngày chưa ghi ngày đóng: tự tính ngày mở + 100 ngày (dự kiến) */
       if (e.type === 'Sự kiện 100 ngày' && e.start && !e.end) { e.end = new Date(e.start.getTime() + 99 * DAY); e.endGuess = true; }
       return e;
