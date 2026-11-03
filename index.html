@@ -214,6 +214,10 @@ select, input[type="text"], input[type="search"], input[type="number"] {
 .evtop { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 12px; }
 .evbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 4px 0 14px; }
 .evbar input { flex: 1 1 220px; }
+.evform { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: 10px; margin: 6px 0 14px; }
+.evform .wide { grid-column: 1 / -1; }
+.evform input, .evform select, .evform textarea { width: 100%; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 7px 10px; font: inherit; color: inherit; }
+.evline { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .8rem; background: var(--sunk); padding: 8px 10px; border-radius: 8px; word-break: break-all; }
 .evcard { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); padding: 14px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .evcard.now { border-color: var(--own); }
 .evcard .t { font-weight: 700; font-size: 1rem; line-height: 1.35; }
@@ -1118,7 +1122,7 @@ function decodeClothesDate(text) {
       return (!EV.type || e.type === EV.type) && (!q || (e.name + ' ' + e.sets).toLowerCase().indexOf(q) >= 0);
     }).sort(function (a, b) { return (b.start || 0) - (a.start || 0); });
     var live = list.filter(function (e) { return e.type !== 'Linh Cảm Không Gian' && evState(e, now); });
-    var html = '<div class="evbar"><input type="search" id="evQ" placeholder="Tìm tên sự kiện hoặc bộ đồ…" value="' + esc(EV.q) + '" aria-label="Tìm sự kiện">' +
+    var html = evFormHtml() + '<div class="evbar"><button type="button" class="btn primary" id="evAdd">＋ Thêm sự kiện</button><input type="search" id="evQ" placeholder="Tìm tên sự kiện hoặc bộ đồ…" value="' + esc(EV.q) + '" aria-label="Tìm sự kiện">' +
       '<div class="seg" id="evType"><button type="button" data-ev="" aria-pressed="' + !EV.type + '">Tất cả</button>' +
       types.map(function (t) { return '<button type="button" data-ev="' + esc(t) + '" aria-pressed="' + (EV.type === t) + '">' + esc(t) + '</button>'; }).join('') + '</div></div>';
     if (live.length) html += '<div class="evmonth">Đang diễn ra & sắp mở</div><div class="evtop">' + live.map(function (e) { return evCard(e, byName, now); }).join('') + '</div>';
@@ -1147,6 +1151,50 @@ function decodeClothesDate(text) {
   $('evBody').addEventListener('input', function (e) {
     if (e.target.id !== 'evQ') return;
     clearTimeout(evTimer); evTimer = setTimeout(function () { EV.q = e.target.value; renderEvents(); var i = $('evQ'); i.focus(); i.setSelectionRange(i.value.length, i.value.length); }, 250);
+  });
+
+  /* ---------- Thêm sự kiện bằng tay ----------
+     Web tĩnh không tự ghi lên GitHub được: form soạn sẵn một dòng đúng mẫu, chép vào bộ nhớ và mở trang sửa su-kien.txt
+     trên GitHub để chủ web dán (Ctrl+V) rồi bấm Commit. Người khác bấm cũng không lưu được vì không có quyền sửa repo. */
+  var EV_EDIT_URL = 'https://github.com/littledua/nikki-nstt/edit/main/su-kien.txt';
+  EV.form = false; EV.line = '';
+  function evFormHtml() {
+    if (!EV.form) return '';
+    var names = {}; (EV.list || []).forEach(function (e) { names[e.name] = 1; });
+    var types = EV_TYPES.map(function (t) { return '<option>' + esc(t) + '</option>'; }).join('');
+    return '<div class="panel" id="evFormBox" style="margin-bottom:14px"><h3 class="sec" style="font-size:1.05rem">Thêm sự kiện</h3>' +
+      '<p class="muted small" style="margin:-6px 0 10px">Sự kiện mở lại (comeback) thì chọn đúng tên cũ trong danh sách gợi ý.</p>' +
+      '<div class="evform">' +
+      '<label class="field wide"><span>Tên sự kiện *</span><input id="efName" list="efNames" autocomplete="off"><datalist id="efNames">' + Object.keys(names).sort().map(function (n) { return '<option value="' + esc(n) + '">'; }).join('') + '</datalist></label>' +
+      '<label class="field"><span>Loại *</span><select id="efType">' + types + '</select></label>' +
+      '<label class="field"><span>Lần mở</span><select id="efRun"><option value="">(không rõ)</option><option>Ra mắt</option><option>Comeback</option></select></label>' +
+      '<label class="field"><span>Ngày mở</span><input type="date" id="efStart"></label>' +
+      '<label class="field"><span>Ngày đóng</span><input type="date" id="efEnd"></label>' +
+      '<label class="field wide"><span>Bộ đồ (ngăn bằng dấu phẩy)</span><input id="efSets"></label>' +
+      '<label class="field wide"><span>Cách chơi</span><textarea id="efHow" rows="2"></textarea></label>' +
+      '<label class="field"><span>Bản tin</span><input id="efNews" placeholder="Kỳ 9 - 11.6.0"></label>' +
+      '<label class="field"><span>Link bài đăng</span><input id="efLink" placeholder="https://"></label></div>' +
+      '<div class="row"><button type="button" class="btn primary" id="efGo">Chép &amp; mở GitHub</button><button type="button" class="btn ghost" id="efCancel">Đóng</button></div>' +
+      (EV.line ? '<div style="margin-top:12px"><p class="small" style="margin:0 0 6px"><b>Dòng cần dán</b> (web đã tự chép; nếu chưa được thì bôi đen dòng bên dưới để chép). Ở trang GitHub vừa mở: bấm vào một dòng trống ngay dưới phần ghi chú (các dòng có dấu #), bấm <b>Ctrl + V</b>, rồi bấm nút xanh <b>Commit changes</b>. Web cập nhật sau 1–2 phút.</p><div class="evline">' + esc(EV.line) + '</div></div>' : '') +
+      '</div>';
+  }
+  function evVal(id) { var el = $(id); return el ? String(el.value).replace(/[|\r\n]+/g, ' ').replace(/\s+/g, ' ').trim() : ''; }
+  function evDMY(v) { var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v); return m ? m[3] + '/' + m[2] + '/' + m[1] : ''; }
+  $('evBody').addEventListener('click', function (e) {
+    var id = e.target.id;
+    if (id === 'evAdd') { EV.form = !EV.form; EV.line = ''; renderEvents(); if (EV.form) $('efName').focus(); return; }
+    if (id === 'efCancel') { EV.form = false; EV.line = ''; renderEvents(); return; }
+    if (id !== 'efGo') return;
+    var name = evVal('efName');
+    if (!name) { toast('Bạn nhập tên sự kiện nhé'); $('efName').focus(); return; }
+    var cols = [name, evVal('efType'), evDMY(evVal('efStart')), evDMY(evVal('efEnd')), evVal('efSets'), evVal('efHow'), evVal('efNews'), evVal('efLink'), evVal('efRun')];
+    var line = cols.join(' | ').replace(/( \| )+$/, '');
+    var keep = {}; ['efName', 'efType', 'efRun', 'efStart', 'efEnd', 'efSets', 'efHow', 'efNews', 'efLink'].forEach(function (k) { keep[k] = $(k).value; });
+    EV.line = line;
+    try { navigator.clipboard.writeText(line).then(function () { toast('Đã chép dòng sự kiện'); }, function () { toast('Chưa chép được, bạn bôi đen dòng bên dưới để chép nhé'); }); } catch (er) {}
+    window.open(EV_EDIT_URL, '_blank', 'noopener');
+    renderEvents();
+    Object.keys(keep).forEach(function (k) { if ($(k)) $(k).value = keep[k]; });
   });
 
   /* ---------- Trang Bộ đã lưu ---------- */
