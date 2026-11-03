@@ -1051,8 +1051,8 @@ function decodeClothesDate(text) {
   });
 
   /* ---------- Trang Lịch sự kiện ----------
-     Dữ liệu: file su-kien.txt (mỗi dòng: Tên | Loại | Ngày mở | Ngày đóng | Bộ đồ | Cách chơi | Bản tin | Link). Dòng # là ghi chú.
-     Comeback tính theo đúng tên sự kiện; "nhịp theo loại" tính khoảng cách giữa các lần mở của cùng một loại. */
+     Dữ liệu: file su-kien.txt (mỗi dòng: Tên | Loại | Ngày mở | Ngày đóng | Bộ đồ | Cách chơi | Bản tin | Link | Lần mở). Dòng # là ghi chú.
+     Comeback tính theo đúng tên sự kiện (cột 9 "Lần mở": Ra mắt / Comeback, không bắt buộc). */
   var EV = { list: null, type: '', q: '' };
   var EV_TYPES = ['Big Event', 'Linh Cảm Không Gian', 'Sự kiện 100 ngày', 'Vô Cùng Quý Giá', 'Gacha', 'Hồn Đom Đóm', '6 Bước Chọn', 'Đóng gói', 'Tiêu tim', 'Tiêu kim cương', 'Khác'];
   var DAY = 86400000;
@@ -1062,7 +1062,7 @@ function decodeClothesDate(text) {
   function parseEvents(txt) {
     return txt.split(/\r?\n/).filter(function (l) { return l.trim() && l.trim()[0] !== '#'; }).map(function (l) {
       var c = l.split('|').map(function (x) { return x.trim(); });
-      var e = { name: c[0] || '', type: c[1] || 'Khác', start: evDate(c[2]), end: evDate(c[3]), sets: c[4] || '', how: c[5] || '', news: c[6] || '', link: c[7] || '' };
+      var e = { name: c[0] || '', type: c[1] || 'Khác', start: evDate(c[2]), end: evDate(c[3]), sets: c[4] || '', how: c[5] || '', news: c[6] || '', link: c[7] || '', run: (c[8] || '').toLowerCase() };
       /* Sự kiện 100 ngày chưa ghi ngày đóng: tự tính ngày mở + 100 ngày (dự kiến) */
       if (e.type === 'Sự kiện 100 ngày' && e.start && !e.end) { e.end = new Date(e.start.getTime() + 99 * DAY); e.endGuess = true; }
       return e;
@@ -1080,18 +1080,18 @@ function decodeClothesDate(text) {
     if (e.start && e.start <= now && (e.end ? e.end >= now : (now - e.start) / DAY <= 14)) return { cls: '', txt: e.end ? 'Đang diễn ra · còn ' + Math.round((e.end - now) / DAY + 1) + ' ngày' : 'Đang diễn ra' };
     return null;
   }
-  /* Thống kê comeback: các lần mở của cùng tên (hoặc cùng loại) → lần gần nhất, khoảng cách TB, dự kiến lần tới */
-  function gapStats(starts) {
-    var d = starts.filter(Boolean).sort(function (a, b) { return a - b; });
-    var gaps = []; for (var i = 1; i < d.length; i++) gaps.push((d[i] - d[i - 1]) / DAY);
-    var avg = gaps.length ? gaps.reduce(function (a, b) { return a + b; }, 0) / gaps.length : 0;
-    return { n: d.length, last: d[d.length - 1] || null, avg: avg, next: gaps.length ? new Date(d[d.length - 1].getTime() + avg * DAY) : null };
+  /* Lịch sử một sự kiện (theo đúng tên): lần ra mắt + các lần comeback.
+     Cột "Lần mở" = Comeback ở dòng sớm nhất → lần ra mắt nằm trước dữ liệu đang có. */
+  function evHistory(runs) {
+    var r = runs.slice().sort(function (a, b) { return (a.start ? a.start.getTime() : 9e15) - (b.start ? b.start.getTime() : 9e15); }); /* chưa rõ ngày xếp cuối */
+    var firstKnown = !(r[0] && r[0].run.indexOf('comeback') === 0);
+    return { first: firstKnown ? r[0].start : null, firstKnown: firstKnown, comebacks: firstKnown ? r.slice(1) : r, last: r.filter(function (x) { return x.start; }).pop() || r[r.length - 1] };
   }
   function evCard(e, byName, now) {
-    var st = evState(e, now), runs = byName[e.name] || [e], g = gapStats(runs.map(function (x) { return x.start; }));
-    var cb = runs.length > 1
-      ? 'Đã mở <b>' + runs.length + ' lần</b> · cách nhau trung bình <b>' + Math.round(g.avg) + ' ngày</b>' + (g.next && g.next > now ? ' · dự kiến lần tới khoảng <b>' + evFmt(g.next) + '</b> (ước tính)' : '')
-      : 'Mới mở 1 lần' + (e.start && e.start <= now ? ' · cách đây <b>' + Math.round((now - e.start) / DAY) + ' ngày</b>' : '');
+    var st = evState(e, now), h = evHistory(byName[e.name] || [e]);
+    var cb = h.firstKnown
+      ? 'Ra mắt <b>' + evFmt(h.first) + '</b>' + (h.comebacks.length ? ' · comeback <b>' + h.comebacks.length + ' lần</b>: ' + h.comebacks.map(function (x) { return evFmt(x.start); }).join(', ') : ' · chưa comeback lần nào')
+      : 'Ra mắt trước khoảng dữ liệu đang có · comeback: ' + h.comebacks.map(function (x) { return evFmt(x.start); }).join(', ');
     return '<article class="evcard' + (st && !st.cls ? ' now' : '') + '"><div class="meta"><span class="evtype">' + esc(e.type) + '</span>' + (st ? '<span class="evstate ' + st.cls + '">' + st.txt + '</span>' : '') + '</div>' +
       '<div class="t">' + esc(e.name) + '</div><div class="d">' + evFmt(e.start) + ' – ' + (e.end ? evFmt(e.end) + (e.endGuess ? ' (dự kiến)' : '') : 'chưa rõ ngày đóng') + (e.news ? ' · Bản tin ' + esc(e.news) : '') + '</div>' +
       (e.sets ? '<div class="sets"><b>Bộ đồ:</b> ' + esc(e.sets) + '</div>' : '') + (e.how ? '<div class="how">' + esc(e.how) + '</div>' : '') +
@@ -1112,13 +1112,17 @@ function decodeClothesDate(text) {
       '<div class="seg" id="evType"><button type="button" data-ev="" aria-pressed="' + !EV.type + '">Tất cả</button>' +
       types.map(function (t) { return '<button type="button" data-ev="' + esc(t) + '" aria-pressed="' + (EV.type === t) + '">' + esc(t) + '</button>'; }).join('') + '</div></div>';
     if (live.length) html += '<div class="evmonth">Đang diễn ra & sắp mở</div><div class="evtop">' + live.map(function (e) { return evCard(e, byName, now); }).join('') + '</div>';
-    /* Nhịp theo loại */
-    var rows = types.filter(function (t) { return !EV.type || t === EV.type; }).map(function (t) {
-      var g = gapStats(all.filter(function (e) { return e.type === t; }).map(function (e) { return e.start; }));
-      return '<tr><td><b>' + esc(t) + '</b></td><td class="num">' + g.n + '</td><td>' + evFmt(g.last) + '</td><td class="num">' + (g.avg ? Math.round(g.avg) + ' ngày' : '—') + '</td><td>' + (g.next ? evFmt(g.next) + (g.next < now ? ' (đã qua)' : '') : '—') + '</td></tr>';
+    /* Bảng comeback theo từng sự kiện (mỗi tên một dòng) */
+    var names = {}; list.forEach(function (e) { names[e.name] = 1; });
+    var hs = Object.keys(names).map(function (n) { var h = evHistory(byName[n]); h.name = n; h.type = byName[n][0].type; return h; })
+      .sort(function (a, b) { return ((b.last && b.last.start) || 0) - ((a.last && a.last.start) || 0); });
+    var rows = hs.map(function (h) {
+      var ls = h.last && h.last.start;
+      return '<tr><td><b>' + esc(h.name) + '</b></td><td>' + esc(h.type) + '</td><td>' + (h.firstKnown ? evFmt(h.first) : 'trước dữ liệu') + '</td><td>' +
+        (h.comebacks.length ? h.comebacks.map(function (x) { return evFmt(x.start); }).join('<br>') : '—') + '</td><td class="num">' + (ls && ls <= now ? Math.round((now - ls) / DAY) + ' ngày' : '—') + '</td></tr>';
     }).join('');
-    html += '<div class="evmonth">Nhịp mở theo loại</div><div class="panel" style="padding:8px 10px"><div class="slots-wrap"><table class="rhythm"><thead><tr><th>Loại</th><th>Số lần</th><th>Lần gần nhất</th><th>Cách nhau TB</th><th>Dự kiến lần tới</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
-      '<p class="muted small" style="margin:8px 4px 2px">Dự kiến chỉ là ước tính theo khoảng cách trung bình giữa các lần mở trước.</p></div>';
+    html += '<div class="evmonth">Comeback theo từng sự kiện</div><div class="panel" style="padding:8px 10px"><div class="slots-wrap"><table class="rhythm"><thead><tr><th>Sự kiện</th><th>Loại</th><th>Ra mắt</th><th>Các lần comeback</th><th>Lần gần nhất cách đây</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
+      '<p class="muted small" style="margin:8px 4px 2px">Tính theo dữ liệu đang có. Dòng ghi "Comeback" ở cột Lần mở mà không có lần trước thì ghi "trước dữ liệu".</p></div>';
     var month = '';
     list.forEach(function (e) {
       var m = e.start ? 'Tháng ' + (e.start.getMonth() + 1) + '/' + e.start.getFullYear() : 'Chưa rõ ngày';
