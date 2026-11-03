@@ -265,6 +265,7 @@ footer a { color: inherit; }
       <a href="#kho-do" data-view="kho-do">Kho đồ chung</a>
       <a href="#bo-da-luu" data-view="bo-da-luu">Bộ đã lưu</a>
       <a href="#su-kien" data-view="su-kien">Lịch sự kiện</a>
+      <a href="#gop-y" data-view="gop-y">Góp ý</a>
     </nav>
     <span class="chip-status" id="wardChip">Chưa nhập tủ đồ</span>
   </header>
@@ -340,7 +341,21 @@ footer a { color: inherit; }
     <div id="savedList"></div>
   </section>
 
-  <footer>Web làm cho vui, không liên quan nhà phát hành.</footer>
+  <!-- GÓP Ý -->
+  <section class="view" id="view-gop-y" hidden>
+    <h2 class="sec">Góp ý</h2>
+    <div class="panel gopy">
+      <p class="muted" style="margin-top:0">Bạn thấy web sai chỗ nào, muốn thêm gì, hay chỉ muốn nhắn vài lời thì gửi ở đây nhé. Góp ý chỉ chủ web đọc được.</p>
+      <form id="gyForm" class="evform" novalidate>
+        <label class="field wide"><span>Tên hoặc biệt danh (không bắt buộc)</span><input id="gyName" maxlength="60" autocomplete="nickname"></label>
+        <label class="field wide"><span>Nội dung góp ý *</span><textarea id="gyMsg" rows="5" maxlength="3000" required></textarea></label>
+        <input type="checkbox" id="gyBot" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">
+        <div class="wide"><button type="submit" class="btn primary" id="gyGo">Gửi góp ý</button> <span class="muted small" id="gyNote" role="status"></span></div>
+      </form>
+    </div>
+  </section>
+
+  <footer>Web làm cho vui, không liên quan nhà phát hành. · <a href="#gop-y">Góp ý</a></footer>
 </div>
 
 <script>
@@ -618,12 +633,12 @@ function decodeClothesDate(text) {
   }
 
   /* ---------- Điều hướng ---------- */
-  var VIEWS = ['phoi-do', 'tu-do', 'kho-do', 'bo-da-luu', 'su-kien'];
+  var VIEWS = ['phoi-do', 'tu-do', 'kho-do', 'bo-da-luu', 'su-kien', 'gop-y'];
   var SECTION = { 'kho-do': 'tu-do' }; /* Kho đồ dùng chung khung với Tủ đồ */
   function route() {
     var v = (location.hash || '').slice(1);
     if (VIEWS.indexOf(v) < 0) v = 'phoi-do';
-    ['phoi-do', 'tu-do', 'bo-da-luu', 'su-kien'].forEach(function (x) { $('view-' + x).hidden = x !== (SECTION[v] || v); });
+    ['phoi-do', 'tu-do', 'bo-da-luu', 'su-kien', 'gop-y'].forEach(function (x) { $('view-' + x).hidden = x !== (SECTION[v] || v); });
     state.kho = v === 'kho-do';
     $('view-tu-do').classList.toggle('kho', state.kho);
     $('listTitle').textContent = state.kho ? 'Kho đồ chung' : 'Đồ của bạn';
@@ -636,6 +651,26 @@ function decodeClothesDate(text) {
     if (v === 'su-kien') loadEvents();
   }
   window.addEventListener('hashchange', route);
+
+  /* Góp ý: gửi qua Web3Forms về email chủ web */
+  var GOPY_KEY = 'b20d8c78-eade-4bac-a747-c321eada10ed';
+  $('gyForm').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var msg = $('gyMsg').value.trim(), note = $('gyNote'), btn = $('gyGo');
+    if (!msg) { note.textContent = 'Bạn viết nội dung góp ý trước nhé.'; $('gyMsg').focus(); return; }
+    if ($('gyBot').checked) return;
+    if (!GOPY_KEY) { note.textContent = 'Phần góp ý chưa mở, bạn quay lại sau nhé.'; return; }
+    var name = $('gyName').value.trim();
+    btn.disabled = true; note.textContent = 'Đang gửi…';
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({ access_key: GOPY_KEY, subject: 'Góp ý web Phòng Thay Đồ' + (name ? ' – ' + name : ''), from_name: name || 'Người xem web', name: name || '(không ghi tên)', message: msg, botcheck: false })
+    }).then(function (r) { return r.json(); }).then(function (j) {
+      if (!j.success) throw new Error(j.message);
+      $('gyMsg').value = ''; note.textContent = 'Cảm ơn bạn đã góp ý!';
+    }).catch(function () { note.textContent = 'Chưa gửi được. Bạn kiểm tra mạng rồi bấm gửi lại nhé.'; })
+      .then(function () { btn.disabled = false; });
+  });
 
   var toastTimer;
   function toast(msg) {
