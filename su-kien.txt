@@ -18,7 +18,7 @@ Tiếng Én Mùa Xuân | Event lẻ | 29/10/2026 | 06/11/2026 | Tiếng Én Mùa
 Dạ Yến Cuối Cùng | Gacha | 29/10/2026 | 04/11/2026 | Yến Tiệc Đỏ | Dùng 100 Kim Cương cho mỗi lượt rút, không giới hạn lượt mỗi ngày. Trọn bộ tốn khoảng 3.300-5.000 Kim Cương. | Kỳ 8 - 11.6.0 | https://www.facebook.com/1774526911457228 | Ra mắt
 Hồn Đom Đóm - Waltz Huyền Ảo | Hồn Đom Đóm | 24/10/2026 | 26/10/2026 | Khúc Dạo Đầu, Waltz Huyền Ảo | Vào Đảo Mơ, Tìm Đá đến khi nhận Khúc Dạo Đầu, rồi chọn Sofia và Khám Phá Giấc Mơ để nhận Waltz Huyền Ảo. Tốn khoảng 900-1.200 Kim Cương. | Kỳ 7 - 11.6.0 | https://www.facebook.com/1768010708775515 | Comeback
 Đăng Nhập Nhận Quà - Ngày Phụ Nữ Việt Nam 20/10 | Event ngày lễ | 20/10/2026 | 26/10/2026 | Ý Xuân Xanh Biếc, Rau Quả Trĩu Cành, Dạo Bước Thôn Dã | Đăng nhập mỗi ngày trong thời gian sự kiện để nhận quà. |  | https://www.facebook.com/1763087339267852
-Phiên Chợ Đồng Cỏ | Đóng gói | 20/10/2026 | 28/10/2026 | | Làm nhiệm vụ để bình chọn 1 trong 5 bộ trên web sự kiện. Bộ thắng được mở bán từ 27/10 đến 28/10 qua gói 500 Kim Cương giá 100.000 VND. | Kỳ 6 - 11.6.0 | https://www.facebook.com/1762508559325730 | 
+Phiên Chợ Đồng Cỏ | Đóng gói | 20/10/2026 | 28/10/2026 |  | Làm nhiệm vụ để bình chọn 1 trong 5 bộ trên web sự kiện. Bộ thắng được mở bán từ 27/10 đến 28/10 qua gói 500 Kim Cương giá 100.000 VND. | Kỳ 6 - 11.6.0 | https://www.facebook.com/1762508559325730
 Lâu Đài Bóng Đêm | Event lẻ | 20/10/2026 | 26/10/2026 | Người Đốn Củi, Ma Cà Rồng | Thi đấu 2vs2 cùng một Cộng Sự để tích Chìa Khóa Hồi Ức, mỗi lượt tốn 24 Kim Cương. Đạt mốc sẽ nhận các món trang phục. | Kỳ 5 - 11.6.0 | https://www.facebook.com/1762031372706782 | Comeback
 Đêm Sao Rực Rỡ | Đóng gói | 17/10/2026 | 23/10/2026 | Tinh Huy Phù Mộng | Vượt ải nhận Kính Sao Sa, dùng 2 Kính cùng 24 Kim Cương cho một lượt Sưu Tầm. Mỗi ngày có 5 lượt miễn phí, đạt mốc nhận món đồ. | Kỳ 4 - 11.6.0 | https://www.facebook.com/1755325223377397
 Ghi Chép Sinh Động | Event lẻ | 15/10/2026 | 26/10/2026 | Ghi Chép Sinh Động | Hoàn thành từng phần trang phục để nhận thưởng theo 3 giai đoạn gồm Tim, Thẻ May Mắn, Thẻ Sao, Giày Pha Lê. |  | https://www.facebook.com/1753892170187369
@@ -32,18 +32,18 @@ Cổ Vực Sóc Phong | Big Event | 19/09/2026 | 02/10/2026 | Ảo Ảnh Rừng 
 Hoa Viên Mộng Mơ | Event lẻ | 18/09/2026 | 24/09/2026 | Hoa Viên Mộng Mơ | Hoàn thành từng phần trang phục để nhận thưởng theo các giai đoạn gồm Tim, Vàng. |  | https://www.facebook.com/1709623447947575
 Hồn Đom Đóm - Thuở Thơ Ấu | Hồn Đom Đóm | 14/09/2026 | 18/09/2026 | Thuở Thơ Ấu, Yến Tiệc Mừng Tuổi | Vào Đảo Mơ, Tìm Đá đến khi nhận Thuở Thơ Ấu, rồi chọn Phát Tô và Khám Phá Giấc Mơ để nhận Yến Tiệc Mừng Tuổi. Tốn khoảng 900-1.200 Kim Cương. | Kỳ 6 - 11.5.0 | https://www.facebook.com/1701702675406319
 Đăng Nhập Nhận Quà - Thanh Xuân Rực Rỡ | Event ngày lễ | 14/09/2026 | 20/09/2026 | Thanh Xuân Rộn Ràng, Hướng Đi Tương Lai, Tự Do Tưởng Tượng, Ấn Tượng Đường Sọc | Đăng nhập mỗi ngày trong thời gian sự kiện để nhận quà mùa tựu trường. |  | https://www.facebook.com/1701621638747756
-Linh Cảm Không Gian: Năm Tháng Tươi Đẹp | Linh Cảm Không Gian | 12/09/2026 | | | Mua vé 350 Kim Cương rồi Lật đồng hồ cát, mỗi lượt 30 Kim Cương, để đạt các mốc. Mốc cao nhất 350 tốn khoảng 10.350 Kim Cương. | Kỳ 5 - 11.5.0 | https://www.facebook.com/1699143312328922 | 
-Tiêu Kim Cương Nhận Giao Diện 2.0 - Chủ Đề: Trăng Sáng Trung Thu | Tiêu kim cương | 09/09/2026 | 28/09/2026 | | Tích lũy tiêu 2499 Kim Cương để nhận giao diện Trăng Sáng Trung Thu. | Kỳ 3 - 11.5.0 | https://www.facebook.com/1691495976426989 | 
+Linh Cảm Không Gian: Năm Tháng Tươi Đẹp | Linh Cảm Không Gian | 12/09/2026 |  |  | Mua vé 350 Kim Cương rồi Lật đồng hồ cát, mỗi lượt 30 Kim Cương, để đạt các mốc. Mốc cao nhất 350 tốn khoảng 10.350 Kim Cương. Gồm: Năm Tháng Tươi Đẹp | Kỳ 5 - 11.5.0 | https://www.facebook.com/1699143312328922
+Tiêu Kim Cương Nhận Giao Diện 2.0 - Chủ Đề: Trăng Sáng Trung Thu | Tiêu kim cương | 09/09/2026 | 28/09/2026 |  | Tích lũy tiêu 2499 Kim Cương để nhận giao diện Trăng Sáng Trung Thu. | Kỳ 3 - 11.5.0 | https://www.facebook.com/1691495976426989
 Hương Hoa Tâm Khúc | 6 Bước Chọn | 09/09/2026 | 15/09/2026 | Hòa Khúc Gió Hoa, Hoa Ngọc Say Giấc | Sự kiện 6 bước chọn, phối theo chủ đề để tích Hương Khúc đổi trang phục theo mốc. Ngày cuối tốn khoảng 1740 Kim Cương. | Kỳ 2 - 11.5.0 | https://www.facebook.com/1688274133415840
 Đăng Nhập Nhận Quà - Thanh Xuân Rực Rỡ | Event ngày lễ | 07/09/2026 | 13/09/2026 | Giai Điệu Đào Ngọt, Nhịp Bước Hân Hoan, Ý Hay Khéo Nghĩ | Đăng nhập mỗi ngày trong thời gian sự kiện để nhận quà mùa tựu trường, kèm 6 Thẻ Công Chúa. |  | https://www.facebook.com/1689526849957235
 Cửa Sổ Thủy Tinh | Gacha | 01/09/2026 | 07/09/2026 | Bài Ca Trái Tim | Dùng 10 Kim Cương hoặc 1 Lông Vũ để Sưu Tầm nguyên liệu, đủ số lượng theo 16 mốc sẽ nhận các món. Tốn khoảng 2000-2200 Kim Cương. | Kỳ 9 - 11.4.0 | https://www.facebook.com/1680141714229082 | Comeback
 Núi Thanh Khâu | Gacha | 29/08/2026 | 04/09/2026 | Hồ Ly Truyền Kỳ | Dùng 100 Kim Cương mua Thư Đêm Mông Lung để rút. Sau 21 lần, cứ 3 lần chắc chắn có món mới, tốn khoảng 3200-5000 Kim Cương. | Kỳ 8 - 11.4.0 | https://www.facebook.com/1672969588279628 | Ra mắt
-Kỳ Nghỉ Cuối Hè | Event ngày lễ | 21/08/2026 | 28/08/2026 | | Trang sự kiện web, chơi thả bong bóng đại dương và khám phá đáy biển. Phần thưởng gồm Avatar Giải Nhiệt Mùa Hè và quà out-game. | Kỳ 6 - 11.4.0 | https://www.facebook.com/1662947202615200 | 
+Kỳ Nghỉ Cuối Hè | Event ngày lễ | 21/08/2026 | 28/08/2026 |  | Trang sự kiện web, chơi thả bong bóng đại dương và khám phá đáy biển. Phần thưởng gồm Avatar Giải Nhiệt Mùa Hè và quà out-game. | Kỳ 6 - 11.4.0 | https://www.facebook.com/1662947202615200
 Ước Hẹn Thủy Cung | Đóng gói | 19/08/2026 | 25/08/2026 | Khoảnh Khắc Rung Động | Vượt ải nhận Hình Lưu Niệm Rung Động, dùng 2 hình cùng 24 Kim Cương cho một lượt Sưu Tầm. Mỗi ngày có 5 lượt miễn phí, đạt mốc nhận món đồ. | Kỳ 5 - 11.4.0 | https://www.facebook.com/1656280486615205
 Tâm Trí Rối Bời | Big Event | 09/08/2026 | 18/08/2026 | Ánh Sáng Ước Nguyện, Yến Tiệc Cực Lạc, Phán Quyết Ánh Trăng, Đom Đóm Rừng Đêm | Dùng 100 Kim Cương mua Chìa Linh Âm để quay 2 bộ đầu. Đạt 60 lượt mở khóa 2 bộ cuối, cả 4 bộ tốn khoảng 16.000 Kim Cương. | Kỳ 4 - 11.4.0 | https://www.facebook.com/1641525351424052 | Comeback
 Ngọc Nhụy Bày Tỏ | Event lẻ | 05/08/2026 | 14/08/2026 | Hương Sắc Trong Veo | Vượt các ải theo yêu cầu để thu thập 58 Quỳnh Hoa Tiên Đài và nguyên liệu, rồi chế tạo trang phục. Sự kiện miễn phí. | Kỳ 3 - 11.4.0 | https://www.facebook.com/1634459772130610
-Theo Dấu Bóng Hình | Big Event | 31/07/2026 | 16/08/2026 | Tình Ca Mộng Mơ, Giai Điệu Giấc Mơ, Chương Thơ Xanh Ngát, Cổ Tích Gấu Xinh, Hẹn Thề Bảo Vệ, Tâm Sự Hoa Nở, Cánh Bướm Vương Hương | Tốn 30 Kim Cương mỗi lượt quay để nhận vật phẩm ngẫu nhiên, có thể chọn bộ ưu tiên. Mỗi ngày có 1 lượt miễn phí, đạt mốc mở khóa trang phục. | Kỳ 2 - 11.4.0 | https://www.facebook.com/1627933169449937
-Linh Cảm Không Gian: Huyết Nguyệt | Linh Cảm Không Gian | 22/07/2026 | | Hoa Linh, Ảo Ảnh Ma Mị, Hiệp Sĩ Hoàng Gia, Huyết Bộc, Huyết Sắc | Mua vé 350 Kim Cương rồi cầu nguyện, mỗi lượt 30 Kim Cương, đạt mốc nhận ngẫu nhiên trang phục. Mốc 275 tốn khoảng 8100 Kim Cương. | Kỳ 9 - 11.3.0 | https://www.facebook.com/1613028910940363 | 
+Theo Dấu Bóng Hình | Big Event | 31/07/2026 | 16/08/2026 | Tình Ca Mộng Mơ, Giai Điệu Giấc Mơ, Chương Thơ Xanh Ngát, Cổ Tích Gấu Xinh, Hẹn Thề Bảo Vệ, Tâm Sự Hoa Nở, Cánh Bướm Vương Hương | Tốn 30 Kim Cương mỗi lượt quay để nhận vật phẩm ngẫu nhiên, có thể chọn bộ ưu tiên. Mỗi ngày có 1 lượt miễn phí, đạt mốc mở khóa trang phục. | Kỳ 2 - 11.4.0 | https://www.facebook.com/1627933169449937 | Ra mắt
+Linh Cảm Không Gian: Huyết Nguyệt | Linh Cảm Không Gian | 22/07/2026 |  | Hoa Linh, Ảo Ảnh Ma Mị, Hiệp Sĩ Hoàng Gia, Huyết Bộc, Huyết Sắc | Mua vé 350 Kim Cương rồi cầu nguyện, mỗi lượt 30 Kim Cương, đạt mốc nhận ngẫu nhiên trang phục. Mốc 275 tốn khoảng 8100 Kim Cương. Gồm: Huyết Nguyệt | Kỳ 9 - 11.3.0 | https://www.facebook.com/1613028910940363
 Đồng Thoại Mộng Ảo Kỳ 6 - Du Ngoạn Biển Mộng | Đồng Thoại Mộng Ảo | 15/07/2026 | 21/07/2026 | Tuần Du Biển Mộng, Ước Mộng Phiêu Du | Chọn 1 trong 2 câu chuyện, vượt ải thu thập Bình Cầu Nguyện để hoàn thành và nhận bộ tương ứng. Mỗi ngày có 1 lượt miễn phí. | Kỳ 8 - 11.3.0 | https://www.facebook.com/1602812848628636
 Bài Ca Thuần Khiết | Gacha | 09/07/2026 | 15/07/2026 | Bài Ca Thuần Khiết | Dùng 100 Kim Cương cho mỗi lượt rút, không giới hạn lượt mỗi ngày. Trọn bộ tốn khoảng 3.500-5.000 Kim Cương. | Kỳ 7 - 11.3.0 | https://www.facebook.com/1596609139249007 | Comeback
 Hương Bánh Lan Tỏa | Tiêu tim | 05/07/2026 | 14/07/2026 | Lò Bánh Kỳ Duyên | Vượt ải Thiếu Nữ hoặc Công Chúa nhận vật phẩm ngẫu nhiên để đổi các món. Trọn bộ tốn khoảng 4.400 Tim. | Kỳ 6 - 11.3.0 | https://www.facebook.com/1593496596226928
@@ -59,19 +59,19 @@ Truyền Thuyết Ngôi Sao | Event lẻ | 22/04/2026 | 28/04/2026 | Tiết Tấ
 Ký Sự Nguyệt Ảnh | Đóng gói | 01/04/2026 | 07/04/2026 | Kẻ Trộm Ánh Trăng | Vượt ải nhận Vé Mộng Hồng, dùng vé cùng 24 Kim Cương cho một lượt Sưu Tầm. Mỗi ngày có 5 lượt miễn phí, đạt mốc nhận món đồ. | Kỳ 5 - 11.1.0 | https://www.facebook.com/1458135286429727
 Phòng Sách Thần Bí - Kỳ 3 | Tiêu tim | 07/03/2026 | 16/03/2026 | Suy Tưởng Xanh Biếc | Vượt ải Thiếu Nữ hoặc Công Chúa nhận Mảnh Thần Bí để ghép ảnh và nhận lần lượt các món. Tốn khoảng 4000-4400 cho toàn sự kiện. | Kỳ 11 - 11.0.0 | https://www.facebook.com/1424660189777237
 Hành Trình Tuổi Thơ | 6 Bước Chọn | 28/02/2026 | 06/03/2026 | Du Hành Bầu Trời | Sự kiện 6 bước chọn, bình chọn món hợp chủ đề để tích Giấy Dán Máy Bay đổi trang phục. Ngày cuối tốn khoảng 1800 Kim Cương. | Kỳ 9 - 11.0.0 | https://www.facebook.com/1414870327422890
-Khởi Hội Vui Xuân | Event ngày lễ | 10/02/2026 | 24/02/2026 | | Trang sự kiện Tết trên web, tham gia các hoạt động du xuân để nhận bao lì xì và quà giới hạn. | Kỳ 6 - 11.0.0 | https://www.facebook.com/1395344782708778 | 
-Tích Lũy Tiêu Phí - Nhận Khung Avatar Mã Đáo Tân Xuân | Tiêu tim | 06/02/2026 | 24/02/2026 | | Vượt ải Thiếu Nữ hoặc Công Chúa để tiêu Tim. Đạt mốc 2688 Tim nhận khung avatar Mã Đáo Tân Xuân. | Kỳ 4 - 11.0.0 | https://www.facebook.com/1388469546729635 | 
-Vòng Xoáy Hỗn Loạn | Big Event | 06/02/2026 | 24/02/2026 | Mơ Giấc Ngàn Sao, Dạ Yến Phù Hoa, Ân Phúc Sơn Hải, Hoa Trong Biển Lửa, Gương Hoa Thời Gian | Chọn 1 trong 2 Bóng Gương để tăng tỉ lệ rơi đạo cụ của bộ đó, tích đạo cụ đạt mốc để nhận thưởng. Xong 1 bộ mở khóa bộ tiếp theo, mỗi ngày có 1 lượt miễn phí. | Kỳ 2 - 11.0.0 | https://www.facebook.com/1385854846991105
+Khởi Hội Vui Xuân | Event ngày lễ | 10/02/2026 | 24/02/2026 |  | Trang sự kiện Tết trên web, tham gia các hoạt động du xuân để nhận bao lì xì và quà giới hạn. | Kỳ 6 - 11.0.0 | https://www.facebook.com/1395344782708778
+Tích Lũy Tiêu Phí - Nhận Khung Avatar Mã Đáo Tân Xuân | Tiêu tim | 06/02/2026 | 24/02/2026 |  | Vượt ải Thiếu Nữ hoặc Công Chúa để tiêu Tim. Đạt mốc 2688 Tim nhận khung avatar Mã Đáo Tân Xuân. | Kỳ 4 - 11.0.0 | https://www.facebook.com/1388469546729635
+Vòng Xoáy Hỗn Loạn | Big Event | 06/02/2026 | 24/02/2026 | Mơ Giấc Ngàn Sao, Dạ Yến Phù Hoa, Ân Phúc Sơn Hải, Hoa Trong Biển Lửa, Gương Hoa Thời Gian | Chọn 1 trong 2 Bóng Gương để tăng tỉ lệ rơi đạo cụ của bộ đó, tích đạo cụ đạt mốc để nhận thưởng. Xong 1 bộ mở khóa bộ tiếp theo, mỗi ngày có 1 lượt miễn phí. | Kỳ 2 - 11.0.0 | https://www.facebook.com/1385854846991105 | Ra mắt
 Rubik Siêu Tân | Gacha | 13/12/2025 | 19/12/2025 | Thời Khắc Tinh Hà | Dùng 10 Kim Cương hoặc 1 Thẻ Thông Hành Ảo để Sưu Tầm chất liệu, đủ số lượng theo 21 mốc sẽ nhận các món. Tốn khoảng 2000-2200 Kim Cương. | Kỳ 6 - 10.7.0 | https://www.facebook.com/1305520801691177
 Học Viện Ma Pháp | Tiêu tim | 30/11/2025 | 09/12/2025 | Giai Điệu Mộng Mơ, Giai Điệu Băng Sương | Vượt ải Thiếu Nữ hoặc Công Chúa nhận Tập Sách Phép Thuật để đổi 2 bộ. Tốn khoảng 2600 và 8200 theo từng bộ. | Kỳ 5 - 10.7.0 | https://www.facebook.com/1288784353364822
 Huyễn Cảnh Thạch Bi | Big Event | 24/11/2025 | 03/12/2025 | Bài Ca Hải Vương, Chinh Phục Biển Sao, Giấc Mơ Đại Dương, Tuyên Ngôn Tường Vi, Tiên Suối Thánh, Mùa Xuân Dịu Êm, Du Hành Thời Gian | Tốn 30 Kim Cương mỗi lượt Hồi Tưởng để nhận vật phẩm ngẫu nhiên, có thể chọn bộ ưu tiên. Mỗi ngày có 1 lượt miễn phí, đạt mốc mở khóa trang phục. | Kỳ 4 - 10.7.0 | https://www.facebook.com/1282166560693268 | Comeback
-Bí Cảnh Nấm Ma | Big Event | 18/11/2025 | 29/11/2025 | Bóng Mộng Rừng Xanh, Gấu Nhỏ Hội Ngộ, Nấm Mộng Phiêu Du | Tốn 30 Kim Cương mỗi lượt Tìm Nấm Ma, tích Thư Gửi Mộng Lạ đạt mốc để mở khóa ngẫu nhiên bộ Cổ Tích. Đủ 3 bộ nhận thêm khung avatar Gầm Gừ. | Kỳ 3 - 10.7.0 | https://www.facebook.com/1276231894620068
+Bí Cảnh Nấm Ma | Big Event | 18/11/2025 | 29/11/2025 | Bóng Mộng Rừng Xanh, Gấu Nhỏ Hội Ngộ, Nấm Mộng Phiêu Du | Tốn 30 Kim Cương mỗi lượt Tìm Nấm Ma, tích Thư Gửi Mộng Lạ đạt mốc để mở khóa ngẫu nhiên bộ Cổ Tích. Đủ 3 bộ nhận thêm khung avatar Gầm Gừ. | Kỳ 3 - 10.7.0 | https://www.facebook.com/1276231894620068 | Ra mắt
 Hẹn Ước Đầu Đông | 6 Bước Chọn | 06/11/2025 | 12/11/2025 | Đêm Tuyết Đầu Mùa, Lời Thề Kiếm Và Băng | Sự kiện 6 bước chọn, phối theo chủ đề để tích Bách Hợp Đêm Tuyết đổi trang phục. Ngày cuối tốn khoảng 1740 Kim Cương. | Kỳ 10 - 10.6.0 | https://www.facebook.com/1258864053023519
-Lời Nguyền Ma Quái | Event ngày lễ | 24/10/2025 | 02/11/2025 | | Trang sự kiện Halloween trên web, tham gia giúp Mumu giải mã lời nguyền trong màn sương. | Kỳ 5 - 10.6.0 | https://www.facebook.com/1240350504874874 | 
+Lời Nguyền Ma Quái | Event ngày lễ | 24/10/2025 | 02/11/2025 |  | Trang sự kiện Halloween trên web, tham gia giúp Mumu giải mã lời nguyền trong màn sương. | Kỳ 5 - 10.6.0 | https://www.facebook.com/1240350504874874
 Vườn Treo Mộng Tưởng | Big Event | 29/08/2025 | 08/09/2025 | Làn Gió Hừng Đông, Mộng Tưởng Biển Hoa, Khổng Tước Uy Vũ | Tốn 30 Kim Cương mỗi lượt Tìm, đạt mốc nhận ngẫu nhiên 1 trong 3 bộ. Đủ 3 bộ nhận thêm khung avatar Đảo Mộng Cầu Vồng. | Kỳ 3 - 10.5.0 | https://www.facebook.com/1167361848840407
 Nhật Kí Thất Lạc | Tiêu tim | 29/08/2025 | 08/09/2025 | Nhà Thám Hiểm Mèo | Vượt ải Thiếu Nữ hoặc Công Chúa nhận Mảnh Bản Đồ để đổi trang phục. Cần 2220 Mảnh, khoảng 4400 Tim. | Kỳ 2 - 10.5.0 | https://www.facebook.com/1165341422375783
-Linh Cảm Không Gian: Tứ Đại Gia Tộc | Linh Cảm Không Gian | 20/08/2025 | | Rồng Mây Ảo Ảnh, Cánh Phượng Mê Ảo, Bí Ẩn Biển Sâu, Hổ Tuyết Thần Uy | Mua vé 350 Kim Cương rồi Tìm Tia Ánh Sáng, mỗi lượt 45 Kim Cương. Đạt mốc nhận ngẫu nhiên 1 trong 4 bộ, mốc 340 tốn khoảng 10.170 Kim Cương. | Kỳ 7 - 10.4.0 | https://www.facebook.com/1155488630027729 | 
-Linh Cảm Không Gian: Dòng Chảy Thời Gian | Linh Cảm Không Gian | 08/07/2025 | | Làn Gió Mát, Trăng Vĩnh Hằng, Nụ Hôn Của Hoa | Mua vé 350 Kim Cương rồi Cầu Nguyện, mỗi lượt 45 Kim Cương, thu nguyên liệu theo mốc 12, 30, 60 để mở khóa bộ Cổ Tích. Cả 4 bộ tốn khoảng 10.400-11.430 Kim Cương. | Kỳ 10 - 10.3.0 | https://www.facebook.com/1113892960853963 | 
+Linh Cảm Không Gian: Tứ Đại Gia Tộc | Linh Cảm Không Gian | 20/08/2025 |  | Rồng Mây Ảo Ảnh, Cánh Phượng Mê Ảo, Bí Ẩn Biển Sâu, Hổ Tuyết Thần Uy | Mua vé 350 Kim Cương rồi Tìm Tia Ánh Sáng, mỗi lượt 45 Kim Cương. Đạt mốc nhận ngẫu nhiên 1 trong 4 bộ, mốc 340 tốn khoảng 10.170 Kim Cương. Gồm: Chiến Đỉnh Mây | Kỳ 7 - 10.4.0 | https://www.facebook.com/1155488630027729
+Linh Cảm Không Gian: Dòng Chảy Thời Gian | Linh Cảm Không Gian | 08/07/2025 |  | Làn Gió Mát, Trăng Vĩnh Hằng, Nụ Hôn Của Hoa | Mua vé 350 Kim Cương rồi Cầu Nguyện, mỗi lượt 45 Kim Cương, thu nguyên liệu theo mốc 12, 30, 60 để mở khóa bộ Cổ Tích. Cả 4 bộ tốn khoảng 10.400-11.430 Kim Cương. Gồm: Dòng Chảy Thời Gian | Kỳ 10 - 10.3.0 | https://www.facebook.com/1113892960853963
 Khúc Hát Nhà Vườn | Tiêu tim | 04/07/2025 | 13/07/2025 |  | Vượt ải nhận Nước Ngọt Ngào, thu thập đủ để nhận bộ trang phục. Cần 2200 Nước Ngọt Ngào, khoảng 4400 Tim. | Kỳ 9 - 10.3.0 | https://www.facebook.com/1108730241370235 | Ra mắt
 Ra Khơi Tầm Bảo | Event lẻ | 01/07/2025 | 07/07/2025 |  | Sự kiện bản đồ: vượt 5 ải (3 ải phối đồ) để nhận Vàng Thần Bí. | Kỳ 8 - 10.3.0 | https://www.facebook.com/1105344595042133 | Ra mắt
 Hồn Đom Đóm - Kho Báu Chân Thành | Hồn Đom Đóm | 25/06/2025 | 29/06/2025 | Cầu Nguyện Đầu Đông, Kho Báu Chân Thành | Vào Đảo Mơ, Tìm Đá đến khi nhận Cầu Nguyện Đầu Đông, rồi chọn Deobby và Khám Phá Giấc Mơ để nhận Kho Báu Chân Thành. Tốn 900-1200 Kim Cương, cần thêm 185 Đá Rực Rỡ và 114 Đá Ánh Sáng. | Kỳ 7 - 10.3.0 | https://www.facebook.com/1100596385516954
@@ -85,12 +85,84 @@ Truy Tìm Dấu Vết | Đóng gói | 26/05/2025 | 01/06/2025 | Truy Tìm Dấu 
 Sách Cổ | Gacha | 15/05/2025 | 21/05/2025 | Hồn Mộng Nhuộm Sương | Dùng 10 Kim Cương hoặc 1 Bút Âm Dương để Sưu Tầm nguyên liệu, đủ số lượng theo 13 mốc nhận các món. | Kỳ 4 - 10.2.0 | https://www.facebook.com/1063950982514828
 Tường Vi Ban Trưa | Big Event | 03/05/2025 | 13/05/2025 | Bài Ca Hải Âu, Tia Sáng Bình Minh, Tín Ngưỡng Bóng Đêm, Ảo Ảnh Điệu Van, Ánh Trăng Trải Dài | Tốn 30 Kim Cương mỗi lần Nghe Lời Hoa Tường Vi, nhận ngẫu nhiên Kim Cương, Tim, Vàng và bộ phận trang phục. Đạt mốc mở khóa các bộ thuộc Bộ Cổ Tích Tường Vi Rực Rỡ. | Kỳ 4 - 10.2.0 | https://www.facebook.com/1054957356747524 | Comeback
 Tìm Hoa Ủ Mật | Event lẻ | 02/05/2025 | 11/05/2025 | Lời Xuân Ngọt Ngào | Nhận bản vẽ trong giao diện sự kiện, vượt các ải công chúa chỉ định để nhận Mùa Xuân Ngọt Ngào rồi chế tạo bộ đồ. Tốn khoảng 630-900 Tim. | Kỳ 3 - 10.2.0 | https://www.facebook.com/1441214067290157 | Ra mắt
-Ân Điển Tiệc Xưa | Gacha | 24/04/2025 | 10/05/2025 |  | Dùng 30 Kim Cương hoặc 1 Chư Thần Bí Truyện cho mỗi lần Truyền Tụng, nhận ngẫu nhiên Kim Cương, Tim, Vàng và bộ phận trang phục. | Kỳ 2 - 10.2.0 | https://www.facebook.com/1046403734269553
+Ân Điển Tiệc Xưa | Big Event | 24/04/2025 | 10/05/2025 |  | Dùng 30 Kim Cương hoặc 1 Chư Thần Bí Truyện cho mỗi lần Truyền Tụng, nhận ngẫu nhiên Kim Cương, Tim, Vàng và bộ phận trang phục. | Kỳ 2 - 10.2.0 | https://www.facebook.com/1046403734269553 | Ra mắt
 Nhiệm Vụ Quỹ Đạo Thời Gian | Event lẻ | 24/04/2025 | 10/05/2025 | Hoa Lòng Đuổi Mộng | Hoàn thành đủ các nhiệm vụ chỉ định để nhận miễn phí bộ trang phục cùng Tim, Vàng, Thẻ Sao. | Kỳ 3 - 10.2.0 | https://www.facebook.com/1048252944084632
 Cài Hoa Cầu Nguyện | 6 Bước Chọn | 14/04/2025 | 20/04/2025 | Hoa Luôn Ngát Hương | Phối đồ theo chủ đề qua 6 bước chọn để tích Hương Tỏa, đạt mốc nhận trang phục. | Kỳ Cuối - 10.1.0 | https://www.facebook.com/1037433518499908
 Điền Viên Gió Lộng | Đóng gói | 04/04/2025 | 10/04/2025 | Mục Vân Mộng Châu, Khúc Nhạc Đồng Lúa | Vượt ải nhận Cối Xay Gió dùng để Sưu Tầm, mỗi lượt 24 Kim Cương. Mỗi ngày 5 lượt miễn phí. | Kỳ 5 - 10.1.0 | https://www.facebook.com/1026166036293323
 Bảo Tàng Kỳ Diệu - Kỳ 8 | Bảo Tàng Kỳ Diệu | 25/03/2025 | 31/03/2025 | Bài Thơ Thủy Bình | Vượt 5 ải (3 ải phối đồ, 2 ải câu hỏi) nhận Thủy Bình để kích hoạt Sao trong Tinh Hệ. Mỗi ải có 3 lượt miễn phí mỗi ngày. | Kỳ 4 - 10.1.0 | https://www.facebook.com/1016542240589036
 Vân Vũ Nhân Gian | Event lẻ | 16/03/2025 | 25/03/2025 | Bài Ca Mưa Rơi | Vượt ải nhận Bình Thời Tiết (Thiếu Nữ 1-3, Công Chúa 2-4) để sưu tập trang phục. | Kỳ 3 - 10.1.0 | https://www.facebook.com/1009633381279922
 Soi Chiếu Cố Nhân | Event lẻ | 12/03/2025 | 21/03/2025 | Múa Kiếm Đón Xuân, Lồng Sương Trên Không, Hương Trời Dưới Trăng | Tốn Gậy Trúc Xanh vượt ải nhận Hồng Phúc để sưu tập 3 trang phục đặc biệt và 2 nền mới. | Kỳ 2 - 10.1.0 | https://www.facebook.com/1007854798124447
-Big Event Kỷ Niệm 10 Năm - Đua Top Nhận Quà Siêu Hiếm | Big Event | 09/05/2026 | 25/05/2026 | | Đua Top 200 nhận Khung Avatar giới hạn siêu hiếm, có cơ hội nhận merchandise kỷ niệm 10 năm. | | https://www.facebook.com/1522146470028608 |
-Giờ Lành Năm Mới - Mở Lại Trang Phục Túi Phúc Ước Nguyện 2025 | Túi Phúc | 06/02/2026 | 24/02/2026 | | Mở lại các Túi Phúc 2025 để hoàn thành bộ sưu tập, cùng đợt Túi Phúc 2026. | | https://www.facebook.com/1394113462831910 | Comeback
+Big Event Kỷ Niệm 10 Năm - Đua Top Nhận Quà Siêu Hiếm | Big Event | 09/05/2026 | 25/05/2026 |  | Đua Top 200 nhận Khung Avatar giới hạn siêu hiếm, có cơ hội nhận merchandise kỷ niệm 10 năm. |  | https://www.facebook.com/1522146470028608
+Giờ Lành Năm Mới - Mở Lại Trang Phục Túi Phúc Ước Nguyện 2025 | Túi Phúc | 06/02/2026 | 24/02/2026 |  | Mở lại các Túi Phúc 2025 để hoàn thành bộ sưu tập, cùng đợt Túi Phúc 2026. |  | https://www.facebook.com/1394113462831910 | Comeback
+Ánh Sáng Kỳ Tích | Big Event | 09/05/2026 |  |  |  | Bản 11.2.0 | https://tinyurl.com/y7abj37p | Ra mắt
+Ánh Sáng Ngưng Tụ | Big Event | 20/02/2026 |  |  |  |  | https://tinyurl.com/4fry57wf | Comeback
+Biển Sao Ban Đầu - Thời Gian Hội Tụ | Big Event | 02/08/2025 |  |  |  |  | https://tinyurl.com/msz4rh8t | Comeback
+Hộp Ma Thuật | Big Event | 21/07/2025 |  |  |  | Bản 10.4.0 | https://tinyurl.com/3889pysn | Ra mắt
+Tứ Thời Họa Ngữ | Big Event | 01/02/2025 |  |  |  |  | https://tinyurl.com/5xybkuj9 | Comeback
+Ngôi Sao Dẫn Đường | Big Event | 24/01/2025 |  |  |  | Bản 10.0.0 | https://tinyurl.com/4cskemw8 | Ra mắt
+Năm Tháng Tươi Đẹp | Big Event | 04/11/2024 |  |  |  |  | https://tinyurl.com/37s9wtu4 | Comeback
+Đại Dương Chìm Đắm | Big Event | 02/11/2024 |  |  |  | Bản 9.10.0 | https://tinyurl.com/479pumbj | Ra mắt
+Cảnh Giới Phù Hoa | Big Event | 30/09/2024 |  |  |  |  | https://tinyurl.com/3j5257cv | Comeback
+Quỹ Đạo Bầu Trời | Big Event | 02/08/2024 |  |  |  |  | https://tinyurl.com/5t37hvr6 | Comeback
+Tàn Tích Thời Gian | Big Event | 26/07/2024 |  |  |  | Bản 9.8.0 | https://tinyurl.com/4499rrcb | Ra mắt
+Vùng Đất Lành | Big Event | 09/05/2024 |  |  |  |  | https://tinyurl.com/y8rs9yjh | Comeback
+Giải Mã Giấc Mơ | Big Event | 26/04/2024 |  |  |  | Bản 9.6.0 | https://tinyurl.com/2d9kzv2x | Ra mắt
+Huyết Nguyệt | Big Event | 01/04/2024 |  |  |  |  | https://tinyurl.com/mu4fcx5t | Comeback
+Tâm Trí Rối Bời | Big Event | 10/02/2024 |  |  |  |  | https://tinyurl.com/mvuvecee | Comeback
+Tứ Thời Họa Ngữ | Big Event | 26/01/2024 |  |  |  | Bản 9.4.0 | https://tinyurl.com/5xybkuj9 | Ra mắt
+Ký Ức Mộng Cảnh | Big Event | 07/01/2024 |  |  |  |  | https://tinyurl.com/mue4dsxb | Comeback
+Thế Giới Tươi Đẹp | Big Event | 31/10/2023 |  |  |  |  | https://tinyurl.com/hb3akur9 | Comeback
+Chiến Đỉnh Mây | Big Event | 19/09/2023 |  | Thanh Long, Bạch Hổ, Chu Tước, Huyền Vũ |  |  | https://tinyurl.com/579vwd7x | Comeback
+Thủy Triều Ký Ức | Big Event | 28/07/2023 |  |  |  |  | https://tinyurl.com/yyvywn35 | Comeback
+Ban Mai Rung Động | Big Event | 21/07/2023 |  |  |  | Bản 9.0.0 | https://tinyurl.com/yp87k4fa | Ra mắt
+Dòng Chảy Thời Gian | Big Event | 03/05/2023 |  |  |  |  | https://tinyurl.com/3vj7j7dy | Comeback
+Quyển Sách Mơ Ước | Big Event | 21/04/2023 |  |  |  | Bản 8.9.0 | https://tinyurl.com/mr3tm33j | Ra mắt
+Ma Quái | Big Event | 22/03/2023 |  |  |  |  | https://tinyurl.com/329s2ut8 | Comeback
+Đêm Vĩnh Hằng | Big Event | 28/01/2023 |  |  |  |  | https://tinyurl.com/zuv27ba8 | Comeback
+Ánh Sáng Ngưng Tụ | Big Event | 13/01/2023 |  |  |  | Bản 8.7.0 | https://tinyurl.com/4fry57wf | Ra mắt
+Vùng Đất Lành | Big Event | 27/10/2022 |  |  |  |  | https://tinyurl.com/y8rs9yjh | Comeback
+Biển Sao Ban Đầu - Thời Gian Hội Tụ | Big Event | 20/10/2022 |  |  |  | Bản 8.5.0 | https://tinyurl.com/msz4rh8t | Ra mắt
+Huyễn Cảnh Thạch Bi | Big Event | 02/08/2022 |  |  |  |  | https://tinyurl.com/ma7hhdy3 | Comeback
+Tường Vi Ban Trưa | Big Event | 27/07/2022 |  |  |  | Bản 8.3.0 | https://tinyurl.com/42tvedfv | Ra mắt
+Tâm Trí Rối Bời | Big Event | 27/04/2022 |  |  |  | Bản 8.1.0 | https://tinyurl.com/mvuvecee | Ra mắt
+Sơn Hải Vân | Big Event | 19/04/2022 |  |  |  |  | https://tinyurl.com/25zyv9fz | Comeback
+Cảnh Giới Phù Hoa | Big Event | 05/02/2022 |  |  |  |  | https://tinyurl.com/3j5257cv | Comeback
+Quỹ Đạo Bầu Trời | Big Event | 13/12/2021 |  |  |  |  | https://tinyurl.com/5t37hvr6 | Comeback
+Phong Lâm Hỏa Sơn | Big Event | 04/10/2021 |  |  |  |  | https://tinyurl.com/2vdxsrtn | Comeback
+Năm Tháng Tươi Đẹp | Big Event | 27/08/2021 |  |  |  |  | https://tinyurl.com/37s9wtu4 | Comeback
+Vùng Đất Lành | Big Event | 19/08/2021 |  |  |  | Bản 7.7.0 | https://tinyurl.com/y8rs9yjh | Ra mắt
+Ký Ức Mộng Cảnh | Big Event | 27/04/2021 |  |  |  |  | https://tinyurl.com/mue4dsxb | Comeback
+Huyễn Cảnh Thạch Bi | Big Event | 15/04/2021 |  |  |  | Bản 7.4.0 | https://tinyurl.com/ma7hhdy3 | Ra mắt
+Thủy Triều Ký Ức | Big Event | 08/02/2021 |  |  |  |  | https://tinyurl.com/yyvywn35 | Comeback
+Thế Giới Tươi Đẹp | Big Event | 04/12/2020 |  |  |  |  | https://tinyurl.com/hb3akur9 | Comeback
+Cảnh Giới Phù Hoa | Big Event | 21/10/2020 |  |  |  | Bản 7.0.0 | https://tinyurl.com/3j5257cv | Ra mắt
+Đêm Vĩnh Hằng | Big Event | 28/08/2020 |  |  |  |  | https://tinyurl.com/zuv27ba8 | Comeback
+Chiến Đỉnh Mây | Big Event | 09/05/2020 |  | Thanh Long, Bạch Hổ, Chu Tước, Huyền Vũ |  |  | https://tinyurl.com/579vwd7x | Comeback
+Quỹ Đạo Bầu Trời | Big Event | 29/04/2020 |  |  |  | Bản 6.7.0 | https://tinyurl.com/5t37hvr6 | Ra mắt
+Phong Lâm Hỏa Sơn | Big Event | 24/01/2020 |  |  |  |  | https://tinyurl.com/2vdxsrtn | Comeback
+Ký Ức Mộng Cảnh | Big Event | 16/01/2020 |  |  |  | Bản 6.4.0 | https://tinyurl.com/mue4dsxb | Ra mắt
+Năm Tháng Tươi Đẹp | Big Event | 12/12/2019 |  |  |  |  | https://tinyurl.com/37s9wtu4 | Comeback
+Thủy Triều Ký Ức | Big Event | 08/11/2019 |  |  |  | Bản 6.2.0 | https://tinyurl.com/yyvywn35 | Ra mắt
+Dòng Chảy Thời Gian | Big Event | 16/10/2019 |  |  |  |  | https://tinyurl.com/3vj7j7dy | Comeback
+Sơn Hải Vân | Big Event | 05/09/2019 |  |  |  |  | https://tinyurl.com/25zyv9fz | Comeback
+Thế Giới Tươi Đẹp | Big Event | 15/08/2019 |  |  |  | Bản 6.0.0 | https://tinyurl.com/hb3akur9 | Ra mắt
+Huyết Nguyệt | Big Event | 13/07/2019 |  |  |  |  | https://tinyurl.com/mu4fcx5t | Comeback
+Ma Quái | Big Event | 13/06/2019 |  |  |  |  | https://tinyurl.com/329s2ut8 | Comeback
+Bài Ca Mùa Hạ | Big Event | 07/05/2019 |  |  |  |  | https://tinyurl.com/yramwbt3 | Comeback
+Chiến Đỉnh Mây | Big Event | 12/04/2019 |  | Thanh Long, Bạch Hổ, Chu Tước, Huyền Vũ |  |  | https://tinyurl.com/579vwd7x | Comeback
+Năm Tháng Tươi Đẹp | Big Event | 03/04/2019 |  |  |  | Bản 5.6.0 | https://tinyurl.com/37s9wtu4 | Ra mắt
+Phong Lâm Hỏa Sơn | Big Event | 30/01/2019 |  |  |  |  | https://tinyurl.com/2vdxsrtn | Ra mắt
+Đêm Vĩnh Hằng | Big Event | 06/12/2018 |  |  |  |  | https://tinyurl.com/zuv27ba8 | Comeback
+Sơn Hải Vân | Big Event | 30/11/2018 |  |  |  | Bản 5.8.0 | https://tinyurl.com/25zyv9fz | Ra mắt
+Dòng Chảy Thời Gian | Big Event | 13/11/2018 |  |  |  |  | https://tinyurl.com/3vj7j7dy | Comeback
+Ma Quái | Big Event | 25/08/2018 |  |  |  |  | https://tinyurl.com/329s2ut8 | Ra mắt
+Chiến Đỉnh Mây | Big Event | 06/06/2018 |  | Thanh Long, Bạch Hổ, Chu Tước, Huyền Vũ |  |  | https://tinyurl.com/579vwd7x | Ra mắt
+Huyết Nguyệt | Big Event | 22/04/2018 |  |  |  |  | https://tinyurl.com/mu4fcx5t | Ra mắt
+Bài Ca Mùa Hạ | Big Event | 01/04/2018 |  |  |  |  | https://tinyurl.com/yramwbt3 | Comeback
+Dòng Chảy Thời Gian | Big Event | 07/02/2018 |  |  |  |  | https://tinyurl.com/3vj7j7dy | Ra mắt
+Đêm Vĩnh Hằng | Big Event | 08/12/2017 |  |  |  |  | https://tinyurl.com/zuv27ba8 | Ra mắt
+Bài Ca Mùa Hạ | Big Event | 14/07/2017 |  |  |  |  | https://tinyurl.com/yramwbt3 | Ra mắt
+Linh Cảm Không Gian: Bài Ca Mùa Hạ | Linh Cảm Không Gian |  |  |  | Tâm Nguyện Chi Môn: mua vé 350 Kim Cương, mở 5 ngày để chơi, dùng Kim Cương quay như Big Event. Gồm: Bài Ca Mùa Hạ | Bản 7.8.0
+Linh Cảm Không Gian: Đêm Vĩnh Hằng | Linh Cảm Không Gian |  |  |  | Tâm Nguyện Chi Môn: mua vé 350 Kim Cương, mở 5 ngày để chơi, dùng Kim Cương quay như Big Event. Gồm: Đêm Vĩnh Hằng | Bản 9.6.0
+Linh Cảm Không Gian: Ma Quái | Linh Cảm Không Gian |  |  |  | Tâm Nguyện Chi Môn: mua vé 350 Kim Cương, mở 5 ngày để chơi, dùng Kim Cương quay như Big Event. Gồm: Ma Quái | Bản 10.6.0
+Linh Cảm Không Gian: Phong Lâm Hỏa Sơn | Linh Cảm Không Gian |  |  |  | Tâm Nguyện Chi Môn: mua vé 350 Kim Cương, mở 5 ngày để chơi, dùng Kim Cương quay như Big Event. Gồm: Phong Lâm Hỏa Sơn | Bản 11.0.0
