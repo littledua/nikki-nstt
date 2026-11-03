@@ -1059,7 +1059,7 @@ function decodeClothesDate(text) {
      Dữ liệu: file su-kien.txt (mỗi dòng: Tên | Loại | Ngày mở | Ngày đóng | Bộ đồ | Cách chơi | Bản tin | Link | Lần mở). Dòng # là ghi chú.
      Comeback tính theo đúng tên sự kiện (cột 9 "Lần mở": Ra mắt / Comeback, không bắt buộc). */
   var EV = { list: null, type: '', q: '', lckg: {}, vcqg: {} };
-  var EV_TYPES = ['Big Event', 'Event ngày lễ', 'Linh Cảm Không Gian', 'Sự kiện 100 ngày', 'Vô Cùng Quý Giá', 'Gacha', 'Hồn Đom Đóm', '6 Bước Chọn', 'Đóng gói', 'Tiêu tim', 'Tiêu kim cương', 'Đồng Thoại Mộng Ảo', 'Event lẻ'];
+  var EV_TYPES = ['Big Event', 'Túi Phúc', 'Event ngày lễ', 'Linh Cảm Không Gian', 'Sự kiện 100 ngày', 'Vô Cùng Quý Giá', 'Gacha', 'Hồn Đom Đóm', '6 Bước Chọn', 'Đóng gói', 'Tiêu tim', 'Tiêu kim cương', 'Đồng Thoại Mộng Ảo', 'Event lẻ'];
   var DAY = 86400000;
   function evDate(t) { var m = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec((t || '').trim()); return m ? new Date(+m[3], +m[2] - 1, +m[1]) : null; }
   function evFmt(d) { return d ? d.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '?'; }
@@ -1081,6 +1081,8 @@ function decodeClothesDate(text) {
   }
   /* Linh Cảm Không Gian và Vô Cùng Quý Giá: vào là mở vĩnh viễn, không có ngày đóng, không tính comeback */
   function evPerm(e) { return e.type === 'Linh Cảm Không Gian' || e.type === 'Vô Cùng Quý Giá'; }
+  /* Túi Phúc: event nạp đi kèm Big Event Tết, không comeback */
+  function evNoCb(e) { return evPerm(e) || e.type === 'Túi Phúc'; }
   function evState(e, now) {
     if (evPerm(e)) return e.start && e.start <= now ? { cls: 'perm', txt: 'Mở vĩnh viễn' } : (e.start ? { cls: 'soon', txt: 'Sắp mở' } : null);
     if (e.start && e.start > now) return { cls: 'soon', txt: 'Sắp mở' };
@@ -1097,7 +1099,7 @@ function decodeClothesDate(text) {
   }
   function evCard(e, byName, now) {
     var st = evState(e, now), h = evHistory(byName[e.name] || [e]), lk = EV.lckg[e.name], isLc = evPerm(e), vq = EV.vcqg[e.name];
-    var cb = isLc ? 'Vào ' + esc(e.type) + ' là mở vĩnh viễn, không còn comeback.' : h.firstKnown
+    var cb = e.type === 'Túi Phúc' ? 'Event nạp, đi kèm Big Event Tết, không comeback. Nạp đủ mốc túi năm nay thì mở thêm túi của các năm trước.' : isLc ? 'Vào ' + esc(e.type) + ' là mở vĩnh viễn, không còn comeback.' : h.firstKnown
       ? 'Ra mắt <b>' + evFmt(h.first) + '</b>' + (h.comebacks.length ? ' · comeback <b>' + h.comebacks.length + ' lần</b>: ' + h.comebacks.map(function (x) { return evFmt(x.start); }).join(', ') : ' · chưa comeback lần nào')
       : 'Ra mắt trước khoảng dữ liệu đang có · comeback: ' + h.comebacks.map(function (x) { return evFmt(x.start); }).join(', ');
     if (vq && !isLc) cb += '<br><b>Bản chưa chế màu đã mở ở Vô Cùng Quý Giá</b>' + (vq.from ? ' từ <b>' + evFmt(vq.from) + '</b>' : '') + ' · miễn phí, mở vĩnh viễn';
@@ -1133,7 +1135,7 @@ function decodeClothesDate(text) {
       types.map(function (t) { return '<button type="button" data-ev="' + esc(t) + '" aria-pressed="' + (EV.type === t) + '">' + esc(t) + '</button>'; }).join('') + '</div></div>';
     if (live.length) html += '<div class="evmonth">Đang diễn ra & sắp mở</div><div class="evtop">' + live.map(function (e) { return evCard(e, byName, now); }).join('') + '</div>';
     /* Bảng comeback theo từng sự kiện (mỗi tên một dòng) */
-    var names = {}; list.forEach(function (e) { if (!evPerm(e)) names[e.name] = 1; }); /* LCKG, VCQG mở vĩnh viễn, không tính comeback */
+    var names = {}; list.forEach(function (e) { if (!evNoCb(e)) names[e.name] = 1; }); /* LCKG, VCQG mở vĩnh viễn; Túi Phúc không comeback */
     var hs = Object.keys(names).map(function (n) { var h = evHistory(byName[n]); h.name = n; h.type = byName[n][0].type; return h; })
       .sort(function (a, b) { return ((b.last && b.last.start) || 0) - ((a.last && a.last.start) || 0); });
     var rows = hs.map(function (h) {
