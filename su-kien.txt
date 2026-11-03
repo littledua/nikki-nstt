@@ -8,7 +8,7 @@
 # Sự kiện mở lại (comeback): thêm một dòng mới, GIỮ Y HỆT tên cũ.
 # Sự kiện được đưa vào Linh Cảm Không Gian: ghi ở cột Cách chơi của dòng Linh Cảm Không Gian, ví dụ "Gồm: Tên sự kiện A, Tên sự kiện B".
 # Sự kiện 100 ngày (dòng Ánh Sáng Lấp Lánh Kỳ N): nếu để trống ngày đóng, web tự tính ngày mở + 100 ngày. Khi fanpage báo mở ở Vô Cùng Quý Giá, thêm một dòng loại "Vô Cùng Quý Giá" GIỮ Y tên kỳ đó (mở vĩnh viễn, không tính comeback).
-# Không ghi: Lầu, Shop Vạn Năng, Mở Bán Shop Thần Bí, cập nhật chặng mới.
+# Không ghi: Lầu, Shop Vạn Năng, Mở Bán Shop Thần Bí, cập nhật chặng mới, event nạp Kim Cương/Webshop chỉ có gói ưu đãi (không có bộ đồ).
 # Dòng bắt đầu bằng # là ghi chú, web bỏ qua.
 
 Ánh Sáng Lấp Lánh Kỳ 4 | Vô Cùng Quý Giá |  |  | Hương Hoa Thức Giấc | Ánh Sáng Lấp Lánh Kỳ 4 mở ở Vô Cùng Quý Giá (bản chưa chế màu, miễn phí): vào Thành Tựu > Vô Cùng Quý Giá > Ánh Sáng Lấp Lánh, vượt ải tích 7500 Lụa Ánh Sáng đổi trang phục. Mỗi ngày 5 lượt miễn phí, lượt thêm tốn 30 Tim. | Kỳ 3 - 11.6.0 | https://www.facebook.com/1751643037078949 | Ra mắt
@@ -22,7 +22,6 @@ Phiên Chợ Đồng Cỏ | Đóng gói | 20/10/2026 | 28/10/2026 | | Làm nhi�
 Lâu Đài Bóng Đêm | Event lẻ | 20/10/2026 | 26/10/2026 | Người Đốn Củi, Ma Cà Rồng | Thi đấu 2vs2 cùng một Cộng Sự để tích Chìa Khóa Hồi Ức, mỗi lượt tốn 24 Kim Cương. Đạt mốc sẽ nhận các món trang phục. | Kỳ 5 - 11.6.0 | https://www.facebook.com/1762031372706782 | Comeback
 Đêm Sao Rực Rỡ | Đóng gói | 17/10/2026 | 23/10/2026 | Tinh Huy Phù Mộng | Vượt ải nhận Kính Sao Sa, dùng 2 Kính cùng 24 Kim Cương cho một lượt Sưu Tầm. Mỗi ngày có 5 lượt miễn phí, đạt mốc nhận món đồ. | Kỳ 4 - 11.6.0 | https://www.facebook.com/1755325223377397
 Ghi Chép Sinh Động | Event lẻ | 15/10/2026 | 26/10/2026 | Ghi Chép Sinh Động | Hoàn thành từng phần trang phục để nhận thưởng theo 3 giai đoạn gồm Tim, Thẻ May Mắn, Thẻ Sao, Giày Pha Lê. |  | https://www.facebook.com/1753892170187369
-Tiêu Tim Đạt Mốc - Nạp Nhận Quà Ưu Đãi | Tiêu tim | 14/10/2026 | 16/10/2026 |  | Tiêu Tim đạt các mốc để mở khóa gói ưu đãi từng giai đoạn, rồi mua gói tương ứng trên Webshop. |  | https://www.facebook.com/1753040080272578
 Thanh Khê Hữu Linh | Gacha | 07/10/2026 | 13/10/2026 | Nguồn Mộng Hoa Trôi | Dùng 10 Kim Cương hoặc 1 Mộng Nguyên để Sưu Tầm nguyên liệu, đủ số lượng theo 16 mốc sẽ nhận các món. Tốn khoảng 2000-2300 Kim Cương. | Kỳ 11 - 11.5.0 | https://www.facebook.com/1738378558405397 | Ra mắt
 Kỵ Sĩ Cao Ngạo | Event lẻ | 06/10/2026 | 12/10/2026 | Kỵ Sĩ Cao Ngạo | Hoàn thành từng phần trang phục để nhận thưởng theo 3 giai đoạn gồm Tim, Vàng, Kim Cương, Thẻ Sao. |  | https://www.facebook.com/1738734805036439
 Vùng Đất Lành | Big Event | 01/10/2026 | 07/10/2026 | Vườn Hoa Ngào Ngạt, Nhảy Múa Lắc Lư, Ánh Mắt Khát Vọng | Tốn 30 Kim Cương cho mỗi lượt tìm, tích đủ lượt theo mốc để mở khóa trang phục. Mỗi ngày có lượt miễn phí. | Kỳ 9 - 11.5.0 | https://www.facebook.com/1730250849218168 | Comeback
