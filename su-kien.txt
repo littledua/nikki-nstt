@@ -221,12 +221,12 @@ Biển Sao | Event lẻ | 17/04/2020 | 23/04/2020 | Vĩ Hỏa Hồ, Phòng Nhậ
 Bánh Ngọt Mộng Mơ | Event lẻ | 16/03/2019 | 22/03/2019 |  |  |  | https://www.facebook.com/2178937472357421 | Ra mắt
 Bài Ca Thuần Khiết | Gacha | 13/01/2019 | 19/01/2019 |  |  |  | https://www.facebook.com/2247014955564722 | Ra mắt | 2247014955564722.webp
 Báu Vật Sa Mạc | Gacha | 21/09/2019 | 27/09/2019 | Chuông Gió |  |  | https://www.facebook.com/2298053373779163 | Ra mắt
-Bí Cảnh Rừng Tiên | Gacha | 28/06/2020 | 04/07/2020 |  |  |  | https://www.facebook.com/2532592343658597 | Ra mắt
+Bí Cảnh Rừng Tiên | Gacha | 28/06/2020 | 04/07/2020 |  |  |  | https://www.facebook.com/2669910999941780 | Ra mắt
 Cửa Sổ Thủy Tinh | Gacha | 14/12/2024 | 20/12/2024 |  |  |  | https://www.facebook.com/1120319806126189 | Ra mắt
 Giáng Sinh An Lành | Gacha | 20/12/2021 | 26/12/2021 |  |  |  | https://www.facebook.com/2933947543523073 | Ra mắt
 Gấm Hoa | Gacha | 17/11/2022 | 23/11/2022 |  |  |  | https://www.facebook.com/671871774304330 | Ra mắt
 Hồn Đom Đóm - Chim Hót Ban Mai | Hồn Đom Đóm | 16/05/2020 | 20/05/2020 | Minh Thủy Diên |  |  | https://www.facebook.com/2500332886884543 | Ra mắt
-Hồn Đom Đóm - Hành Lang Ký Ức | Hồn Đom Đóm | 10/10/2020 | 12/10/2020 |  |  |  | https://www.facebook.com/2618793638371800 | Ra mắt
+Hồn Đom Đóm - Hành Lang Ký Ức | Hồn Đom Đóm | 10/10/2020 | 12/10/2020 |  |  |  | https://www.facebook.com/2766630150269864 | Ra mắt
 Khắc Ghi Mộng Tưởng | Event lẻ | 14/05/2019 | 20/05/2019 |  |  |  | https://www.facebook.com/2215876025330232
 Lâu Đài Bóng Đêm | Event lẻ | 11/10/2018 | 17/10/2018 |  |  |  | https://www.facebook.com/2185445018388383 |  | 2185445018388383.webp
 Nhạc Hội Thiên Hà | Event lẻ | 03/07/2019 | 09/07/2019 |  |  |  | https://www.facebook.com/2247043925546775 | Ra mắt
@@ -234,7 +234,7 @@ Thành Hera | Event lẻ | 31/08/2023 | 06/09/2023 |  |  |  | https://www.facebo
 Thám Hiểm Nấm Phép | Event lẻ | 12/12/2022 | 18/12/2022 |  |  |  | https://www.facebook.com/688953142596193 | Ra mắt
 Tháng Năm Kỳ Diệu | Gacha | 20/09/2021 | 26/09/2021 |  |  |  | https://www.facebook.com/2869876286596866 | Ra mắt
 Tình Ca Mộng Mơ | Gacha | 24/08/2022 | 30/08/2022 |  |  |  | https://www.facebook.com/611347790356729 | Ra mắt
-Đêm Kinh Hoàng | Gacha | 29/02/2020 | 06/03/2020 | Ám Ảnh Màn Đêm |  |  | https://www.facebook.com/2436621359922363 | Ra mắt
+Đêm Kinh Hoàng | Gacha | 29/02/2020 | 06/03/2020 | Ám Ảnh Màn Đêm |  |  | https://www.facebook.com/2568229183443296 | Ra mắt
 Ảo Cảnh Lưu Ly | Event lẻ | 20/10/2023 | 30/10/2023 |  |  |  | https://www.facebook.com/864621651696007 | Ra mắt
 Nụ Hôn Chim Lửa | Gacha | 04/04/2023 | 10/04/2023 | | | | https://www.facebook.com/761436202014553 | Comeback
 Sự Trở Lại Của Nữ Hoàng Đêm | Event lẻ | 08/07/2016 |  | Nữ Hoàng Đêm, Mong Manh, Lộc Linh |  |  | https://www.facebook.com/1717074625225427 | Comeback
@@ -321,3 +321,36 @@ Vườn Hoa Mộng Cảnh | Event lẻ | 09/12/2019 | 18/12/2019 |  | Khám phá
 Buổi Diễn Đêm Noel | Event ngày lễ | 22/12/2019 | 28/12/2019 |  | Trang trí rối tuần lộc cho buổi diễn. |  | https://www.facebook.com/2505119719754243 | Ra mắt | 2505119719754243.webp
 Biển Sao | Event lẻ | 23/12/2019 | 29/12/2019 |  | Mở lại các bộ Biển Sao kỳ trước. |  | https://www.facebook.com/2505332709732944 | Comeback | 2505332709732944.webp
 Bốn Mùa Âm Vang | Event lẻ | 01/01/2020 | 07/01/2020 |  |  |  | https://www.facebook.com/2513296965603185 | Ra mắt | 2513296965603185.webp
+Truyện Của Mặt Trời | Event lẻ | 16/01/2020 | 25/01/2020 | Tiệc Trà Giữa Mây |  |  | https://www.facebook.com/2531486623784219 | Ra mắt
+Ánh Sao Ảo Mộng | Event lẻ | 29/01/2020 | 04/02/2020 | Tinh Linh Giấc Mơ, Ngân Hà |  |  | https://www.facebook.com/2540983726167842 | Ra mắt
+Ước Nguyện Sao Băng | Event lẻ | 11/02/2020 | 17/02/2020 | Cầu Nguyện Thiếu Nữ |  |  | https://www.facebook.com/2552989301633951 | Ra mắt
+Hoa Mặt Trời | Event lẻ | 29/02/2020 | 13/03/2020 | Thiếu Nữ Mặt Trời |  |  | https://www.facebook.com/2568233033442911 | Ra mắt
+Truyền Thuyết Mèo Đen | Event lẻ | 10/03/2020 | 16/03/2020 |  | Giúp Mumu tìm cô phù thủy mèo đen. |  | https://www.facebook.com/2575323282733886 | Ra mắt
+Biển Mây Ước Vọng | Event lẻ | 20/03/2020 | 26/03/2020 | Khúc Nhạc Phồn Hoa, Biển Mây Cổ Tích |  |  | https://www.facebook.com/2584409525158595 | Ra mắt
+Bài Ca Ánh Trăng | Event lẻ | 30/03/2020 | 05/04/2020 |  |  |  | https://www.facebook.com/2593257334273814 | Ra mắt
+Diều Yêu Thương | Event lẻ | 02/04/2020 | 14/04/2020 | Diều Ước Nguyện |  |  | https://www.facebook.com/2594131104186437 | Ra mắt
+Nạp Đạt Mốc 650 Kim Cương | Event lẻ | 09/04/2020 | 18/04/2020 | Truyện Rồng Xanh | Nạp đạt mốc 650 Kim Cương nhận ngay bộ. |  | https://www.facebook.com/2602459846686896 | Ra mắt |  | Nạp
+Cỏ Xanh Đưa Hương | Event lẻ | 09/04/2020 | 15/04/2020 | Đom Đóm Mùa Hè, Trời Trong Mưa Ấm |  |  | https://www.facebook.com/2602418643357683 | Ra mắt
+Cổ Tích Ban Trưa | Event lẻ | 19/04/2020 | 25/04/2020 | Tiểu Thư Beverly |  |  | https://www.facebook.com/2610268982572649 | Ra mắt
+Túi Phúc 2020 | Túi Phúc | 29/04/2020 | 15/05/2020 | Lạc Vũ, Mộng Cảnh Bạch Vũ, Hồng Đào, Thơ Tuyết Cành Thông, Giấc Mộng Kỳ Lân | Đủ 5 bộ được chọn mở Túi Phúc năm trước. |  | https://www.facebook.com/2619043885028492 | Ra mắt
+Bậc Thang Linh Cảm | Event lẻ | 02/05/2020 | 08/05/2020 | Khuynh Ca |  |  | https://www.facebook.com/2623261547940059 | Ra mắt
+Giao Hưởng Xuân Hè - Bốn Mùa Âm Vang Kỳ 2 | Event lẻ | 19/05/2020 | 25/05/2020 | Cảnh Xuân Rộn Ràng |  |  | https://www.facebook.com/2638825633050317 | Ra mắt
+Tích Lũy Tiêu Vàng | Event lẻ | 22/05/2020 | 28/05/2020 | Mua Mua Mua | Tiêu Vàng đạt các mốc để nhận vật phẩm ghép bộ. |  | https://www.facebook.com/2641227006143513 | Ra mắt
+Nhịp Điệu Hoang Mạc | Event lẻ | 13/06/2020 | 21/06/2020 |  |  |  | https://www.facebook.com/2658170884449125 | Ra mắt
+Tiêu 999 Kim Cương | Tiêu kim cương | 18/06/2020 | 24/06/2020 | Xíu Mại Lá Sen | Dùng 999 Kim Cương nhận trọn bộ. |  | https://www.facebook.com/2660786397520907 | Ra mắt
+Điều Tra Phòng Thí Nghiệm Nguy Hiểm | Event lẻ | 10/07/2020 | 16/07/2020 |  |  |  | https://www.facebook.com/2677893552476858 | Ra mắt
+Lễ Bội Thu Verin | Event lẻ | 23/07/2020 | 01/08/2020 |  |  |  | https://www.facebook.com/2693421217590758 | Ra mắt
+Gặp Gỡ Biển Sâu | Event lẻ | 21/08/2020 | 27/08/2020 | Lilith |  |  | https://www.facebook.com/2720330648233148 | Ra mắt
+Dệt Vận Mệnh | Event lẻ | 04/09/2020 | 10/09/2020 | Bồ Câu - Phán Xét Đêm Trăng |  |  | https://www.facebook.com/2733513730248173 | Ra mắt
+Mộng Cổ Tích | Event lẻ | 18/09/2020 | 24/09/2020 | Vấn Vương, Ma Thuật Tình Yêu |  |  | https://www.facebook.com/2747896882143191 | Comeback
+Nhật Ký Dạo Chơi | Gacha | 30/09/2020 | 06/10/2020 | Đảo Dừa Ngập Nắng, Thám Hiểm Sông Băng |  |  | https://www.facebook.com/2758175104448702 | Ra mắt
+Trung Thu - Nguyệt Quế Trĩu Cành | Event ngày lễ | 30/09/2020 | 06/10/2020 | Nguyệt Quế Trĩu Cành |  |  | https://www.facebook.com/2758980251034854 | Ra mắt
+Bảo Tàng Kỳ Diệu | Bảo Tàng Kỳ Diệu | 12/10/2020 | 18/10/2020 | Cán Cân Vàng, Mộng Du Ký |  |  | https://www.facebook.com/2768149296784616 | Comeback
+Sương Mù Giăng Kín | Event lẻ | 22/10/2020 | 31/10/2020 |  | Vượt ải Thiếu Nữ/Công Chúa lấy Gỗ Lụa. |  | https://www.facebook.com/2781000055499540 | Ra mắt
+Bữa Tiệc Thần Bí | Event lẻ | 17/11/2020 | 28/11/2020 |  |  |  | https://www.facebook.com/2803051976627681 | Ra mắt
+Ngôi Sao Giao Hưởng | Event lẻ | 27/11/2020 | 07/12/2020 | Ngôi Sao Giao Hưởng | Nạp từ mốc 500 Kim Cương nhận bộ. |  | https://www.facebook.com/2814198295513049 | Ra mắt |  | Nạp
+Phe Chiến Kỳ 7 - Mưu Kế Trắng Đen | Event lẻ | 08/12/2020 | 18/12/2020 |  |  |  | https://www.facebook.com/2820159588250253 | Ra mắt
+Gặp Gỡ Susu | Event lẻ | 16/12/2020 | 25/12/2020 | Sương Núi | Tìm Susu giúp Mumu để nhận bộ. |  | https://www.facebook.com/2825727031026842 | Ra mắt
+Điều Ước Giao Thừa | Event ngày lễ | 22/12/2020 | 28/12/2020 | Búp Bê Nhỏ | Bình chọn theo chủ đề, chọn nhân vật điểm cao hơn. |  | https://www.facebook.com/2831272840472261 | Ra mắt
+Đại Tiệc Quán Trăng Non | Event lẻ | 24/12/2020 | 12/01/2021 |  | Giúp Mumu truy lùng tên trộm Bánh Hoa Mai. |  | https://www.facebook.com/2833853003547578 | Ra mắt
+Mộng Khúc Giao Thoa | Event lẻ | 01/01/2021 | 07/01/2021 |  |  |  | https://www.facebook.com/2839824342950444 | Ra mắt
