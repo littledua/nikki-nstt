@@ -53,19 +53,31 @@ button { cursor: pointer; }
 .num { font-variant-numeric: tabular-nums; }
 
 /* Thanh trên cùng */
-.top {
-  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg);
-  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; padding-block: 14px 12px; border-bottom: 1px solid var(--line);
-}
-.brand { display: flex; align-items: baseline; gap: 10px; margin-right: auto; }
-.brand h1 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: 1.45rem; letter-spacing: -0.01em; }
-.brand h1 em { color: var(--accent); font-style: italic; font-weight: 500; }
-.brand small { color: var(--muted); font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; }
-nav.tabs { display: flex; gap: 4px; background: var(--sunk); padding: 4px; border-radius: 999px; }
-nav.tabs a { text-decoration: none; color: var(--muted); padding: 6px 14px; border-radius: 999px; font-weight: 500; font-size: .92rem; white-space: nowrap; }
-nav.tabs a[aria-current="page"] { background: var(--surface); color: var(--accent); box-shadow: 0 1px 2px rgba(30,60,50,.08); }
+.top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 18px; padding-block: 18px 14px; }
+.brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.brand .mark { width: 44px; height: 44px; display: grid; place-items: center; flex: none; background: var(--accent); color: #fff; border-radius: 15px 15px 15px 5px; box-shadow: 0 5px 12px rgba(0,0,0,.12); }
+.brand h1 { margin: 0; font-family: var(--f-display); font-weight: 500; font-size: 1.3rem; line-height: 1.1; letter-spacing: -.01em; }
+.brand small { display: block; color: var(--muted); font-size: .8rem; margin-top: 3px; }
+nav.tabs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 5px; padding: 5px; background: var(--sunk); border: 1px solid var(--line); border-radius: 16px; }
+nav.tabs a { min-height: 46px; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 8px; border-radius: 12px; text-decoration: none; color: var(--muted); font-weight: 600; font-size: .9rem; text-align: center; line-height: 1.2; }
+nav.tabs a:hover { color: var(--accent); }
+nav.tabs a[aria-current="page"] { background: var(--surface); color: var(--accent); box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+/* Đầu mỗi trang */
+.phead { margin: 0 2px 18px; }
+.eyebrow { display: flex; gap: 8px; align-items: center; margin: 0; color: var(--accent); text-transform: uppercase; letter-spacing: .12em; font-size: .74rem; font-weight: 700; }
+.eyebrow svg { width: 15px; height: 15px; }
+.h1 { margin: 6px 0 6px; font-family: var(--f-display); font-weight: 500; font-size: clamp(1.75rem, 4vw, 2.4rem); letter-spacing: -.02em; line-height: 1.12; text-wrap: balance; }
+.lede { color: var(--muted); max-width: 700px; margin: 0; font-size: .92rem; }
 .chip-status { display: inline-flex; align-items: center; gap: 6px; font-size: .82rem; padding: 4px 10px; border-radius: 999px; background: var(--warn-soft); color: var(--warn); }
 .chip-status.ok { background: var(--own-soft); color: var(--own); }
+.srcnow { width: 100%; font-size: .85rem; color: var(--muted); }
+.srcnow b { color: var(--ink); font-weight: 600; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+/* Khung chờ tải */
+.skel { display: grid; gap: 12px; max-width: 760px; margin: 0 auto; }
+.skel i { display: block; height: 18px; border-radius: 8px; background: var(--sunk); }
+.skel i.b { height: 120px; border-radius: var(--r); }
+@media (prefers-reduced-motion: no-preference) { .skel i { animation: pulse 1.2s ease-in-out infinite alternate; } @keyframes pulse { to { opacity: .45; } } }
 .chip-status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
 
 /* Khung chung */
@@ -77,8 +89,12 @@ nav.tabs a[aria-current="page"] { background: var(--surface); color: var(--accen
   #view-phoi-do .grid > .stack { display: contents; }
   #mirror { order: 2; }
   #ticketPanel { order: 3; }
-  nav.tabs { flex-wrap: wrap; border-radius: 16px; }
-  .top { position: static; }
+  .top { padding-block: 12px 10px; }
+  .brand .mark { width: 40px; height: 40px; }
+  .brand h1 { font-size: 1.15rem; }
+  nav.tabs { gap: 2px; padding: 4px; border-radius: 14px; }
+  nav.tabs a { min-height: 56px; flex-direction: column; gap: 3px; padding: 6px 2px; border-radius: 10px; font-size: .74rem; }
+  nav.tabs svg { width: 18px; height: 18px; }
 }
 .panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 18px; min-width: 0; }
 .stack { display: flex; flex-direction: column; gap: 16px; }
@@ -119,7 +135,7 @@ select, input[type="text"], input[type="search"], input[type="number"] {
 .bar { position: relative; height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; }
 .bar i { position: absolute; top: 0; bottom: 0; background: var(--accent); border-radius: 3px; }
 .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-.tag { font-size: .78rem; padding: 2px 9px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); color: var(--muted); }
+.tag { font-size: .8rem; padding: 2px 9px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); color: var(--muted); }
 .tag.hot { background: var(--accent-soft); color: var(--accent); border-color: transparent; font-weight: 600; }
 
 /* Tự đặt */
@@ -137,7 +153,7 @@ select, input[type="text"], input[type="search"], input[type="number"] {
 .split { display: flex; gap: 20px; flex-wrap: wrap; }
 .split div { display: flex; flex-direction: column; }
 .split b { font-size: 1.05rem; }
-.split span { font-size: .78rem; color: var(--muted); }
+.split span { font-size: .82rem; color: var(--muted); }
 .note { font-size: .85rem; padding: 8px 12px; border-radius: 10px; background: var(--warn-soft); color: var(--warn); }
 .note.ok { background: var(--own-soft); color: var(--own); }
 .slots { width: 100%; border-collapse: collapse; margin-top: 8px; }
@@ -151,6 +167,13 @@ select, input[type="text"], input[type="search"], input[type="number"] {
 .slots tr.dropped .iname { text-decoration: line-through; }
 .slotname { color: var(--muted); font-size: .88rem; white-space: nowrap; }
 .slots td.slotname, .slots th:first-child { width: 1%; }
+@media (max-width: 480px) {
+  .slots, .slots tbody { display: block; } .slots thead { display: none; }
+  .slots tr.pick { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; border-bottom: 1px solid var(--line); }
+  .slots tr.pick td { border: 0; }
+  .slots tr.pick td.slotname { grid-column: 1 / -1; width: auto; padding: 8px 4px 0; font-size: .78rem; }
+  .slots tr.groupcap, .slots tr.alts { display: block; } .slots tr.groupcap td, .slots tr.alts td { display: block; }
+}
 @media (max-width: 480px) { .slots td { padding: 8px 4px; } .alt { grid-template-columns: minmax(0,1fr) auto; } .alt > :last-child { grid-column: 1 / -1; justify-self: end; } }
 .iname { font-weight: 500; }
 /* Hình nhỏ cạnh tên món (Phối đồ, Bộ đã lưu) */
@@ -159,7 +182,7 @@ select, input[type="text"], input[type="search"], input[type="number"] {
 .withthumb > span { min-width: 0; }
 .alt .thumb { width: 30px; height: 30px; }
 .card li .thumb { width: 28px; height: 28px; }
-.mini { font-size: .7rem; padding: 1px 7px; border-radius: 999px; margin-left: 6px; vertical-align: 1px; }
+.mini { font-size: .76rem; padding: 1px 7px; border-radius: 999px; margin-left: 6px; vertical-align: 1px; }
 .mini.tag { background: var(--accent-soft); color: var(--accent); border: 0; font-weight: 600; }
 .mini.no { background: var(--warn-soft); color: var(--warn); }
 .mini.mine { background: var(--own-soft); color: var(--own); }
@@ -227,6 +250,10 @@ select, input[type="text"], input[type="search"], input[type="number"] {
 .evq button { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); border: 0; background: none; color: var(--muted); font-size: .95rem; cursor: pointer; padding: 4px 6px; }
 .evcount { width: 100%; font-size: .85rem; color: var(--muted); }
 .evcount button { border: 0; background: none; color: var(--accent); font: inherit; text-decoration: underline; cursor: pointer; padding: 0; }
+.evcount .evscope { margin: 0 0 8px; }
+.evcount .evscope button { border: 1px solid var(--line); background: var(--surface); color: var(--ink); text-decoration: none; padding: 5px 12px; border-radius: 999px; font-size: .85rem; }
+.evcount .evscope button[aria-pressed="true"] { background: var(--fill); color: var(--fill-ink); border-color: var(--fill); font-weight: 600; }
+.evq input::-webkit-search-cancel-button { display: none; }
 .evcost { font-size: .72rem; font-weight: 700; padding: 1px 9px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink); }
 .evstate.hot { background: var(--hot-soft, #FDE4D0); color: var(--hot, #B4500F); }
 .evstate.end { background: var(--sunk); color: var(--muted); }
@@ -247,7 +274,7 @@ select, input[type="text"], input[type="search"], input[type="number"] {
 .evstate.perm { background: var(--accent-soft); color: var(--accent); }
 .evcb { font-size: .8rem; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 6px; }
 .evcb b { color: var(--ink); }
-.evcard a { color: var(--accent); font-size: .82rem; }
+.evcard a { color: var(--accent); font-size: .85rem; }
 .evmonth { font-family: var(--f-display); font-weight: 700; font-size: 1.05rem; margin: 22px 0 10px; }
 .rhythm { width: 100%; border-collapse: collapse; font-size: .88rem; }
 .rhythm th { text-align: left; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 6px 8px; border-bottom: 1px solid var(--line); }
@@ -277,71 +304,201 @@ footer a { color: inherit; }
 .themes { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 10px; }
 .themes button { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 4px 10px 4px 5px; font: inherit; font-size: .8rem; cursor: pointer; }
 .themes button[aria-checked="true"] { border-color: var(--fill); background: var(--accent-soft); font-weight: 600; }
+.themes button[aria-checked="true"]::after { content: "✓"; color: var(--accent); font-weight: 700; }
 .themes i { display: inline-flex; }
 .themes i b { width: 14px; height: 14px; border-radius: 50%; margin-left: -4px; border: 1.5px solid var(--surface); }
 .themes i b:first-child { margin-left: 0; }
 
 @media (prefers-reduced-motion: no-preference) { .alts td, .toast { animation: rise .18s ease-out; } @keyframes rise { from { opacity: .4; transform: translateY(4px); } } .toast { animation: none; } }
+/* Điện thoại: đặt sau cùng để đè các quy tắc bên trên */
+@media (max-width: 860px) {
+  .cactions { position: sticky; bottom: 0; z-index: 4; }
+  .gyfab { bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
+}
+/* ===== Giao diện mới (theo bản mẫu) ===== */
+.panel { border-radius: 18px; box-shadow: 0 4px 18px rgba(60,45,40,.06); }
+h2.sec { font-weight: 500; }
+.sgrid { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(300px, .85fr); gap: 16px; align-items: start; }
+.maincard { padding: 0; overflow: clip; }
+.side { display: grid; gap: 14px; }
+@media (max-width: 860px) { .sgrid { grid-template-columns: minmax(0, 1fr); } }
+select { appearance: none; -webkit-appearance: none; height: 42px; padding: 0 32px 0 11px; background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23786a70' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center; text-overflow: ellipsis; }
+.formrow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; padding: 18px 18px 12px; }
+.field > span { font-size: .74rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+.stagebar { display: grid; gap: 6px; padding: 0 18px 16px; }
+.stagebar .hint { color: var(--muted); font-size: .82rem; display: inline-flex; align-items: center; gap: 6px; }
+#stagePickers .custom { padding: 0 18px 12px; }
+#stagePickers .custom + .formrow { padding-top: 0; }
+#mirror { display: flex; flex-direction: column; }
+.notice { display: flex; gap: 9px; align-items: flex-start; margin: 0 18px 16px; background: var(--warn-soft); color: var(--warn); border-radius: 12px; padding: 10px 12px; font-size: .85rem; line-height: 1.5; }
+.notice a { color: inherit; font-weight: 700; }
+.notice svg { flex: none; margin-top: 2px; }
+.look { margin: 0 18px 14px; border-radius: 16px; overflow: hidden; background: var(--accent-soft); display: grid; grid-template-columns: 150px minmax(0, 1fr); min-height: 150px; }
+.look-art { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 12px 12px 28px; background: linear-gradient(150deg, var(--sunk), var(--tag2)); align-content: center; }
+.look-art img { width: 100%; aspect-ratio: 1; object-fit: contain; background: rgba(255,255,255,.65); border-radius: 10px; }
+.look-art .cap { position: absolute; left: 10px; bottom: 8px; font-family: var(--f-display); font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.scorecopy { padding: 16px 18px; display: flex; flex-direction: column; justify-content: center; min-width: 0; }
+.scorecopy .sl { margin: 0; color: var(--muted); font-size: .74rem; text-transform: uppercase; letter-spacing: .12em; font-weight: 700; }
+.scorecopy .sv { color: var(--accent); font-family: var(--f-display); font-weight: 500; font-size: clamp(2.1rem, 6vw, 2.8rem); letter-spacing: -.02em; line-height: 1.1; margin: 4px 0; }
+.scorecopy .sn { color: var(--muted); font-size: .84rem; }
+.stag { margin-top: 10px; display: inline-flex; gap: 6px; align-items: center; width: fit-content; border-radius: 999px; padding: 5px 10px; font-size: .78rem; font-weight: 700; background: var(--own-soft); color: var(--own); }
+.stag.all { background: var(--warn-soft); color: var(--warn); }
+.mstats { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 0 18px 4px; }
+.mstats div { display: flex; flex-direction: column; }
+.mstats b { font-size: 1rem; }
+.mstats span { font-size: .8rem; color: var(--muted); }
+#mirror .check { margin: 10px 18px 6px; }
+.ihead { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 14px 18px 4px; }
+.stitle { font-family: var(--f-display); font-weight: 500; font-size: 1.25rem; margin: 0; }
+.pill { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 6px 12px; font-size: .82rem; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+.pill:hover { border-color: var(--accent); }
+.ihint { margin: 0 18px 6px; font-size: .82rem; color: var(--muted); }
+.ilist { padding: 0 18px 10px; }
+.gcap { margin: 12px 0 2px; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+.irow { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto 16px; gap: 10px; align-items: center; padding: 9px 4px; border-top: 1px solid var(--line); cursor: pointer; border-radius: 8px; }
+.irow:hover .iname { color: var(--accent); }
+.irow .thumb { width: 40px; height: 40px; border-radius: 12px 12px 12px 4px; }
+.irow .imeta { display: block; color: var(--muted); font-size: .8rem; margin-top: 2px; }
+.irow .score { font-variant-numeric: tabular-nums; font-size: .9rem; white-space: nowrap; color: var(--ink); }
+.irow .chev { color: var(--muted); transition: transform .18s; }
+.irow[aria-expanded="true"] .chev { transform: rotate(180deg); }
+.irow.dropped .iname { text-decoration: line-through; color: var(--muted); }
+.irow.empty-slot .iname { color: var(--muted); font-weight: 400; }
+.alts { margin: 2px 0 10px 50px; }
+.cactions { border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; padding: 12px 18px 14px; background: var(--surface); }
+.tact { border: 0; background: none; color: var(--accent); font-weight: 700; font-size: .9rem; display: inline-flex; align-items: center; gap: 6px; padding: 8px 0; }
+.btn.primary { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; border-radius: 11px; min-height: 40px; }
+a.btn { text-decoration: none; color: inherit; display: inline-flex; align-items: center; gap: 6px; }
+.sidecard { padding: 18px; }
+.side-title { font-family: var(--f-display); font-weight: 500; font-size: 1.3rem; margin: 6px 0 6px; }
+.meter { margin: 14px 0 8px; height: 8px; border-radius: 99px; background: var(--sunk); overflow: hidden; }
+.meter > span { display: block; height: 100%; background: var(--own); border-radius: inherit; }
+.meterline { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); font-size: .8rem; }
+.ownline { display: flex; gap: 8px; align-items: center; color: var(--muted); font-size: .85rem; margin-top: 8px; }
+#ticketPanel .ticket { border: 0; padding: 0; background: none; }
+.guide2 { padding: 18px; background: var(--tag2); border-radius: 18px; }
+.guide2 h3 { font-family: var(--f-display); font-weight: 500; font-size: 1.2rem; margin: 0 0 6px; }
+ol.steps { list-style: none; counter-reset: st; margin: 10px 0 0; padding: 0; display: grid; gap: 9px; }
+ol.steps li { counter-increment: st; position: relative; padding-left: 32px; min-height: 22px; font-size: .88rem; line-height: 1.5; }
+ol.steps li::before { content: counter(st); position: absolute; left: 0; top: 0; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 8px; background: rgba(255,255,255,.75); color: var(--accent); font-weight: 800; font-size: .78rem; }
+ol.steps code { font-size: .78rem; background: rgba(255,255,255,.7); padding: 1px 5px; border-radius: 5px; word-break: break-all; }
+/* Tủ đồ */
+.wgrid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; align-items: start; margin-bottom: 16px; }
+@media (max-width: 860px) { .wgrid { grid-template-columns: minmax(0, 1fr); } }
+.wmain { padding: 20px; }
+.wstats { display: flex; flex-wrap: wrap; gap: 9px; margin: 14px 0; }
+.wstat { border: 1px solid var(--line); background: var(--bg); border-radius: 12px; padding: 10px 14px; min-width: 120px; flex: 1 1 120px; }
+.wstat b { display: block; font-family: var(--f-display); font-weight: 500; color: var(--accent); font-size: 1.4rem; }
+.wstat span { color: var(--muted); font-size: .8rem; }
+.drop { display: flex; justify-content: space-between; align-items: center; gap: 14px; text-align: left; padding: 16px; border-width: 1.5px; }
+.drop b { font-size: .95rem; }
+.drop > span:first-child { display: grid; gap: 2px; }
+@media (max-width: 480px) { .drop { flex-direction: column; align-items: flex-start; } }
+.nox { padding: 20px; background: var(--tag2); border-radius: 18px; }
+.noxmark { width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; background: rgba(255,255,255,.6); color: var(--accent); }
+.nox h2 { margin: 10px 0 4px; font-family: var(--f-display); font-weight: 500; font-size: 1.3rem; }
+.nox > p { margin: 0; font-size: .88rem; color: var(--muted); }
+.noxtip { margin: 14px 0 0 !important; background: rgba(255,255,255,.7); border-radius: 10px; padding: 10px; color: var(--ink) !important; }
+.listpanel { padding: 18px; }
+.sbox { position: relative; display: block; }
+.sbox svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); }
+.sbox input { width: 100%; height: 42px; padding-left: 38px; }
+/* Bộ đã lưu */
+.scard { padding: 18px; display: flex; flex-direction: column; gap: 8px; }
+.scard .stop { display: flex; gap: 6px; align-items: center; color: var(--heart); font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+.scard .sname { font-family: var(--f-display); font-size: 1.3rem; font-weight: 500; border: 1px solid transparent; background: none; padding: 2px 4px; margin-left: -4px; border-radius: 8px; width: 100%; }
+.scard .sname:hover, .scard .sname:focus { border-color: var(--line); background: var(--surface); }
+.scard .smeta { color: var(--muted); font-size: .84rem; }
+.sitems { display: flex; flex-wrap: wrap; gap: 5px; }
+.sitems span { display: inline-flex; align-items: center; gap: 5px; background: var(--sunk); border-radius: 999px; padding: 3px 9px 3px 3px; font-size: .8rem; }
+.sitems img { width: 22px; height: 22px; object-fit: contain; border-radius: 50%; background: var(--surface); }
+.newbtn { width: 100%; justify-content: center; margin-top: 14px; min-height: 46px; font-size: .95rem; }
+footer { text-align: center; }
+footer .themes { justify-content: center; }
+@media (max-width: 480px) {
+  .formrow { grid-template-columns: 1fr 1fr; padding: 14px 14px 10px; }
+  .formrow > .field:first-child { grid-column: 1 / -1; }
+  .stagebar { padding: 0 14px 14px; }
+  .notice, .look, .mstats, .ihead, .ihint { margin-left: 14px; margin-right: 14px; }
+  #mirror .check { margin-left: 14px; margin-right: 14px; }
+  .ilist { padding: 0 14px 10px; }
+  .cactions { padding: 10px 14px 12px; }
+  .look { grid-template-columns: 116px minmax(0, 1fr); }
+  .look-art { padding: 10px 10px 26px; gap: 5px; }
+  .scorecopy { padding: 14px; }
+  .alts { margin-left: 0; }
+}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="top">
-    <div class="brand"><h1>Phòng <em>Thay Đồ</em></h1><small>NSTT · server VN</small></div>
-    <nav class="tabs" aria-label="Các trang">
-      <a href="#phoi-do" data-view="phoi-do">Phối đồ</a>
-      <a href="#tu-do" data-view="tu-do">Tủ đồ cá nhân</a>
-      <a href="#kho-do" data-view="kho-do">Kho đồ chung</a>
-      <a href="#bo-da-luu" data-view="bo-da-luu">Bộ đã lưu</a>
-      <a href="#su-kien" data-view="su-kien">Lịch sự kiện</a>
-    </nav>
-    <span class="chip-status" id="wardChip">Chưa nhập tủ đồ</span>
+    <div class="brand"><span class="mark"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg></span><div><h1>Phòng Thay Đồ</h1><small>Bạn đồng hành Ngôi Sao Thời Trang</small></div></div>
+    <span class="chip-status" id="wardChip">Tủ đồ: chưa nhập · vẫn xem được bộ đề xuất</span>
   </header>
+  <nav class="tabs" aria-label="Các trang">
+    <a href="#phoi-do" data-view="phoi-do"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg><span>Phối đồ</span></a>
+    <a href="#tu-do" data-view="tu-do"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3 4 6l2 4 2-1v12h8V9l2 1 2-4-4-3c0 2-1.8 3-4 3S8 5 8 3z"/></svg><span>Tủ đồ cá nhân</span></a>
+    <a href="#kho-do" data-view="kho-do"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16M8 4v16M12 5l4 15M17 4v16"/></svg><span>Kho đồ chung</span></a>
+    <a href="#bo-da-luu" data-view="bo-da-luu"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg><span>Bộ đã lưu</span></a>
+    <a href="#su-kien" data-view="su-kien"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Lịch sự kiện</span></a>
+  </nav>
 
-  <div class="loading" id="loading">Đang tải dữ liệu đồ của server Việt Nam…</div>
+  <div class="loading" id="loading"><div class="skel" aria-hidden="true"><i style="width:40%"></i><i class="b"></i><i style="width:70%"></i><i class="b"></i></div><p id="loadMsg" role="status">Đang tải dữ liệu đồ của server Việt Nam…</p></div>
+  <p class="sr" id="live" aria-live="polite"></p>
+
+  <main id="main">
 
   <!-- PHỐI ĐỒ -->
   <section class="view" id="view-phoi-do" hidden>
-    <div class="grid">
-      <div class="stack">
-        <div class="panel">
-          <p class="label" data-term="stageTypes">Loại ải</p>
-          <div class="seg" id="typeSeg" role="group" aria-label="Loại ải"></div>
-          <div id="stagePickers" class="stack" style="margin-top:14px"></div>
-        </div>
-        <div class="panel" id="ticketPanel"></div>
+    <div class="phead"><p class="eyebrow"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>Gợi ý phối đồ</p><h2 class="h1">Chọn ải, tìm bộ đồ hợp điểm.</h2>
+      <p class="lede">Chọn loại ải và ải bên dưới, web tự phối bộ điểm cao nhất. Bấm vào từng món để xem lựa chọn khác.</p></div>
+    <div class="sgrid">
+      <div class="panel maincard">
+        <div id="stagePickers"></div>
+        <div id="mirror"></div>
       </div>
-      <div class="panel" id="mirror"></div>
+      <div class="side">
+        <div class="panel sidecard" id="wardSide"></div>
+        <div class="panel sidecard" id="ticketPanel"></div>
+        <div class="guide2"><h3>Bắt đầu thật dễ</h3>
+          <ol class="steps"><li>Chọn loại ải và ải bạn đang cần qua.</li><li>Bấm vào một món để xem lựa chọn thay thế.</li><li>Nhập tủ đồ để chỉ phối từ đồ bạn có, rồi lưu bộ yêu thích.</li></ol></div>
+      </div>
     </div>
   </section>
 
   <!-- TỦ ĐỒ -->
   <section class="view" id="view-tu-do" hidden>
-    <div class="grid">
-      <div class="stack import-col">
-        <div class="panel stack">
-          <h2 class="sec">Nhập tủ đồ từ Nox</h2>
-          <div class="drop" id="drop" tabindex="0" role="button" aria-label="Chọn file clothes_date">
-            <b>Kéo thả file clothes_date vào đây</b>
-            <span class="muted small">hoặc bấm để chọn file</span>
-          </div>
-          <input type="file" id="fileIn" hidden>
-          <div id="wardInfo"></div>
-          <details class="how">
-            <summary class="small">File này lấy ở đâu?</summary>
-            <ol>
-              <li>Bật Root trong cài đặt Nox (tab Cơ bản).</li>
-              <li>Mở game, vào Tủ đồ cho game tải dữ liệu, rồi tắt game.</li>
-              <li>Mở Amaze, vào <code>/data/data/com.vng.ngoisaothoitrang/files/usrdat</code></li>
-              <li>Sao chép file <code>clothes_date…</code> sang <code>/mnt/shared/Other</code>, rồi lấy ra từ thư mục <code>Nox_share</code> trên máy tính.</li>
-            </ol>
-          </details>
+    <div class="phead" id="wardHead"></div>
+    <div class="wgrid import-col">
+      <div class="panel wmain">
+        <p class="eyebrow"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>Tóm tắt tủ đồ</p>
+        <div id="wardInfo"></div>
+        <div class="drop" id="drop" tabindex="0" role="button" aria-label="Chọn file clothes_date">
+          <span><b>Nhập file clothes_date</b><span class="muted small">Kéo thả file vào đây, hoặc bấm để chọn. File chỉ đọc trên máy bạn.</span></span>
+          <span class="btn">⇪ Chọn tệp</span>
         </div>
+        <input type="file" id="fileIn" hidden>
+        <div class="row" style="margin-top:14px"><a class="btn primary" href="#phoi-do"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg> Quay lại phối đồ</a></div>
       </div>
-      <div class="panel">
+      <div class="nox">
+        <span class="noxmark"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16M8 4v16M12 5l4 15M17 4v16"/></svg></span>
+        <h2>Lấy file từ Nox</h2>
+        <p>Làm một lần trên máy tính có giả lập Nox.</p>
+        <ol class="steps">
+          <li>Bật Root trong cài đặt Nox (tab Cơ bản).</li>
+          <li>Mở game, vào Tủ đồ cho game tải dữ liệu, rồi tắt game.</li>
+          <li>Mở Amaze, vào <code>/data/data/com.vng.ngoisaothoitrang/files/usrdat</code></li>
+          <li>Sao chép file <code>clothes_date…</code> sang <code>/mnt/shared/Other</code>, rồi lấy ra từ thư mục <code>Nox_share</code> trên máy tính.</li>
+        </ol>
+        <p class="noxtip"><b>Không dùng Nox?</b> Bạn vẫn xem được bộ gợi ý từ toàn bộ đồ ở trang Phối đồ.</p>
+      </div>
+    </div>
+    <div>
+      <div class="panel listpanel">
         <h2 class="sec" id="listTitle">Kho đồ</h2>
         <div class="filters">
-          <input class="q" type="search" id="fQ" placeholder="Tìm theo tên đồ…" aria-label="Tìm theo tên đồ">
+          <label class="q sbox"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" id="fQ" placeholder="Tìm theo tên đồ…" aria-label="Tìm theo tên đồ"></label>
           <select id="fSlot" aria-label="Lọc theo ô đồ"></select>
           <select id="fOwn" aria-label="Lọc theo đã có">
             <option value="all">Tất cả</option><option value="own">Đã có</option><option value="miss">Chưa có</option>
@@ -359,15 +516,18 @@ footer a { color: inherit; }
 
   <!-- LỊCH SỰ KIỆN -->
   <section class="view" id="view-su-kien" hidden>
-    <h2 class="sec">Lịch sự kiện</h2>
+    <div class="phead"><p class="eyebrow"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Lịch sự kiện</p><h2 class="h1">Nhớ lại sự kiện, tìm bộ đồ cũ.</h2>
+      <p class="lede">Xem sự kiện đang mở hoặc lục lại các năm trước. Tìm kiếm và lọc năm dùng cùng lúc được.</p></div>
     <div id="evBody"><p class="muted">Đang tải lịch sự kiện…</p></div>
   </section>
 
   <!-- BỘ ĐÃ LƯU -->
   <section class="view" id="view-bo-da-luu" hidden>
-    <h2 class="sec">Bộ đã lưu</h2>
+    <div class="phead"><p class="eyebrow"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg>Bộ đã lưu</p><h2 class="h1">Để dành những bộ bạn thích.</h2>
+      <p class="lede">Bộ đã lưu nằm trên máy này. Bấm "Lưu bộ này" ở trang Phối đồ để thêm bộ mới.</p></div>
     <div id="savedList"></div>
   </section>
+  </main>
 
   <!-- GÓP Ý: nút tròn nhỏ ở góc, bấm mở khung -->
   <button type="button" class="gyfab" id="gyOpen" aria-label="Góp ý" title="Góp ý"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 11h7M8.5 14.5h4.5"/></svg></button>
@@ -664,12 +824,16 @@ function decodeClothesDate(text) {
   var SECTION = { 'kho-do': 'tu-do' }; /* Kho đồ dùng chung khung với Tủ đồ */
   function route() {
     var v = (location.hash || '').slice(1);
+    if (/\?soan$/.test(v)) { LS.set('soan', true); v = v.replace(/\?soan$/, ''); } /* link riêng cho chủ web: #su-kien?soan hiện nút Soạn sự kiện */
     if (v === 'gop-y') { gyShow(); history.replaceState(null, '', location.pathname + location.search); v = ''; } /* link cũ #gop-y: mở khung góp ý */
     if (VIEWS.indexOf(v) < 0) v = 'phoi-do';
     ['phoi-do', 'tu-do', 'bo-da-luu', 'su-kien'].forEach(function (x) { $('view-' + x).hidden = x !== (SECTION[v] || v); });
     state.kho = v === 'kho-do';
     $('view-tu-do').classList.toggle('kho', state.kho);
-    $('listTitle').textContent = state.kho ? 'Kho đồ chung' : 'Đồ của bạn';
+    $('listTitle').textContent = state.kho ? 'Toàn bộ đồ' : 'Đồ của bạn';
+    $('wardHead').innerHTML = state.kho
+      ? '<p class="eyebrow"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16M8 4v16M12 5l4 15M17 4v16"/></svg>Kho đồ chung</p><h2 class="h1">Tra cứu toàn bộ đồ trong game.</h2><p class="lede">Tìm theo tên, lọc theo ô đồ, tag, độ hiếm, và đánh dấu món bạn đã có.</p>'
+      : '<p class="eyebrow"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3 4 6l2 4 2-1v12h8V9l2 1 2-4-4-3c0 2-1.8 3-4 3S8 5 8 3z"/></svg>Tủ đồ cá nhân</p><h2 class="h1">Tủ đồ của bạn, theo cách dễ hiểu.</h2><p class="lede">Nhập file tủ đồ từ Nox để trang Phối đồ chỉ gợi ý món bạn có. File chỉ đọc trên máy bạn, không gửi đi đâu.</p>';
     state.f.page = 0;
     document.querySelectorAll('nav.tabs a').forEach(function (a) {
       if (a.getAttribute('data-view') === v) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
@@ -714,11 +878,22 @@ function decodeClothesDate(text) {
     return t[0];
   }
   (function () {
-    var box = document.querySelector('.themes');
-    box.insertAdjacentHTML('beforeend', THEMES.map(function (t) { return '<button type="button" role="radio" data-theme="' + t[0] + '"><i>' + t.slice(2).map(function (c) { return '<b style="background:' + c + '"></b>'; }).join('') + '</i>' + t[1] + '</button>'; }).join(''));
-    box.addEventListener('click', function (e) { var b = e.target.closest('[data-theme]'); if (b) LS.set('theme', applyTheme(b.dataset.theme)); });
+    document.querySelectorAll('.themes').forEach(function (box) {
+      box.insertAdjacentHTML('beforeend', THEMES.map(function (t) { return '<button type="button" role="radio" data-theme="' + t[0] + '"><i>' + t.slice(2).map(function (c) { return '<b style="background:' + c + '"></b>'; }).join('') + '</i>' + t[1] + '</button>'; }).join(''));
+      box.addEventListener('click', function (e) { var b = e.target.closest('[data-theme]'); if (b) LS.set('theme', applyTheme(b.dataset.theme)); });
+    });
     applyTheme(LS.get('theme', 'xanh-dua'));
   })();
+
+  /* Phím mũi tên: chuyển giữa các tab sự kiện và các màu */
+  document.addEventListener('keydown', function (e) {
+    var k = e.key, b = e.target.closest && e.target.closest('[role="tab"],[role="radio"]');
+    if (!b || ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].indexOf(k) < 0) return;
+    var all = [].slice.call(b.parentNode.querySelectorAll('[role="' + b.getAttribute('role') + '"]')), i = all.indexOf(b);
+    var n = all[(i + (k === 'ArrowLeft' || k === 'ArrowUp' ? all.length - 1 : 1)) % all.length];
+    e.preventDefault(); var tab = n.dataset.tab; n.click();
+    (tab ? document.querySelector('[data-tab="' + tab + '"]') : n).focus(); /* tab sự kiện vẽ lại nên tìm lại nút */
+  });
 
   /* Góp ý: gửi qua Web3Forms về email chủ web */
   function gyShow() { var d = $('gyDlg'); if (!d.open) { $('gyNote').textContent = ''; d.showModal(); if (!matchMedia('(pointer: coarse)').matches) $('gyMsg').focus(); } } /* điện thoại: không tự bật bàn phím */ 
@@ -756,7 +931,7 @@ function decodeClothesDate(text) {
   function renderChip() {
     var c = $('wardChip');
     if (state.owned) { c.className = 'chip-status ok'; c.textContent = T.wardrobe + ': ' + fmt(state.ownedRaw.length) + ' món'; }
-    else { c.className = 'chip-status'; c.textContent = 'Chưa nhập ' + lc(T.wardrobe); }
+    else { c.className = 'chip-status'; c.textContent = T.wardrobe + ': chưa nhập · vẫn xem được bộ đề xuất'; }
   }
 
   /* ---------- Chỉ mục màn chơi ---------- */
@@ -801,11 +976,9 @@ function decodeClothesDate(text) {
     state.code = first ? first.code : '';
   }
 
-  function renderTypeSeg() {
-    $('typeSeg').innerHTML = TYPES.map(function (t) {
-      return '<button type="button" data-t="' + t + '" aria-pressed="' + (state.type === t) + '">' + TYPE_VI[t] + '</button>';
-    }).join('');
-  }
+  function renderTypeSeg() {} /* loại ải giờ là ô chọn đầu tiên trong renderPickers */
+  function typeField() { return '<label class="field"><span>' + T.stageTypes + '</span><select id="pT">' + TYPES.map(function (t) { return opt(t, TYPE_VI[t], state.type === t); }).join('') + '</select></label>'; }
+  var HINT = '<span class="hint"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15 9-2 4-4 2 2-4z"/></svg>Chọn ải để xem bộ gợi ý</span>';
 
   function opt(v, label, sel) { return '<option value="' + esc(v) + '"' + (sel ? ' selected' : '') + '>' + esc(label) + '</option>'; }
 
@@ -815,17 +988,17 @@ function decodeClothesDate(text) {
       var m = s ? /^[MP]V(\d+)C(\d+)/.exec(s.code) : null, V = m ? m[1] : '', C = m ? m[2] : '';
       var vols = keysNum(idx[t]), chs = V ? keysNum(idx[t][V]) : [];
       var list = (V && C && idx[t][V][C]) ? idx[t][V][C].slice().sort(function (a, b) { return (a.side - b.side) || (a.n - b.n) || a.tier.localeCompare(b.tier); }) : [];
-      html = '<div class="fields3">' +
+      html = '<div class="formrow">' + typeField() +
         '<label class="field"><span>' + T.vol + '</span><select id="pV">' + vols.map(function (v) { return opt(v, T.vol + ' ' + v, v === V); }).join('') + '</select></label>' +
-        '<label class="field"><span>' + T.chapter + '</span><select id="pC">' + chs.map(function (c) { return opt(c, T.chapter + ' ' + c, c === C); }).join('') + '</select></label>' +
-        '<label class="field"><span>' + T.stage + '</span><select id="pS">' + list.map(function (x) { return opt(x.s.code, (x.side ? T.side : T.stage) + ' ' + x.lbl + (x.tier ? ' (' + x.tier + ')' : '') + ' · ' + x.s.name, x.s.code === state.code); }).join('') + '</select></label></div>';
+        '<label class="field"><span>' + T.chapter + '</span><select id="pC">' + chs.map(function (c) { return opt(c, T.chapter + ' ' + c, c === C); }).join('') + '</select></label></div>' +
+        '<div class="stagebar">' + HINT + '<select id="pS" aria-label="' + T.stage + '">' + list.map(function (x) { return opt(x.s.code, (x.side ? T.side : T.stage) + ' ' + x.lbl + (x.tier ? ' (' + x.tier + ')' : '') + ' · ' + x.s.name, x.s.code === state.code); }).join('') + '</select></div>';
     } else if (t === 'Commission') {
       var g = s ? /^GA(\d+)/.exec(s.code)[1] : '', gs = keysNum(idx.Commission), ls = g ? idx.Commission[g].slice().sort(function (a, b) { return a.n - b.n; }) : [];
-      html = '<div class="fields3">' +
-        '<label class="field"><span>' + T.type.Commission + '</span><select id="pG">' + gs.map(function (x) { return opt(x, T.guildLevel + ' ' + x, x === g); }).join('') + '</select></label>' +
-        '<label class="field" style="grid-column: span 2"><span>' + T.stage + '</span><select id="pS">' + ls.map(function (x) { return opt(x.s.code, g + '-' + x.n + ' · ' + x.s.name, x.s.code === state.code); }).join('') + '</select></label></div>';
+      html = '<div class="formrow">' + typeField() +
+        '<label class="field"><span>' + T.guildLevel + '</span><select id="pG">' + gs.map(function (x) { return opt(x, T.guildLevel + ' ' + x, x === g); }).join('') + '</select></label></div>' +
+        '<div class="stagebar">' + HINT + '<select id="pS" aria-label="' + T.stage + '">' + ls.map(function (x) { return opt(x.s.code, g + '-' + x.n + ' · ' + x.s.name, x.s.code === state.code); }).join('') + '</select></div>';
     } else if (t === 'Arena') {
-      html = '<label class="field"><span>' + T.theme + '</span><select id="pS">' + idx[t].map(function (x) { return opt(x.code, x.name, x.code === state.code); }).join('') + '</select></label>';
+      html = '<div class="formrow">' + typeField() + '<label class="field" style="grid-column: span 2"><span>' + T.theme + '</span><select id="pS">' + idx[t].map(function (x) { return opt(x.code, x.name, x.code === state.code); }).join('') + '</select></label></div>';
     } else {
       var w = state.custom.w, rows = '';
       for (var p = 0; p < 5; p++) {
@@ -835,7 +1008,7 @@ function decodeClothesDate(text) {
           '<input type="number" min="0" max="100" id="cw' + p + '" value="' + (w[side] || 0) + '" aria-label="Trọng số"></div>';
       }
       var tagOpts = function (cur) { return opt(0, '(không có)', !cur) + Object.keys(state.db.tagName).map(function (k) { return opt(k, state.db.tagName[k], +k === cur); }).join(''); };
-      html = '<div class="custom">' + rows + '</div><div class="fields3">' +
+      html = '<div class="formrow">' + typeField() + '</div><div class="custom">' + rows + '</div><div class="formrow">' +
         '<label class="field" style="grid-column: span 2"><span>' + T.tag + ' 1</span><select id="ct1">' + tagOpts(state.custom.tag[0]) + '</select></label>' +
         '<label class="field"><span>' + T.tagBonus + '</span><input type="number" id="ctw1" min="0" value="' + (state.custom.tw[0] || 0) + '"></label>' +
         '<label class="field" style="grid-column: span 2"><span>' + T.tag + ' 2</span><select id="ct2">' + tagOpts(state.custom.tag[1]) + '</select></label>' +
@@ -876,7 +1049,7 @@ function decodeClothesDate(text) {
     var chips = '';
     for (var t = 0; t < 2; t++) if (s.tag[t]) chips += '<span class="tag hot">' + esc(state.db.tagName[s.tag[t]] || (T.tag + ' ' + s.tag[t])) + ' +' + fmt(s.tw[t]) + '</span>';
     (s.sk || []).forEach(function (c) { if (c) { var k = Math.floor(c / 100); chips += '<span class="tag">' + esc(SKILL_VI[k] || T.skill + ' ' + k) + '</span>'; } });
-    p.innerHTML = '<div class="ticket"><div class="code">' + TYPE_VI[s.type] + ' · ' + esc(gameCode(s)) + '</div><div class="name">' + esc(s.name) + '</div>' +
+    p.innerHTML = '<p class="eyebrow" style="margin-bottom:8px">Ải đang chọn</p><div class="ticket"><div class="code">' + TYPE_VI[s.type] + ' · ' + esc(gameCode(s)) + '</div><div class="name">' + esc(s.name) + '</div>' +
       '<div class="pairs">' + pairs + '</div>' + (chips ? '<div class="tags">' + chips + '</div>' : '') + '</div>';
   }
 
@@ -886,7 +1059,7 @@ function decodeClothesDate(text) {
     var s = currentStage();
     renderTicket(s);
     if (!s) { $('mirror').innerHTML = '<div class="empty"><b>Chưa có ' + lc(T.stage) + '</b>Chọn một ' + lc(T.stage) + ' ở cột bên trái.</div>'; return; }
-    var owned = state.onlyOwned ? state.owned : null;
+    var owned = state.owned; /* LUẬT: đã nhập tủ đồ thì chỉ phối và gợi ý món có trong tủ; chưa nhập thì dùng toàn bộ đồ */
     ranked = rankAll(state.db, s, owned, state.owned);
     var ov = {};
     Object.keys(state.ov).forEach(function (k) {
@@ -912,8 +1085,8 @@ function decodeClothesDate(text) {
   function slotRows(list, cls) {
     return list.map(function (x) {
       var k = x.slot.key, open = state.open === k;
-      var row = '<tr class="pick ' + (cls || '') + '" data-slot="' + k + '" tabindex="0" aria-expanded="' + open + '"><td class="slotname">' + esc(x.slot.vi) + '</td>' +
-        '<td><div class="withthumb">' + thumb(x.e.item.id) + '<span><span class="iname">' + esc(x.e.item.name) + '</span>' + itemTags(x.e) + '</span></div></td><td class="score num">' + fmt(x.e.score) + '</td></tr>';
+      var row = '<div class="irow pick ' + (cls || '') + '" data-slot="' + k + '" tabindex="0" role="button" aria-expanded="' + open + '">' + thumb(x.e.item.id) +
+        '<span><span class="iname">' + esc(x.e.item.name) + '</span>' + itemTags(x.e) + '<span class="imeta">' + esc(x.slot.vi) + ' · chạm để xem lựa chọn khác</span></span><span class="score">' + fmt(x.e.score) + '</span><svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></div>';
       return row + (open ? altRow(k, x.e.item.id) : '');
     }).join('');
   }
@@ -927,7 +1100,7 @@ function decodeClothesDate(text) {
     }).join('');
     var foot = '<div class="row" style="margin-top:6px">' + (state.ov[k] ? '<button class="btn ghost" data-use="' + k + '|auto">Tự chọn lại</button>' : '') +
       '<button class="btn ghost" data-use="' + k + '|none">Bỏ trống ô này</button></div>';
-    return '<tr class="alts"><td colspan="3"><div class="altlist">' + (items || '<span class="muted small">Không có món nào cho ô này.</span>') + '</div>' + foot + '</td></tr>';
+    return '<div class="alts"><div class="altlist">' + (items || '<span class="muted small">Không có món nào cho ô này.</span>') + '</div>' + foot + '</div>';
   }
 
   function emptySlots(o) {
@@ -943,34 +1116,43 @@ function decodeClothesDate(text) {
 
   function renderMirror(s, o) {
     var noteHtml = '';
-    if (state.owned && !state.onlyOwned) noteHtml = '<div class="note">Đang gợi ý từ toàn bộ đồ trong game. Món nào bạn chưa có sẽ ghi "chưa có".</div>';
     var empties = emptySlots(o).map(function (sl) {
-      return '<tr class="pick" data-slot="' + sl.key + '" tabindex="0" aria-expanded="' + (state.open === sl.key) + '"><td class="slotname">' + esc(sl.vi) + '</td><td class="muted">—</td><td></td></tr>' +
+      return '<div class="irow pick empty-slot" data-slot="' + sl.key + '" tabindex="0" role="button" aria-expanded="' + (state.open === sl.key) + '"><span class="thumb"></span><span><span class="iname">Đang trống</span><span class="imeta">' + esc(sl.vi) + ' · chạm để chọn món</span></span><span></span><svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></div>' +
         (state.open === sl.key ? altRow(sl.key, null) : '');
     }).join('');
-    /* Nút chọn nguồn đồ: để ngay đầu khung kết quả cho dễ thấy (cả trên điện thoại) */
-    var mine = state.owned && state.onlyOwned;
-    var srcbar = '<div class="srcbar"><span class="label" style="margin:0">Phối từ</span>' +
-      (state.owned
-        ? '<div class="seg" role="group" aria-label="Phối từ"><button type="button" data-src="own" aria-pressed="' + !!mine + '">Đồ của bạn (' + fmt(state.ownedRaw.length) + ' món)</button>' +
-          '<button type="button" data-src="all" aria-pressed="' + !mine + '">Toàn bộ đồ trong game</button></div>'
-        : '<span class="small">toàn bộ đồ trong game · <a href="#tu-do">Nhập tủ đồ cá nhân</a> để phối từ đồ của bạn</span>') + '</div>';
-    $('mirror').innerHTML = srcbar +
-      '<div class="mirror-head"><div><p class="label">Điểm gốc</p><div class="total num">' + fmt(o.total) + '</div>' +
-      '<div class="muted small" style="margin-top:6px">' + esc(s.name) + ' · chưa tính điểm kỹ năng khi thi</div></div>' +
-      '<div class="split num"><div><b>' + fmt(o.mainSum) + '</b><span>' + T.mainGroup + '</span></div><div><b>' + fmt1(o.accTotal) + '</b><span>' + T.acc + '</span></div>' +
-      '<div><b>' + o.accCount + (o.accMult !== 1 ? ' × ' + String(o.accMult).replace('.', ',') : '') + '</b><span>Số ' + lc(T.acc) + (o.accMult !== 1 ? ' × hệ số' : '') + '</span></div></div></div>' +
-      (ACC_PENALTY ? '<label class="check" style="margin-top:14px"><input type="checkbox" id="optAcc"' + (state.optimize ? ' checked' : '') + '> <span>Tự bỏ bớt ' + lc(T.acc) + ' nếu được điểm cao hơn<br><span class="muted small">Đeo càng nhiều ' + lc(T.acc) + ' thì hệ số điểm ' + lc(T.acc) + ' càng giảm.</span></span></label>' : '') +
-      (noteHtml ? '<div style="margin-top:14px">' + noteHtml + '</div>' : '') +
-      '<div class="row" style="margin-top:14px"><button class="btn primary" id="saveBtn">Lưu bộ này</button><button class="btn" id="copyBtn">Chép danh sách đồ</button>' +
-      (Object.keys(state.ov).length ? '<button class="btn ghost" id="resetOv">Tự chọn lại tất cả</button>' : '') + '</div>' +
-      '<p class="muted small" style="margin:12px 0 0">Bấm vào một dòng để xem món khác điểm cao cho ô đó.</p>' +
-      '<div class="slots-wrap"><table class="slots"><thead><tr><th>' + T.slot + '</th><th>Món đồ</th><th style="text-align:right">Điểm</th></tr></thead><tbody>' +
-      '<tr class="groupcap"><td colspan="3">' + T.mainGroup + '</td></tr>' + slotRows(o.main) +
-      '<tr class="groupcap"><td colspan="3">' + T.acc + '</td></tr>' + slotRows(o.acc) +
-      (o.accDropped.length ? '<tr class="groupcap"><td colspan="3">' + T.acc + ' bỏ ra cho điểm cao hơn</td></tr>' + slotRows(o.accDropped, 'dropped') : '') +
-      (empties ? '<tr class="groupcap"><td colspan="3">' + T.slot + ' đang trống</td></tr>' + empties : '') +
-      '</tbody></table></div>';
+    var mine = !!state.owned, art = o.main.slice(0, 4).map(function (x) { return '<img loading="lazy" alt="" src="' + IMG_BASE + x.e.item.id + '.webp" onerror="this.style.visibility=\'hidden\'">'; }).join('');
+    var INFO = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>';
+    $('live').textContent = 'Điểm gốc ' + fmt(o.total);
+    $('mirror').innerHTML =
+      (mine ? '' : '<div class="notice">' + INFO + '<span><b>Lưu ý:</b> bạn chưa nhập tủ đồ nên bộ gợi ý lấy từ toàn bộ đồ trong game, có thể gồm món bạn chưa có. <a href="#tu-do">Nhập tủ đồ</a> để chỉ phối từ đồ bạn đang có.</span></div>') +
+      '<div class="look"><div class="look-art">' + art + '<span class="cap">Bộ gợi ý</span></div><div class="scorecopy"><p class="sl">Điểm gốc</p><div class="sv num">' + fmt(o.total) + '</div>' +
+      '<div class="sn">' + esc(s.name) + ' · ' + (TYPE_VI[s.type] || '') + (s.type !== 'Custom' ? ' ' + esc(gameCode(s)) : '') + '</div><div class="sn">Chưa tính điểm kỹ năng khi thi · tự cập nhật khi đổi ' + lc(T.stage) + '</div>' +
+      (mine ? '<span class="stag">★ Chỉ dùng đồ trong tủ của bạn</span>' : '<span class="stag all">Từ toàn bộ đồ trong game</span>') + '</div></div>' +
+      '<div class="mstats num"><div><b>' + fmt(o.mainSum) + '</b><span>' + T.mainGroup + '</span></div><div><b>' + fmt1(o.accTotal) + '</b><span>' + T.acc + '</span></div>' +
+      '<div><b>' + o.accCount + (o.accMult !== 1 ? ' × ' + String(o.accMult).replace('.', ',') : '') + '</b><span>Số ' + lc(T.acc) + (o.accMult !== 1 ? ' × hệ số' : '') + '</span></div></div>' +
+      (ACC_PENALTY ? '<label class="check"><input type="checkbox" id="optAcc"' + (state.optimize ? ' checked' : '') + '> <span>Đeo ít ' + lc(T.acc) + ' hơn nếu như vậy được điểm cao hơn<br><span class="muted small">Đeo càng nhiều món ' + lc(T.acc) + ' thì điểm ' + lc(T.acc) + ' càng bị nhân hệ số thấp (từ 16 món chỉ còn ×0,4).</span></span></label>' : '') +
+      '<div class="ihead"><h3 class="stitle">Các món trong bộ</h3>' + (Object.keys(state.ov).length ? '<button type="button" class="pill" id="resetOv">↺ Tự chọn lại tất cả</button>' : '') + '</div>' +
+      '<p class="ihint">Món có nhãn <span class="mini tag" style="margin:0">' + esc(lc(T.tag)) + '</span> trùng tag của ' + lc(T.stage) + ' nên được cộng thêm điểm.</p>' +
+      '<div class="ilist"><div class="gcap">' + T.mainGroup + '</div>' + slotRows(o.main) +
+      '<div class="gcap">' + T.acc + '</div>' + slotRows(o.acc) +
+      (o.accDropped.length ? '<div class="gcap">' + T.acc + ' bỏ ra cho điểm cao hơn</div>' + slotRows(o.accDropped, 'dropped') : '') +
+      (empties ? '<div class="gcap">' + T.slot + ' đang trống</div>' + empties : '') + '</div>' +
+      '<div class="cactions"><button type="button" class="tact" id="copyBtn">⧉ Chép danh sách đồ</button><button type="button" class="btn primary" id="saveBtn">♡ Lưu bộ này</button></div>';
+    renderWardSide();
+  }
+
+  /* Cột phải trang Phối đồ: tóm tắt tủ đồ */
+  function renderWardSide() {
+    var box = $('wardSide'), E = '<p class="eyebrow"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M8 3 4 6l2 4 2-1v12h8V9l2 1 2-4-4-3c0 2-1.8 3-4 3S8 5 8 3z"/></svg>Tủ của bạn</p>';
+    if (!state.owned) {
+      box.innerHTML = E + '<h3 class="side-title">Chưa nhập tủ đồ.</h3><p class="muted small" style="margin:0 0 14px">Nhập file clothes_date từ Nox để web chỉ phối từ đồ bạn đang có.</p><a class="btn primary" href="#tu-do">Nhập tủ đồ →</a>';
+      return;
+    }
+    var have = state.ownedRaw.length - state.unknown, total = state.db.clothes.length, pct = Math.min(100, Math.round(have / total * 100));
+    box.innerHTML = E + '<h3 class="side-title">Mặc theo cách của bạn.</h3><p class="muted small" style="margin:0">Bộ gợi ý chỉ dùng món có trong tủ của bạn.</p>' +
+      '<div class="meter"><span style="width:' + pct + '%"></span></div><div class="meterline num"><span>Đồ trong game bạn có</span><b>' + fmt(have) + ' / ' + fmt(total) + ' món</b></div>' +
+      '<div class="ownline">✓ ' + fmt(have) + ' món có dữ liệu điểm</div>' + (state.unknown ? '<div class="ownline">ⓘ ' + fmt(state.unknown) + ' món chưa có dữ liệu (thường là đồ rất mới)</div>' : '') +
+      '<div class="row" style="margin-top:14px"><a class="btn" href="#tu-do">Nhập lại tủ đồ</a></div>';
   }
 
   function outfitText() {
@@ -1011,13 +1193,9 @@ function decodeClothesDate(text) {
   function persistStage() { LS.set('type', state.type); LS.set('code', state.code); }
 
   /* ---------- Sự kiện trang Phối đồ ---------- */
-  $('typeSeg').addEventListener('click', function (e) {
-    var b = e.target.closest('button[data-t]'); if (!b) return;
-    state.type = b.getAttribute('data-t'); state.ov = {}; state.open = null;
-    ensureStage(); persistStage(); renderTypeSeg(); renderPickers(); compute();
-  });
   $('stagePickers').addEventListener('change', function (e) {
     var id = e.target.id, t = state.type;
+    if (id === 'pT') { state.type = e.target.value; state.ov = {}; state.open = null; ensureStage(); persistStage(); renderPickers(); compute(); return; }
     if (t === 'Custom') { readCustom(); compute(); return; }
     if (id === 'pV') { var V = e.target.value, C = keysNum(idx[t][V])[0]; state.code = idx[t][V][C][0].s.code; }
     else if (id === 'pC') { var V2 = $('pV').value; state.code = idx[t][V2][e.target.value][0].s.code; }
@@ -1045,21 +1223,23 @@ function decodeClothesDate(text) {
       catch (er) { toast('Trình duyệt chưa cho chép. Bạn bấm lại thử nhé.'); }
       return;
     }
-    var tr = e.target.closest('tr.pick');
+    var tr = e.target.closest('.pick');
     if (tr) { var k = tr.getAttribute('data-slot'); state.open = state.open === k ? null : k; renderMirror(state.last.stage, state.last.outfit); }
   });
   $('mirror').addEventListener('keydown', function (e) {
-    if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('tr.pick')) { e.preventDefault(); e.target.click(); }
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('.pick')) { e.preventDefault(); e.target.click(); }
   });
 
   /* ---------- Trang Tủ đồ ---------- */
   function renderWardInfo(msg, bad) {
     var html = '';
     if (state.owned) {
-      html = '<div class="row" style="justify-content:space-between"><div><div class="stat num">' + fmt(state.ownedRaw.length) + '</div><div class="muted small">món trong tủ của bạn</div></div>' +
-        '<div><div class="stat num">' + fmt(state.ownedRaw.length - state.unknown) + '</div><div class="muted small">món có dữ liệu điểm</div></div></div>' +
+      var have = state.ownedRaw.length - state.unknown;
+      html = '<div class="wstats num"><div class="wstat"><b>' + fmt(state.ownedRaw.length) + '</b><span>Món trong tủ</span></div>' +
+        '<div class="wstat"><b>' + fmt(have) + '</b><span>Món có dữ liệu điểm</span></div>' +
+        '<div class="wstat"><b>' + Math.round(have / state.db.clothes.length * 100) + '%</b><span>Đồ trong game bạn có</span></div></div>' +
         (state.unknown ? '<p class="muted small" style="margin:8px 0 0">' + fmt(state.unknown) + ' món chưa có trong bảng dữ liệu (thường là đồ rất mới) nên chưa tính điểm được.</p>' : '');
-    } else html = '<p class="muted small" style="margin:0">Chưa có tủ đồ. Khi chưa nhập, trang Phối đồ sẽ gợi ý từ toàn bộ đồ trong game.</p>';
+    } else html = '<div class="wstats"><div class="wstat"><b>0</b><span>Món trong tủ</span></div></div><p class="muted small" style="margin:0 0 14px">Chưa có tủ đồ. Khi chưa nhập, trang Phối đồ gợi ý từ toàn bộ đồ trong game.</p>';
     if (msg) html += '<div class="note' + (bad ? '' : ' ok') + '" style="margin-top:10px">' + esc(msg) + '</div>';
     $('wardInfo').innerHTML = html;
   }
@@ -1267,9 +1447,12 @@ function decodeClothesDate(text) {
       var years = []; list.forEach(function (e) { var y = e.start ? e.start.getFullYear() : 0; if (years.indexOf(y) < 0) years.push(y); });
       years.sort(function (a, b) { return (b || -1) - (a || -1); });
       if (years.indexOf(EV.year) < 0) EV.year = years[0] || 0;
-      if (!q) html += '<div class="evyears">' + years.map(function (y) { return '<button type="button" data-year="' + y + '" aria-pressed="' + (y === EV.year) + '">' + (y || 'Chưa rõ') + '</button>'; }).join('') + '</div>';
-      shown = q ? list : list.filter(function (e) { return (e.start ? e.start.getFullYear() : 0) === EV.year; });
-      countTxt = q ? shown.length + ' sự kiện khớp "' + esc(EV.q.trim()) + '" (mọi năm)' : shown.length + ' sự kiện trong ' + (EV.year ? 'năm ' + EV.year : 'mục chưa rõ ngày');
+      var allYears = q && EV.qAll !== false;
+      if (!allYears) html += '<div class="evyears">' + years.map(function (y) { return '<button type="button" data-year="' + y + '" aria-pressed="' + (y === EV.year) + '">' + (y || 'Chưa rõ') + '</button>'; }).join('') + '</div>';
+      shown = allYears ? list : list.filter(function (e) { return (e.start ? e.start.getFullYear() : 0) === EV.year; });
+      var yTxt = EV.year ? 'năm ' + EV.year : 'mục chưa rõ ngày';
+      countTxt = q ? shown.length + ' sự kiện khớp "' + esc(EV.q.trim()) + '" (' + (allYears ? 'mọi năm' : yTxt) + ')' : shown.length + ' sự kiện trong ' + yTxt;
+      if (q) countTxt = '<span class="seg evscope" role="group" aria-label="Tìm trong"><button type="button" data-scope="year" aria-pressed="' + !allYears + '">Năm đang chọn</button><button type="button" data-scope="all" aria-pressed="' + allYears + '">Tất cả các năm</button></span> ' + countTxt;
     }
     html += '<div class="evbar"><select id="evType" aria-label="Loại sự kiện"><option value="">Tất cả loại (' + types.length + ')</option>' +
       types.map(function (t) { return '<option' + (EV.type === t ? ' selected' : '') + '>' + esc(t) + '</option>'; }).join('') + '</select>' +
@@ -1285,13 +1468,15 @@ function decodeClothesDate(text) {
       });
       html += month ? '</div>' : '<div class="empty"><b>Không có sự kiện nào khớp</b>Bạn thử bỏ bớt bộ lọc nhé.</div>';
     }
-    html += '<div class="evadmin"><button type="button" class="btn" id="evAdd">✎ Soạn sự kiện (cần quyền GitHub)</button></div>' + evFormHtml();
+    if (LS.get('soan', false)) html += '<div class="evadmin"><button type="button" class="btn" id="evAdd">✎ Soạn sự kiện (cần quyền GitHub)</button></div>' + evFormHtml();
     $('evBody').innerHTML = html;
+    $('live').textContent = countTxt.replace(/<[^>]+>/g, '').replace(/^Năm đang chọnTất cả các năm /, '');
   }
   $('evBody').addEventListener('click', function (e) {
-    var b = e.target.closest('[data-tab],[data-year],[data-more],#evQx,#evReset'); if (!b) return;
+    var b = e.target.closest('[data-tab],[data-year],[data-more],[data-scope],#evQx,#evReset'); if (!b) return;
     if (b.dataset.tab) EV.tab = b.dataset.tab;
-    else if (b.dataset.year !== undefined && b.hasAttribute('data-year')) EV.year = +b.dataset.year;
+    else if (b.dataset.scope) EV.qAll = b.dataset.scope === 'all';
+    else if (b.dataset.year !== undefined && b.hasAttribute('data-year')) { EV.year = +b.dataset.year; EV.qAll = false; }
     else if (b.hasAttribute('data-more')) { var k = b.getAttribute('data-more'); EV.more[k] = !EV.more[k]; }
     else if (b.id === 'evQx') EV.q = '';
     else if (b.id === 'evReset') { EV.q = ''; EV.type = ''; }
@@ -1353,20 +1538,20 @@ function decodeClothesDate(text) {
   function renderSaved() {
     var box = $('savedList');
     if (!state.outfits.length) {
-      box.innerHTML = '<div class="empty"><b>Chưa có bộ nào</b>Phối xong một ' + lc(T.stage) + ' ở trang Phối đồ, bấm "Lưu bộ này" là bộ đó hiện ở đây.</div>';
+      box.innerHTML = '<div class="empty"><b>Chưa có bộ nào</b>Phối xong một ' + lc(T.stage) + ' ở trang Phối đồ, bấm "Lưu bộ này" là bộ đó hiện ở đây.<div style="margin-top:14px"><a class="btn primary" href="#phoi-do" style="text-decoration:none;display:inline-block">Đến trang Phối đồ</a></div></div>';
       return;
     }
     box.innerHTML = '<div class="saved">' + state.outfits.map(function (r) {
       var d = new Date(r.at);
-      return '<article class="card" data-id="' + r.id + '"><input type="text" value="' + esc(r.name) + '" data-rename="' + r.id + '" aria-label="Tên bộ">' +
-        '<div class="row" style="justify-content:space-between"><span class="sc num">' + fmt(r.total) + '</span><span class="muted small">' + (TYPE_VI[r.type] || T.type.Arena) + ' · ' + d.toLocaleDateString('vi-VN') + '</span></div>' +
-        '<div class="muted small">' + esc(r.stageName) + '</div>' +
-        '<ul>' + r.items.map(function (x) { return '<li><span>' + esc(x.slot) + '</span><span class="withthumb">' + thumb(x.id) + '<span>' + esc(x.name) + '</span></span></li>'; }).join('') + '</ul>' +
+      return '<article class="panel scard" data-id="' + r.id + '"><div class="stop">★ Điểm gốc · <span class="num">' + fmt(r.total) + '</span></div>' +
+        '<input type="text" class="sname" value="' + esc(r.name) + '" data-rename="' + r.id + '" aria-label="Tên bộ (bấm để đổi tên)">' +
+        '<div class="smeta">' + esc(r.stageName) + ' · ' + (TYPE_VI[r.type] || T.type.Arena) + ' · ' + d.toLocaleDateString('vi-VN') + '</div>' +
+        '<div class="sitems">' + r.items.map(function (x) { return '<span title="' + esc(x.slot) + '"><img loading="lazy" alt="" src="' + IMG_BASE + x.id + '.webp" onerror="this.style.visibility=\'hidden\'">' + esc(x.name) + '</span>'; }).join('') + '</div>' +
         '<div class="row">' + (confirmDel === r.id
           ? '<span class="small">Xóa bộ này? Xóa rồi không lấy lại được.</span><button class="btn danger" data-del2="' + r.id + '">Xóa bộ</button><button class="btn ghost" data-cancel="1">Giữ lại</button>'
           : '<button class="btn primary" data-open="' + r.id + '">Mở lại để chỉnh</button><button class="btn ghost danger" data-del="' + r.id + '">Xóa</button>') +
         '</div></article>';
-    }).join('') + '</div>';
+    }).join('') + '</div><a class="btn primary newbtn" href="#phoi-do">✦ Tạo bộ phối mới</a>';
   }
   $('savedList').addEventListener('click', function (e) {
     var t = e.target, id;
@@ -1422,7 +1607,7 @@ function decodeClothesDate(text) {
   }
 
   fetch('data.json').then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(start).catch(function () {
-    $('loading').textContent = 'Không tải được dữ liệu đồ. Bạn kiểm tra mạng rồi tải lại trang nhé.';
+    $('loading').innerHTML = '<p role="alert">Không tải được dữ liệu đồ. Bạn kiểm tra mạng rồi tải lại trang nhé.</p>';
   });
 })();
 </script>
