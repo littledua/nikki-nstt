@@ -218,7 +218,8 @@ select, input[type="text"], input[type="search"], input[type="number"] {
 .evform .wide { grid-column: 1 / -1; }
 .evform input, .evform select, .evform textarea { width: 100%; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 7px 10px; font: inherit; color: inherit; }
 .evline { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .8rem; background: var(--sunk); padding: 8px 10px; border-radius: 8px; word-break: break-all; }
-.evcard { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); padding: 14px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.evimg { width: calc(100% + 28px); max-width: none; margin: -14px -14px 2px; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 14px 14px 0 0; background: var(--sunk); display: block; }
+.evcard { overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); padding: 14px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .evcard.now { border-color: var(--own); }
 .evcard .t { font-weight: 700; font-size: 1rem; line-height: 1.35; }
 .evcard .d { font-size: .85rem; color: var(--muted); }
@@ -1111,7 +1112,7 @@ function decodeClothesDate(text) {
   function parseEvents(txt) {
     return txt.split(/\r?\n/).filter(function (l) { return l.trim() && l.trim()[0] !== '#'; }).map(function (l) {
       var c = l.split('|').map(function (x) { return x.trim(); });
-      var e = { name: c[0] || '', type: (!c[1] || c[1] === 'Khác') ? 'Event lẻ' : c[1], start: evDate(c[2]), end: evDate(c[3]), sets: c[4] || '', how: c[5] || '', news: c[6] || '', link: c[7] || '', run: (c[8] || '').toLowerCase() };
+      var e = { name: c[0] || '', type: (!c[1] || c[1] === 'Khác') ? 'Event lẻ' : c[1], start: evDate(c[2]), end: evDate(c[3]), sets: c[4] || '', how: c[5] || '', news: c[6] || '', link: c[7] || '', run: (c[8] || '').toLowerCase(), img: (c[9] || '').replace(/[^\w.-]/g, '') };
       /* Sự kiện 100 ngày chưa ghi ngày đóng: tự tính ngày mở + 100 ngày (dự kiến) */
       if (e.type === 'Sự kiện 100 ngày' && e.start && !e.end) { e.end = new Date(e.start.getTime() + 99 * DAY); e.endGuess = true; }
       return e;
@@ -1148,7 +1149,7 @@ function decodeClothesDate(text) {
       : 'Ra mắt trước khoảng dữ liệu đang có · comeback: ' + h.comebacks.map(function (x) { return evFmt(x.start); }).join(', ');
     if (vq && !isLc) cb += '<br><b>Bản chưa chế màu đã mở ở Vô Cùng Quý Giá</b>' + (vq.from ? ' từ <b>' + evFmt(vq.from) + '</b>' : '') + ' · miễn phí, mở vĩnh viễn';
     if (lk) cb += '<br><b>Đã vào Linh Cảm Không Gian</b> (' + esc(lk.lc) + ')' + (lk.from ? ' từ <b>' + evFmt(lk.from) + '</b>' : (lk.news ? ' từ ' + esc(lk.news) : '')) + ' · mở vĩnh viễn, không còn comeback';
-    return '<article class="evcard' + (st && !st.cls ? ' now' : '') + '"><div class="meta"><span class="evtype">' + esc(e.type) + '</span>' + (st ? '<span class="evstate ' + st.cls + '">' + st.txt + '</span>' : '') + '</div>' +
+    return '<article class="evcard' + (st && !st.cls ? ' now' : '') + '">' + (e.img ? '<img class="evimg" src="ev/' + e.img + '" alt="" loading="lazy" decoding="async" onerror="this.remove()">' : '') + '<div class="meta"><span class="evtype">' + esc(e.type) + '</span>' + (st ? '<span class="evstate ' + st.cls + '">' + st.txt + '</span>' : '') + '</div>' +
       '<div class="t">' + esc(e.name) + '</div><div class="d">' + (isLc ? (e.type === 'Vô Cùng Quý Giá' ? 'Mở ở Vô Cùng Quý Giá từ ' + (e.start ? evFmt(e.start) : '(chưa rõ ngày)') + ' · miễn phí, mở vĩnh viễn' : (e.start ? 'Vào Linh Cảm Không Gian từ ' + evFmt(e.start) : 'Đã vào Linh Cảm Không Gian (chưa rõ ngày)') + ' · mở vĩnh viễn') : evFmt(e.start) + ' – ' + (e.end ? evFmt(e.end) + (e.endGuess ? ' (dự kiến)' : '') : 'chưa rõ ngày đóng')) + (e.news ? ' · ' + (/^Bản /.test(e.news) ? '' : 'Bản tin ') + esc(e.news) : '') + '</div>' +
       (e.sets ? '<div class="sets"><b>Bộ đồ:</b> ' + esc(e.sets) + '</div>' : '') + (e.how ? '<div class="how">' + esc(e.how) + '</div>' : '') +
       (e.type === 'Sự kiện 100 ngày' && !vq ? '<div class="how muted small">Đồ nhận ở đây là bản đã chế màu. Sau khi kết thúc, bản chưa chế màu sẽ mở miễn phí ở Vô Cùng Quý Giá (đợi fanpage báo ngày).</div>' : '') +

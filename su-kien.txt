@@ -1,6 +1,6 @@
 # LỊCH SỰ KIỆN NGÔI SAO THỜI TRANG
 # Mỗi dòng là MỘT lần sự kiện mở. Các cột ngăn bằng dấu |
-# Tên sự kiện | Loại | Ngày mở | Ngày đóng | Bộ đồ | Cách chơi | Bản tin | Link bài đăng | Lần mở
+# Tên sự kiện | Loại | Ngày mở | Ngày đóng | Bộ đồ | Cách chơi | Bản tin | Link bài đăng | Lần mở | Ảnh (tự điền)
 # Lần mở (không bắt buộc): Ra mắt hoặc Comeback.
 #
 # Loại: Big Event, Túi Phúc, Event ngày lễ, Linh Cảm Không Gian, Sự kiện 100 ngày, Vô Cùng Quý Giá, Gacha, Hồn Đom Đóm, 6 Bước Chọn, Đóng gói, Tiêu tim, Tiêu kim cương, Đồng Thoại Mộng Ảo, Bảo Tàng Kỳ Diệu, Event lẻ
