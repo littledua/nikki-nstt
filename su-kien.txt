@@ -103,11 +103,11 @@ Năm Tháng Tươi Đẹp | Big Event | 04/11/2024 |  |  |  |  | https://tinyurl
 Đại Dương Chìm Đắm | Big Event | 02/11/2024 |  |  |  | Bản 9.10.0 | https://tinyurl.com/479pumbj | Ra mắt
 Cảnh Giới Phù Hoa | Big Event | 30/09/2024 |  |  |  |  | https://tinyurl.com/3j5257cv | Comeback
 Quỹ Đạo Bầu Trời | Big Event | 02/08/2024 |  |  |  |  | https://tinyurl.com/5t37hvr6 | Comeback
-Tàn Tích Thời Gian | Big Event | 26/07/2024 |  |  |  | Bản 9.8.0 | https://tinyurl.com/4499rrcb | Ra mắt
+Tàn Tích Thời Gian | Big Event | 26/07/2024 | 06/08/2024 |  |  | Bản 9.8.0 | https://tinyurl.com/4499rrcb | Ra mắt
 Vùng Đất Lành | Big Event | 09/05/2024 |  |  |  |  | https://tinyurl.com/y8rs9yjh | Comeback
-Giải Mã Giấc Mơ | Big Event | 26/04/2024 |  |  |  | Bản 9.6.0 | https://tinyurl.com/2d9kzv2x | Ra mắt
+Giải Mã Giấc Mơ | Big Event | 26/04/2024 | 12/05/2024 |  |  | Bản 9.6.0 | https://tinyurl.com/2d9kzv2x | Ra mắt
 Huyết Nguyệt | Big Event | 01/04/2024 |  |  |  |  | https://tinyurl.com/mu4fcx5t | Comeback
-Tâm Trí Rối Bời | Big Event | 10/02/2024 |  |  |  |  | https://tinyurl.com/mvuvecee | Comeback
+Tâm Trí Rối Bời | Big Event | 10/02/2024 | 19/02/2024 |  |  |  | https://tinyurl.com/mvuvecee | Comeback
 Tứ Thời Họa Ngữ | Big Event | 26/01/2024 |  |  |  | Bản 9.4.0 | https://tinyurl.com/5xybkuj9 | Ra mắt
 Ký Ức Mộng Cảnh | Big Event | 07/01/2024 |  |  |  |  | https://tinyurl.com/mue4dsxb | Comeback
 Thế Giới Tươi Đẹp | Big Event | 31/10/2023 |  |  |  |  | https://tinyurl.com/hb3akur9 | Comeback
@@ -165,3 +165,9 @@ Linh Cảm Không Gian: Bài Ca Mùa Hạ | Linh Cảm Không Gian |  |  |  | T�
 Linh Cảm Không Gian: Đêm Vĩnh Hằng | Linh Cảm Không Gian |  |  |  | Tâm Nguyện Chi Môn: mua vé 350 Kim Cương, mở 5 ngày để chơi, dùng Kim Cương quay như Big Event. Gồm: Đêm Vĩnh Hằng | Bản 9.6.0
 Linh Cảm Không Gian: Ma Quái | Linh Cảm Không Gian |  |  |  | Tâm Nguyện Chi Môn: mua vé 350 Kim Cương, mở 5 ngày để chơi, dùng Kim Cương quay như Big Event. Gồm: Ma Quái | Bản 10.6.0
 Linh Cảm Không Gian: Phong Lâm Hỏa Sơn | Linh Cảm Không Gian |  |  |  | Tâm Nguyện Chi Môn: mua vé 350 Kim Cương, mở 5 ngày để chơi, dùng Kim Cương quay như Big Event. Gồm: Phong Lâm Hỏa Sơn | Bản 11.0.0
+Giờ Lành Năm Mới Túi Phúc Ước Nguyện - Du Ngoạn Không Gian | Túi Phúc | 24/01/2025 | 10/02/2025 | | Mở Túi Phúc ước nguyện nhận bộ đồ. | | https://www.facebook.com/979214170988510
+Âm Điệu Thu Sang | Event lẻ | | | | | | https://www.facebook.com/981313924111868
+Bảo Tàng Kỳ Diệu - Hình Bóng Thiên Yết | Bảo Tàng Kỳ Diệu | 25/11/2024 | 01/12/2024 | | | | https://www.facebook.com/928131646096763
+Kính Tìm Ánh Sáng | Sự kiện 100 ngày | 25/07/2024 | 13/11/2024 | | | | https://www.facebook.com/841170968126165
+Nạp Túi Phúc 2024 | Túi Phúc | 26/01/2024 | 15/02/2024 | | Nạp tích lũy nhận Túi Phúc. | | https://www.facebook.com/731037542472842
+Linh Cảm Không Gian | Linh Cảm Không Gian | 30/09/2021 | | | Ra mắt tính năng Linh Cảm Không Gian. | | | Ra mắt
