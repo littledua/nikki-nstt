@@ -93,66 +93,66 @@ Bảo Tàng Kỳ Diệu - Kỳ 8 | Bảo Tàng Kỳ Diệu | 25/03/2025 | 31/03/
 Vân Vũ Nhân Gian | Event lẻ | 16/03/2025 | 25/03/2025 | Bài Ca Mưa Rơi | Vượt ải nhận Bình Thời Tiết (Thiếu Nữ 1-3, Công Chúa 2-4) để sưu tập trang phục. | Kỳ 3 - 10.1.0 | https://www.facebook.com/1009633381279922
 Soi Chiếu Cố Nhân | Event lẻ | 12/03/2025 | 21/03/2025 | Múa Kiếm Đón Xuân, Lồng Sương Trên Không, Hương Trời Dưới Trăng | Tốn Gậy Trúc Xanh vượt ải nhận Hồng Phúc để sưu tập 3 trang phục đặc biệt và 2 nền mới. | Kỳ 2 - 10.1.0 | https://www.facebook.com/1007854798124447 | Ra mắt | 1005507098359217.webp
 Túi Phúc 2026 | Túi Phúc | 06/02/2026 | 24/02/2026 |  | Nạp tích lũy mở Túi Phúc 2026. Nạp đủ mốc thì mở lại Túi Phúc 2025. |  |  |  |  | Nạp
-Ánh Sáng Kỳ Tích | Big Event | 09/05/2026 | 25/05/2026 |  | Sự kiện kỷ niệm 10 năm, tích lũy nhận bộ. | Bản 11.2.0 | https://www.facebook.com/1511667551076500 | Ra mắt | 1511667551076500.webp
+Ánh Sáng Kỳ Tích | Big Event | 09/05/2026 | 25/05/2026 |  | Sự kiện kỷ niệm 10 năm, tích lũy nhận bộ. |  | https://www.facebook.com/1511667551076500 | Ra mắt | 1511667551076500.webp
 Ánh Sáng Ngưng Tụ | Big Event | 20/02/2026 | 01/03/2026 |  |  |  | https://www.facebook.com/1406839378225985 | Comeback | 1406839378225985.webp
 Biển Sao Ban Đầu - Thời Gian Hội Tụ | Big Event | 02/08/2025 | 11/08/2025 |  |  |  | https://www.facebook.com/1136247948618464 | Comeback | 1136247948618464.webp
-Hộp Ma Thuật | Big Event | 21/07/2025 |  |  |  | Bản 10.4.0 | https://tinyurl.com/3889pysn | Ra mắt
+Hộp Ma Thuật | Big Event | 21/07/2025 |  |  |  |  | https://tinyurl.com/3889pysn | Ra mắt
 Tứ Thời Họa Ngữ | Big Event | 01/02/2025 |  |  |  |  | https://tinyurl.com/5xybkuj9 | Comeback
-Ngôi Sao Dẫn Đường | Big Event | 24/01/2025 |  |  |  | Bản 10.0.0 | https://tinyurl.com/4cskemw8 | Ra mắt
+Ngôi Sao Dẫn Đường | Big Event | 24/01/2025 |  |  |  |  | https://tinyurl.com/4cskemw8 | Ra mắt
 Năm Tháng Tươi Đẹp | Big Event | 04/11/2024 |  |  |  |  | https://tinyurl.com/37s9wtu4 | Comeback
-Đại Dương Chìm Đắm | Big Event | 02/11/2024 |  |  |  | Bản 9.10.0 | https://tinyurl.com/479pumbj | Ra mắt
+Đại Dương Chìm Đắm | Big Event | 02/11/2024 |  |  |  |  | https://tinyurl.com/479pumbj | Ra mắt
 Cảnh Giới Phù Hoa | Big Event | 30/09/2024 | 06/10/2024 |  |  |  | https://www.facebook.com/888477116728883 | Comeback | 891472989762629.webp
 Quỹ Đạo Bầu Trời | Big Event | 02/08/2024 | 08/08/2024 |  |  |  | https://www.facebook.com/846963774213551 | Comeback | 846963774213551.webp
-Tàn Tích Thời Gian | Big Event | 26/07/2024 | 06/08/2024 |  |  | Bản 9.8.0 | https://www.facebook.com/841240388119223 | Ra mắt | 841240388119223.webp
+Tàn Tích Thời Gian | Big Event | 26/07/2024 | 06/08/2024 |  |  |  | https://www.facebook.com/841240388119223 | Ra mắt | 841240388119223.webp
 Vùng Đất Lành | Big Event | 09/05/2024 |  |  |  |  | https://tinyurl.com/y8rs9yjh | Comeback
-Giải Mã Giấc Mơ | Big Event | 26/04/2024 | 12/05/2024 |  |  | Bản 9.6.0 | https://www.facebook.com/784818830428046 | Ra mắt | 789230793320183.webp
+Giải Mã Giấc Mơ | Big Event | 26/04/2024 | 12/05/2024 |  |  |  | https://www.facebook.com/784818830428046 | Ra mắt | 789230793320183.webp
 Huyết Nguyệt | Big Event | 01/04/2024 | 07/04/2024 |  |  |  | https://www.facebook.com/769896851920244 | Comeback | 769896851920244.webp
 Tâm Trí Rối Bời | Big Event | 10/02/2024 | 19/02/2024 |  |  |  | https://www.facebook.com/741422964767633 | Comeback
-Tứ Thời Họa Ngữ | Big Event | 26/01/2024 |  |  |  | Bản 9.4.0 | https://tinyurl.com/5xybkuj9 | Ra mắt
+Tứ Thời Họa Ngữ | Big Event | 26/01/2024 |  |  |  |  | https://tinyurl.com/5xybkuj9 | Ra mắt
 Ký Ức Mộng Cảnh | Big Event | 07/01/2024 | 13/01/2024 |  |  |  | https://www.facebook.com/720097763566820 | Comeback | 720097763566820.webp
 Thế Giới Tươi Đẹp | Big Event | 31/10/2023 | 09/11/2023 |  | Sưu tầm trang phục 4 chị đẹp. |  | https://www.facebook.com/682301490679781 | Comeback | 682301490679781.webp
 Chiến Đỉnh Mây | Big Event | 19/09/2023 | 28/09/2023 | Thanh Long, Bạch Hổ, Chu Tước, Huyền Vũ | Sưu tầm trang phục 4 gia tộc thần thú. |  | https://www.facebook.com/657443243165606 | Comeback | 657443243165606.webp
 Thủy Triều Ký Ức | Big Event | 28/07/2023 | 06/08/2023 | Định Đoạt |  |  | https://www.facebook.com/628634709379793 | Comeback | 628634709379793.webp
-Ban Mai Rung Động | Big Event | 21/07/2023 |  |  |  | Bản 9.0.0 | https://tinyurl.com/yp87k4fa | Ra mắt
+Ban Mai Rung Động | Big Event | 21/07/2023 |  |  |  |  | https://tinyurl.com/yp87k4fa | Ra mắt
 Dòng Chảy Thời Gian | Big Event | 03/05/2023 |  |  |  |  | https://tinyurl.com/3vj7j7dy | Comeback
-Quyển Sách Mơ Ước | Big Event | 21/04/2023 |  |  |  | Bản 8.9.0 | https://tinyurl.com/mr3tm33j | Ra mắt
+Quyển Sách Mơ Ước | Big Event | 21/04/2023 |  |  |  |  | https://tinyurl.com/mr3tm33j | Ra mắt
 Ma Quái | Big Event | 22/03/2023 | 28/03/2023 |  |  |  | https://www.facebook.com/3483782735221265 | Comeback | 3483782735221265.webp
 Đêm Vĩnh Hằng | Big Event | 28/01/2023 | 03/02/2023 | Công Chúa Nắng Mai, Nữ Vương Đêm Ảo | Sưu tầm 2 bộ trang phục. |  | https://www.facebook.com/3441628979436641 | Comeback | 3441628979436641.webp
-Ánh Sáng Ngưng Tụ | Big Event | 13/01/2023 |  |  |  | Bản 8.7.0 | https://tinyurl.com/4fry57wf | Ra mắt
+Ánh Sáng Ngưng Tụ | Big Event | 13/01/2023 |  |  |  |  | https://tinyurl.com/4fry57wf | Ra mắt
 Vùng Đất Lành | Big Event | 27/10/2022 | 04/11/2022 |  | Vào Hoang Mạc, chọn Tìm để nhận Quả Lạc Lối. |  | https://www.facebook.com/3362285267371013 | Comeback | 3362285267371013.webp
-Biển Sao Ban Đầu - Thời Gian Hội Tụ | Big Event | 20/10/2022 | 30/10/2022 |  |  | Bản 8.5.0 | https://www.facebook.com/3356035697995970 | Ra mắt | 3356035697995970.webp
+Biển Sao Ban Đầu - Thời Gian Hội Tụ | Big Event | 20/10/2022 | 30/10/2022 |  |  |  | https://www.facebook.com/3356035697995970 | Ra mắt | 3356035697995970.webp
 Huyễn Cảnh Thạch Bi | Big Event | 02/08/2022 | 11/08/2022 |  | Quay lầu đạt mốc để nhận các nàng thơ. |  | https://www.facebook.com/3289280041338203 | Comeback | 3289280041338203.webp
-Tường Vi Ban Trưa | Big Event | 27/07/2022 | 05/08/2022 |  |  | Bản 8.3.0 | https://www.facebook.com/3284851318447742 | Ra mắt | 3284851318447742.webp
-Tâm Trí Rối Bời | Big Event | 27/04/2022 |  |  |  | Bản 8.1.0 | https://tinyurl.com/mvuvecee | Ra mắt
+Tường Vi Ban Trưa | Big Event | 27/07/2022 | 05/08/2022 |  |  |  | https://www.facebook.com/3284851318447742 | Ra mắt | 3284851318447742.webp
+Tâm Trí Rối Bời | Big Event | 27/04/2022 |  |  |  |  | https://tinyurl.com/mvuvecee | Ra mắt
 Sơn Hải Vân | Big Event | 19/04/2022 | 25/04/2022 |  |  |  | https://www.facebook.com/3203778346555040 | Comeback | 3203778346555040.webp
 Cảnh Giới Phù Hoa | Big Event | 05/02/2022 | 14/02/2022 | Dị Mộng Âm U, Cánh Hồng Nhung, Sắc Hồng Yêu Thương, Ánh Sáng Ban Mai | Chọn Tìm để nhận Khế Ước Nội Tâm, tích lũy đạt mốc. |  | https://www.facebook.com/3146096662323209 | Comeback | 3146096662323209.webp
 Quỹ Đạo Bầu Trời | Big Event | 13/12/2021 | 19/12/2021 |  |  |  | https://www.facebook.com/3107694959496713 | Comeback | 3107694959496713.webp
 Phong Lâm Hỏa Sơn | Big Event | 04/10/2021 | 10/10/2021 | Bạo Phong Chiến Y, Trúc Lâm Vân Y, Nguyệt Hoả Thần, Thiên Đạo Âm Vương |  |  | https://www.facebook.com/3050118068587736 | Comeback | 3050118068587736.webp
 Năm Tháng Tươi Đẹp | Big Event | 27/08/2021 | 05/09/2021 |  | Hơn 10 bộ trang phục và nhiều nền. |  | https://www.facebook.com/3017835601815983 | Comeback | 3017835601815983.webp
-Vùng Đất Lành | Big Event | 19/08/2021 |  |  |  | Bản 7.7.0 | https://tinyurl.com/y8rs9yjh | Ra mắt
+Vùng Đất Lành | Big Event | 19/08/2021 |  |  |  |  | https://tinyurl.com/y8rs9yjh | Ra mắt
 Ký Ức Mộng Cảnh | Big Event | 27/04/2021 |  |  |  |  | https://tinyurl.com/mue4dsxb | Comeback
-Huyễn Cảnh Thạch Bi | Big Event | 15/04/2021 |  |  |  | Bản 7.4.0 | https://tinyurl.com/ma7hhdy3 | Ra mắt
+Huyễn Cảnh Thạch Bi | Big Event | 15/04/2021 |  |  |  |  | https://tinyurl.com/ma7hhdy3 | Ra mắt
 Thủy Triều Ký Ức | Big Event | 08/02/2021 | 17/02/2021 |  |  |  | https://www.facebook.com/2866529523613259 | Comeback | 2866529523613259.webp
 Thế Giới Tươi Đẹp | Big Event | 04/12/2020 |  |  |  |  | https://tinyurl.com/hb3akur9 | Comeback
-Cảnh Giới Phù Hoa | Big Event | 21/10/2020 |  |  |  | Bản 7.0.0 | https://tinyurl.com/3j5257cv | Ra mắt
+Cảnh Giới Phù Hoa | Big Event | 21/10/2020 |  |  |  |  | https://tinyurl.com/3j5257cv | Ra mắt
 Đêm Vĩnh Hằng | Big Event | 28/08/2020 |  |  |  |  | https://tinyurl.com/zuv27ba8 | Comeback
 Chiến Đỉnh Mây | Big Event | 09/05/2020 |  | Thanh Long, Bạch Hổ, Chu Tước, Huyền Vũ |  |  | https://tinyurl.com/579vwd7x | Comeback
-Quỹ Đạo Bầu Trời | Big Event | 29/04/2020 |  |  |  | Bản 6.7.0 | https://tinyurl.com/5t37hvr6 | Ra mắt
+Quỹ Đạo Bầu Trời | Big Event | 29/04/2020 |  |  |  |  | https://tinyurl.com/5t37hvr6 | Ra mắt
 Phong Lâm Hỏa Sơn | Big Event | 24/01/2020 |  |  |  |  | https://tinyurl.com/2vdxsrtn | Comeback
-Ký Ức Mộng Cảnh | Big Event | 16/01/2020 |  |  |  | Bản 6.4.0 | https://tinyurl.com/mue4dsxb | Ra mắt
+Ký Ức Mộng Cảnh | Big Event | 16/01/2020 |  |  |  |  | https://tinyurl.com/mue4dsxb | Ra mắt
 Năm Tháng Tươi Đẹp | Big Event | 12/12/2019 |  |  |  |  | https://tinyurl.com/37s9wtu4 | Comeback
-Thủy Triều Ký Ức | Big Event | 08/11/2019 |  |  |  | Bản 6.2.0 | https://tinyurl.com/yyvywn35 | Ra mắt
+Thủy Triều Ký Ức | Big Event | 08/11/2019 |  |  |  |  | https://tinyurl.com/yyvywn35 | Ra mắt
 Dòng Chảy Thời Gian | Big Event | 16/10/2019 |  |  |  |  | https://tinyurl.com/3vj7j7dy | Comeback
 Sơn Hải Vân | Big Event | 05/09/2019 |  |  |  |  | https://tinyurl.com/25zyv9fz | Comeback
-Thế Giới Tươi Đẹp | Big Event | 15/08/2019 |  |  |  | Bản 6.0.0 | https://tinyurl.com/hb3akur9 | Ra mắt
+Thế Giới Tươi Đẹp | Big Event | 15/08/2019 |  |  |  |  | https://tinyurl.com/hb3akur9 | Ra mắt
 Huyết Nguyệt | Big Event | 13/07/2019 |  |  |  |  | https://tinyurl.com/mu4fcx5t | Comeback
 Ma Quái | Big Event | 13/06/2019 |  |  |  |  | https://tinyurl.com/329s2ut8 | Comeback
 Bài Ca Mùa Hạ | Big Event | 07/05/2019 |  |  |  |  | https://tinyurl.com/yramwbt3 | Comeback
 Chiến Đỉnh Mây | Big Event | 12/04/2019 |  | Thanh Long, Bạch Hổ, Chu Tước, Huyền Vũ |  |  | https://tinyurl.com/579vwd7x | Comeback
-Năm Tháng Tươi Đẹp | Big Event | 03/04/2019 |  |  |  | Bản 5.6.0 | https://tinyurl.com/37s9wtu4 | Ra mắt
+Năm Tháng Tươi Đẹp | Big Event | 03/04/2019 |  |  |  |  | https://tinyurl.com/37s9wtu4 | Ra mắt
 Phong Lâm Hỏa Sơn | Big Event | 30/01/2019 |  |  |  |  | https://tinyurl.com/2vdxsrtn | Ra mắt
 Đêm Vĩnh Hằng | Big Event | 06/12/2018 |  |  |  |  | https://tinyurl.com/zuv27ba8 | Comeback
-Sơn Hải Vân | Big Event | 30/11/2018 |  |  |  | Bản 5.8.0 | https://www.facebook.com/2215638102035741 | Ra mắt | 2215638102035741.webp
+Sơn Hải Vân | Big Event | 30/11/2018 |  |  |  |  | https://www.facebook.com/2215638102035741 | Ra mắt | 2215638102035741.webp
 Dòng Chảy Thời Gian | Big Event | 13/11/2018 |  |  |  |  | https://tinyurl.com/3vj7j7dy | Comeback
 Ma Quái | Big Event | 25/08/2018 |  |  |  |  | https://www.facebook.com/2151462588453293 | Ra mắt | 2151462588453293.webp
 Chiến Đỉnh Mây | Big Event | 06/06/2018 |  | Thanh Long, Bạch Hổ, Chu Tước, Huyền Vũ |  |  | https://www.facebook.com/2079757348957151 | Ra mắt | 2079757348957151.webp
@@ -161,15 +161,15 @@ Bài Ca Mùa Hạ | Big Event | 01/04/2018 |  |  |  |  | https://tinyurl.com/yra
 Dòng Chảy Thời Gian | Big Event | 07/02/2018 |  |  |  |  | https://tinyurl.com/3vj7j7dy | Ra mắt
 Đêm Vĩnh Hằng | Big Event | 08/12/2017 |  |  |  |  | https://www.facebook.com/1982719288660958 | Ra mắt
 Bài Ca Mùa Hạ | Big Event | 14/07/2017 |  |  |  |  | https://tinyurl.com/yramwbt3 | Ra mắt
-Linh Cảm Không Gian: Bài Ca Mùa Hạ | Linh Cảm Không Gian | 30/09/2021 |  |  | Tâm Nguyện Chi Môn: mua vé 350 Kim Cương, mở 5 ngày để chơi, dùng Kim Cương quay như Big Event. Gồm: Bài Ca Mùa Hạ | Bản 7.8.0
-Linh Cảm Không Gian: Đêm Vĩnh Hằng | Linh Cảm Không Gian | 26/04/2024 |  |  | Tâm Nguyện Chi Môn: mua vé 350 Kim Cương, mở 5 ngày để chơi, dùng Kim Cương quay như Big Event. Gồm: Đêm Vĩnh Hằng | Bản 9.6.0
-Linh Cảm Không Gian: Ma Quái | Linh Cảm Không Gian | 31/10/2025 |  |  | Tâm Nguyện Chi Môn: mua vé 350 Kim Cương, mở 5 ngày để chơi, dùng Kim Cương quay như Big Event. Gồm: Ma Quái | Bản 10.6.0 | https://www.facebook.com/1250545857188672 |  | 1250545857188672.webp
-Linh Cảm Không Gian: Phong Lâm Hỏa Sơn | Linh Cảm Không Gian | 01/03/2026 |  |  | Tâm Nguyện Chi Môn: mua vé 350 Kim Cương, mở 5 ngày để chơi, dùng Kim Cương quay như Big Event. Gồm: Phong Lâm Hỏa Sơn | Bản 11.0.0 | https://www.facebook.com/1417122630530993 |  | 1417122630530993.webp
+Linh Cảm Không Gian: Bài Ca Mùa Hạ | Linh Cảm Không Gian | 30/09/2021 |  |  | Tâm Nguyện Chi Môn: mua vé 350 Kim Cương, mở 5 ngày để chơi, dùng Kim Cương quay như Big Event. Gồm: Bài Ca Mùa Hạ
+Linh Cảm Không Gian: Đêm Vĩnh Hằng | Linh Cảm Không Gian | 26/04/2024 |  |  | Tâm Nguyện Chi Môn: mua vé 350 Kim Cương, mở 5 ngày để chơi, dùng Kim Cương quay như Big Event. Gồm: Đêm Vĩnh Hằng
+Linh Cảm Không Gian: Ma Quái | Linh Cảm Không Gian | 31/10/2025 |  |  | Tâm Nguyện Chi Môn: mua vé 350 Kim Cương, mở 5 ngày để chơi, dùng Kim Cương quay như Big Event. Gồm: Ma Quái |  | https://www.facebook.com/1250545857188672 |  | 1250545857188672.webp
+Linh Cảm Không Gian: Phong Lâm Hỏa Sơn | Linh Cảm Không Gian | 01/03/2026 |  |  | Tâm Nguyện Chi Môn: mua vé 350 Kim Cương, mở 5 ngày để chơi, dùng Kim Cương quay như Big Event. Gồm: Phong Lâm Hỏa Sơn |  | https://www.facebook.com/1417122630530993 |  | 1417122630530993.webp
 Túi Phúc 2025 | Túi Phúc | 24/01/2025 | 10/02/2025 | Âm Điệu Thu Sang | Mở Túi Phúc ước nguyện nhận bộ đồ. Tên sự kiện: Giờ Lành Năm Mới - Túi Phúc Ước Nguyện, Du Ngoạn Không Gian. |  | https://www.facebook.com/979214170988510
-Bảo Tàng Kỳ Diệu - Hình Bóng Thiên Yết | Bảo Tàng Kỳ Diệu | 25/11/2024 | 01/12/2024 | | | | https://www.facebook.com/928131646096763
-Ánh Sáng Lấp Lánh | Sự kiện 100 ngày | 25/07/2024 | 13/11/2024 | | | | https://www.facebook.com/841170968126165
+Bảo Tàng Kỳ Diệu - Hình Bóng Thiên Yết | Bảo Tàng Kỳ Diệu | 25/11/2024 | 01/12/2024 |  |  |  | https://www.facebook.com/928131646096763
+Ánh Sáng Lấp Lánh | Sự kiện 100 ngày | 25/07/2024 | 13/11/2024 |  |  |  | https://www.facebook.com/841170968126165
 Nạp Túi Phúc 2024 | Túi Phúc | 26/01/2024 | 15/02/2024 |  | Nạp tích lũy nhận Túi Phúc. |  | https://www.facebook.com/731037542472842 |  |  | Nạp
-Linh Cảm Không Gian | Linh Cảm Không Gian | 30/09/2021 | | | Ra mắt tính năng Linh Cảm Không Gian. | | | Ra mắt
+Linh Cảm Không Gian | Linh Cảm Không Gian | 30/09/2021 |  |  | Ra mắt tính năng Linh Cảm Không Gian. |  |  | Ra mắt
 Hồn Đom Đóm - Kho Báu Chân Thành | Hồn Đom Đóm | 27/07/2026 | 29/07/2026 | Kho Báu Chân Thành | Đảo Mơ tìm Hồn Đom Đóm, nâng cấp qua thợ dệt. |  | https://www.facebook.com/1571852760972889 | Comeback
 Biển Sao | Event lẻ | 28/03/2026 | 03/04/2026 |  | Ghép 2v2 với NPC, nhận Đá Ngôi Sao đổi tự do. |  | https://www.facebook.com/1473938767430956 | Comeback | 1453462043563718.webp
 Hồn Đom Đóm - Chim Hót Ban Mai | Hồn Đom Đóm | 17/03/2026 | 19/03/2026 | Chim Hót Ban Mai | Đảo Mơ tìm Hồn Đom Đóm, nâng cấp qua thợ dệt. |  | https://www.facebook.com/1465453364946163 | Comeback
@@ -212,7 +212,7 @@ Báu Vật Sa Mạc | Gacha | 18/01/2022 | 24/01/2022 |  | Quay lầu 100 kim c�
 Bốn Mùa Âm Vang (Thu Đông) | Event lẻ | 31/12/2021 | 06/01/2022 | Ước Thề Mùa Thu, Tuyết Trắng Ngày Đông | Quay thẻ hỗ trợ, đấu 2v2, thu thập đạt mốc. |  | https://www.facebook.com/2941760792741748 | Comeback | 3120834251516117.webp
 Hồi Ức Khó Quên | Event lẻ | 15/11/2021 | 21/11/2021 |  | Phối đồ đấu 1v1, nhận Nhẫn đổi phụ kiện. |  | https://www.facebook.com/2909570579294103 | Comeback | 3083258698607006.webp
 Đêm Kinh Hoàng | Gacha | 29/10/2021 | 04/11/2021 |  | Mua vé quay lầu, đổi phần thưởng ở Khu Đổi Thưởng. |  | https://www.facebook.com/2897509557166872 | Comeback | 3069302130002663.webp
-Lâu Đài Bóng Đêm | Event lẻ | 11/08/2021 | 17/08/2021 | Người Đốn Củi, Ma Cà Rồng | Ghép 2v2 với NPC, tích Khóa Hồi Ức nhận bộ theo mốc. |  | https://www.facebook.com/2840951639489331 | Comeback | 3004673253132218.webp
+Lâu Đài Bóng Đêm | Event lẻ | 10/08/2021 | 16/08/2021 | Người Đốn Củi, Ma Cà Rồng | Ghép 2v2 với NPC, tích Khóa Hồi Ức nhận bộ theo mốc. |  | https://www.facebook.com/2840951639489331 | Comeback | 3004673253132218.webp
 Bài Ca Thuần Khiết | Gacha | 15/07/2021 | 21/07/2021 |  | Quay lầu bằng kim cương, nhận ngẫu nhiên món trang phục. |  | https://www.facebook.com/2822407558010406 | Comeback
 Bí Cảnh Rừng Tiên | Gacha | 03/06/2021 | 09/06/2021 |  | Mua vé quay lầu, đổi phần thưởng ở Khu Đổi Thưởng. |  | https://www.facebook.com/2792084101042752 | Comeback | 2953825524883658.webp
 Bí Mật Tinh Linh | Event lẻ | 24/06/2020 | 30/06/2020 | Quà Vui Vẻ, Tiên Cảnh Mùa Xuân | Ghép đôi đấu, thắng 5 thua 3, đổi bộ theo mốc. |  | https://www.facebook.com/2529491890635309 | Comeback
@@ -236,14 +236,14 @@ Tháng Năm Kỳ Diệu | Gacha | 20/09/2021 | 26/09/2021 |  |  |  | https://www
 Tình Ca Mộng Mơ | Gacha | 24/08/2022 | 30/08/2022 |  |  |  | https://www.facebook.com/611347790356729 | Ra mắt
 Đêm Kinh Hoàng | Gacha | 29/02/2020 | 06/03/2020 | Ám Ảnh Màn Đêm |  |  | https://www.facebook.com/2568229183443296 | Ra mắt | 2568229183443296.webp
 Ảo Cảnh Lưu Ly | Event lẻ | 20/10/2023 | 30/10/2023 |  |  |  | https://www.facebook.com/864621651696007 | Ra mắt
-Nụ Hôn Chim Lửa | Gacha | 04/04/2023 | 10/04/2023 | | | | https://www.facebook.com/761436202014553 | Comeback
+Nụ Hôn Chim Lửa | Gacha | 04/04/2023 | 10/04/2023 |  |  |  | https://www.facebook.com/761436202014553 | Comeback
 Sự Trở Lại Của Nữ Hoàng Đêm | Event lẻ | 08/07/2016 |  | Nữ Hoàng Đêm, Mong Manh, Lộc Linh |  |  | https://www.facebook.com/1717074625225427 | Comeback
 Hồi Ức Khó Quên | Event lẻ | 08/07/2016 | 16/07/2016 | Sánh Duyên, Trong Sáng, Hoa Tử Đằng | Vượt ải Tuần Trăng Mật lấy Nhẫn Ước Nguyện đổi váy cưới. Lúc đầu tên "Hạnh Phúc". |  | https://www.facebook.com/1719198741679682 | Ra mắt
 Nạp Tặng Ngát Hương Hoa | Event lẻ | 12/08/2016 | 21/08/2016 | Ngát Hương Hoa | Nạp từ 100K trở lên nhận bộ trang phục. |  | https://www.facebook.com/1735050520094504 | Ra mắt |  | Nạp
 Hồn Khúc | Event lẻ | 01/09/2016 | 05/09/2016 | Hồn Khúc, Điệu Buồn | Vượt ải nhận đồ, nâng cấp Hồn Khúc, đổi màu ra Điệu Buồn. |  | https://www.facebook.com/1745249139074642 | Ra mắt
 Biển Sao | Event lẻ | 27/09/2016 |  | Hồ Ly Ánh Trăng, Kim Long |  |  | https://www.facebook.com/1757317181201171 | Ra mắt | 1757317181201171.webp
 Nạp Kim Cương Đủ Mốc | Event lẻ | 27/09/2016 |  | Sylvia, Cá Thủy Mặc | Nạp 500KC nhận Sylvia, 988KC nhận Cá Thủy Mặc. |  | https://www.facebook.com/1757317181201171 | Ra mắt | 1757317181201171.webp | Nạp
-Hội Âm Nhạc | Event lẻ | 14/10/2016 |  | Khúc Ngẫu Hứng, Giao Hưởng Trắng Đen, Hợp Tấu Clarinet |  |  | https://www.facebook.com/1764038410529048 | Ra mắt | 1764038410529048.webp
+Hội Âm Nhạc | Event lẻ | 08/10/2016 | 15/10/2016 | Khúc Ngẫu Hứng, Giao Hưởng Trắng Đen, Hợp Tấu Clarinet |  |  | https://www.facebook.com/1764038410529048 | Ra mắt | 1764038410529048.webp
 Vũ Hội Băng Tuyết | Event lẻ | 06/11/2016 |  | Thiếu Nữ Xuân, Thiếu Nữ Xuân-Hiếm, Nữ Hoàng Tuyết |  |  | https://www.facebook.com/1779265609006328 | Ra mắt | 1779265609006328.webp
 Nạp Tích Lũy Vũ Hội Băng Tuyết | Event lẻ | 06/11/2016 |  | Bách Hợp Sắc Sảo, Thiếu Nữ Hanbok | Nạp 100K nhận Bách Hợp Sắc Sảo, thêm 170K nhận Hanbok. |  | https://www.facebook.com/1779265609006328 | Ra mắt | 1779265609006328.webp | Nạp
 Bí Ẩn Phòng Khám | Event lẻ | 24/11/2016 | 30/11/2016 | Phù Thủy Áo Trắng, Thiên Thần Tội Lỗi | Chọn giảm 50% Khế Ước 1 bộ, vượt ải lấy Khế Ước đổi đồ. |  | https://www.facebook.com/1786374494962106 | Ra mắt | 1786374494962106.webp
@@ -283,7 +283,7 @@ Lễ Phục Sinh | Event ngày lễ | 01/04/2018 | 07/04/2018 | Giấc Mơ Xuân
 Nạp Tích Lũy Tứ Đại Gia Tộc | Event lẻ | 06/06/2018 |  |  | Nạp tích lũy 250/500/1000/2000/5500KC nhận 1 bộ mỗi mốc. |  | https://www.facebook.com/2085492538383632 | Ra mắt | 2085492538383632.webp | Nạp
 Thất Tịch | Event ngày lễ | 13/08/2018 | 19/08/2018 | Giấc Mơ Mộng Ảo | Vượt ải rơi Sợi Tơ Mịn, chế bản vẽ ở Khu Thiết Kế. |  | https://www.facebook.com/2142363639363188 | Comeback | 2142363639363188.webp
 Nạp Tích Lũy 1000K Yêu Ma Quỷ Quái | Event lẻ | 25/08/2018 | 03/09/2018 | Dạ Tiệc Đỏ | Nạp tích lũy đủ 1000K nhận bộ. |  | https://www.facebook.com/2157093011223584 |  | 2157093011223584.webp | Nạp
-Gió Bão Kỳ 2 - Tiềm Long Trổi Dậy | Event lẻ | 07/09/2018 |  |  |  |  | https://www.facebook.com/2167498896849662 | Ra mắt | 2167498896849662.webp
+Gió Bão Kỳ 2 - Tiềm Long Trổi Dậy | Event lẻ | 04/09/2018 | 06/09/2018 |  |  |  | https://www.facebook.com/2167498896849662 | Ra mắt | 2167498896849662.webp
 Hồi Ức Khó Quên | Event lẻ | 18/09/2018 |  |  |  |  | https://www.facebook.com/2172843916315160 | Comeback | 2172843916315160.webp
 Nạp Mốc Bất Kỳ Tặng Thời Thanh Xuân | Event lẻ | 28/09/2018 | 07/10/2018 | Thời Thanh Xuân | Nạp mốc Kim Cương bất kỳ nhận bộ. |  | https://www.facebook.com/2179666715632880 |  | 2179666715632880.webp | Nạp
 Kỷ Nguyên Lãng Mạn | Event lẻ | 21/10/2018 | 28/10/2018 | Trợ Lý Dễ Thương, Mèo và Nhà Tiểu Thuyết | Vượt ải lấy Vé Xe đổi đồ. |  | https://www.facebook.com/2192145694384982 | Ra mắt | 2192145694384982.webp
@@ -298,7 +298,7 @@ Hồ Ly Tân Nương | Gacha | 23/12/2018 | 29/12/2018 | Hồ Ly Tân Nương | 
 Nạp Tích Lũy Lời Thề Tường Vi | Event lẻ | 23/12/2018 | 29/12/2018 | Lời Thề Tường Vi | Nạp tích lũy 100/200/500/1000KC nhận từng phần. |  | https://www.facebook.com/2233862476879970 |  | 2233862476879970.webp | Nạp
 Đại Dương Dậy Sóng | Event lẻ | 02/01/2019 | 08/01/2019 | Thuần Phục Gió Xoáy, Canh Giữ Kho Báu |  |  | https://www.facebook.com/2240977352835149 | Ra mắt | 2240977352835149.webp
 Nạp Tích Lũy Robot Báo Đen | Event lẻ | 02/01/2019 | 08/01/2019 | Robot Báo Đen | Nạp tích lũy 2500KC nhận bộ. |  | https://www.facebook.com/2239222609677290 |  | 2239222609677290.webp | Nạp
-Túi Phúc 2019 | Túi Phúc | 30/01/2019 | 19/02/2019 | Thơ Tình Vấn Vương | Nạp Kim Cương đạt mốc, nhận ngẫu nhiên 1 trong 5 bộ. |  | https://www.facebook.com/2256904831242401 | Ra mắt | 2256904831242401.webp | Nạp
+Túi Phúc 2019 | Túi Phúc | 30/01/2019 | 16/02/2019 | Thơ Tình Vấn Vương | Nạp Kim Cương đạt mốc, nhận ngẫu nhiên 1 trong 5 bộ. |  | https://www.facebook.com/2256904831242401 | Ra mắt | 2256904831242401.webp | Nạp
 Hồi Ức Khó Quên | Event lẻ | 03/02/2019 | 12/02/2019 |  | Mở lại các bộ váy cưới kỳ trước. |  | https://www.facebook.com/2259937127605838 | Comeback | 2259937127605838.webp
 Bí Mật Cánh Bướm | Event lẻ | 03/02/2019 | 09/02/2019 | Khúc Hát Thủy Triều, Cánh Bướm Hoàng Hôn |  |  | https://www.facebook.com/2259342114332006 | Ra mắt | 2259342114332006.webp
 Vũ Khúc Chung Tình | Event ngày lễ | 13/02/2019 | 19/02/2019 | Lông Vũ Chân Tình, Cánh Chung Tình |  |  | https://www.facebook.com/2261334550799429 | Ra mắt | 2261334550799429.webp
@@ -404,7 +404,7 @@ Truyền Thuyết Tinh Hà Cổ Tích Ngàn Sao | Event lẻ | 07/11/2022 | 13/1
 Hồn Đom Đóm - Chim Hót Ban Mai | Hồn Đom Đóm | 20/01/2023 | 22/01/2023 |  |  |  | https://www.facebook.com/3435377670061772 | Comeback | 3435377670061772.webp
 Hồn Đom Đóm - Hươu Cửu Sắc | Hồn Đom Đóm | 03/02/2023 | 05/02/2023 |  |  |  | https://www.facebook.com/3448084722124400 | Comeback | 3448084722124400.webp
 Hồn Đom Đóm - Môtô Đêm | Hồn Đom Đóm | 17/04/2023 | 19/04/2023 |  |  |  | https://www.facebook.com/3500806903518848 | Comeback | 3500806903518848.webp
-Phong Hoa Tuyết Nguyệt | Gacha | 02/05/2023 | 12/05/2023 |  |  |  | https://www.facebook.com/3511980399068165 | Comeback | 3511980399068165.webp
+Phong Hoa Tuyết Nguyệt | Gacha | 03/05/2023 | 12/05/2023 |  |  |  | https://www.facebook.com/3511980399068165 | Comeback | 3511980399068165.webp
 Giấc Mộng Thủy Tinh | Event lẻ | 20/05/2023 | 26/05/2023 | Mộng Cõi Tiên, Tô Điểm Ước Mơ | Làm nhiệm vụ sự kiện nhận 2 bộ. |  | https://www.facebook.com/3524268724505999 | Comeback | 3524268724505999.webp
 Sắc Trà Trong Mưa | Event lẻ | 20/05/2023 | 29/05/2023 | Trà Xuân Thơm Ngát |  |  | https://www.facebook.com/3525583521041186 | Ra mắt | 3525583521041186.webp
 Hiệp Khách Phong Trần | Event lẻ | 27/05/2023 | 02/06/2023 | Nữ Hiệp Thần Bí, Bọ Cạp Ma Mị |  |  | https://www.facebook.com/3529140960685442 | Ra mắt | 3529140960685442.webp
