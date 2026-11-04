@@ -152,11 +152,11 @@ Chiến Đỉnh Mây | Big Event | 12/04/2019 |  | Thanh Long, Bạch Hổ, Chu 
 Năm Tháng Tươi Đẹp | Big Event | 03/04/2019 |  |  |  | Bản 5.6.0 | https://tinyurl.com/37s9wtu4 | Ra mắt
 Phong Lâm Hỏa Sơn | Big Event | 30/01/2019 |  |  |  |  | https://tinyurl.com/2vdxsrtn | Ra mắt
 Đêm Vĩnh Hằng | Big Event | 06/12/2018 |  |  |  |  | https://tinyurl.com/zuv27ba8 | Comeback
-Sơn Hải Vân | Big Event | 30/11/2018 |  |  |  | Bản 5.8.0 | https://www.facebook.com/2215638102035741 | Ra mắt
+Sơn Hải Vân | Big Event | 30/11/2018 |  |  |  | Bản 5.8.0 | https://www.facebook.com/2215638102035741 | Ra mắt | 2215638102035741.webp
 Dòng Chảy Thời Gian | Big Event | 13/11/2018 |  |  |  |  | https://tinyurl.com/3vj7j7dy | Comeback
-Ma Quái | Big Event | 25/08/2018 |  |  |  |  | https://www.facebook.com/2151462588453293 | Ra mắt
-Chiến Đỉnh Mây | Big Event | 06/06/2018 |  | Thanh Long, Bạch Hổ, Chu Tước, Huyền Vũ |  |  | https://www.facebook.com/2079757348957151 | Ra mắt
-Huyết Nguyệt | Big Event | 22/04/2018 |  |  |  |  | https://www.facebook.com/2054190171513869 | Ra mắt
+Ma Quái | Big Event | 25/08/2018 |  |  |  |  | https://www.facebook.com/2151462588453293 | Ra mắt | 2151462588453293.webp
+Chiến Đỉnh Mây | Big Event | 06/06/2018 |  | Thanh Long, Bạch Hổ, Chu Tước, Huyền Vũ |  |  | https://www.facebook.com/2079757348957151 | Ra mắt | 2079757348957151.webp
+Huyết Nguyệt | Big Event | 22/04/2018 |  |  |  |  | https://www.facebook.com/2054190171513869 | Ra mắt | 2054190171513869.webp
 Bài Ca Mùa Hạ | Big Event | 01/04/2018 |  |  |  |  | https://tinyurl.com/yramwbt3 | Comeback
 Dòng Chảy Thời Gian | Big Event | 07/02/2018 |  |  |  |  | https://tinyurl.com/3vj7j7dy | Ra mắt
 Đêm Vĩnh Hằng | Big Event | 08/12/2017 |  |  |  |  | https://www.facebook.com/1982719288660958 | Ra mắt
@@ -276,26 +276,26 @@ Gói Quà Áo Dài Trắng | Event lẻ | 15/11/2017 |  | Áo Dài Trắng | Mua
 Nạp Mộng Đen Trắng | Event lẻ | 08/12/2017 | 17/12/2017 | Ngao Du Kinh Mộng, Mộng Du Hành, Thiên Kim Đài Cát | Nạp mốc 100K, 200K, 500K nhận bộ tương ứng. |  | https://www.facebook.com/1984542425145311 | Ra mắt | 1984542425145311.webp
 Giáng Sinh Tuyết Trắng | Event ngày lễ | 22/12/2017 | 26/12/2017 | Khúc Hát Tuyết Đêm, Gặp Gỡ Noel | Vượt ải lấy Chuông Tuyết gói quà, đủ số nhận đồ. |  | https://www.facebook.com/1990991757833711 | Ra mắt | 1990991757833711.webp
 Thắp Đèn Năm Mới | Event ngày lễ | 29/12/2017 | 04/01/2018 | Gấm Hoa Đêm | Toàn server đạt mốc lượt vượt ải, Hội, thi đấu, bình chọn nhận món. |  | https://www.facebook.com/1994928287440058 | Ra mắt | 1994928287440058.webp
-Biển Sao | Event lẻ | 05/01/2018 | 11/01/2018 | Cô gái loli thỏ, Sao Trương Nguyệt Lộc |  |  | https://www.facebook.com/1997926627140224 | Comeback
-Túi Phúc 2018 | Túi Phúc | 07/02/2018 |  | Hạt Ngọc Vàng, Dòng Thời Gian, Mong Xuân Về, Hoa Mộng Ảo, Thiên Chiếu, Nguyệt Độc | Nạp tích lũy các mốc nhận Túi Phúc May Mắn. |  | https://www.facebook.com/2017451855187701 | Ra mắt
-Quán Ăn Vui Vẻ | Event ngày lễ | 28/02/2018 | 06/03/2018 | Quán Ăn Vui Vẻ, Tiệm Bánh Mumu, Múa Rồng | Vượt ải tìm Susu thắp đèn, đạt mốc nhận đồ. |  | https://www.facebook.com/2026323474300539 | Ra mắt
+Biển Sao | Event lẻ | 05/01/2018 | 11/01/2018 | Cô gái loli thỏ, Sao Trương Nguyệt Lộc |  |  | https://www.facebook.com/1997926627140224 | Comeback | 1997926627140224.webp
+Túi Phúc 2018 | Túi Phúc | 07/02/2018 |  | Hạt Ngọc Vàng, Dòng Thời Gian, Mong Xuân Về, Hoa Mộng Ảo, Thiên Chiếu, Nguyệt Độc | Nạp tích lũy các mốc nhận Túi Phúc May Mắn. |  | https://www.facebook.com/2017451855187701 | Ra mắt | 2017451855187701.webp
+Quán Ăn Vui Vẻ | Event ngày lễ | 28/02/2018 | 06/03/2018 | Quán Ăn Vui Vẻ, Tiệm Bánh Mumu, Múa Rồng | Vượt ải tìm Susu thắp đèn, đạt mốc nhận đồ. |  | https://www.facebook.com/2026323474300539 | Ra mắt | 2026323474300539.webp
 Đêm Rực Rỡ | Event lẻ | 11/03/2018 | 18/03/2018 | Yukata Sao Đêm, Thiếu Nữ Bán Hàng, Thiếu Nữ Cá, Mỹ Nữ Cá | Vượt ải lấy Bóng Nước đổi đồ; 2 bộ theo bảng xếp hạng. |  | https://www.facebook.com/2032935350306018 | Ra mắt
 Lễ Phục Sinh | Event ngày lễ | 01/04/2018 | 07/04/2018 | Giấc Mơ Xuân | Quay rút thưởng, 60KC mỗi lượt. |  | https://www.facebook.com/2044404985825721 | Ra mắt
-Nạp Tích Lũy Tứ Đại Gia Tộc | Event lẻ | 06/06/2018 |  |  | Nạp tích lũy 250/500/1000/2000/5500KC nhận 1 bộ mỗi mốc. |  | https://www.facebook.com/2085492538383632 | Ra mắt
-Thất Tịch | Event ngày lễ | 13/08/2018 | 19/08/2018 | Giấc Mơ Mộng Ảo | Vượt ải rơi Sợi Tơ Mịn, chế bản vẽ ở Khu Thiết Kế. |  | https://www.facebook.com/2142363639363188 | Comeback
-Nạp Tích Lũy 1000K Yêu Ma Quỷ Quái | Event lẻ | 25/08/2018 | 03/09/2018 | Dạ Tiệc Đỏ | Nạp tích lũy đủ 1000K nhận bộ. |  | https://www.facebook.com/2157093011223584
-Gió Bão Kỳ 2 - Tiềm Long Trổi Dậy | Event lẻ | 07/09/2018 |  |  |  |  | https://www.facebook.com/2167498896849662 | Ra mắt
-Hồi Ức Khó Quên | Event lẻ | 18/09/2018 |  |  |  |  | https://www.facebook.com/2172843916315160 | Comeback
-Nạp Mốc Bất Kỳ Tặng Thời Thanh Xuân | Event lẻ | 28/09/2018 | 07/10/2018 | Thời Thanh Xuân | Nạp mốc Kim Cương bất kỳ nhận bộ. |  | https://www.facebook.com/2179666715632880
-Kỷ Nguyên Lãng Mạn | Event lẻ | 21/10/2018 | 28/10/2018 | Trợ Lý Dễ Thương, Mèo và Nhà Tiểu Thuyết | Vượt ải lấy Vé Xe đổi đồ. |  | https://www.facebook.com/2192145694384982 | Ra mắt
-Ngọn Lửa U Linh | Event lẻ | 10/11/2018 | 16/11/2018 | Vong Hồn Quyến Rũ |  |  | https://www.facebook.com/2204734266459458 | Ra mắt
-Nạp Tích Lũy Giấc Mơ Diana | Event lẻ | 10/11/2018 | 19/11/2018 | Giấc Mơ Diana | Nạp tích lũy 100–1460KC nhận từng phần bộ. |  | https://www.facebook.com/2204772993122252
-Phong Hoa Tuyết Nguyệt | Gacha | 13/11/2018 | 19/11/2018 | Làn Gió Mát, Nụ Hôn Của Hoa, Tuyết Tung Bay, Trăng Vĩnh Hằng | Quay 45KC/lượt lấy nguyên liệu, đủ 60 đổi bộ. |  | https://www.facebook.com/2206544692945082 | Comeback
-Mộng Cổ Tích | Event lẻ | 20/11/2018 | 26/11/2018 | Vấn Vương, Ma Thuật Tình Yêu | Vượt ải lấy Bình Ước Nguyện đổi bộ. |  | https://www.facebook.com/2210425379223680 | Ra mắt
-Cảnh Hoàng Hôn | Event lẻ | 30/11/2018 | 09/12/2018 | Ma Lực Ảo Ảnh | Vượt ải lấy Đá Hoàng Hôn đổi bộ. |  | https://www.facebook.com/2219577114975173 | Ra mắt
-Sư Tử Đồng Cỏ | Event lẻ | 13/12/2018 | 19/12/2018 |  | Vượt ải lấy Đá Sư Tử, trang trí hộp quà nhận quà. |  | https://www.facebook.com/2225003031099248 | Ra mắt
-Điều Ước Giáng Sinh | Event ngày lễ | 23/12/2018 | 29/12/2018 |  | Vượt ải bản đồ đặc biệt lấy Tuyết Dịu Dàng đổi đồ. |  | https://www.facebook.com/2233892683543616 | Ra mắt
-Hồ Ly Tân Nương | Gacha | 23/12/2018 | 29/12/2018 | Hồ Ly Tân Nương | Rút thưởng 100KC, lần đầu giảm 50%. |  | https://www.facebook.com/2233795356886682 | Ra mắt
-Nạp Tích Lũy Lời Thề Tường Vi | Event lẻ | 23/12/2018 | 29/12/2018 | Lời Thề Tường Vi | Nạp tích lũy 100/200/500/1000KC nhận từng phần. |  | https://www.facebook.com/2233862476879970
-Đại Dương Dậy Sóng | Event lẻ | 02/01/2019 | 08/01/2019 | Thuần Phục Gió Xoáy, Canh Giữ Kho Báu |  |  | https://www.facebook.com/2240977352835149 | Ra mắt
-Nạp Tích Lũy Robot Báo Đen | Event lẻ | 02/01/2019 | 08/01/2019 | Robot Báo Đen | Nạp tích lũy 2500KC nhận bộ. |  | https://www.facebook.com/2239222609677290
+Nạp Tích Lũy Tứ Đại Gia Tộc | Event lẻ | 06/06/2018 |  |  | Nạp tích lũy 250/500/1000/2000/5500KC nhận 1 bộ mỗi mốc. |  | https://www.facebook.com/2085492538383632 | Ra mắt | 2085492538383632.webp
+Thất Tịch | Event ngày lễ | 13/08/2018 | 19/08/2018 | Giấc Mơ Mộng Ảo | Vượt ải rơi Sợi Tơ Mịn, chế bản vẽ ở Khu Thiết Kế. |  | https://www.facebook.com/2142363639363188 | Comeback | 2142363639363188.webp
+Nạp Tích Lũy 1000K Yêu Ma Quỷ Quái | Event lẻ | 25/08/2018 | 03/09/2018 | Dạ Tiệc Đỏ | Nạp tích lũy đủ 1000K nhận bộ. |  | https://www.facebook.com/2157093011223584 |  | 2157093011223584.webp
+Gió Bão Kỳ 2 - Tiềm Long Trổi Dậy | Event lẻ | 07/09/2018 |  |  |  |  | https://www.facebook.com/2167498896849662 | Ra mắt | 2167498896849662.webp
+Hồi Ức Khó Quên | Event lẻ | 18/09/2018 |  |  |  |  | https://www.facebook.com/2172843916315160 | Comeback | 2172843916315160.webp
+Nạp Mốc Bất Kỳ Tặng Thời Thanh Xuân | Event lẻ | 28/09/2018 | 07/10/2018 | Thời Thanh Xuân | Nạp mốc Kim Cương bất kỳ nhận bộ. |  | https://www.facebook.com/2179666715632880 |  | 2179666715632880.webp
+Kỷ Nguyên Lãng Mạn | Event lẻ | 21/10/2018 | 28/10/2018 | Trợ Lý Dễ Thương, Mèo và Nhà Tiểu Thuyết | Vượt ải lấy Vé Xe đổi đồ. |  | https://www.facebook.com/2192145694384982 | Ra mắt | 2192145694384982.webp
+Ngọn Lửa U Linh | Event lẻ | 10/11/2018 | 16/11/2018 | Vong Hồn Quyến Rũ |  |  | https://www.facebook.com/2204734266459458 | Ra mắt | 2204734266459458.webp
+Nạp Tích Lũy Giấc Mơ Diana | Event lẻ | 10/11/2018 | 19/11/2018 | Giấc Mơ Diana | Nạp tích lũy 100–1460KC nhận từng phần bộ. |  | https://www.facebook.com/2204772993122252 |  | 2204772993122252.webp
+Phong Hoa Tuyết Nguyệt | Gacha | 13/11/2018 | 19/11/2018 | Làn Gió Mát, Nụ Hôn Của Hoa, Tuyết Tung Bay, Trăng Vĩnh Hằng | Quay 45KC/lượt lấy nguyên liệu, đủ 60 đổi bộ. |  | https://www.facebook.com/2206544692945082 | Comeback | 2206544692945082.webp
+Mộng Cổ Tích | Event lẻ | 20/11/2018 | 26/11/2018 | Vấn Vương, Ma Thuật Tình Yêu | Vượt ải lấy Bình Ước Nguyện đổi bộ. |  | https://www.facebook.com/2210425379223680 | Ra mắt | 2210425379223680.webp
+Cảnh Hoàng Hôn | Event lẻ | 30/11/2018 | 09/12/2018 | Ma Lực Ảo Ảnh | Vượt ải lấy Đá Hoàng Hôn đổi bộ. |  | https://www.facebook.com/2219577114975173 | Ra mắt | 2219577114975173.webp
+Sư Tử Đồng Cỏ | Event lẻ | 13/12/2018 | 19/12/2018 |  | Vượt ải lấy Đá Sư Tử, trang trí hộp quà nhận quà. |  | https://www.facebook.com/2225003031099248 | Ra mắt | 2225003031099248.webp
+Điều Ước Giáng Sinh | Event ngày lễ | 23/12/2018 | 29/12/2018 |  | Vượt ải bản đồ đặc biệt lấy Tuyết Dịu Dàng đổi đồ. |  | https://www.facebook.com/2233892683543616 | Ra mắt | 2233892683543616.webp
+Hồ Ly Tân Nương | Gacha | 23/12/2018 | 29/12/2018 | Hồ Ly Tân Nương | Rút thưởng 100KC, lần đầu giảm 50%. |  | https://www.facebook.com/2233795356886682 | Ra mắt | 2233795356886682.webp
+Nạp Tích Lũy Lời Thề Tường Vi | Event lẻ | 23/12/2018 | 29/12/2018 | Lời Thề Tường Vi | Nạp tích lũy 100/200/500/1000KC nhận từng phần. |  | https://www.facebook.com/2233862476879970 |  | 2233862476879970.webp
+Đại Dương Dậy Sóng | Event lẻ | 02/01/2019 | 08/01/2019 | Thuần Phục Gió Xoáy, Canh Giữ Kho Báu |  |  | https://www.facebook.com/2240977352835149 | Ra mắt | 2240977352835149.webp
+Nạp Tích Lũy Robot Báo Đen | Event lẻ | 02/01/2019 | 08/01/2019 | Robot Báo Đen | Nạp tích lũy 2500KC nhận bộ. |  | https://www.facebook.com/2239222609677290 |  | 2239222609677290.webp
