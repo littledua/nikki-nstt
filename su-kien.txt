@@ -119,13 +119,13 @@ Quyển Sách Mơ Ước | Big Event | 21/04/2023 |  |  |  | Bản 8.9.0 | https
 Ma Quái | Big Event | 22/03/2023 |  |  |  |  | https://tinyurl.com/329s2ut8 | Comeback
 Đêm Vĩnh Hằng | Big Event | 28/01/2023 |  |  |  |  | https://tinyurl.com/zuv27ba8 | Comeback
 Ánh Sáng Ngưng Tụ | Big Event | 13/01/2023 |  |  |  | Bản 8.7.0 | https://tinyurl.com/4fry57wf | Ra mắt
-Vùng Đất Lành | Big Event | 27/10/2022 | 04/11/2022 |  | Vào Hoang Mạc, chọn Tìm để nhận Quả Lạc Lối. |  | https://www.facebook.com/3362285267371013 | Comeback
-Biển Sao Ban Đầu - Thời Gian Hội Tụ | Big Event | 20/10/2022 | 30/10/2022 |  |  | Bản 8.5.0 | https://www.facebook.com/3356035697995970 | Ra mắt
-Huyễn Cảnh Thạch Bi | Big Event | 02/08/2022 | 11/08/2022 |  | Quay lầu đạt mốc để nhận các nàng thơ. |  | https://www.facebook.com/3289280041338203 | Comeback
-Tường Vi Ban Trưa | Big Event | 27/07/2022 | 05/08/2022 |  |  | Bản 8.3.0 | https://www.facebook.com/3284851318447742 | Ra mắt
+Vùng Đất Lành | Big Event | 27/10/2022 | 04/11/2022 |  | Vào Hoang Mạc, chọn Tìm để nhận Quả Lạc Lối. |  | https://www.facebook.com/3362285267371013 | Comeback | 3362285267371013.webp
+Biển Sao Ban Đầu - Thời Gian Hội Tụ | Big Event | 20/10/2022 | 30/10/2022 |  |  | Bản 8.5.0 | https://www.facebook.com/3356035697995970 | Ra mắt | 3356035697995970.webp
+Huyễn Cảnh Thạch Bi | Big Event | 02/08/2022 | 11/08/2022 |  | Quay lầu đạt mốc để nhận các nàng thơ. |  | https://www.facebook.com/3289280041338203 | Comeback | 3289280041338203.webp
+Tường Vi Ban Trưa | Big Event | 27/07/2022 | 05/08/2022 |  |  | Bản 8.3.0 | https://www.facebook.com/3284851318447742 | Ra mắt | 3284851318447742.webp
 Tâm Trí Rối Bời | Big Event | 27/04/2022 |  |  |  | Bản 8.1.0 | https://tinyurl.com/mvuvecee | Ra mắt
-Sơn Hải Vân | Big Event | 19/04/2022 | 25/04/2022 |  |  |  | https://www.facebook.com/3203778346555040 | Comeback
-Cảnh Giới Phù Hoa | Big Event | 05/02/2022 | 14/02/2022 | Dị Mộng Âm U, Cánh Hồng Nhung, Sắc Hồng Yêu Thương, Ánh Sáng Ban Mai | Chọn Tìm để nhận Khế Ước Nội Tâm, tích lũy đạt mốc. |  | https://www.facebook.com/3146096662323209 | Comeback
+Sơn Hải Vân | Big Event | 19/04/2022 | 25/04/2022 |  |  |  | https://www.facebook.com/3203778346555040 | Comeback | 3203778346555040.webp
+Cảnh Giới Phù Hoa | Big Event | 05/02/2022 | 14/02/2022 | Dị Mộng Âm U, Cánh Hồng Nhung, Sắc Hồng Yêu Thương, Ánh Sáng Ban Mai | Chọn Tìm để nhận Khế Ước Nội Tâm, tích lũy đạt mốc. |  | https://www.facebook.com/3146096662323209 | Comeback | 3146096662323209.webp
 Quỹ Đạo Bầu Trời | Big Event | 13/12/2021 | 19/12/2021 |  |  |  | https://www.facebook.com/3107694959496713 | Comeback | 3107694959496713.webp
 Phong Lâm Hỏa Sơn | Big Event | 04/10/2021 | 10/10/2021 | Bạo Phong Chiến Y, Trúc Lâm Vân Y, Nguyệt Hoả Thần, Thiên Đạo Âm Vương |  |  | https://www.facebook.com/3050118068587736 | Comeback | 3050118068587736.webp
 Năm Tháng Tươi Đẹp | Big Event | 27/08/2021 | 05/09/2021 |  | Hơn 10 bộ trang phục và nhiều nền. |  | https://www.facebook.com/3017835601815983 | Comeback | 3017835601815983.webp
@@ -399,5 +399,5 @@ Hồn Đom Đóm - Bích Tiêu Ngâm | Hồn Đom Đóm | 22/07/2022 | 24/07/202
 Chiến Công Khoa Kỹ | Event lẻ | 12/08/2022 | 18/08/2022 |  |  |  | https://www.facebook.com/3296509667281907 | Ra mắt | 3296509667281907.webp
 Bụi Hoa Yên Ả - Tô Vẽ Kỳ Duyên | Event lẻ | 08/09/2022 | 14/09/2022 |  |  |  | https://www.facebook.com/3318657088400498 | Ra mắt | 3318657088400498.webp
 Sân Khấu Kỳ Lạ Màn Kịch Bất Ngờ | Event lẻ | 30/09/2022 | 06/10/2022 |  |  |  | https://www.facebook.com/3337197779879762 | Ra mắt | 3337197779879762.webp
-Túi Phúc 2022 | Túi Phúc | 27/04/2022 | 15/05/2022 |  | Nạp Kim Cương đạt các mốc để nhận 5 bộ. |  | https://www.facebook.com/3210619349204273 | Ra mắt |  | Nạp
+Túi Phúc 2022 | Túi Phúc | 27/04/2022 | 15/05/2022 |  | Nạp Kim Cương đạt các mốc để nhận 5 bộ. |  | https://www.facebook.com/3210619349204273 | Ra mắt | 3210619349204273.webp | Nạp
 Truyền Thuyết Tinh Hà Cổ Tích Ngàn Sao | Event lẻ | 07/11/2022 | 13/11/2022 |  |  |  | https://www.facebook.com/3371022883163918 | Ra mắt
