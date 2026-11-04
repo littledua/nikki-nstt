@@ -25,6 +25,8 @@
   --own-soft: #DDF0EA;
   --warn: #9C5A12;
   --warn-soft: #FBEBD6;
+  --hot: #B4500F;
+  --hot-soft: #FDE4D0;
   --f-display: "Fraunces", "Iowan Old Style", Georgia, serif;
   --f-body: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, sans-serif;
   --r: 14px;
@@ -33,13 +35,13 @@
   :root:not([data-theme="light"]) {
     --bg: #17121A; --surface: #211A25; --sunk: #1B1520; --ink: #F3EAF1; --muted: #B4A7B7; --line: #3A2F3F;
     --accent: #E391BE; --accent-ink: #2A1323; --accent-soft: #3B2234; --own: #74CDB8; --own-soft: #1D3631;
-    --warn: #E8A962; --warn-soft: #3A2A17; color-scheme: dark;
+    --warn: #E8A962; --warn-soft: #3A2A17; --hot: #F2A36B; --hot-soft: #3D2414; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #17121A; --surface: #211A25; --sunk: #1B1520; --ink: #F3EAF1; --muted: #B4A7B7; --line: #3A2F3F;
   --accent: #E391BE; --accent-ink: #2A1323; --accent-soft: #3B2234; --own: #74CDB8; --own-soft: #1D3631;
-  --warn: #E8A962; --warn-soft: #3A2A17; color-scheme: dark;
+  --warn: #E8A962; --warn-soft: #3A2A17; --hot: #F2A36B; --hot-soft: #3D2414; color-scheme: dark;
 }
 * { box-sizing: border-box; }
 body {
@@ -211,7 +213,7 @@ select, input[type="text"], input[type="search"], input[type="number"] {
 .pager { display: flex; gap: 8px; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-top: 12px; }
 
 /* Lịch sự kiện */
-.evtop { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 12px; }
+.evtop { align-items: start; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 12px; }
 .evbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 4px 0 14px; }
 .evbar input { flex: 1 1 220px; }
 .evform { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: 10px; margin: 6px 0 14px; }
@@ -219,12 +221,31 @@ select, input[type="text"], input[type="search"], input[type="number"] {
 .evform input, .evform select, .evform textarea { width: 100%; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 7px 10px; font: inherit; color: inherit; }
 .evline { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .8rem; background: var(--sunk); padding: 8px 10px; border-radius: 8px; word-break: break-all; }
 .evimg { width: calc(100% + 28px); max-width: none; margin: -14px -14px 2px; height: auto; border-radius: 14px 14px 0 0; background: var(--sunk); display: block; }
-.evcard { overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); padding: 14px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.evtabs { display: flex; gap: 4px; background: var(--sunk); padding: 4px; border-radius: 999px; width: max-content; max-width: 100%; margin: 2px 0 12px; }
+.evtabs button { border: 0; background: transparent; padding: 7px 16px; border-radius: 999px; font: inherit; font-weight: 600; color: var(--muted); cursor: pointer; }
+.evtabs button[aria-selected="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.06); }
+.evyears { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 10px; }
+.evyears button { border: 0; background: var(--sunk); color: var(--muted); padding: 5px 12px; border-radius: 999px; font: inherit; font-size: .85rem; font-weight: 600; cursor: pointer; }
+.evyears button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.evbar select { flex: 0 1 220px; }
+.evq { position: relative; flex: 1 1 240px; min-width: 0; }
+.evq input { width: 100%; padding-right: 34px; }
+.evq button { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); border: 0; background: none; color: var(--muted); font-size: .95rem; cursor: pointer; padding: 4px 6px; }
+.evcount { width: 100%; font-size: .85rem; color: var(--muted); }
+.evcount button { border: 0; background: none; color: var(--accent); font: inherit; text-decoration: underline; cursor: pointer; padding: 0; }
+.evcost { font-size: .72rem; font-weight: 700; padding: 1px 9px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink); }
+.evstate.hot { background: var(--hot-soft, #FDE4D0); color: var(--hot, #B4500F); }
+.evstate.end { background: var(--sunk); color: var(--muted); }
+.evcard .how.clamp { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.evmore { align-self: flex-start; border: 0; background: none; color: var(--accent); font: inherit; font-size: .82rem; font-weight: 600; padding: 0; cursor: pointer; }
+.evadmin { text-align: center; margin: 26px 0 6px; }
+.evadmin .btn { font-size: .85rem; color: var(--muted); }
+.evcard { overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); padding: 14px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
 .evcard.now { border-color: var(--own); }
-.evcard .t { font-weight: 700; font-size: 1rem; line-height: 1.35; }
-.evcard .d { font-size: .85rem; color: var(--muted); }
-.evcard .how { font-size: .88rem; }
-.evcard .sets { font-size: .82rem; }
+.evcard .t { font-weight: 700; font-size: 1.06rem; line-height: 1.35; }
+.evcard .d { font-size: .9rem; font-weight: 600; }
+.evcard .how { font-size: .88rem; color: var(--muted); line-height: 1.55; }
+.evcard .sets { font-size: .88rem; }
 .evcard .meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 .evtype { font-size: .72rem; font-weight: 700; padding: 2px 9px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
 .evstate { font-size: .72rem; font-weight: 700; padding: 2px 9px; border-radius: 999px; background: var(--own-soft); color: var(--own); }
@@ -1103,7 +1124,7 @@ function decodeClothesDate(text) {
   /* ---------- Trang Lịch sự kiện ----------
      Dữ liệu: file su-kien.txt (mỗi dòng: Tên | Loại | Ngày mở | Ngày đóng | Bộ đồ | Cách chơi | Bản tin | Link | Lần mở). Dòng # là ghi chú.
      Comeback tính theo đúng tên sự kiện (cột 9 "Lần mở": Ra mắt / Comeback, không bắt buộc). */
-  var EV = { list: null, type: '', q: '', lckg: {}, vcqg: {} };
+  var EV = { list: null, type: '', q: '', lckg: {}, vcqg: {}, tab: 'now', year: null, more: {} };
   var EV_TYPES = ['Big Event', 'Túi Phúc', 'Event ngày lễ', 'Linh Cảm Không Gian', 'Sự kiện 100 ngày', 'Vô Cùng Quý Giá', 'Gacha', 'Hồn Đom Đóm', '6 Bước Chọn', 'Đóng gói', 'Tiêu tim', 'Tiêu kim cương', 'Đồng Thoại Mộng Ảo', 'Bảo Tàng Kỳ Diệu', 'Event lẻ'];
   var DAY = 86400000;
   function evDate(t) { var m = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec((t || '').trim()); return m ? new Date(+m[3], +m[2] - 1, +m[1]) : null; }
@@ -1112,7 +1133,7 @@ function decodeClothesDate(text) {
   function parseEvents(txt) {
     return txt.split(/\r?\n/).filter(function (l) { return l.trim() && l.trim()[0] !== '#'; }).map(function (l) {
       var c = l.split('|').map(function (x) { return x.trim(); });
-      var e = { name: c[0] || '', type: (!c[1] || c[1] === 'Khác') ? 'Event lẻ' : c[1], start: evDate(c[2]), end: evDate(c[3]), sets: c[4] || '', how: c[5] || '', news: c[6] || '', link: c[7] || '', run: (c[8] || '').toLowerCase(), img: (c[9] || '').replace(/[^\w.-]/g, '') };
+      var e = { name: c[0] || '', type: (!c[1] || c[1] === 'Khác') ? 'Event lẻ' : c[1], start: evDate(c[2]), end: evDate(c[3]), sets: c[4] || '', how: c[5] || '', news: c[6] || '', link: c[7] || '', run: (c[8] || '').toLowerCase(), img: (c[9] || '').replace(/[^\w.-]/g, ''), cost: c[10] || '' };
       /* Sự kiện 100 ngày chưa ghi ngày đóng: tự tính ngày mở + 100 ngày (dự kiến) */
       if (e.type === 'Sự kiện 100 ngày' && e.start && !e.end) { e.end = new Date(e.start.getTime() + 99 * DAY); e.endGuess = true; }
       return e;
@@ -1132,7 +1153,17 @@ function decodeClothesDate(text) {
     if (evPerm(e)) return e.start && e.start <= now ? { cls: 'perm', txt: 'Mở vĩnh viễn' } : (e.start ? { cls: 'soon', txt: 'Sắp mở' } : null);
     if (e.start && e.start > now) return { cls: 'soon', txt: 'Sắp mở' };
     /* không có ngày đóng: chỉ coi là đang diễn ra trong 14 ngày đầu */
-    if (e.start && e.start <= now && (e.end ? e.end >= now : (now - e.start) / DAY <= 14)) return { cls: '', txt: e.end ? 'Đang diễn ra · còn ' + Math.round((e.end - now) / DAY + 1) + ' ngày' : 'Đang diễn ra' };
+    if (e.start && e.start <= now && (e.end ? e.end >= now : (now - e.start) / DAY <= 14)) {
+      var left = e.end ? Math.round((e.end - now) / DAY + 1) : 0;
+      return { cls: left && left <= 3 ? 'hot' : '', live: true, txt: e.end ? 'Còn ' + left + ' ngày' : 'Đang diễn ra' };
+    }
+    return null;
+  }
+  /* Nhãn trạng thái để hiện: thêm "Đã kết thúc" cho sự kiện đã qua ngày đóng */
+  function evBadge(e, now) {
+    var st = evState(e, now);
+    if (st) return st;
+    if (!evPerm(e) && e.end && e.end < now) return { cls: 'end', txt: 'Đã kết thúc' };
     return null;
   }
   /* Lịch sử một sự kiện (theo đúng tên): lần ra mắt + các lần comeback.
@@ -1142,17 +1173,28 @@ function decodeClothesDate(text) {
     var firstKnown = !(r[0] && r[0].run.indexOf('comeback') === 0);
     return { first: firstKnown ? r[0].start : null, firstKnown: firstKnown, comebacks: firstKnown ? r.slice(1) : r, last: r.filter(function (x) { return x.start; }).pop() || r[r.length - 1] };
   }
+  /* Comeback y hệt lần ra mắt: dòng nào thiếu cách chơi / chi phí / bộ đồ thì lấy từ dòng cùng tên có ghi */
+  function evShared(runs, k) { for (var i = 0; i < runs.length; i++) if (runs[i][k]) return runs[i][k]; return ''; }
   function evCard(e, byName, now) {
-    var st = evState(e, now), h = evHistory(byName[e.name] || [e]), lk = EV.lckg[e.name], isLc = evPerm(e), vq = EV.vcqg[e.name];
-    var cb = e.type === 'Túi Phúc' ? 'Event nạp, đi kèm Big Event Tết, không comeback. Nạp đủ mốc túi năm nay thì mở thêm túi của các năm trước.' : isLc ? 'Vào ' + esc(e.type) + ' là mở vĩnh viễn, không còn comeback.' : h.firstKnown
-      ? 'Ra mắt <b>' + evFmt(h.first) + '</b>' + (h.comebacks.length ? ' · comeback <b>' + h.comebacks.length + ' lần</b>: ' + h.comebacks.map(function (x) { return evFmt(x.start); }).join(', ') : ' · chưa comeback lần nào')
-      : 'Ra mắt trước khoảng dữ liệu đang có · comeback: ' + h.comebacks.map(function (x) { return evFmt(x.start); }).join(', ');
-    if (vq && !isLc) cb += '<br><b>Bản chưa chế màu đã mở ở Vô Cùng Quý Giá</b>' + (vq.from ? ' từ <b>' + evFmt(vq.from) + '</b>' : '') + ' · miễn phí, mở vĩnh viễn';
-    if (lk) cb += '<br><b>Đã vào Linh Cảm Không Gian</b> (' + esc(lk.lc) + ')' + (lk.from ? ' từ <b>' + evFmt(lk.from) + '</b>' : (lk.news ? ' từ ' + esc(lk.news) : '')) + ' · mở vĩnh viễn, không còn comeback';
-    return '<article class="evcard' + (st && !st.cls ? ' now' : '') + '">' + (e.img ? '<img class="evimg" src="ev/' + e.img + '" alt="" loading="lazy" decoding="async" onerror="this.remove()">' : '') + '<div class="meta"><span class="evtype">' + esc(e.type) + '</span>' + (st ? '<span class="evstate ' + st.cls + '">' + st.txt + '</span>' : '') + '</div>' +
-      '<div class="t">' + esc(e.name) + '</div><div class="d">' + (isLc ? (e.type === 'Vô Cùng Quý Giá' ? 'Mở ở Vô Cùng Quý Giá từ ' + (e.start ? evFmt(e.start) : '(chưa rõ ngày)') + ' · miễn phí, mở vĩnh viễn' : (e.start ? 'Vào Linh Cảm Không Gian từ ' + evFmt(e.start) : 'Đã vào Linh Cảm Không Gian (chưa rõ ngày)') + ' · mở vĩnh viễn') : evFmt(e.start) + ' – ' + (e.end ? evFmt(e.end) + (e.endGuess ? ' (dự kiến)' : '') : 'chưa rõ ngày đóng')) + (e.news ? ' · ' + (/^Bản /.test(e.news) ? '' : 'Bản tin ') + esc(e.news) : '') + '</div>' +
-      (e.sets ? '<div class="sets"><b>Bộ đồ:</b> ' + esc(e.sets) + '</div>' : '') + (e.how ? '<div class="how">' + esc(e.how) + '</div>' : '') +
-      (e.type === 'Sự kiện 100 ngày' && !vq ? '<div class="how muted small">Đồ nhận ở đây là bản đã chế màu. Sau khi kết thúc, bản chưa chế màu sẽ mở miễn phí ở Vô Cùng Quý Giá (đợi fanpage báo ngày).</div>' : '') +
+    var st = evBadge(e, now), runs = byName[e.name] || [e], h = evHistory(runs), lk = EV.lckg[e.name], isLc = evPerm(e), vq = EV.vcqg[e.name];
+    var how = e.how || evShared(runs, 'how'), cost = e.cost || evShared(runs, 'cost'), sets = e.sets || evShared(runs, 'sets');
+    var isCb = !isLc && runs.length > 1 && !(h.firstKnown && h.first === e.start) || e.run.indexOf('comeback') === 0;
+    var cb = e.type === 'Túi Phúc' ? 'Event nạp, đi kèm Big Event Tết, không comeback.' : isLc ? 'Mở vĩnh viễn, không còn comeback.'
+      : (h.firstKnown ? 'Ra mắt <b>' + evFmt(h.first) + '</b>' : 'Ra mắt trước dữ liệu đang có') + (h.comebacks.length ? ' · comeback <b>' + h.comebacks.length + ' lần</b>' : ' · chưa comeback') +
+        (h.last && h.last.start && h.last.start !== h.first && h.comebacks.length ? ' · gần nhất ' + evFmt(h.last.start) : '');
+    if (vq && !isLc) cb += '<br>Bản chưa chế màu đã mở ở <b>Vô Cùng Quý Giá</b>' + (vq.from ? ' từ ' + evFmt(vq.from) : '') + ' · miễn phí';
+    if (lk) cb += '<br><b>Đã vào Linh Cảm Không Gian</b> (' + esc(lk.lc) + ')' + (lk.from ? ' từ ' + evFmt(lk.from) : (lk.news ? ' · ' + esc(lk.news) : '')) + ' · mở vĩnh viễn';
+    var date = isLc ? (e.type === 'Vô Cùng Quý Giá' ? 'Mở ở Vô Cùng Quý Giá từ ' + (e.start ? evFmt(e.start) : '(chưa rõ ngày)') : (e.start ? 'Vào Linh Cảm Không Gian từ ' + evFmt(e.start) : 'Đã vào Linh Cảm Không Gian (chưa rõ ngày)'))
+      : evFmt(e.start) + ' – ' + (e.end ? evFmt(e.end) + (e.endGuess ? ' (dự kiến)' : '') : 'chưa rõ ngày đóng');
+    var key = e.name + '|' + (e.start ? e.start.getTime() : ''), open = EV.more[key], long = how.length > 140;
+    return '<article class="evcard' + (st && st.live ? ' now' : '') + '">' + (e.img ? '<img class="evimg" src="ev/' + e.img + '" alt="" loading="lazy" decoding="async" onerror="this.remove()">' : '') +
+      '<div class="t">' + esc(e.name) + '</div>' +
+      '<div class="meta"><span class="evtype">' + esc(e.type) + '</span>' + (st ? '<span class="evstate ' + st.cls + '">' + st.txt + '</span>' : '') + (cost ? '<span class="evcost" title="Ước tính cho người chưa chơi lần nào">' + esc(cost) + '</span>' : '') + '</div>' +
+      '<div class="d">' + date + (e.news ? ' <span class="muted">· ' + (/^Bản /.test(e.news) ? '' : 'Bản tin ') + esc(e.news) + '</span>' : '') + '</div>' +
+      (sets ? '<div class="sets"><b>Bộ đồ:</b> ' + esc(sets) + '</div>' : '') +
+      (how ? '<div class="how' + (long && !open ? ' clamp' : '') + '">' + esc(how) + '</div>' + (long ? '<button type="button" class="evmore" data-more="' + esc(key) + '">' + (open ? 'Thu gọn ▴' : 'Đọc thêm ▾') + '</button>' : '') : '') +
+      (cost && isCb ? '<div class="muted small">Chi phí ước tính nếu chưa chơi lần nào. Đã chơi lần trước thì giữ mốc, comeback chơi tiếp.</div>' : '') +
+      (e.type === 'Sự kiện 100 ngày' && !vq ? '<div class="muted small">Đồ nhận ở đây là bản đã chế màu. Sau khi kết thúc, bản chưa chế màu mở miễn phí ở Vô Cùng Quý Giá.</div>' : '') +
       '<div class="evcb">' + cb + '</div>' + (/^https?:\/\//.test(e.link) ? '<a href="' + esc(e.link) + '" target="_blank" rel="noopener">' + (/facebook\.com/.test(e.link) ? 'Xem bài đăng trên fanpage' : 'Xem cách chơi') + '</a>' : '') + '</article>';
   }
   function renderEvents() {
@@ -1174,32 +1216,47 @@ function decodeClothesDate(text) {
     var list = all.filter(function (e) {
       return (!EV.type || e.type === EV.type) && (!q || (e.name + ' ' + e.sets).toLowerCase().indexOf(q) >= 0);
     }).sort(function (a, b) { return (b.start || 0) - (a.start || 0); });
-    var live = list.filter(function (e) { return !evPerm(e) && evState(e, now); });
-    var html = evFormHtml() + '<div class="evbar"><button type="button" class="btn primary" id="evAdd">＋ Thêm sự kiện</button><input type="search" id="evQ" placeholder="Tìm tên sự kiện hoặc bộ đồ…" value="' + esc(EV.q) + '" aria-label="Tìm sự kiện">' +
-      '<div class="seg" id="evType"><button type="button" data-ev="" aria-pressed="' + !EV.type + '">Tất cả</button>' +
-      types.map(function (t) { return '<button type="button" data-ev="' + esc(t) + '" aria-pressed="' + (EV.type === t) + '">' + esc(t) + '</button>'; }).join('') + '</div></div>';
-    if (live.length) html += '<div class="evmonth">Đang diễn ra & sắp mở</div><div class="evtop">' + live.map(function (e) { return evCard(e, byName, now); }).join('') + '</div>';
-    /* Bảng comeback theo từng sự kiện (mỗi tên một dòng) */
-    var names = {}; list.forEach(function (e) { if (!evNoCb(e)) names[e.name] = 1; }); /* LCKG, VCQG mở vĩnh viễn; Túi Phúc không comeback */
-    var hs = Object.keys(names).map(function (n) { var h = evHistory(byName[n]); h.name = n; h.type = byName[n][0].type; return h; })
-      .sort(function (a, b) { return ((b.last && b.last.start) || 0) - ((a.last && a.last.start) || 0); });
-    var rows = hs.map(function (h) {
-      var ls = h.last && h.last.start;
-      return '<tr><td><b>' + esc(h.name) + '</b></td><td>' + esc(h.type) + '</td><td>' + (h.firstKnown ? evFmt(h.first) : '<i class="muted small">trước dữ liệu</i>') + '</td><td>' +
-        (h.comebacks.length ? h.comebacks.map(function (x) { return evFmt(x.start); }).join('<br>') : '—') + (EV.lckg[h.name] ? '<br><b>→ vào Linh Cảm Không Gian ' + (EV.lckg[h.name].from ? evFmt(EV.lckg[h.name].from) : (EV.lckg[h.name].news || '')) + '</b>' : '') + (EV.vcqg[h.name] ? '<br><b>→ mở ở Vô Cùng Quý Giá' + (EV.vcqg[h.name].from ? ' ' + evFmt(EV.vcqg[h.name].from) : '') + '</b>' : '') + '</td><td class="num">' + (ls && ls <= now ? Math.round((now - ls) / DAY) + ' ngày' : '—') + '</td></tr>';
-    }).join('');
-    html += '<div class="evmonth">Comeback theo từng sự kiện</div><div class="panel" style="padding:8px 10px"><div class="slots-wrap"><table class="rhythm"><thead><tr><th>Sự kiện</th><th>Loại</th><th>Ra mắt</th><th>Các lần comeback</th><th>Lần gần nhất cách đây</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
-      '<p class="muted small" style="margin:8px 4px 2px">Tính theo dữ liệu đang có. Dòng ghi "Comeback" ở cột Lần mở mà không có lần trước thì ghi "trước dữ liệu".</p></div>';
-    var month = '';
-    list.forEach(function (e) {
-      var m = e.start ? 'Tháng ' + (e.start.getMonth() + 1) + '/' + e.start.getFullYear() : 'Chưa rõ ngày';
-      if (m !== month) { html += (month ? '</div>' : '') + '<div class="evmonth">' + m + '</div><div class="evtop">'; month = m; }
-      html += evCard(e, byName, now);
-    });
-    if (month) html += '</div>'; else html += '<div class="empty"><b>Không có sự kiện nào khớp</b>Bạn thử bỏ bớt bộ lọc nhé.</div>';
+    var hist = EV.tab === 'hist';
+    var html = '<div class="tabs evtabs" role="tablist"><button type="button" role="tab" data-tab="now" aria-selected="' + !hist + '">Đang mở</button><button type="button" role="tab" data-tab="hist" aria-selected="' + hist + '">Lịch sử</button></div>';
+    var shown, countTxt;
+    if (!hist) {
+      shown = list.filter(function (e) { return !evPerm(e) && evState(e, now); });
+      countTxt = shown.length + ' sự kiện đang diễn ra & sắp mở';
+    } else {
+      var years = []; list.forEach(function (e) { var y = e.start ? e.start.getFullYear() : 0; if (years.indexOf(y) < 0) years.push(y); });
+      years.sort(function (a, b) { return (b || -1) - (a || -1); });
+      if (years.indexOf(EV.year) < 0) EV.year = years[0] || 0;
+      if (!q) html += '<div class="evyears">' + years.map(function (y) { return '<button type="button" data-year="' + y + '" aria-pressed="' + (y === EV.year) + '">' + (y || 'Chưa rõ') + '</button>'; }).join('') + '</div>';
+      shown = q ? list : list.filter(function (e) { return (e.start ? e.start.getFullYear() : 0) === EV.year; });
+      countTxt = q ? shown.length + ' sự kiện khớp "' + esc(EV.q.trim()) + '" (mọi năm)' : shown.length + ' sự kiện trong ' + (EV.year ? 'năm ' + EV.year : 'mục chưa rõ ngày');
+    }
+    html += '<div class="evbar"><select id="evType" aria-label="Loại sự kiện"><option value="">Tất cả loại (' + types.length + ')</option>' +
+      types.map(function (t) { return '<option' + (EV.type === t ? ' selected' : '') + '>' + esc(t) + '</option>'; }).join('') + '</select>' +
+      '<div class="evq"><input type="search" id="evQ" placeholder="Tìm tên sự kiện hoặc bộ đồ…" value="' + esc(EV.q) + '" aria-label="Tìm sự kiện">' + (EV.q ? '<button type="button" id="evQx" aria-label="Xóa từ khóa">✕</button>' : '') + '</div>' +
+      '<div class="evcount">' + countTxt + ((EV.q || EV.type) ? ' · <button type="button" id="evReset">Xóa bộ lọc</button>' : '') + '</div></div>';
+    if (!hist) html += shown.length ? '<div class="evtop">' + shown.map(function (e) { return evCard(e, byName, now); }).join('') + '</div>' : '<div class="empty"><b>Hiện chưa có sự kiện nào đang mở</b>Bạn xem tab Lịch sử nhé.</div>';
+    else {
+      var month = '';
+      shown.forEach(function (e) {
+        var m = e.start ? 'Tháng ' + (e.start.getMonth() + 1) + '/' + e.start.getFullYear() : 'Chưa rõ ngày';
+        if (m !== month) { html += (month ? '</div>' : '') + '<div class="evmonth">' + m + '</div><div class="evtop">'; month = m; }
+        html += evCard(e, byName, now);
+      });
+      html += month ? '</div>' : '<div class="empty"><b>Không có sự kiện nào khớp</b>Bạn thử bỏ bớt bộ lọc nhé.</div>';
+    }
+    html += '<div class="evadmin"><button type="button" class="btn" id="evAdd">✎ Soạn sự kiện (cần quyền GitHub)</button></div>' + evFormHtml();
     $('evBody').innerHTML = html;
   }
-  $('evBody').addEventListener('click', function (e) { var b = e.target.closest('[data-ev]'); if (b) { EV.type = b.getAttribute('data-ev'); renderEvents(); } });
+  $('evBody').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-tab],[data-year],[data-more],#evQx,#evReset'); if (!b) return;
+    if (b.dataset.tab) EV.tab = b.dataset.tab;
+    else if (b.dataset.year !== undefined && b.hasAttribute('data-year')) EV.year = +b.dataset.year;
+    else if (b.hasAttribute('data-more')) { var k = b.getAttribute('data-more'); EV.more[k] = !EV.more[k]; }
+    else if (b.id === 'evQx') EV.q = '';
+    else if (b.id === 'evReset') { EV.q = ''; EV.type = ''; }
+    renderEvents();
+  });
+  $('evBody').addEventListener('change', function (e) { if (e.target.id === 'evType') { EV.type = e.target.value; renderEvents(); } });
   var evTimer;
   $('evBody').addEventListener('input', function (e) {
     if (e.target.id !== 'evQ') return;
@@ -1215,7 +1272,7 @@ function decodeClothesDate(text) {
     if (!EV.form) return '';
     var names = {}; (EV.list || []).forEach(function (e) { names[e.name] = 1; });
     var types = EV_TYPES.map(function (t) { return '<option>' + esc(t) + '</option>'; }).join('');
-    return '<div class="panel" id="evFormBox" style="margin-bottom:14px"><h3 class="sec" style="font-size:1.05rem">Thêm sự kiện</h3>' +
+    return '<div class="panel" id="evFormBox" style="margin-top:10px"><h3 class="sec" style="font-size:1.05rem">Thêm sự kiện</h3>' +
       '<p class="muted small" style="margin:-6px 0 10px">Sự kiện mở lại (comeback) thì chọn đúng tên cũ trong danh sách gợi ý.</p>' +
       '<div class="evform">' +
       '<label class="field wide"><span>Tên sự kiện *</span><input id="efName" list="efNames" autocomplete="off"><datalist id="efNames">' + Object.keys(names).sort().map(function (n) { return '<option value="' + esc(n) + '">'; }).join('') + '</datalist></label>' +
@@ -1235,7 +1292,7 @@ function decodeClothesDate(text) {
   function evDMY(v) { var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v); return m ? m[3] + '/' + m[2] + '/' + m[1] : ''; }
   $('evBody').addEventListener('click', function (e) {
     var id = e.target.id;
-    if (id === 'evAdd') { EV.form = !EV.form; EV.line = ''; renderEvents(); if (EV.form) $('efName').focus(); return; }
+    if (id === 'evAdd') { EV.form = !EV.form; EV.line = ''; renderEvents(); if (EV.form) { $('evFormBox').scrollIntoView({ block: 'start' }); $('efName').focus(); } return; }
     if (id === 'efCancel') { EV.form = false; EV.line = ''; renderEvents(); return; }
     if (id !== 'efGo') return;
     var name = evVal('efName');
