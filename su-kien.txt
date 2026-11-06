@@ -55,6 +55,7 @@ Ban Mai Rung Động | Big Event | 19/05/2026 | 28/05/2026 |  | Tốn 30 Kim Cư
 Hành Trình Thời Không | Gacha | 29/04/2026 | 05/05/2026 | Vang Khúc Hư Không, Hương Vị Tự Nhiên, Tín Hiệu Không Ngừng | Dùng 30 Kim Cương mua Khóa Bảo Mật để rút, sau 15 lần cứ 3 lần có món mới. Cả 3 bộ tốn khoảng 2.000-2.500 Kim Cương. | Kỳ 11 - 11.1.0 | https://www.facebook.com/1495474269362495 | Ra mắt | 1495474269362495.webp | ~2.000–2.500 KC
 Truyền Thuyết Ngôi Sao | Event lẻ | 22/04/2026 | 28/04/2026 | Tiết Tấu Trăng Sao, Âm Vang Hoang Mạc | Vượt ải trên bản đồ, gồm ải phối đồ và trả lời câu hỏi, để nhận Đá Sa Mạc. Có lượt miễn phí mỗi ngày, lượt thêm 5 Kim Cương. | Kỳ 9 - 11.1.0 | https://www.facebook.com/1484701113773144 |  | truyen-thuyet-ngoi-sao-2026.webp
 Âm Thanh Huyền Ảo | 6 Bước Chọn | 11/04/2026 | 17/04/2026 | Giai Điệu Dưới Mưa | Sự kiện 6 bước chọn, phối theo chủ đề để tích Đĩa Nhạc Cầu Vòng đổi trang phục. Ngày cuối tốn khoảng 1740 Kim Cương. | Kỳ 7 - 11.1.0 | https://www.facebook.com/1469655511944371 | Ra mắt | 1469655511944371.webp | ~1.740 KC
+Đăng Nhập Nhận Quà - Lễ Phục Sinh | Event ngày lễ | 05/04/2026 | 10/04/2026 | Nhung Lụa Mới | Đăng nhập trong thời gian sự kiện nhận quà Phục Sinh. |  |  | Ra mắt | dang-nhap-phuc-sinh-2026.webp
 Ký Sự Nguyệt Ảnh | Đóng gói | 01/04/2026 | 07/04/2026 | Kẻ Trộm Ánh Trăng | Vượt ải nhận Vé Mộng Hồng, dùng vé cùng 24 Kim Cương cho một lượt Sưu Tầm. Mỗi ngày có 5 lượt miễn phí, đạt mốc nhận món đồ. | Kỳ 5 - 11.1.0 | https://www.facebook.com/1458135286429727 | Ra mắt | 1458135286429727.webp
 Phòng Sách Thần Bí - Kỳ 3 | Tiêu tim | 07/03/2026 | 16/03/2026 | Suy Tưởng Xanh Biếc | Vượt ải Thiếu Nữ hoặc Công Chúa nhận Mảnh Thần Bí để ghép ảnh và nhận lần lượt các món. Tốn khoảng 4000-4400 cho toàn sự kiện. | Kỳ 11 - 11.0.0 | https://www.facebook.com/1424660189777237 | Ra mắt | 1424660189777237.webp
 Hành Trình Tuổi Thơ | 6 Bước Chọn | 28/02/2026 | 06/03/2026 | Du Hành Bầu Trời | Sự kiện 6 bước chọn, bình chọn món hợp chủ đề để tích Giấy Dán Máy Bay đổi trang phục. Ngày cuối tốn khoảng 1800 Kim Cương. | Kỳ 9 - 11.0.0 | https://www.facebook.com/1414870327422890 | Ra mắt | 1414870327422890.webp | ~1.800 KC
@@ -150,6 +151,7 @@ Thế Giới Tươi Đẹp | Big Event | 15/08/2019 | 31/08/2019 |  |  |  | http
 Huyết Nguyệt | Big Event | 13/07/2019 |  |  |  |  | https://tinyurl.com/mu4fcx5t | Comeback | 2367763356823214.webp
 Ma Quái | Big Event | 13/06/2019 |  |  |  |  | https://tinyurl.com/329s2ut8 | Comeback | 2346770285589188.webp
 Bài Ca Mùa Hạ | Big Event | 07/05/2019 |  |  |  |  | https://tinyurl.com/yramwbt3 | Comeback | 2320949444837939.webp
+Bí Mật Tinh Linh | Event lẻ | 24/04/2019 | 30/04/2019 | Tiên Cảnh Mùa Xuân |  |  |  | Ra mắt | bi-mat-tinh-linh-2019.webp
 Chiến Đỉnh Mây | Big Event | 12/04/2019 |  | Thanh Long, Bạch Hổ, Chu Tước, Huyền Vũ |  |  | https://tinyurl.com/579vwd7x | Comeback | 2302822116650672.webp
 Năm Tháng Tươi Đẹp | Big Event | 03/04/2019 |  |  |  |  | https://tinyurl.com/37s9wtu4 | Ra mắt | 2298404207092463.webp
 Phong Lâm Hỏa Sơn | Big Event | 30/01/2019 |  |  |  |  | https://tinyurl.com/2vdxsrtn | Ra mắt | 2261373200795564.webp
@@ -280,7 +282,7 @@ Biển Sao | Event lẻ | 05/01/2018 | 11/01/2018 | Cô gái loli thỏ, Sao Tr�
 Túi Phúc 2018 | Túi Phúc | 07/02/2018 |  | Hạt Ngọc Vàng, Dòng Thời Gian, Mong Xuân Về, Hoa Mộng Ảo, Thiên Chiếu, Nguyệt Độc | Nạp tích lũy các mốc nhận Túi Phúc May Mắn. |  | https://www.facebook.com/2017451855187701 | Ra mắt | 2017451855187701.webp | Nạp
 Quán Ăn Vui Vẻ | Event ngày lễ | 28/02/2018 | 06/03/2018 | Quán Ăn Vui Vẻ, Tiệm Bánh Mumu, Múa Rồng | Vượt ải tìm Susu thắp đèn, đạt mốc nhận đồ. |  | https://www.facebook.com/2026323474300539 | Ra mắt | 2026323474300539.webp
 Đêm Rực Rỡ | Event lẻ | 11/03/2018 | 18/03/2018 | Yukata Sao Đêm, Thiếu Nữ Bán Hàng, Thiếu Nữ Cá, Mỹ Nữ Cá | Vượt ải lấy Bóng Nước đổi đồ; 2 bộ theo bảng xếp hạng. |  | https://www.facebook.com/2032935350306018 | Ra mắt
-Lễ Phục Sinh | Event ngày lễ | 01/04/2018 | 07/04/2018 | Giấc Mơ Xuân | Quay rút thưởng, 60KC mỗi lượt. |  | https://www.facebook.com/2044404985825721 | Ra mắt |  | 60 KC/lượt
+Lễ Phục Sinh | Event ngày lễ | 01/04/2018 | 07/04/2018 | Giấc Mơ Xuân | Quay rút thưởng, 60KC mỗi lượt. |  | https://www.facebook.com/2044404985825721 | Ra mắt | le-phuc-sinh-2018.webp | 60 KC/lượt
 Nạp Tích Lũy Tứ Đại Gia Tộc | Event lẻ | 06/06/2018 |  |  | Nạp tích lũy 250/500/1000/2000/5500KC nhận 1 bộ mỗi mốc. |  | https://www.facebook.com/2085492538383632 | Ra mắt | 2085492538383632.webp | Nạp
 Thất Tịch | Event ngày lễ | 13/08/2018 | 19/08/2018 | Giấc Mơ Mộng Ảo | Vượt ải rơi Sợi Tơ Mịn, chế bản vẽ ở Khu Thiết Kế. |  | https://www.facebook.com/2142363639363188 | Comeback | 2142363639363188.webp
 Nạp Tích Lũy 1000K Yêu Ma Quỷ Quái | Event lẻ | 25/08/2018 | 03/09/2018 | Dạ Tiệc Đỏ | Nạp tích lũy đủ 1000K nhận bộ. |  | https://www.facebook.com/2157093011223584 |  | 2157093011223584.webp | Nạp
