@@ -54,7 +54,7 @@ Thuyền Hoa Dạo Biển | 6 Bước Chọn | 18/06/2026 | 27/06/2026 | Ánh Đ
 Hồi Ức Khó Quên | Event lẻ | 05/06/2026 | 11/06/2026 | Ngày Chờ Mong, Ước Hẹn Mùa Hoa | Thi đấu phối đồ 1vs1 để tích Nhẫn Ước Nguyện, mỗi lượt tốn 10 Kim Cương và 4 Tim. Đạt mốc nhận trang phục. | Kỳ 6 - 11.2.0 | https://www.facebook.com/1551670633742858 | Comeback | 1551670633742858.webp | 10 KC/lượt
 Ban Mai Rung Động | Big Event | 19/05/2026 | 28/05/2026 |  | Tốn 30 Kim Cương cho mỗi lượt tìm, tích đủ lượt theo mốc để mở khóa trang phục. Mỗi ngày có lượt miễn phí. | Kỳ 4 - 11.2.0 | https://www.facebook.com/1526340636275858 | Comeback | ban-mai-rung-dong-2026.webp | 30 KC/lượt
 Hành Trình Thời Không | Gacha | 29/04/2026 | 05/05/2026 | Vang Khúc Hư Không, Hương Vị Tự Nhiên, Tín Hiệu Không Ngừng | Dùng 30 Kim Cương mua Khóa Bảo Mật để rút, sau 15 lần cứ 3 lần có món mới. Cả 3 bộ tốn khoảng 2.000-2.500 Kim Cương. | Kỳ 11 - 11.1.0 | https://www.facebook.com/1495474269362495 | Ra mắt | 1495474269362495.webp | ~2.000–2.500 KC
-Truyền Thuyết Ngôi Sao | Event lẻ | 22/04/2026 | 28/04/2026 | Tiết Tấu Trăng Sao, Âm Vang Hoang Mạc | Vượt ải trên bản đồ, gồm ải phối đồ và trả lời câu hỏi, để nhận Đá Sa Mạc. Có lượt miễn phí mỗi ngày, lượt thêm 5 Kim Cương. | Kỳ 9 - 11.1.0 | https://www.facebook.com/1484701113773144
+Truyền Thuyết Ngôi Sao | Event lẻ | 22/04/2026 | 28/04/2026 | Tiết Tấu Trăng Sao, Âm Vang Hoang Mạc | Vượt ải trên bản đồ, gồm ải phối đồ và trả lời câu hỏi, để nhận Đá Sa Mạc. Có lượt miễn phí mỗi ngày, lượt thêm 5 Kim Cương. | Kỳ 9 - 11.1.0 | https://www.facebook.com/1484701113773144 |  | truyen-thuyet-ngoi-sao-2026.webp
 Âm Thanh Huyền Ảo | 6 Bước Chọn | 11/04/2026 | 17/04/2026 | Giai Điệu Dưới Mưa | Sự kiện 6 bước chọn, phối theo chủ đề để tích Đĩa Nhạc Cầu Vòng đổi trang phục. Ngày cuối tốn khoảng 1740 Kim Cương. | Kỳ 7 - 11.1.0 | https://www.facebook.com/1469655511944371 | Ra mắt | 1469655511944371.webp | ~1.740 KC
 Ký Sự Nguyệt Ảnh | Đóng gói | 01/04/2026 | 07/04/2026 | Kẻ Trộm Ánh Trăng | Vượt ải nhận Vé Mộng Hồng, dùng vé cùng 24 Kim Cương cho một lượt Sưu Tầm. Mỗi ngày có 5 lượt miễn phí, đạt mốc nhận món đồ. | Kỳ 5 - 11.1.0 | https://www.facebook.com/1458135286429727 | Ra mắt | 1458135286429727.webp
 Phòng Sách Thần Bí - Kỳ 3 | Tiêu tim | 07/03/2026 | 16/03/2026 | Suy Tưởng Xanh Biếc | Vượt ải Thiếu Nữ hoặc Công Chúa nhận Mảnh Thần Bí để ghép ảnh và nhận lần lượt các món. Tốn khoảng 4000-4400 cho toàn sự kiện. | Kỳ 11 - 11.0.0 | https://www.facebook.com/1424660189777237 | Ra mắt | 1424660189777237.webp
@@ -71,7 +71,7 @@ Lời Nguyền Ma Quái | Event ngày lễ | 24/10/2025 | 02/11/2025 |  | Trang 
 Vườn Treo Mộng Tưởng | Big Event | 29/08/2025 | 08/09/2025 | Làn Gió Hừng Đông, Mộng Tưởng Biển Hoa, Khổng Tước Uy Vũ | Tốn 30 Kim Cương mỗi lượt Tìm, đạt mốc nhận ngẫu nhiên 1 trong 3 bộ. Đủ 3 bộ nhận thêm khung avatar Đảo Mộng Cầu Vồng. | Kỳ 3 - 10.5.0 | https://www.facebook.com/1167361848840407 |  | vuon-treo-mong-tuong-2025.webp | 30 KC/lượt
 Nhật Kí Thất Lạc | Tiêu tim | 29/08/2025 | 08/09/2025 | Nhà Thám Hiểm Mèo | Vượt ải Thiếu Nữ hoặc Công Chúa nhận Mảnh Bản Đồ để đổi trang phục. Cần 2220 Mảnh, khoảng 4400 Tim. | Kỳ 2 - 10.5.0 | https://www.facebook.com/1165341422375783 |  | nhat-ki-that-lac-2025.webp | ~4.400 Tim
 Linh Cảm Không Gian: Tứ Đại Gia Tộc | Linh Cảm Không Gian | 20/08/2025 |  | Rồng Mây Ảo Ảnh, Cánh Phượng Mê Ảo, Bí Ẩn Biển Sâu, Hổ Tuyết Thần Uy | Mua vé 350 Kim Cương rồi Tìm Tia Ánh Sáng, mỗi lượt 45 Kim Cương. Đạt mốc nhận ngẫu nhiên 1 trong 4 bộ, mốc 340 tốn khoảng 10.170 Kim Cương. Gồm: Chiến Đỉnh Mây | Kỳ 7 - 10.4.0 | https://www.facebook.com/1155488630027729 |  | 1155488630027729.webp | ~10.170 KC
-Linh Cảm Không Gian: Dòng Chảy Thời Gian | Linh Cảm Không Gian | 08/07/2025 |  | Làn Gió Mát, Trăng Vĩnh Hằng, Nụ Hôn Của Hoa | Mua vé 350 Kim Cương rồi Cầu Nguyện, mỗi lượt 45 Kim Cương, thu nguyên liệu theo mốc 12, 30, 60 để mở khóa bộ Cổ Tích. Cả 4 bộ tốn khoảng 10.400-11.430 Kim Cương. Gồm: Dòng Chảy Thời Gian | Kỳ 10 - 10.3.0 | https://www.facebook.com/1113892960853963 |  |  | ~10.400–11.430 KC
+Linh Cảm Không Gian: Phong Hoa Tuyết Nguyệt | Linh Cảm Không Gian | 08/07/2025 |  | Làn Gió Mát, Trăng Vĩnh Hằng, Nụ Hôn Của Hoa | Mua vé 350 Kim Cương rồi Cầu Nguyện, mỗi lượt 45 Kim Cương, thu nguyên liệu theo mốc 12, 30, 60 để mở khóa bộ Cổ Tích. Cả 4 bộ tốn khoảng 10.400-11.430 Kim Cương. Gồm: Phong Hoa Tuyết Nguyệt | Kỳ 10 - 10.3.0 | https://www.facebook.com/1113892960853963 |  | lckg-phong-hoa-tuyet-nguyet-2025.webp | ~10.400–11.430 KC
 Khúc Hát Nhà Vườn | Tiêu tim | 04/07/2025 | 13/07/2025 |  | Vượt ải nhận Nước Ngọt Ngào, thu thập đủ để nhận bộ trang phục. Cần 2200 Nước Ngọt Ngào, khoảng 4400 Tim. | Kỳ 9 - 10.3.0 | https://www.facebook.com/1108730241370235 | Ra mắt | khuc-hat-nha-vuon-2025.webp | ~4.400 Tim
 Ra Khơi Tầm Bảo | Event lẻ | 01/07/2025 | 07/07/2025 |  | Sự kiện bản đồ: vượt 5 ải (3 ải phối đồ) để nhận Vàng Thần Bí. | Kỳ 8 - 10.3.0 | https://www.facebook.com/1105344595042133 | Ra mắt | ra-khoi-tam-bao-2025.webp
 Hồn Đom Đóm - Kho Báu Chân Thành | Hồn Đom Đóm | 25/06/2025 | 29/06/2025 | Cầu Nguyện Đầu Đông, Kho Báu Chân Thành | Vào Đảo Mơ, Tìm Đá đến khi nhận Cầu Nguyện Đầu Đông, rồi chọn Deobby và Khám Phá Giấc Mơ để nhận Kho Báu Chân Thành. Tốn 900-1200 Kim Cương, cần thêm 185 Đá Rực Rỡ và 114 Đá Ánh Sáng. | Kỳ 7 - 10.3.0 | https://www.facebook.com/1100596385516954 |  | hdd-kho-bau-chan-thanh.webp
@@ -114,7 +114,6 @@ Thế Giới Tươi Đẹp | Big Event | 31/10/2023 | 09/11/2023 |  | Sưu tầm
 Chiến Đỉnh Mây | Big Event | 19/09/2023 | 28/09/2023 | Thanh Long, Bạch Hổ, Chu Tước, Huyền Vũ | Sưu tầm trang phục 4 gia tộc thần thú. |  | https://www.facebook.com/657443243165606 | Comeback | 657443243165606.webp
 Thủy Triều Ký Ức | Big Event | 28/07/2023 | 06/08/2023 | Định Đoạt |  |  | https://www.facebook.com/628634709379793 | Comeback | 628634709379793.webp
 Ban Mai Rung Động | Big Event | 21/07/2023 |  |  |  |  | https://tinyurl.com/yp87k4fa | Ra mắt | 627118172864780.webp
-Dòng Chảy Thời Gian | Big Event | 03/05/2023 |  |  |  |  | https://tinyurl.com/3vj7j7dy | Comeback
 Quyển Sách Mơ Ước | Big Event | 21/04/2023 |  |  |  |  | https://tinyurl.com/mr3tm33j | Ra mắt | 3504850769781128.webp
 Ma Quái | Big Event | 22/03/2023 | 28/03/2023 |  |  |  | https://www.facebook.com/3483782735221265 | Comeback | 3483782735221265.webp
 Đêm Vĩnh Hằng | Big Event | 28/01/2023 | 03/02/2023 | Công Chúa Nắng Mai, Nữ Vương Đêm Ảo | Sưu tầm 2 bộ trang phục. |  | https://www.facebook.com/3441628979436641 | Comeback | 3441628979436641.webp
@@ -142,7 +141,7 @@ Phong Lâm Hỏa Sơn | Big Event | 24/01/2020 |  |  |  |  | https://tinyurl.com
 Ký Ức Mộng Cảnh | Big Event | 16/01/2020 |  |  |  |  | https://tinyurl.com/mue4dsxb | Ra mắt | 2533286636937551.webp
 Năm Tháng Tươi Đẹp | Big Event | 12/12/2019 |  |  |  |  | https://tinyurl.com/37s9wtu4 | Comeback | 2494007174198831.webp
 Thủy Triều Ký Ức | Big Event | 08/11/2019 |  |  |  |  | https://tinyurl.com/yyvywn35 | Ra mắt
-Dòng Chảy Thời Gian | Big Event | 16/10/2019 |  |  |  |  | https://tinyurl.com/3vj7j7dy | Comeback
+Phong Hoa Tuyết Nguyệt | Big Event | 16/10/2019 |  |  |  |  | https://tinyurl.com/3vj7j7dy | Comeback
 Sơn Hải Vân | Big Event | 05/09/2019 |  |  |  |  | https://tinyurl.com/25zyv9fz | Comeback
 Thế Giới Tươi Đẹp | Big Event | 15/08/2019 |  |  |  |  | https://tinyurl.com/hb3akur9 | Ra mắt | 2392684404331109.webp
 Huyết Nguyệt | Big Event | 13/07/2019 |  |  |  |  | https://tinyurl.com/mu4fcx5t | Comeback | 2367763356823214.webp
@@ -153,12 +152,11 @@ Năm Tháng Tươi Đẹp | Big Event | 03/04/2019 |  |  |  |  | https://tinyurl
 Phong Lâm Hỏa Sơn | Big Event | 30/01/2019 |  |  |  |  | https://tinyurl.com/2vdxsrtn | Ra mắt | 2261373200795564.webp
 Đêm Vĩnh Hằng | Big Event | 06/12/2018 |  |  |  |  | https://tinyurl.com/zuv27ba8 | Comeback
 Sơn Hải Vân | Big Event | 30/11/2018 |  |  |  |  | https://www.facebook.com/2215638102035741 | Ra mắt | 2215638102035741.webp
-Dòng Chảy Thời Gian | Big Event | 13/11/2018 |  |  |  |  | https://tinyurl.com/3vj7j7dy | Comeback
 Ma Quái | Big Event | 25/08/2018 |  |  |  |  | https://www.facebook.com/2151462588453293 | Ra mắt | 2151462588453293.webp
 Chiến Đỉnh Mây | Big Event | 06/06/2018 |  | Thanh Long, Bạch Hổ, Chu Tước, Huyền Vũ |  |  | https://www.facebook.com/2079757348957151 | Ra mắt | 2079757348957151.webp
 Huyết Nguyệt | Big Event | 22/04/2018 |  |  |  |  | https://www.facebook.com/2054190171513869 | Ra mắt | 2054190171513869.webp
 Bài Ca Mùa Hạ | Big Event | 01/04/2018 |  |  |  |  | https://tinyurl.com/yramwbt3 | Comeback
-Dòng Chảy Thời Gian | Big Event | 07/02/2018 |  |  |  |  | https://tinyurl.com/3vj7j7dy | Ra mắt
+Phong Hoa Tuyết Nguyệt | Big Event | 07/02/2018 |  |  |  |  | https://tinyurl.com/3vj7j7dy | Ra mắt
 Đêm Vĩnh Hằng | Big Event | 08/12/2017 |  |  |  |  | https://www.facebook.com/1982719288660958 | Ra mắt
 Bài Ca Mùa Hạ | Big Event | 14/07/2017 |  |  |  |  | https://tinyurl.com/yramwbt3 | Ra mắt
 Linh Cảm Không Gian: Bài Ca Mùa Hạ | Linh Cảm Không Gian | 30/09/2021 |  |  | Tâm Nguyện Chi Môn: mua vé 350 Kim Cương, mở 5 ngày để chơi, dùng Kim Cương quay như Big Event. Gồm: Bài Ca Mùa Hạ
@@ -289,7 +287,7 @@ Nạp Mốc Bất Kỳ Tặng Thời Thanh Xuân | Event lẻ | 28/09/2018 | 07/
 Kỷ Nguyên Lãng Mạn | Event lẻ | 21/10/2018 | 28/10/2018 | Trợ Lý Dễ Thương, Mèo và Nhà Tiểu Thuyết | Vượt ải lấy Vé Xe đổi đồ. |  | https://www.facebook.com/2192145694384982 | Ra mắt | 2192145694384982.webp
 Ngọn Lửa U Linh | Event lẻ | 10/11/2018 | 16/11/2018 | Vong Hồn Quyến Rũ |  |  | https://www.facebook.com/2204734266459458 | Ra mắt | 2204734266459458.webp
 Nạp Tích Lũy Giấc Mơ Diana | Event lẻ | 10/11/2018 | 19/11/2018 | Giấc Mơ Diana | Nạp tích lũy 100–1460KC nhận từng phần bộ. |  | https://www.facebook.com/2204772993122252 |  | 2204772993122252.webp | Nạp
-Phong Hoa Tuyết Nguyệt | Gacha | 13/11/2018 | 19/11/2018 | Làn Gió Mát, Nụ Hôn Của Hoa, Tuyết Tung Bay, Trăng Vĩnh Hằng | Quay 45KC/lượt lấy nguyên liệu, đủ 60 đổi bộ. |  | https://www.facebook.com/2206544692945082 | Comeback | 2206544692945082.webp | 45 KC/lượt
+Phong Hoa Tuyết Nguyệt | Big Event | 13/11/2018 | 19/11/2018 | Làn Gió Mát, Nụ Hôn Của Hoa, Tuyết Tung Bay, Trăng Vĩnh Hằng | Quay 45KC/lượt lấy nguyên liệu, đủ 60 đổi bộ. |  | https://www.facebook.com/2206544692945082 | Comeback | 2206544692945082.webp | 45 KC/lượt
 Mộng Cổ Tích | Event lẻ | 20/11/2018 | 26/11/2018 | Vấn Vương, Ma Thuật Tình Yêu | Vượt ải lấy Bình Ước Nguyện đổi bộ. |  | https://www.facebook.com/2210425379223680 | Ra mắt | 2210425379223680.webp
 Cảnh Hoàng Hôn | Event lẻ | 30/11/2018 | 09/12/2018 | Ma Lực Ảo Ảnh | Vượt ải lấy Đá Hoàng Hôn đổi bộ. |  | https://www.facebook.com/2219577114975173 | Ra mắt | 2219577114975173.webp
 Sư Tử Đồng Cỏ | Event lẻ | 13/12/2018 | 19/12/2018 |  | Vượt ải lấy Đá Sư Tử, trang trí hộp quà nhận quà. |  | https://www.facebook.com/2225003031099248 | Ra mắt | 2225003031099248.webp
@@ -404,7 +402,7 @@ Truyền Thuyết Tinh Hà Cổ Tích Ngàn Sao | Event lẻ | 07/11/2022 | 13/1
 Hồn Đom Đóm - Chim Hót Ban Mai | Hồn Đom Đóm | 20/01/2023 | 22/01/2023 |  |  |  | https://www.facebook.com/3435377670061772 | Comeback | 3435377670061772.webp
 Hồn Đom Đóm - Hươu Cửu Sắc | Hồn Đom Đóm | 03/02/2023 | 05/02/2023 |  |  |  | https://www.facebook.com/3448084722124400 | Comeback | 3448084722124400.webp
 Hồn Đom Đóm - Môtô Đêm | Hồn Đom Đóm | 17/04/2023 | 19/04/2023 |  |  |  | https://www.facebook.com/3500806903518848 | Comeback | 3500806903518848.webp
-Phong Hoa Tuyết Nguyệt | Gacha | 03/05/2023 | 12/05/2023 |  |  |  | https://www.facebook.com/3511980399068165 | Comeback | 3511980399068165.webp
+Phong Hoa Tuyết Nguyệt | Big Event | 03/05/2023 | 12/05/2023 |  |  |  | https://www.facebook.com/3511980399068165 | Comeback | 3511980399068165.webp
 Giấc Mộng Thủy Tinh | Event lẻ | 20/05/2023 | 26/05/2023 | Mộng Cõi Tiên, Tô Điểm Ước Mơ | Làm nhiệm vụ sự kiện nhận 2 bộ. |  | https://www.facebook.com/3524268724505999 | Comeback | 3524268724505999.webp
 Sắc Trà Trong Mưa | Event lẻ | 20/05/2023 | 29/05/2023 | Trà Xuân Thơm Ngát |  |  | https://www.facebook.com/3525583521041186 | Ra mắt | 3525583521041186.webp
 Hiệp Khách Phong Trần | Event lẻ | 27/05/2023 | 02/06/2023 | Nữ Hiệp Thần Bí, Bọ Cạp Ma Mị |  |  | https://www.facebook.com/3529140960685442 | Ra mắt | 3529140960685442.webp
