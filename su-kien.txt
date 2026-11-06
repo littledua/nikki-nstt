@@ -195,8 +195,8 @@ Nhạc Hội Thiên Hà | Event lẻ | 14/06/2023 | 20/06/2023 | Âm Vực Sâu,
 Khắc Ghi Mộng Tưởng | Event lẻ | 05/01/2023 | 11/01/2023 | Tiểu Thư Hoa Hồng, Cánh Bướm Mơ Màng | Ghép 2v2 với NPC, tích Nhẫn Khắc Ghi nhận bộ theo mốc. |  | https://www.facebook.com/706868367471337 | Comeback | 3423486564584216.webp
 Giáng Sinh An Lành | Gacha | 23/12/2022 | 29/12/2022 |  | Mua vé quay lầu kim cương, nhận món trang phục. |  | https://www.facebook.com/697816121709895 | Comeback | 3412000295732843.webp
 Quỷ Diện Yến Vũ | Gacha | 24/11/2022 | 30/11/2022 |  | Mua vé quay lầu, lần đầu không giảm 50%. |  | https://www.facebook.com/676834347141406 | Comeback | 3386063864993153.webp
-Hồn Đom Đóm - Ước Hẹn Tương Lai | Hồn Đom Đóm | 05/11/2022 | 07/11/2022 | Ước Hẹn Tương Lai | Đảo Mơ tìm Hồn Đom Đóm, nâng cấp qua thợ dệt. |  | https://www.facebook.com/663662555125252 | Comeback
-Tháng Năm Kỳ Diệu | Gacha | 07/10/2022 | 13/10/2022 |  | Mua vé quay lầu, đổi phần thưởng ở Khu Đổi Thưởng. |  | https://www.facebook.com/641708590653982 | Comeback
+Hồn Đom Đóm - Ước Hẹn Tương Lai | Hồn Đom Đóm | 05/11/2022 | 07/11/2022 | Ước Hẹn Tương Lai | Đảo Mơ tìm Hồn Đom Đóm, nâng cấp qua thợ dệt. |  | https://www.facebook.com/663662555125252 | Comeback | hdd-uoc-hen-tuong-lai-2022.webp
+Tháng Năm Kỳ Diệu | Gacha | 07/10/2022 | 13/10/2022 |  | Mua vé quay lầu, đổi phần thưởng ở Khu Đổi Thưởng. |  | https://www.facebook.com/641708590653982 | Comeback | thang-nam-ky-dieu-2022.webp
 Biển Sao | Event lẻ | 19/07/2022 | 25/07/2022 |  | Ghép 2v2 với NPC, nhận Đá Ngôi Sao đổi tự do. |  | https://www.facebook.com/588022442689264 | Comeback
 Nhật Ký Dạo Chơi | Gacha | 27/06/2022 | 03/07/2022 | Đảo Dừa Ngập Nắng, Thám Hiểm Sông Băng | Chọn 1 trong 2 lầu, mua vé quay 50 kim cương. |  | https://www.facebook.com/3069834049934421 | Comeback | 3260079637591577.webp
 Hồi Ức Khó Quên | Event lẻ | 31/05/2022 | 06/06/2022 |  | Phối đồ đấu 1v1, nhận Nhẫn đổi phụ kiện. |  | https://www.facebook.com/3049829271934899 | Comeback | 3238877416378466.webp
@@ -221,7 +221,7 @@ Báu Vật Sa Mạc | Gacha | 21/09/2019 | 27/09/2019 | Chuông Gió |  |  | htt
 Bí Cảnh Rừng Tiên | Gacha | 28/06/2020 | 04/07/2020 |  |  |  | https://www.facebook.com/2669910999941780 | Ra mắt | 2669910999941780.webp
 Cửa Sổ Thủy Tinh | Gacha | 14/12/2024 | 20/12/2024 |  |  |  | https://www.facebook.com/1120319806126189 | Ra mắt | 942103448032916.webp
 Giáng Sinh An Lành | Gacha | 20/12/2021 | 26/12/2021 |  |  |  | https://www.facebook.com/2933947543523073 | Ra mắt | 1237561669987804.webp
-Gấm Hoa | Gacha | 17/11/2022 | 23/11/2022 |  |  |  | https://www.facebook.com/671871774304330 | Ra mắt
+Gấm Hoa | Gacha | 17/11/2022 | 23/11/2022 |  |  |  | https://www.facebook.com/671871774304330 | Ra mắt | gam-hoa-2022.webp
 Hồn Đom Đóm - Chim Hót Ban Mai | Hồn Đom Đóm | 16/05/2020 | 20/05/2020 | Minh Thủy Diên |  |  | https://www.facebook.com/2500332886884543 | Ra mắt
 Hồn Đom Đóm - Hành Lang Ký Ức | Hồn Đom Đóm | 10/10/2020 | 12/10/2020 |  |  |  | https://www.facebook.com/2766630150269864 | Ra mắt | 2766630150269864.webp
 Khắc Ghi Mộng Tưởng | Event lẻ | 14/05/2019 | 20/05/2019 |  |  |  | https://www.facebook.com/2215876025330232
@@ -397,7 +397,7 @@ Chiến Công Khoa Kỹ | Event lẻ | 12/08/2022 | 18/08/2022 |  |  |  | https:
 Bụi Hoa Yên Ả - Tô Vẽ Kỳ Duyên | Event lẻ | 08/09/2022 | 14/09/2022 |  |  |  | https://www.facebook.com/3318657088400498 | Ra mắt | 3318657088400498.webp
 Sân Khấu Kỳ Lạ Màn Kịch Bất Ngờ | Event lẻ | 30/09/2022 | 06/10/2022 |  |  |  | https://www.facebook.com/3337197779879762 | Ra mắt | 3337197779879762.webp
 Túi Phúc 2022 | Túi Phúc | 27/04/2022 | 15/05/2022 |  | Nạp Kim Cương đạt các mốc để nhận 5 bộ. |  | https://www.facebook.com/3210619349204273 | Ra mắt | 3210619349204273.webp | Nạp
-Truyền Thuyết Tinh Hà Cổ Tích Ngàn Sao | Event lẻ | 07/11/2022 | 13/11/2022 |  |  |  | https://www.facebook.com/3371022883163918 | Ra mắt
+Truyền Thuyết Tinh Hà Cổ Tích Ngàn Sao | Event lẻ | 07/11/2022 | 13/11/2022 |  |  |  | https://www.facebook.com/3371022883163918 | Ra mắt | truyen-thuyet-tinh-ha-2022.webp
 Hồn Đom Đóm - Chim Hót Ban Mai | Hồn Đom Đóm | 20/01/2023 | 22/01/2023 |  |  |  | https://www.facebook.com/3435377670061772 | Comeback | 3435377670061772.webp
 Hồn Đom Đóm - Hươu Cửu Sắc | Hồn Đom Đóm | 03/02/2023 | 05/02/2023 |  |  |  | https://www.facebook.com/3448084722124400 | Comeback | 3448084722124400.webp
 Hồn Đom Đóm - Môtô Đêm | Hồn Đom Đóm | 17/04/2023 | 19/04/2023 |  |  |  | https://www.facebook.com/3500806903518848 | Comeback | 3500806903518848.webp
