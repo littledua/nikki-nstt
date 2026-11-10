@@ -725,6 +725,28 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 .ward-mini { font-size: .88rem; }
 .ward-mini b { color: var(--accent); }
 
+/* ---------- Ải cốt truyện: món bắt buộc ---------- */
+.ctgroup { border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px; margin-bottom: 12px; background: var(--surface); }
+.ctgroup h3 { margin: 0 0 8px; font-family: var(--f-display); font-size: 1rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.ctgroup h3 .tagai { font-size: .78rem; padding: 2px 10px; border-radius: 999px; background: var(--tag2); color: var(--tag2-ink); }
+.ctitem { border-top: 1px dashed var(--line); padding: 8px 0 4px; }
+.ctitem:first-of-type { border-top: 0; }
+.ctitem > summary, .ctrow { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; gap: 10px; align-items: center; cursor: pointer; list-style: none; }
+.ctitem > summary::-webkit-details-marker { display: none; }
+.ctrow { cursor: default; }
+.ctitem .pic, .ctrow .pic { width: 40px; height: 40px; border-radius: 10px; }
+.ctitem .nm, .ctrow .nm { font-weight: 700; }
+.ctitem .sub { font-size: .8rem; color: var(--muted); }
+.ctitem > summary .mo { color: var(--accent); font-size: .82rem; font-weight: 700; white-space: nowrap; }
+.ctitem[open] > summary .mo::after { content: " ▴"; }
+.ctitem:not([open]) > summary .mo::after { content: " ▾"; }
+.ctcook { margin: 8px 0 4px 50px; padding-left: 12px; border-left: 2px solid var(--line); font-size: .9rem; display: grid; gap: 4px; }
+.ctcook .bv { font-size: .8rem; color: var(--muted); }
+.ctcook .nl { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; }
+.ctcook .nl b { color: var(--accent); }
+.ctcook .sub2 { margin-left: 14px; padding-left: 10px; border-left: 2px dotted var(--line); }
+.co { font-size: .74rem; font-weight: 700; padding: 1px 8px; border-radius: 999px; background: var(--own-soft); color: var(--own); white-space: nowrap; }
+.chua { font-size: .74rem; font-weight: 700; padding: 1px 8px; border-radius: 999px; background: var(--warn-soft); color: var(--warn); white-space: nowrap; }
 /* ---------- Tủ đồ / Kho đồ ---------- */
 .wgrid2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; margin-bottom: 18px; }
 .drop { border-radius: 16px; background: color-mix(in srgb, var(--fill) 10%, #fff); border-color: color-mix(in srgb, var(--fill) 60%, #fff); cursor: pointer; margin-top: 12px; }
@@ -793,6 +815,9 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   .filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .filters select { min-width: 0; }
   .wbar { grid-template-columns: 88px minmax(0, 1fr) 34px; }
+  .ctitem > summary, .ctrow { grid-template-columns: 40px minmax(0, 1fr); }
+  .ctitem > summary > span:last-child, .ctrow > span:last-child { grid-column: 2; justify-self: start; }
+  .ctcook { margin-left: 10px; }
 }
 </style>
 </head>
@@ -819,45 +844,6 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   <section class="view" id="view-su-kien" hidden>
     <div class="phead"><p class="eyebrow">Nhật ký Miraland</p><h2 class="h1">Hôm nay <span class="hl">có sự kiện gì</span>?</h2>
       <p class="lede">Xem sự kiện đang mở hoặc lục lại các năm trước. Tìm kiếm và lọc năm dùng cùng lúc được.</p></div>
-    <div class="evaddbar" id="evAddBar" hidden><button type="button" class="btn primary" id="evAdd" aria-expanded="false" aria-controls="evAddBox">＋ Thêm sự kiện</button></div>
-    <div class="panel evaddbox" id="evAddBox" hidden>
-      <h3 class="sec" style="font-size:1.05rem;margin-top:0">Thêm sự kiện mới</h3>
-      <p class="muted small" style="margin:-4px 0 12px">Dán link, ảnh và nội dung bài đăng fanpage. Web tự điền thông tin và tự đoán loại sự kiện, bạn xem lại rồi bấm Lưu.</p>
-      <div class="evform">
-        <label class="field wide"><span>Link bài đăng</span><input id="efLink" type="url" placeholder="https://www.facebook.com/…" autocomplete="off"></label>
-        <div class="field wide"><span>Ảnh sự kiện</span>
-          <div class="efimg" id="efDrop" tabindex="0" role="button" aria-label="Chọn ảnh sự kiện"><img id="efPrev" alt="" hidden><span id="efImgTxt">Bấm để chọn ảnh, kéo thả ảnh vào đây, hoặc dán ảnh (Ctrl + V)</span></div>
-          <input type="file" id="efFile" accept="image/*" hidden>
-        </div>
-        <label class="field wide"><span>Nội dung bài đăng (dán nguyên bài: tên, thời gian, cách chơi…)</span><textarea id="efPost" rows="6" placeholder="TIỆM MAY CỔ TÍCH&#10;⏰ Thời gian: 05h00 09/11/2026 - 23h59 15/11/2026&#10;- Lựa chọn trang phục phù hợp…"></textarea></label>
-      </div>
-      <div class="efguess" id="efGuess" hidden></div>
-      <details class="efmore" id="efMore">
-        <summary>Xem và sửa thông tin web tự điền</summary>
-        <div class="evform" style="margin-top:10px">
-          <label class="field wide"><span>Tên sự kiện *</span><input id="efName" list="efNames" autocomplete="off"><datalist id="efNames"></datalist></label>
-          <label class="field"><span>Loại</span><select id="efType"></select></label>
-          <label class="field"><span>Lần mở</span><select id="efRun"><option value="">(không rõ)</option><option>Ra mắt</option><option>Comeback</option></select></label>
-          <label class="field"><span>Ngày mở *</span><input type="date" id="efStart"></label>
-          <label class="field"><span>Ngày đóng</span><input type="date" id="efEnd"></label>
-          <label class="field wide"><span>Bộ đồ (ngăn bằng dấu phẩy)</span><input id="efSets"></label>
-          <label class="field wide"><span>Cách chơi</span><textarea id="efHow" rows="3"></textarea></label>
-          <label class="field"><span>Chi phí</span><input id="efCost" placeholder="~1.740 KC"></label>
-          <label class="field"><span>Bản tin</span><input id="efNews" placeholder="Kỳ 9 - 11.6.0"></label>
-        </div>
-      </details>
-      <div class="row" style="margin-top:12px;align-items:center"><button type="button" class="btn primary" id="efGo">Lưu sự kiện</button><button type="button" class="btn ghost" id="efCancel">Đóng</button><span class="small muted" id="efStatus" role="status"></span></div>
-      <div id="efManual"></div>
-      <details class="efmore" id="efGhBox" style="margin-top:14px">
-        <summary id="efGhSum">Kết nối GitHub để lưu thẳng lên web</summary>
-        <div class="small" style="margin-top:8px;line-height:1.6">
-          <p style="margin:0 0 6px">Đã kết nối thì bấm Lưu là web tự đưa ảnh vào thư mục <code>ev</code> và thêm dòng vào <code>su-kien.txt</code>. Chưa kết nối thì web soạn sẵn dòng, tải ảnh về máy và chỉ chỗ dán trên GitHub.</p>
-          <p style="margin:0 0 6px">Cách lấy mã: vào <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub › Fine-grained token</a>. Ở mục <b>Repository access</b> chọn <b>Only select repositories</b> › <b>nikki-nstt</b>. Ở mục <b>Permissions › Contents</b> chọn <b>Read and write</b>. Bấm <b>Generate token</b> rồi chép mã dán vào đây.</p>
-          <p style="margin:0 0 8px">Mã chỉ lưu trong trình duyệt này và chỉ gửi tới GitHub. Đừng lưu mã trên máy dùng chung.</p>
-          <div class="row"><input id="efTok" type="password" placeholder="github_pat_…" autocomplete="off" aria-label="Mã GitHub" style="flex:1 1 220px;min-width:0;border:1px solid var(--line);border-radius:10px;padding:7px 10px;font:inherit;background:var(--surface);color:inherit"><button type="button" class="btn" id="efTokSave">Lưu mã</button><button type="button" class="btn ghost" id="efTokDel">Xóa mã</button></div>
-        </div>
-      </details>
-    </div>
     <div id="evBody"><p class="muted">Đang tải lịch sự kiện…</p></div>
   </section>
 
@@ -870,16 +856,21 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       <div class="panel pin pick">
         <p class="lbl">Loại ải</p>
         <select id="pdLoai" aria-label="Loại ải">
-          <option value="khu-thi-dau">Khu Thi Đấu</option>
-          <option value="" disabled>Thiếu Nữ (sắp có)</option>
-          <option value="" disabled>Công Chúa (sắp có)</option>
-          <option value="" disabled>Ải Hội (sắp có)</option>
+          <option value="khu-thi-dau">Khu Thi Đấu: phối điểm cao</option>
+          <option value="cot-truyen">Ải cốt truyện: món bắt buộc chế</option>
         </select>
+        <div id="pdKtd">
         <p class="lbl" style="margin-top:14px">Chủ đề</p>
         <input type="search" id="pdQ" placeholder="Tìm chủ đề…" aria-label="Tìm chủ đề" style="width:100%">
         <div class="themes-list" id="pdList" role="group" aria-label="Chủ đề"></div>
         <div id="pdW"></div>
-        <p class="soon-note">Ải cốt truyện sẽ có khi đủ dữ liệu trọng số.</p>
+        <p class="soon-note">Phối điểm cho ải cốt truyện sẽ có khi đủ dữ liệu trọng số.</p>
+        </div>
+        <div id="pdCt" hidden>
+        <p class="lbl" style="margin-top:14px">Chặng</p>
+        <div class="themes-list" id="ctList" role="group" aria-label="Chặng"></div>
+        <p class="soon-note">Chặng có bộ bắt buộc mới hiện ở đây. Bấm từng món để xem cách chế.</p>
+        </div>
         <div class="ward-mini" id="pdWard" style="margin-top:12px"></div>
       </div>
       <div class="panel" id="pdKq"><p class="muted">Đang mở sổ…</p></div>
@@ -940,6 +931,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
         <li><b>Điểm món đồ, ô đồ:</b> tổng hợp thủ công từ game. Món còn thiếu bổ sung từ <a href="https://lovenikki.fandom.com" target="_blank" rel="noopener">Love Nikki Wiki</a> theo giấy phép <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a>; điểm chữ đã quy đổi sang số để tính.</li>
         <li><b>Luật trừ điểm trang sức:</b> theo Love Nikki Wiki, trang <a href="https://lovenikki.fandom.com/wiki/Styling_Battle" target="_blank" rel="noopener">Styling Battle</a> (CC BY-SA 3.0).</li>
         <li><b>Trọng số chủ đề Khu Thi Đấu:</b> chép từ thông tin công khai trong game.</li>
+        <li><b>Ải bắt buộc và công thức chế:</b> theo Love Nikki Wiki, trang <a href="https://lovenikki.fandom.com/wiki/Target_Suits" target="_blank" rel="noopener">Target Suits</a> và trang từng món (CC BY-SA 3.0), đã đổi sang tên Việt.</li>
         <li><b>Lịch sự kiện và ảnh sự kiện:</b> tổng hợp từ fanpage chính thức của Ngôi Sao Thời Trang.</li>
         <li><b>Hình món đồ:</b> chụp từ game.</li>
       </ul></div>
@@ -957,6 +949,44 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   <!-- ADMIN: vào bằng nút "Quản trị" ở cuối trang (…/#admin) -->
   <section class="view" id="view-admin" hidden>
     <div id="adBody"><p class="muted">Đang tải…</p></div>
+    <div class="panel evaddbox" id="evAddBox" hidden>
+      <h3 class="sec" style="font-size:1.05rem;margin-top:0">Thêm sự kiện mới</h3>
+      <p class="muted small" style="margin:-4px 0 12px">Dán link, ảnh và nội dung bài đăng fanpage. Web tự điền thông tin và tự đoán loại sự kiện, bạn xem lại rồi bấm Lưu.</p>
+      <div class="evform">
+        <label class="field wide"><span>Link bài đăng</span><input id="efLink" type="url" placeholder="https://www.facebook.com/…" autocomplete="off"></label>
+        <div class="field wide"><span>Ảnh sự kiện</span>
+          <div class="efimg" id="efDrop" tabindex="0" role="button" aria-label="Chọn ảnh sự kiện"><img id="efPrev" alt="" hidden><span id="efImgTxt">Bấm để chọn ảnh, kéo thả ảnh vào đây, hoặc dán ảnh (Ctrl + V)</span></div>
+          <input type="file" id="efFile" accept="image/*" hidden>
+        </div>
+        <label class="field wide"><span>Nội dung bài đăng (dán nguyên bài: tên, thời gian, cách chơi…)</span><textarea id="efPost" rows="6" placeholder="TIỆM MAY CỔ TÍCH&#10;⏰ Thời gian: 05h00 09/11/2026 - 23h59 15/11/2026&#10;- Lựa chọn trang phục phù hợp…"></textarea></label>
+      </div>
+      <div class="efguess" id="efGuess" hidden></div>
+      <details class="efmore" id="efMore">
+        <summary>Xem và sửa thông tin web tự điền</summary>
+        <div class="evform" style="margin-top:10px">
+          <label class="field wide"><span>Tên sự kiện *</span><input id="efName" list="efNames" autocomplete="off"><datalist id="efNames"></datalist></label>
+          <label class="field"><span>Loại</span><select id="efType"></select></label>
+          <label class="field"><span>Lần mở</span><select id="efRun"><option value="">(không rõ)</option><option>Ra mắt</option><option>Comeback</option></select></label>
+          <label class="field"><span>Ngày mở *</span><input type="date" id="efStart"></label>
+          <label class="field"><span>Ngày đóng</span><input type="date" id="efEnd"></label>
+          <label class="field wide"><span>Bộ đồ (ngăn bằng dấu phẩy)</span><input id="efSets"></label>
+          <label class="field wide"><span>Cách chơi</span><textarea id="efHow" rows="3"></textarea></label>
+          <label class="field"><span>Chi phí</span><input id="efCost" placeholder="~1.740 KC"></label>
+          <label class="field"><span>Bản tin</span><input id="efNews" placeholder="Kỳ 9 - 11.6.0"></label>
+        </div>
+      </details>
+      <div class="row" style="margin-top:12px;align-items:center"><button type="button" class="btn primary" id="efGo">Lưu sự kiện</button><button type="button" class="btn ghost" id="efCancel">Xóa nội dung</button><span class="small muted" id="efStatus" role="status"></span></div>
+      <div id="efManual"></div>
+      <details class="efmore" id="efGhBox" style="margin-top:14px">
+        <summary id="efGhSum">Kết nối GitHub để lưu thẳng lên web</summary>
+        <div class="small" style="margin-top:8px;line-height:1.6">
+          <p style="margin:0 0 6px">Đã kết nối thì bấm Lưu là web tự đưa ảnh vào thư mục <code>ev</code> và thêm dòng vào <code>su-kien.txt</code>. Chưa kết nối thì web soạn sẵn dòng, tải ảnh về máy và chỉ chỗ dán trên GitHub.</p>
+          <p style="margin:0 0 6px">Cách lấy mã: vào <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub › Fine-grained token</a>. Ở mục <b>Repository access</b> chọn <b>Only select repositories</b> › <b>nikki-nstt</b>. Ở mục <b>Permissions › Contents</b> chọn <b>Read and write</b>. Bấm <b>Generate token</b> rồi chép mã dán vào đây.</p>
+          <p style="margin:0 0 8px">Mã chỉ lưu trong trình duyệt này và chỉ gửi tới GitHub. Đừng lưu mã trên máy dùng chung.</p>
+          <div class="row"><input id="efTok" type="password" placeholder="github_pat_…" autocomplete="off" aria-label="Mã GitHub" style="flex:1 1 220px;min-width:0;border:1px solid var(--line);border-radius:10px;padding:7px 10px;font:inherit;background:var(--surface);color:inherit"><button type="button" class="btn" id="efTokSave">Lưu mã</button><button type="button" class="btn ghost" id="efTokDel">Xóa mã</button></div>
+        </div>
+      </details>
+    </div>
   </section>
   </main>
 
@@ -995,7 +1025,6 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   var CAN_DU_LIEU = { 'phoi-do': 1, 'tu-do': 1, 'kho-do': 1, 'bo-da-luu': 1 };
   function route() {
     var v = (location.hash || '').slice(1);
-    if (/\?soan$/.test(v)) { LS.set('soan', true); v = v.replace(/\?soan$/, ''); } /* link riêng cho chủ web: #su-kien?soan hiện nút Thêm sự kiện */
     if (v === 'gop-y') { gyShow(); history.replaceState(null, '', location.pathname + location.search); v = ''; }
     if (VIEWS.indexOf(v) < 0) v = 'su-kien';
     ['su-kien', 'phoi-do', 'tu-do', 'bo-da-luu', 'nguon', 'admin'].forEach(function (x) { $('view-' + x).hidden = x !== (KHUNG[v] || v); });
@@ -1006,7 +1035,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     if (v === 'su-kien') loadEvents();
     if (CAN_DU_LIEU[v]) moDuLieu(function () { veMuc(v); });
     trackView(v);
-    if (v === 'admin') adOpen();
+    if (v === 'admin') adOpen(); else $('evAddBox').hidden = true;
     window.scrollTo(0, 0);
   }
   window.addEventListener('hashchange', route);
@@ -1235,7 +1264,6 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       html += month ? '</div>' : '<div class="empty"><b>Không có sự kiện nào khớp</b>Bạn thử bỏ bớt bộ lọc nhé.</div>';
     }
     $('evBody').innerHTML = html;
-    $('evAddBar').hidden = !LS.get('soan', false);
     $('live').textContent = countTxt.replace(/<[^>]+>/g, '').replace(/^Năm đang chọnTất cả các năm /, '');
   }
   $('evBody').addEventListener('click', function (e) {
@@ -1283,7 +1311,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     return { type: 'Event lẻ', why: 'không thấy dấu hiệu của loại riêng nào' };
   }
   /*CLS-END*/
-  /* ---------- Thêm sự kiện (chỉ hiện khi mở link #su-kien?soan) ----------
+  /* ---------- Thêm sự kiện (trong trang Quản trị, tab "Thêm sự kiện") ----------
      Dán link + ảnh + nội dung bài đăng fanpage: web tự điền tên, ngày, bộ đồ, chi phí, cách chơi và đoán loại.
      Có mã GitHub (fine-grained token, chỉ quyền Contents của repo này, lưu trong trình duyệt) thì lưu thẳng:
      đưa ảnh vào ev/ và chèn dòng vào đầu su-kien.txt. Không có mã thì chép dòng, tải ảnh về và chỉ chỗ dán trên GitHub. */
@@ -1393,12 +1421,12 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     $('efGuess').hidden = true; $('efManual').innerHTML = ''; efStatus('');
   }
   function efOpen(show) {
-    var box = $('evAddBox'); box.hidden = !show; $('evAdd').setAttribute('aria-expanded', show);
+    var box = $('evAddBox'); box.hidden = !show;
     if (!show) return;
     if (!$('efType').options.length) $('efType').innerHTML = EV_TYPES.map(function (t) { return '<option>' + esc(t) + '</option>'; }).join('');
     var names = {}; (EV.list || []).forEach(function (e) { names[e.name] = 1; });
     $('efNames').innerHTML = Object.keys(names).sort().map(function (n) { return '<option value="' + esc(n) + '">'; }).join('');
-    efTokUi(); box.scrollIntoView({ block: 'start', behavior: 'smooth' }); $('efLink').focus();
+    efTokUi();
   }
   function efTokUi() { var has = !!LS.get('ghtok', ''); $('efGhSum').textContent = has ? 'Đã kết nối GitHub · bấm Lưu là web tự cập nhật' : 'Kết nối GitHub để lưu thẳng lên web'; $('efGo').textContent = has ? 'Lưu sự kiện lên web' : 'Soạn sẵn để dán lên GitHub'; }
 
@@ -1463,8 +1491,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       '<li>Dòng bên dưới đã được chép. Mở <a href="https://github.com/' + GH_REPO + '/edit/' + GH_BRANCH + '/su-kien.txt" target="_blank" rel="noopener">trang sửa su-kien.txt</a>, bấm vào dòng trống ngay dưới phần ghi chú (các dòng có dấu #), bấm <b>Ctrl + V</b>, rồi bấm <b>Commit changes</b>.</li></ol>' +
       '<div class="evline">' + esc(line) + '</div><p class="muted" style="margin:6px 0 0">Kết nối GitHub ở mục bên dưới thì lần sau bấm Lưu là xong, không phải làm tay.</p></div>';
   }
-  $('evAdd').addEventListener('click', function () { efOpen($('evAddBox').hidden); });
-  $('efCancel').addEventListener('click', function () { efOpen(false); });
+  $('efCancel').addEventListener('click', function () { efReset(); efStatus('Đã xóa nội dung đang soạn.'); });
   $('efGo').addEventListener('click', efSave);
   $('efPost').addEventListener('input', efAuto);
   $('efLink').addEventListener('input', efAuto);
@@ -1545,9 +1572,16 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     var unseen = AD.fb.filter(function (f) { return !f.seen; }).length;
     var tab = function (k, label) { return '<button type="button" role="tab" data-adtab="' + k + '" aria-selected="' + (AD.tab === k) + '">' + label + '</button>'; };
     box.innerHTML = who +
-      '<div class="tabs evtabs adtabs" role="tablist">' + tab('gop-y', 'Góp ý' + (unseen ? ' (' + unseen + ' mới)' : '')) + tab('thong-ke', 'Thống kê') +
-      '<button type="button" role="tab" aria-selected="false" disabled title="Làm ở đợt 2">Sự kiện · sắp có</button><button type="button" role="tab" aria-selected="false" disabled title="Làm ở đợt 3">Ải bắt buộc · sắp có</button></div>' +
-      (AD.tab === 'thong-ke' ? stHtml() : fbHtml(unseen));
+      '<div class="tabs evtabs adtabs" role="tablist">' + tab('gop-y', 'Góp ý' + (unseen ? ' (' + unseen + ' mới)' : '')) + tab('thong-ke', 'Thống kê') + tab('su-kien', 'Thêm sự kiện') + '</div>' +
+      (AD.tab === 'thong-ke' ? stHtml() : AD.tab === 'su-kien' ? '' : fbHtml(unseen));
+    adSuKien();
+  }
+  /* Tab "Thêm sự kiện" trong admin: dùng lại khung soạn sự kiện; cần danh sách sự kiện để gợi ý tên */
+  function adSuKien() {
+    var on = !!(AD.user && AD.admin && AD.tab === 'su-kien');
+    if (!on) { $('evAddBox').hidden = true; return; }
+    if (!EV.list) { fetch('su-kien.txt', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.text() : ''; }).then(function (t) { if (t) EV.list = parseEvents(t); if (AD.tab === 'su-kien') efOpen(true); }); }
+    efOpen(true);
   }
   function fbHtml(unseen) {
     var list = AD.fbAll ? AD.fb : AD.fb.filter(function (f) { return !f.seen; });
@@ -1716,6 +1750,9 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     }).join('') || '<span class="muted small">Không có chủ đề nào khớp.</span>';
   }
   function vePhoi() {
+    var ct = PD.loai === 'cot-truyen';
+    $('pdKtd').hidden = ct; $('pdCt').hidden = !ct;
+    if (ct) { veCotTruyen(); return; }
     var c = chuDe();
     veDsChuDe();
     $('pdW').innerHTML = '<div class="wbars">' + c.w.map(function (x, k) { return x ? [x, k] : null; }).filter(Boolean)
@@ -1770,6 +1807,63 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     if (b.id === 'pdLuu') luuBo();
   });
   $('pdKq').addEventListener('toggle', function (e) { if (e.target.id === 'pdTs') PD.moTs = e.target.open; }, true);
+
+
+  /* ================= ẢI CỐT TRUYỆN: MÓN BẮT BUỘC (cot-truyen.json, từ Love Nikki Wiki CC BY-SA 3.0) ================= */
+  var CT = null, ctDangTai = false;
+  PD.loai = LS.get('loai', 'khu-thi-dau'); PD.chuong = LS.get('chuong', '');
+  $('pdLoai').value = PD.loai;
+  $('pdLoai').addEventListener('change', function () { PD.loai = this.value; LS.set('loai', PD.loai); vePhoi(); });
+  function moCt(xong) {
+    if (CT) { xong(); return; }
+    if (ctDangTai) return; ctDangTai = true;
+    fetch('cot-truyen.json').then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (j) { CT = j; xong(); })
+      .catch(function () { ctDangTai = false; $('pdKq').innerHTML = '<div class="empty"><b>Chưa tải được dữ liệu ải</b>Bạn tải lại trang thử nhé.</div>'; });
+  }
+  function tenChuong(k) { var p = k.split('-'); return 'Q.' + p[0] + ' Chặng ' + p[1]; }
+  function maAi(k, ai) { return 'Q.' + k.split('-')[0] + '-' + ai; }
+  function veCotTruyen() {
+    moCt(function () {
+      var ks = Object.keys(CT.chuong).sort(function (a, b) { var x = a.split('-').map(Number), y = b.split('-').map(Number); return x[0] - y[0] || x[1] - y[1]; });
+      if (ks.indexOf(PD.chuong) < 0) PD.chuong = ks[0];
+      $('ctList').innerHTML = ks.map(function (k) { return '<button type="button" data-chuong="' + k + '" aria-pressed="' + (k === PD.chuong) + '">' + tenChuong(k) + '</button>'; }).join('');
+      var ds = CT.chuong[PD.chuong], html = '<div class="score"><div><div class="lbl">Món bắt buộc</div><div class="total" style="font-size:1.7rem">' + tenChuong(PD.chuong) + '</div></div>' +
+        '<div class="sub">' + (TU ? 'Đã đánh dấu món có trong tủ đồ của bạn.' : '<a href="#tu-do">Nhập tủ đồ</a> để biết món nào bạn đã có.') + '</div></div>';
+      ds.forEach(function (b) {
+        if (b.ca && b.bo.length) html += nhomCt('Cả chặng cần đủ bộ này', '', b.bo);
+        if (b.ai && b.can.length) html += nhomCt('Ải bắt buộc mặc', maAi(PD.chuong, b.ai), b.can);
+      });
+      $('pdKq').innerHTML = html + '<p class="basenote" style="margin-top:4px">Chỉ ghi nguyên liệu và nơi lấy bản vẽ. Nguồn: Love Nikki Wiki (CC BY-SA 3.0).</p>';
+    });
+  }
+  function nhomCt(tieuDe, ai, ids) {
+    return '<div class="ctgroup"><h3>' + tieuDe + (ai ? ' <span class="tagai">' + esc(ai) + '</span>' : '') + '</h3>' + ids.map(function (i) { return monCt(i, 0); }).join('') + '</div>';
+  }
+  function coTu(i) { return TU ? (TU.has(i) ? '<span class="co">✓ Đã có</span>' : '<span class="chua">Chưa có</span>') : ''; }
+  function tenMon(i) { var m = KHO && KHO.mon[i]; return m ? m.ten : 'Món ' + i; }
+  function oMon(i) { var m = KHO && KHO.mon[i]; return m ? m.o : ''; }
+  function banVe(bv) {
+    if (bv.indexOf('ai:') === 0) return 'Bản vẽ: rơi ở ải Thiếu Nữ ' + esc(bv.slice(3));
+    if (bv === 'sao') return 'Bản vẽ: đổi ở cửa hàng Sao';
+    if (bv === 'san') return 'Bản vẽ: có sẵn';
+    return 'Bản vẽ: nguồn khác';
+  }
+  function monCt(i, sau) {
+    var cts = CT.ct[i];
+    var dong = hinh(i) + '<span><span class="nm">' + esc(tenMon(i)) + '</span><br><span class="sub">' + esc(oMon(i)) + '</span></span>';
+    if (!cts) return '<div class="ctitem ctrow">' + dong + '<span>' + (coTu(i) || '<span class="sub">không cần chế</span>') + '</span></div>';
+    return '<details class="ctitem"><summary>' + dong + '<span style="display:flex;gap:6px;align-items:center">' + coTu(i) + '<span class="mo">Cách chế</span></span></summary>' + cachChe(i, 0) + '</details>';
+  }
+  function cachChe(i, sau) {
+    var cts = CT.ct[i]; if (!cts) return '';
+    return '<div class="ctcook' + (sau ? ' sub2' : '') + '">' + cts.map(function (c, k) {
+      return (cts.length > 1 ? '<div class="bv"><b>Cách ' + (k + 1) + '</b></div>' : '') + '<div class="bv">' + banVe(c.bv) + '</div>' +
+        c.nl.map(function (x) {
+          return '<div class="nl"><span>' + esc(tenMon(x[0])) + ' <b>× ' + x[1] + '</b></span>' + coTu(x[0]) + '</div>' + (sau < 2 && CT.ct[x[0]] ? cachChe(x[0], sau + 1) : '');
+        }).join('');
+    }).join('') + '</div>';
+  }
+  $('ctList').addEventListener('click', function (e) { var b = e.target.closest('[data-chuong]'); if (!b) return; PD.chuong = b.dataset.chuong; LS.set('chuong', PD.chuong); veCotTruyen(); });
 
   /* ================= BỘ ĐÃ LƯU ================= */
   var BO = LS.get('bo2', []), xoaBo = null;
