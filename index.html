@@ -721,7 +721,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 .altbox .alt .pic { width: 34px; height: 34px; border-radius: 9px; }
 .altbox .alt button { padding: 4px 10px; min-height: 32px; font-size: .82rem; }
 .pacts { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 14px; }
-.pacts .check { flex: 1 1 260px; }
+.pacts { justify-content: flex-end; }
 .ward-mini { font-size: .88rem; }
 .ward-mini b { color: var(--accent); }
 
@@ -1703,7 +1703,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   var CHU = { C: 'C', B: 'B', A: 'A', S: 'S', X: 'SS' };
 
   /* ================= PHỐI ĐỒ ================= */
-  var PD = { cd: LS.get('cd', ''), q: '', itTs: LS.get('itTs', true), ov: {}, mo: null, kq: null, moTs: false };
+  var PD = { cd: LS.get('cd', ''), q: '', itTs: true, ov: {}, mo: null, kq: null, moTs: false };
   function chuDe() {
     var ds = KHO.khuThiDau, c = ds.filter(function (x) { return x.ten === PD.cd; })[0];
     if (!c) { c = ds[0]; PD.cd = c.ten; }
@@ -1734,10 +1734,10 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     var doi = Object.keys(PD.ov).length;
     var html = '<div class="score"><div><div class="lbl">Điểm gốc (ước tính)</div><div class="total num">' + fmt(t.tong) + '</div></div>' +
       '<div class="sub">' + esc(c.ten) + ' · Khu Thi Đấu<br>' + chinh.length + ' món chính · ' + t.soTrangSuc + ' trang sức' + (t.soTrangSuc > 3 ? ' (×' + String(t.heSoTrangSuc).replace('.', ',') + ')' : '') + '</div></div>' +
-      '<p class="basenote">Gợi ý dựa theo điểm gốc, chưa tính kỹ năng.</p>' +
+      '<p class="basenote">Gợi ý dựa theo điểm gốc, chưa tính kỹ năng. Số trang sức đã được chọn theo luật trừ điểm trang sức để ra điểm cao nhất.</p>' +
       '<div class="grouphead">Đồ chính <small>bấm để đổi món</small></div><div class="slotgrid">' + chinh.map(oDo).join('') + '</div>' +
       (ts.length ? '<details class="accs"' + (PD.moTs ? ' open' : '') + ' id="pdTs"><summary><div class="grouphead">Trang sức <small>' + ts.length + ' món</small></div></summary><div class="slotgrid">' + ts.map(oDo).join('') + '</div></details>' : '') +
-      '<div class="pacts"><label class="check"><input type="checkbox" id="pdIt"' + (PD.itTs ? ' checked' : '') + '> <span>Đeo ít trang sức hơn nếu như vậy điểm cao hơn<br><span class="muted small">Đeo càng nhiều trang sức thì phần trang sức càng bị nhân hệ số thấp (từ 16 món chỉ còn ×0,4).</span></span></label>' +
+      '<div class="pacts">' +
       (doi ? '<button type="button" class="btn ghost" id="pdReset">Về bộ gợi ý</button>' : '') +
       '<button type="button" class="btn primary" id="pdLuu">♡ Lưu bộ này</button></div>';
     $('pdKq').innerHTML = html;
@@ -1769,7 +1769,6 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     if (b.id === 'pdReset') { PD.ov = {}; PD.mo = null; vePhoi(); return; }
     if (b.id === 'pdLuu') luuBo();
   });
-  $('pdKq').addEventListener('change', function (e) { if (e.target.id === 'pdIt') { PD.itTs = e.target.checked; LS.set('itTs', PD.itTs); PD.ov = {}; vePhoi(); } });
   $('pdKq').addEventListener('toggle', function (e) { if (e.target.id === 'pdTs') PD.moTs = e.target.open; }, true);
 
   /* ================= BỘ ĐÃ LƯU ================= */
