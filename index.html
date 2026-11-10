@@ -1820,18 +1820,20 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     fetch('cot-truyen.json').then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (j) { CT = j; xong(); })
       .catch(function () { ctDangTai = false; $('pdKq').innerHTML = '<div class="empty"><b>Chưa tải được dữ liệu ải</b>Bạn tải lại trang thử nhé.</div>'; });
   }
-  function tenChuong(k) { var p = k.split('-'); return 'Q.' + p[0] + ' Chặng ' + p[1]; }
-  function maAi(k, ai) { return 'Q.' + k.split('-')[0] + '-' + ai; }
+  function tenChuong(k) { if (CT.nhan && CT.nhan[k]) return CT.nhan[k]; var p = k.split('-'); return 'Q.' + p[0] + ' Chặng ' + p[1]; }
+  function maAi(k, ai) { var t = CT.ten_ai && CT.ten_ai[k.split('-')[0] + '-' + ai]; return 'Q.' + k.split('-')[0] + '-' + ai + (t ? ' ' + t : ''); }
   function veCotTruyen() {
     moCt(function () {
       var ks = Object.keys(CT.chuong).sort(function (a, b) { var x = a.split('-').map(Number), y = b.split('-').map(Number); return x[0] - y[0] || x[1] - y[1]; });
       if (ks.indexOf(PD.chuong) < 0) PD.chuong = ks[0];
       $('ctList').innerHTML = ks.map(function (k) { return '<button type="button" data-chuong="' + k + '" aria-pressed="' + (k === PD.chuong) + '">' + tenChuong(k) + '</button>'; }).join('');
       var ds = CT.chuong[PD.chuong], html = '<div class="score"><div><div class="lbl">Món bắt buộc</div><div class="total" style="font-size:1.7rem">' + tenChuong(PD.chuong) + '</div></div>' +
-        '<div class="sub">' + (TU ? 'Đã đánh dấu món có trong tủ đồ của bạn.' : '<a href="#tu-do">Nhập tủ đồ</a> để biết món nào bạn đã có.') + '</div></div>';
+        '<div class="sub">' + (TU ? 'Đã đánh dấu món có trong tủ đồ của bạn.' : '<a href="#tu-do">Nhập tủ đồ</a> để biết món nào bạn đã có.') + '</div></div>' +
+        (CT.ghi_chu && CT.ghi_chu[PD.chuong] ? '<p class="basenote">' + esc(CT.ghi_chu[PD.chuong]) + '</p>' : '');
       ds.forEach(function (b) {
-        if (b.ca && b.bo.length) html += nhomCt('Cả chặng cần đủ bộ này', '', b.bo);
-        if (b.ai && b.can.length) html += nhomCt('Ải bắt buộc mặc', maAi(PD.chuong, b.ai), b.can);
+        var bo = b.ten ? 'bộ ' + b.ten : 'bộ này';
+        if (b.ca && b.bo.length) html += nhomCt('Phải chế đủ ' + bo + ' mới sang chặng sau', '', b.bo);
+        if (b.ai && b.can.length) html += nhomCt('Chế các món này để qua ải' + (b.ten ? ' (trong ' + bo + ')' : ''), maAi(PD.chuong, b.ai), b.can);
       });
       $('pdKq').innerHTML = html + '<p class="basenote" style="margin-top:4px">Chỉ ghi nguyên liệu và nơi lấy bản vẽ. Nguồn: Love Nikki Wiki (CC BY-SA 3.0).</p>';
     });
@@ -1844,7 +1846,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   function oMon(i) { var m = KHO && KHO.mon[i]; return m ? m.o : ''; }
   function banVe(bv) {
     if (bv.indexOf('ai:') === 0) return 'Bản vẽ: rơi ở ải Thiếu Nữ ' + esc(bv.slice(3));
-    if (bv === 'sao') return 'Bản vẽ: đổi ở cửa hàng Sao';
+    if (bv === 'sao') return 'Bản vẽ: đổi ở Shop Thẻ Sao';
     if (bv === 'san') return 'Bản vẽ: có sẵn';
     return 'Bản vẽ: nguồn khác';
   }
