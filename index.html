@@ -273,7 +273,10 @@ button.crchip { border: 0; background: none; padding: 0; font: inherit; color: v
 /* Cùng một khung cho 2 trang: Tủ đồ (chỉ đồ đã có, kèm chỗ nhập file) và Kho đồ (toàn bộ đồ) */
 #view-tu-do.kho .grid { grid-template-columns: minmax(0, 1fr); }
 #view-tu-do.kho .import-col { display: none; }
-#view-tu-do:not(.kho) #fOwn { display: none; }
+#view-tu-do:not(.kho) #fOwn, #view-tu-do:not(.kho) #fChe { display: none; }
+#view-tu-do.theobo #fO, #view-tu-do.theobo #fPc, #view-tu-do.theobo #fSort { display: none; }
+.boluoi { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 10px; margin-top: 12px; }
+.boitems span.khop { outline: 2px solid var(--accent); font-weight: 800; }
 .filters { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
 .filters .q { grid-column: 1 / -1; }
 /* Thẻ món đồ */
@@ -773,6 +776,16 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 .own[aria-pressed="true"] { background: var(--own-soft); color: var(--own); border-color: transparent; }
 .pager { display: flex; gap: 8px; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-top: 14px; }
 
+/* Tìm theo bộ */
+.bolist { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 10px; margin-bottom: 10px; }
+.bocard { border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px; background: color-mix(in srgb, var(--tag2) 25%, #fff); display: flex; flex-direction: column; gap: 8px; }
+.bocard.on { border-color: var(--accent); margin-bottom: 10px; }
+.bohead { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; }
+.bohead b { font-family: var(--f-display); font-size: 1.02rem; }
+.boitems { display: flex; flex-wrap: wrap; gap: 4px; }
+.boitems span { font-size: .78rem; padding: 2px 9px; border-radius: 999px; }
+.bocard .btn { align-self: flex-start; min-height: 34px; padding: 5px 12px; font-size: .85rem; }
+.bolink { border: 0; background: none; padding: 0; font: inherit; font-size: .76rem; color: var(--accent); font-weight: 700; cursor: pointer; text-align: center; text-decoration: underline dotted; }
 /* ---------- Bộ đã lưu ---------- */
 .saved { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 16px; }
 .scard { padding: 18px; display: flex; flex-direction: column; gap: 8px; }
@@ -903,12 +916,14 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     <div class="panel">
       <h2 class="sec" id="tdTitle">Đồ của bạn</h2>
       <div class="filters">
-        <label class="q"><input type="search" id="fQ" placeholder="Tìm theo tên đồ…" aria-label="Tìm theo tên đồ"></label>
+        <label class="q"><input type="search" id="fQ" placeholder="Tìm tên món hoặc tên bộ…" aria-label="Tìm tên món hoặc tên bộ"></label>
+        <select id="fChe" aria-label="Cách xem"><option value="bo">Xem theo bộ</option><option value="le">Món lẻ (không thuộc bộ)</option></select>
         <select id="fO" aria-label="Lọc theo ô đồ"></select>
         <select id="fOwn" aria-label="Lọc theo đã có"><option value="all">Tất cả</option><option value="own">Đã có</option><option value="miss">Chưa có</option></select>
         <select id="fPc" aria-label="Lọc theo phong cách"></select>
         <select id="fSort" aria-label="Sắp xếp"><option value="ten">Xếp theo tên</option><option value="pc">Xếp theo phong cách đang lọc</option></select>
       </div>
+      <div id="tdBo"></div>
       <p class="muted small" id="fCount" style="margin:0"></p>
       <div class="cards" id="tdCards"></div>
       <div class="pager"><button class="btn" id="pPrev">← Trang trước</button><span class="muted small num" id="pInfo"></span><button class="btn" id="pNext">Trang sau →</button></div>
@@ -928,7 +943,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       <p class="lede">Cảm ơn những nguồn đã giúp cuốn sổ này có dữ liệu.</p></div>
     <div class="ngrid">
       <div class="panel pin"><h3>Nguồn dữ liệu</h3><ul>
-        <li><b>Điểm món đồ, ô đồ:</b> tổng hợp thủ công từ game. Món còn thiếu bổ sung từ <a href="https://lovenikki.fandom.com" target="_blank" rel="noopener">Love Nikki Wiki</a> theo giấy phép <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a>; điểm chữ đã quy đổi sang số để tính.</li>
+        <li><b>Điểm món đồ, ô đồ, tên bộ đồ và tên chặng:</b> tổng hợp thủ công từ game. Món còn thiếu bổ sung từ <a href="https://lovenikki.fandom.com" target="_blank" rel="noopener">Love Nikki Wiki</a> theo giấy phép <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a>; điểm chữ đã quy đổi sang số để tính.</li>
         <li><b>Luật trừ điểm trang sức:</b> theo Love Nikki Wiki, trang <a href="https://lovenikki.fandom.com/wiki/Styling_Battle" target="_blank" rel="noopener">Styling Battle</a> (CC BY-SA 3.0).</li>
         <li><b>Trọng số chủ đề Khu Thi Đấu:</b> chép từ thông tin công khai trong game.</li>
         <li><b>Ải bắt buộc và công thức chế:</b> theo Love Nikki Wiki, trang <a href="https://lovenikki.fandom.com/wiki/Target_Suits" target="_blank" rel="noopener">Target Suits</a> và trang từng món (CC BY-SA 3.0), đã đổi sang tên Việt.</li>
@@ -1713,6 +1728,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     ['pdKq', 'tdCards', 'savedList'].forEach(function (id) { if ($(id)) $(id).innerHTML = '<p class="muted">Đang mở sổ…</p>'; });
     fetch('du-lieu.json').then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (j) {
       KHO = TinhDiem.taoKho(j);
+      KHO.bo = j.bo || []; KHO.boCua = {};
+      KHO.bo.forEach(function (b, k) { b[2] = khongDau(b[0]); b[1].forEach(function (i) { (KHO.boCua[i] = KHO.boCua[i] || []).push(k); }); });
       var w = LS.get('ward', null);
       if (w && w.ids) datTu(String(w.ids).split(',').map(Number), false);
       veChip();
@@ -1904,14 +1921,15 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   });
 
   /* ================= TỦ ĐỒ / KHO ĐỒ ================= */
-  var TD = { kho: false, q: '', o: '', own: 'all', pc: '', sort: 'ten', page: 0 }, MOI_TRANG = 48, ganDay = null;
+  function khongDau(t) { return String(t).normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[đĐ]/g, 'd').toLowerCase().trim(); }
+  var TD = { kho: false, q: '', o: '', own: 'all', pc: '', sort: 'ten', page: 0, bo: -1, che: 'bo' }, MOI_TRANG = 48, ganDay = null;
   function veTu(kho) {
-    TD.kho = kho;
+    TD.kho = kho; TD.bo = -1;
     $('tdHead').innerHTML = kho
-      ? '<p class="eyebrow">Kho đồ chung</p><h2 class="h1">Tra cứu <span class="hl">toàn bộ đồ</span> trong game.</h2><p class="lede">Tìm theo tên, lọc theo ô đồ và phong cách, đánh dấu món bạn đã có.</p>'
+      ? '<p class="eyebrow">Kho đồ chung</p><h2 class="h1">Tra cứu <span class="hl">các bộ đồ</span> trong game.</h2><p class="lede">Gõ tên bộ hoặc tên một món, web hiện bộ có món đó. Bấm "Xem cả bộ" để xem từng món và đánh dấu món đã có.</p>'
       : '<p class="eyebrow">Tủ đồ cá nhân</p><h2 class="h1">Tủ đồ <span class="hl">của bạn</span>.</h2><p class="lede">Nhập file tủ đồ để mục Phối đồ chỉ gợi ý món bạn có. File chỉ đọc trên máy bạn, không gửi đi đâu.</p>';
     $('tdNhap').hidden = kho; $('view-tu-do').classList.toggle('kho', kho);
-    $('tdTitle').textContent = kho ? 'Toàn bộ đồ' : 'Đồ của bạn';
+    $('tdTitle').textContent = kho ? 'Các bộ đồ' : 'Đồ của bạn';
     if (!$('fO').options.length) {
       $('fO').innerHTML = '<option value="">Mọi ô đồ</option>' + KHO.o.map(function (o) { return '<option>' + esc(o) + '</option>'; }).join('');
       $('fPc').innerHTML = '<option value="">Mọi phong cách</option>' + KHO.pc.map(function (p, k) { return '<option value="' + k + '">' + esc(p) + '</option>'; }).join('');
@@ -1927,15 +1945,18 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       '<div class="row" style="margin-top:10px"><button type="button" class="btn ghost danger" id="tdXoa">Xóa tủ đồ khỏi máy này</button></div>';
   }
   function locThe() {
-    var q = TD.q.trim().toLowerCase(), pc = TD.pc === '' ? -1 : +TD.pc, ds = [];
+    var q = khongDau(TD.q), pc = TD.pc === '' ? -1 : +TD.pc, ds = [];
+    var trongBo = TD.bo >= 0 ? new Set(KHO.bo[TD.bo][1]) : null;
     Object.keys(KHO.mon).forEach(function (k) {
       var m = KHO.mon[k], co = !!(TU && TU.has(m.ma));
+      if (trongBo) { if (trongBo.has(m.ma)) ds.push(m); return; }
+      if (TD.kho && TD.che === 'le' && KHO.boCua[m.ma]) return;
       if (!TD.kho && !co) return;
       if (TD.kho && TD.own === 'own' && !co) return;
       if (TD.kho && TD.own === 'miss' && co) return;
       if (TD.o && m.o !== TD.o) return;
       if (pc >= 0 && !m.diem[pc]) return;
-      if (q && m.ten.toLowerCase().indexOf(q) < 0) return;
+      if (q && khongDau(m.ten).indexOf(q) < 0) return;
       ds.push(m);
     });
     if (TD.sort === 'pc' && pc >= 0) ds.sort(function (a, b) { return b.diem[pc] - a.diem[pc] || a.ten.localeCompare(b.ten, 'vi'); });
@@ -1945,13 +1966,19 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   function theMon(m) {
     var co = !!(TU && TU.has(m.ma)), cap = m.diem.map(function (d, k) { return [d, k]; }).filter(function (x) { return x[0]; }).sort(function (a, b) { return b[0] - a[0]; });
     return '<article class="icard"><div class="bigpic"><img loading="lazy" decoding="async" alt="" src="img/' + m.ma + '.webp" onerror="this.remove()"><span class="slotlbl">' + esc(m.o) + '</span></div>' +
-      '<div class="body"><div class="nm">' + esc(m.ten) + '</div><div class="grades">' + cap.slice(0, 3).map(function (x, i) {
+      '<div class="body"><div class="nm">' + esc(m.ten) + '</div>' + ((KHO.boCua[m.ma] || []).slice(0, 1).map(function (k) { return '<button type="button" class="bolink" data-bo="' + k + '">Bộ ' + esc(KHO.bo[k][0]) + '</button>'; }).join('')) + '<div class="grades">' + cap.slice(0, 3).map(function (x, i) {
         return '<span' + (i < 2 ? ' class="top"' : '') + '>' + esc(KHO.pc[x[1]]) + ' ' + CHU[m.chu.charAt(x[1])] + '</span>';
       }).join('') + '</div>' +
       (TD.kho ? '<button type="button" class="own" data-co="' + m.ma + '" aria-pressed="' + co + '">' + (co ? '✓ Đã có trong tủ' : '+ Thêm vào tủ') + '</button>' : '') + '</div></article>';
   }
   function veThe() {
     if (!TD.kho && !TU) { $('tdCards').innerHTML = '<div class="empty" style="grid-column:1/-1"><b>Tủ đồ đang trống</b>Nhập file clothes_date ở trên để xem đồ của bạn.</div>'; $('fCount').textContent = ''; $('pInfo').textContent = ''; $('pPrev').disabled = $('pNext').disabled = true; return; }
+    var theoBo = TD.kho && TD.bo < 0 && TD.che === 'bo';
+    $('view-tu-do').classList.toggle('theobo', theoBo);
+    $('tdCards').className = theoBo ? 'boluoi' : 'cards';
+    $('fOwn').options[1].text = theoBo ? 'Đã đủ bộ' : 'Đã có'; $('fOwn').options[2].text = theoBo ? 'Còn thiếu món' : 'Chưa có';
+    if (theoBo) { $('tdBo').innerHTML = ''; veDsBo(); return; }
+    veBo();
     var ds = locThe(), so = Math.max(1, Math.ceil(ds.length / MOI_TRANG));
     TD.page = Math.min(TD.page, so - 1);
     $('fCount').textContent = fmt(ds.length) + ' món';
@@ -1959,12 +1986,50 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     $('pInfo').textContent = 'Trang ' + (TD.page + 1) + ' / ' + so;
     $('pPrev').disabled = TD.page <= 0; $('pNext').disabled = TD.page >= so - 1;
   }
+  /* Tìm theo bộ: gõ tên bộ → hiện thẻ bộ ở đầu danh sách; bấm "Xem cả bộ" để chỉ hiện các món trong bộ */
+  function coBo(b) { return TU ? b[1].filter(function (i) { return TU.has(i); }).length : 0; }
+  function theBo(k, dangXem) {
+    var b = KHO.bo[k], co = coBo(b);
+    return '<div class="bocard' + (dangXem ? ' on' : '') + '"><div class="bohead"><b>Bộ ' + esc(b[0]) + '</b><span class="muted small">' + b[1].length + ' món' + (TU ? ' · bạn có <b>' + co + '/' + b[1].length + '</b>' : '') + '</span></div>' +
+      '<div class="boitems">' + b[1].map(function (i) { var m = KHO.mon[i]; if (!m) return ''; var kh = TD.q && khongDau(m.ten).indexOf(khongDau(TD.q)) >= 0; return '<span class="' + (TU && TU.has(i) ? 'co' : 'chua') + (kh ? ' khop' : '') + '" title="' + esc(m.o) + '">' + esc(m.ten) + '</span>'; }).join('') + '</div>' +
+      (dangXem ? '<button type="button" class="btn ghost" data-bo="-1">✕ Thôi xem bộ này</button>' : '<button type="button" class="btn" data-bo="' + k + '">Xem cả bộ</button>') + '</div>';
+  }
+  function veBo() {
+    var box = $('tdBo');
+    if (TD.bo >= 0) { box.innerHTML = theBo(TD.bo, true); return; }
+    var q = khongDau(TD.q);
+    if (q.length < 2) { box.innerHTML = ''; return; }
+    var kq = [];
+    KHO.bo.forEach(function (b, k) { if (b[2].indexOf(q) >= 0 && (TD.kho || coBo(b))) kq.push(k); });
+    kq.sort(function (a, b) { return (KHO.bo[a][2] === q ? -1 : 0) - (KHO.bo[b][2] === q ? -1 : 0) || KHO.bo[a][0].localeCompare(KHO.bo[b][0], 'vi'); });
+    box.innerHTML = kq.length ? '<p class="muted small" style="margin:4px 0 6px">Bộ khớp "' + esc(TD.q.trim()) + '" (' + kq.length + ')</p><div class="bolist">' + kq.slice(0, 6).map(function (k) { return theBo(k, false); }).join('') + '</div>' + (kq.length > 6 ? '<p class="muted small">Còn ' + (kq.length - 6) + ' bộ nữa, gõ thêm chữ để thu hẹp.</p>' : '') : '';
+  }
+  /* Kho đồ xem theo bộ: tìm tên bộ hoặc tên món, bộ có món khớp sẽ hiện và tô món đó */
+  var MOI_TRANG_BO = 24;
+  function veDsBo() {
+    var q = khongDau(TD.q), kq = [];
+    KHO.bo.forEach(function (b, k) {
+      if (q && b[2].indexOf(q) < 0 && !b[1].some(function (i) { var m = KHO.mon[i]; return m && khongDau(m.ten).indexOf(q) >= 0; })) return;
+      if (TD.own !== 'all') { var co = coBo(b), du = co === b[1].length; if (TD.own === 'own' ? !du : du) return; }
+      kq.push(k);
+    });
+    kq.sort(function (a, b) { var x = KHO.bo[a], y = KHO.bo[b]; return (q ? (y[2].indexOf(q) >= 0) - (x[2].indexOf(q) >= 0) : 0) || x[0].replace(/^\[[^\]]*\]\s*/, '').localeCompare(y[0].replace(/^\[[^\]]*\]\s*/, ''), 'vi'); });
+    var so = Math.max(1, Math.ceil(kq.length / MOI_TRANG_BO)); TD.page = Math.min(TD.page, so - 1);
+    $('fCount').textContent = fmt(kq.length) + ' bộ' + (q ? ' có tên bộ hoặc tên món khớp' : '');
+    $('tdCards').innerHTML = kq.length ? kq.slice(TD.page * MOI_TRANG_BO, (TD.page + 1) * MOI_TRANG_BO).map(function (k) { return theBo(k, false); }).join('')
+      : '<div class="empty" style="grid-column:1/-1"><b>Không có bộ nào khớp</b>Món không thuộc bộ nào thì chọn "Món lẻ" ở ô cách xem nhé.</div>';
+    $('pInfo').textContent = 'Trang ' + (TD.page + 1) + ' / ' + so;
+    $('pPrev').disabled = TD.page <= 0; $('pNext').disabled = TD.page >= so - 1;
+  }
+  function chonBo(k) { TD.bo = k; TD.page = 0; veThe(); $('tdBo').scrollIntoView({ block: 'start', behavior: 'smooth' }); }
+  $('tdBo').addEventListener('click', function (e) { var b = e.target.closest('[data-bo]'); if (b) chonBo(+b.dataset.bo); });
   var tdHen;
-  $('fQ').addEventListener('input', function () { var v = this.value; clearTimeout(tdHen); tdHen = setTimeout(function () { TD.q = v; TD.page = 0; veThe(); }, 200); });
-  [['fO', 'o'], ['fOwn', 'own'], ['fPc', 'pc'], ['fSort', 'sort']].forEach(function (p) { $(p[0]).addEventListener('change', function () { TD[p[1]] = this.value; TD.page = 0; veThe(); }); });
+  $('fQ').addEventListener('input', function () { var v = this.value; clearTimeout(tdHen); tdHen = setTimeout(function () { TD.q = v; TD.bo = -1; TD.page = 0; veThe(); }, 200); });
+  [['fChe', 'che'], ['fO', 'o'], ['fOwn', 'own'], ['fPc', 'pc'], ['fSort', 'sort']].forEach(function (p) { $(p[0]).addEventListener('change', function () { TD[p[1]] = this.value; TD.page = 0; veThe(); }); });
   $('pPrev').addEventListener('click', function () { TD.page--; veThe(); window.scrollTo(0, $('tdCards').getBoundingClientRect().top + window.scrollY - 120); });
   $('pNext').addEventListener('click', function () { TD.page++; veThe(); window.scrollTo(0, $('tdCards').getBoundingClientRect().top + window.scrollY - 120); });
   $('tdCards').addEventListener('click', function (e) {
+    var bl = e.target.closest('[data-bo]'); if (bl) { chonBo(+bl.dataset.bo); return; }
     var b = e.target.closest('[data-co]'); if (!b) return;
     var ma = +b.dataset.co, ds = TU ? Array.from(TU) : [], i = ds.indexOf(ma);
     if (i >= 0) ds.splice(i, 1); else ds.push(ma);
