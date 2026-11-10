@@ -967,12 +967,12 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
           <label class="field wide"><span>Tên sự kiện *</span><input id="efName" list="efNames" autocomplete="off"><datalist id="efNames"></datalist></label>
           <label class="field"><span>Loại</span><select id="efType"></select></label>
           <label class="field"><span>Lần mở</span><select id="efRun"><option value="">(không rõ)</option><option>Ra mắt</option><option>Comeback</option></select></label>
-          <label class="field"><span>Ngày mở *</span><input type="date" id="efStart"></label>
-          <label class="field"><span>Ngày đóng</span><input type="date" id="efEnd"></label>
-          <label class="field wide"><span>Bộ đồ (ngăn bằng dấu phẩy)</span><input id="efSets"></label>
+          <label class="field"><span>Ngày mở *</span><input type="date" id="efStart" autocomplete="off"></label>
+          <label class="field"><span>Ngày đóng</span><input type="date" id="efEnd" autocomplete="off"></label>
+          <label class="field wide"><span>Bộ đồ (ngăn bằng dấu phẩy)</span><input id="efSets" autocomplete="off"></label>
           <label class="field wide"><span>Cách chơi</span><textarea id="efHow" rows="3"></textarea></label>
-          <label class="field"><span>Chi phí</span><input id="efCost" placeholder="~1.740 KC"></label>
-          <label class="field"><span>Bản tin</span><input id="efNews" placeholder="Kỳ 9 - 11.6.0"></label>
+          <label class="field"><span>Chi phí</span><input id="efCost" placeholder="~1.740 KC" autocomplete="off"></label>
+          <label class="field"><span>Bản tin</span><input id="efNews" placeholder="Kỳ 9 - 11.6.0" autocomplete="off"></label>
         </div>
       </details>
       <div class="row" style="margin-top:12px;align-items:center"><button type="button" class="btn primary" id="efGo">Lưu sự kiện</button><button type="button" class="btn ghost" id="efCancel">Xóa nội dung</button><span class="small muted" id="efStatus" role="status"></span></div>
@@ -983,7 +983,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
           <p style="margin:0 0 6px">Đã kết nối thì bấm Lưu là web tự đưa ảnh vào thư mục <code>ev</code> và thêm dòng vào <code>su-kien.txt</code>. Chưa kết nối thì web soạn sẵn dòng, tải ảnh về máy và chỉ chỗ dán trên GitHub.</p>
           <p style="margin:0 0 6px">Cách lấy mã: vào <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub › Fine-grained token</a>. Ở mục <b>Repository access</b> chọn <b>Only select repositories</b> › <b>nikki-nstt</b>. Ở mục <b>Permissions › Contents</b> chọn <b>Read and write</b>. Bấm <b>Generate token</b> rồi chép mã dán vào đây.</p>
           <p style="margin:0 0 8px">Mã chỉ lưu trong trình duyệt này và chỉ gửi tới GitHub. Đừng lưu mã trên máy dùng chung.</p>
-          <div class="row"><input id="efTok" type="password" placeholder="github_pat_…" autocomplete="off" aria-label="Mã GitHub" style="flex:1 1 220px;min-width:0;border:1px solid var(--line);border-radius:10px;padding:7px 10px;font:inherit;background:var(--surface);color:inherit"><button type="button" class="btn" id="efTokSave">Lưu mã</button><button type="button" class="btn ghost" id="efTokDel">Xóa mã</button></div>
+          <div class="row"><input id="efTok" type="text" placeholder="github_pat_…" autocomplete="off" spellcheck="false" data-lpignore="true" data-1p-ignore aria-label="Mã GitHub" style="flex:1 1 220px;min-width:0;border:1px solid var(--line);border-radius:10px;padding:7px 10px;font:inherit;background:var(--surface);color:inherit;-webkit-text-security:disc"><button type="button" class="btn" id="efTokSave">Lưu mã</button><button type="button" class="btn ghost" id="efTokDel">Xóa mã</button></div>
         </div>
       </details>
     </div>
@@ -1459,6 +1459,9 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   function efSave() {
     if (EF.busy) return;
     efAuto();
+    /* chặn lỡ dán email (trình duyệt tự điền) vào dòng sự kiện công khai */
+    var lo = EF_FIELDS.filter(function (id) { return /[^\s@|]+@[^\s@|]+\.[a-z]{2,}/i.test(evVal(id)); });
+    if (lo.length) { efStatus('Có ô đang chứa địa chỉ email (thường do trình duyệt tự điền). Bạn xóa email trong ô đó rồi bấm Lưu lại nhé.', true); $('efMore').open = true; $(lo[0]).focus(); return; }
     var name = evVal('efName');
     if (!name) { $('efMore').open = true; $('efName').focus(); return efStatus('Bạn nhập tên sự kiện nhé', true); }
     if (!evVal('efStart')) { $('efMore').open = true; $('efStart').focus(); return efStatus('Bạn nhập ngày mở nhé', true); }
@@ -1717,6 +1720,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     }).catch(function () {
       dangTai = false; choDuLieu = [];
       ['pdKq', 'tdCards', 'savedList'].forEach(function (id) { if ($(id)) $(id).innerHTML = '<div class="empty"><b>Chưa mở được sổ</b>Bạn kiểm tra mạng rồi tải lại trang nhé.</div>'; });
+      if (!$('view-phoi-do').hidden && PD.loai === 'cot-truyen') vePhoi(); /* phần ải cốt truyện không cần dữ liệu đồ */
     });
   }
   function veMuc(v) {
@@ -1813,7 +1817,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   var CT = null, ctDangTai = false;
   PD.loai = LS.get('loai', 'khu-thi-dau'); PD.chuong = LS.get('chuong', '');
   $('pdLoai').value = PD.loai;
-  $('pdLoai').addEventListener('change', function () { PD.loai = this.value; LS.set('loai', PD.loai); vePhoi(); });
+  $('pdLoai').addEventListener('change', function () { PD.loai = this.value; LS.set('loai', PD.loai); if (PD.loai === 'cot-truyen') vePhoi(); else moDuLieu(vePhoi); });
   function moCt(xong) {
     if (CT) { xong(); return; }
     if (ctDangTai) return; ctDangTai = true;
@@ -1842,8 +1846,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     return '<div class="ctgroup"><h3>' + tieuDe + (ai ? ' <span class="tagai">' + esc(ai) + '</span>' : '') + '</h3>' + ids.map(function (i) { return monCt(i, 0); }).join('') + '</div>';
   }
   function coTu(i) { return TU ? (TU.has(i) ? '<span class="co">✓ Đã có</span>' : '<span class="chua">Chưa có</span>') : ''; }
-  function tenMon(i) { var m = KHO && KHO.mon[i]; return m ? m.ten : 'Món ' + i; }
-  function oMon(i) { var m = KHO && KHO.mon[i]; return m ? m.o : ''; }
+  function tenMon(i) { var t = CT.ten && CT.ten[i]; if (t) return t[0]; var m = KHO && KHO.mon[i]; return m ? m.ten : 'Món ' + i; }
+  function oMon(i) { var t = CT.ten && CT.ten[i]; if (t && t[1]) return t[1]; var m = KHO && KHO.mon[i]; return m ? m.o : ''; }
   function banVe(bv) {
     if (bv.indexOf('ai:') === 0) return 'Bản vẽ: rơi ở ải Thiếu Nữ ' + esc(bv.slice(3));
     if (bv === 'sao') return 'Bản vẽ: đổi ở Shop Thẻ Sao';
