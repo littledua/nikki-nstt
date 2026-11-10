@@ -668,10 +668,29 @@ footer .themes { justify-content: center; }
 .gyfab { width: 52px; height: 52px; border-radius: 18px; border: 0; background: var(--fill); color: var(--fill-ink); display: grid; place-items: center; box-shadow: 0 4px 0 color-mix(in srgb, var(--fill) 55%, #000 15%), 0 8px 18px rgba(0,0,0,.12); }
 
 /* Admin: tách khỏi sổ */
-body.admin-mode .book { background-image: none; }
-body.admin-mode .bhead, body.admin-mode .marks, body.admin-mode footer, body.admin-mode .gyfab, body.admin-mode .totop, body.admin-mode .tape { display: none !important; }
+/* Admin: cùng cuốn sổ, bỏ menu người dùng; thẻ kẹp riêng cho các tab quản trị */
+body.admin-mode { background: var(--sunk); }
+body.admin-mode .bhead, body.admin-mode .marks, body.admin-mode footer, body.admin-mode .gyfab, body.admin-mode .totop { display: none !important; }
 body.admin-mode .book { padding-right: 26px; }
 body.admin-mode .book::before { display: none; }
+.adauth { margin-top: clamp(40px, 10vh, 110px); }
+.adcard { position: relative; border-radius: 22px; }
+.adcard::before { content: ""; position: absolute; top: -11px; left: 50%; width: 96px; height: 22px; transform: translateX(-50%) rotate(-2deg);
+  background: color-mix(in srgb, var(--fill) 55%, transparent); border-left: 3px dashed rgba(255,255,255,.75); border-right: 3px dashed rgba(255,255,255,.75); border-radius: 3px; }
+.adlogo { border-radius: 18px; background: var(--fill); color: var(--fill-ink); transform: rotate(-4deg); box-shadow: 0 4px 0 color-mix(in srgb, var(--fill) 60%, #000 10%); }
+.adbrand .adlogo { border-radius: 14px; }
+.adcard h2, .adbrand { font-family: var(--f-display); }
+.adsubmit { font-family: var(--f-display); font-size: 1.02rem; box-shadow: 0 3px 0 color-mix(in srgb, var(--fill) 55%, #000 15%); }
+.adinput input { border-radius: 14px; background: #fff; }
+.adtop { border-bottom: 2px dashed var(--line); padding-top: 26px; }
+.adtabs { background: none !important; border: 0 !important; padding: 0 0 6px !important; gap: 10px !important; overflow: visible; flex-wrap: wrap; }
+.adtabs button { font-family: var(--f-display); font-weight: 700; padding: 9px 16px !important; border-radius: 4px 14px 14px 4px !important; color: var(--ink) !important;
+  box-shadow: 0 2px 0 rgba(0,0,0,.06), 0 6px 14px rgba(60,80,110,.10); transform: rotate(-1.5deg); }
+.adtabs button:nth-child(3n+1) { background: color-mix(in srgb, var(--fill) 45%, #fff) !important; }
+.adtabs button:nth-child(3n+2) { background: var(--tag2) !important; transform: rotate(1.2deg); }
+.adtabs button:nth-child(3n+3) { background: color-mix(in srgb, var(--heart) 20%, #fff) !important; transform: rotate(-.8deg); }
+.adtabs button[aria-selected="true"] { transform: rotate(0) translateY(-3px); outline: 2px solid var(--accent); outline-offset: -2px; }
+.fbcard { border-radius: 18px; }
 
 /* ---------- Phối đồ ---------- */
 .pgrid { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 22px; align-items: start; }
@@ -1538,7 +1557,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   var SB_URL = 'https://yxlrhuzkgdigoacowsee.supabase.co', SB_KEY = 'sb_publishable_mUagOfOiaQ2AeIYJ3XVIqQ_fYmBXtX1';
   var SB_LIB = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js';
   var AD = { sb: null, loading: null, user: null, admin: false, fb: null, fbAll: false, del: null, busy: false, tab: 'gop-y', st: null, stErr: false };
-  var AD_MARK = '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>', AD_MAIL = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>', AD_LOCK = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>', AD_EYE = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+  var AD_MARK = '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/><path d="M12.5 6.5l.7 1.6 1.6.7-1.6.7-.7 1.6-.7-1.6-1.6-.7 1.6-.7z"/></svg>', AD_MAIL = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>', AD_LOCK = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>', AD_EYE = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
   function sbClient() {
     if (AD.sb) return Promise.resolve(AD.sb);
     if (!AD.loading) AD.loading = new Promise(function (ok, fail) {
@@ -1574,7 +1593,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   function adTime(t) { var d = new Date(t); return isNaN(d) ? '' : d.toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' }); }
   function adRender() {
     var box = $('adBody');
-    var HOME = '<a class="adhome" href="#phoi-do"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Về trang chủ</a>';
+    var HOME = '<a class="adhome" href="#su-kien"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Về trang chủ</a>';
     if (!AD.user) {
       box.innerHTML = '<div class="adauth">' + HOME + '<form class="adcard" id="adLogin" novalidate><div class="adlogo">' + AD_MARK + '</div>' +
         '<h2>Admin Login</h2><p class="adsub">Nikki Diary — Trang quản trị</p>' +
@@ -1585,7 +1604,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       return;
     }
     var who = '<div class="adtop"><div class="adbrand"><span class="adlogo">' + AD_MARK + '</span><span>Nikki Diary<small>Trang quản trị</small></span></div>' +
-      '<div class="adacts"><span class="muted">' + esc(AD.user.email || '') + '</span><button type="button" class="btn ghost" data-adout="1">Đăng xuất</button><a class="btn" href="#phoi-do" style="text-decoration:none">← Về trang chủ</a></div></div>';
+      '<div class="adacts"><span class="muted">' + esc(AD.user.email || '') + '</span><button type="button" class="btn ghost" data-adout="1">Đăng xuất</button><a class="btn" href="#su-kien" style="text-decoration:none">← Về trang chủ</a></div></div>';
     if (!AD.admin) { box.innerHTML = who + '<div class="note">Tài khoản này chưa có quyền admin. Bạn thêm email vào bảng <code>admins</code> trong Supabase nhé.</div>'; return; }
     var unseen = AD.fb.filter(function (f) { return !f.seen; }).length;
     var tab = function (k, label) { return '<button type="button" role="tab" data-adtab="' + k + '" aria-selected="' + (AD.tab === k) + '">' + label + '</button>'; };
