@@ -656,6 +656,18 @@ select, input[type="text"], input[type="search"], input[type="number"] {
 }
 .empty { background: rgba(255,255,255,.75); border-radius: var(--r); }
 .evcard { border-radius: 20px; }
+/* Thẻ sự kiện gọn (bà dặn 10/11/2026): nhiều cột hơn, bỏ chiều cao tối thiểu, cách chơi 2 dòng */
+.evtop { grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)); gap: 14px; }
+.evbody { min-height: 0; gap: 6px; }
+.evcard { padding: 12px; gap: 6px; }
+.evimg { width: calc(100% + 24px); margin: -12px -12px 2px; }
+.evcard .t { font-size: .98rem; min-height: 0; }
+.evcard .d { font-size: .84rem; }
+.evcard .sets { min-height: 0; font-size: .84rem; -webkit-line-clamp: 1; }
+.evcard .how { min-height: 0; font-size: .82rem; }
+.evcard .how.clamp { -webkit-line-clamp: 2; }
+.evbody > .muted.small { display: none; }
+.evcb { font-size: .74rem; }
 .evtabs { background: var(--surface); border: 1px solid var(--line); }
 .evtabs button[aria-selected="true"] { background: var(--fill); color: var(--fill-ink); }
 .evmonth { display: inline-block; background: var(--tag2); color: var(--tag2-ink); padding: 3px 14px; border-radius: 6px; transform: rotate(-1deg); font-size: .98rem; }
@@ -795,6 +807,11 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 .own[aria-pressed="true"] { background: var(--own-soft); color: var(--own); border-color: transparent; }
 .pager { display: flex; gap: 8px; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-top: 14px; }
 
+/* Thống kê sự kiện (admin) */
+.dslist { display: grid; gap: 6px; }
+.dsrow { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+.dsrow .btn { flex: none; min-height: 34px; padding: 5px 14px; }
+.dsthieu { color: var(--warn); font-weight: 700; }
 /* Tìm theo bộ */
 .bolist { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 10px; margin-bottom: 10px; }
 .bocard { border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px; background: color-mix(in srgb, var(--tag2) 25%, #fff); display: flex; flex-direction: column; gap: 8px; }
@@ -847,6 +864,18 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   .filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .filters select { min-width: 0; }
   .wbar { grid-template-columns: 88px minmax(0, 1fr) 34px; }
+  .evtop { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .evcard { padding: 8px; border-radius: 14px; }
+  .evimg { width: calc(100% + 16px); margin: -8px -8px 2px; border-radius: 14px 14px 0 0; }
+  .evcard .t { font-size: .86rem; line-height: 1.3; min-height: 0; }
+  .evcard .meta { gap: 3px; }
+  .evtype, .evstate, .evcost { font-size: .64rem !important; padding: 1px 6px !important; }
+  .evcard .d { font-size: .74rem; }
+  .evcard .d .muted { display: none; }
+  .evcard .sets, .evcard .how { font-size: .74rem; }
+  .evmore { font-size: .74rem; }
+  .evcb { display: none; }
+  .evcard a { font-size: .74rem; }
   .ctitem > summary, .ctrow { grid-template-columns: 40px minmax(0, 1fr); }
   .ctitem > summary > span:last-child, .ctrow > span:last-child { grid-column: 2; justify-self: start; }
   .ctcook { margin-left: 10px; }
@@ -900,8 +929,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
         </div>
         <div id="pdCt" hidden>
         <p class="lbl" style="margin-top:14px">Chặng</p>
-        <div class="themes-list" id="ctList" role="group" aria-label="Chặng"></div>
-        <p class="soon-note">Chặng có bộ bắt buộc mới hiện ở đây. Bấm từng món để xem cách chế.</p>
+        <select id="ctList" aria-label="Chặng" style="width:100%"></select>
+        <p class="soon-note">Chọn chặng ở ô trên. Bấm từng món để xem cách chế.</p>
         </div>
         <div class="ward-mini" id="pdWard" style="margin-top:12px"></div>
       </div>
@@ -984,8 +1013,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   <section class="view" id="view-admin" hidden>
     <div id="adBody"><p class="muted">Đang tải…</p></div>
     <div class="panel evaddbox" id="evAddBox" hidden>
-      <h3 class="sec" style="font-size:1.05rem;margin-top:0">Thêm sự kiện mới</h3>
-      <p class="muted small" style="margin:-4px 0 12px">Dán link, ảnh và nội dung bài đăng fanpage. Web tự điền thông tin và tự đoán loại sự kiện, bạn xem lại rồi bấm Lưu.</p>
+      <h3 class="sec" style="font-size:1.05rem;margin-top:0" id="efH">Thêm sự kiện mới</h3>
+      <p class="muted small" id="efIntro" style="margin:-4px 0 12px">Dán link, ảnh và nội dung bài đăng fanpage. Web tự điền thông tin và tự đoán loại sự kiện, bạn xem lại rồi bấm Lưu.</p>
       <div class="evform">
         <label class="field wide"><span>Link bài đăng</span><input id="efLink" type="url" placeholder="https://www.facebook.com/…" autocomplete="off"></label>
         <div class="field wide"><span>Ảnh sự kiện</span>
@@ -1009,7 +1038,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
           <label class="field"><span>Bản tin</span><input id="efNews" placeholder="Kỳ 9 - 11.6.0" autocomplete="off"></label>
         </div>
       </details>
-      <div class="row" style="margin-top:12px;align-items:center"><button type="button" class="btn primary" id="efGo">Lưu sự kiện</button><button type="button" class="btn ghost" id="efCancel">Xóa nội dung</button><span class="small muted" id="efStatus" role="status"></span></div>
+      <div class="row" style="margin-top:12px;align-items:center"><button type="button" class="btn primary" id="efGo">Lưu sự kiện</button><button type="button" class="btn ghost" id="efCancel">Xóa nội dung</button><button type="button" class="btn ghost" id="efThoi" hidden>← Về danh sách</button><button type="button" class="btn ghost danger" id="efDel" hidden>Xóa sự kiện này</button><span class="small muted" id="efStatus" role="status"></span></div>
       <div id="efManual"></div>
       <details class="efmore" id="efGhBox" style="margin-top:14px">
         <summary id="efGhSum">Kết nối GitHub để lưu thẳng lên web</summary>
@@ -1041,7 +1070,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       <div class="wide"><button type="submit" class="btn primary" id="gyGo">Gửi góp ý</button> <span class="muted small" id="gyNote" role="status"></span></div>
     </form>
   </dialog>
-<script src="tinh-diem.js"></script>
+<script src="tinh-diem.js?v=20261112a"></script>
 <script>
 (function () {
   'use strict';
@@ -1183,7 +1212,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   function parseEvents(txt) {
     return txt.split(/\r?\n/).filter(function (l) { return l.trim() && l.trim()[0] !== '#'; }).map(function (l) {
       var c = l.split('|').map(function (x) { return x.trim(); });
-      var e = { name: c[0] || '', type: (!c[1] || c[1] === 'Khác') ? 'Event lẻ' : c[1], start: evDate(c[2]), end: evDate(c[3]), sets: c[4] || '', how: c[5] || '', news: c[6] || '', link: c[7] || '', run: (c[8] || '').toLowerCase(), img: (c[9] || '').replace(/[^\w.-]/g, ''), cost: c[10] || '' };
+      var e = { name: c[0] || '', type: (!c[1] || c[1] === 'Khác') ? 'Event lẻ' : c[1], start: evDate(c[2]), end: evDate(c[3]), sets: c[4] || '', how: c[5] || '', news: c[6] || '', link: c[7] || '', run: (c[8] || '').toLowerCase(), img: (c[9] || '').replace(/[^\w.-]/g, ''), cost: c[10] || '', raw: l, c: c };
       /* Sự kiện 100 ngày chưa ghi ngày đóng: tự tính ngày mở + 100 ngày (dự kiến) */
       if (e.type === 'Sự kiện 100 ngày' && e.start && !e.end) { e.end = new Date(e.start.getTime() + 99 * DAY); e.endGuess = true; }
       return e;
@@ -1245,7 +1274,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       (how ? '<div class="how' + (long && !open ? ' clamp' : '') + '">' + esc(how) + '</div>' + (long ? '<button type="button" class="evmore" data-more="' + esc(key) + '">' + (open ? 'Thu gọn ▴' : 'Đọc thêm ▾') + '</button>' : '') : '') +
       (cost && isCb ? '<div class="muted small">Chi phí ước tính nếu chưa chơi lần nào. Đã chơi lần trước thì giữ mốc, comeback chơi tiếp.</div>' : '') +
       (e.type === 'Sự kiện 100 ngày' && !vq ? '<div class="muted small">Đồ nhận ở đây là bản đã chế màu. Sau khi kết thúc, bản chưa chế màu mở miễn phí ở Vô Cùng Quý Giá.</div>' : '') +
-      '<div class="evcb">' + cb + '</div>' + (/^https?:\/\//.test(e.link) ? '<a href="' + esc(e.link) + '" target="_blank" rel="noopener">' + (/facebook\.com/.test(e.link) ? 'Xem bài đăng trên fanpage' : 'Xem cách chơi') + '</a>' : '') + '</div></article>';
+      '<div class="evcb">' + cb + '</div>' + (/^https?:\/\//.test(e.link) ? '<a href="' + esc(e.link) + '" target="_blank" rel="noopener">' + (/facebook\.com/.test(e.link) ? 'Xem bài đăng ↗' : 'Xem cách chơi ↗') + '</a>' : '') + '</div></article>';
   }
   function renderEvents() {
     var now = today(), all = EV.list || [], byName = {};
@@ -1359,6 +1388,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   function efSlug(t) { return t.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[đĐ]/g, 'd').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60); }
   function efNum(t) { var n = +String(t).replace(/[.,]/g, ''); return isNaN(n) ? '' : n.toLocaleString('vi-VN'); }
   function efTitle(t) {
+    /* bỏ ngoặc vuông và chữ đứng trước tên sự kiện: "[ Ra Mắt Sự Kiện - Vui Đùa Ác Ma ]" → "Vui Đùa Ác Ma" */
+    t = String(t).replace(/^[\[(\s]+|[\])\s]+$/g, '').replace(/^(?:ra mắt|trở lại|comeback|tái xuất|sự kiện mới|sự kiện|event)(?:\s+(?:sự kiện|event|mới))*\s*[-–:]\s*/iu, '').trim();
     if (!/\p{Lu}/u.test(t) || t !== t.toLocaleUpperCase('vi')) return t;
     return t.toLocaleLowerCase('vi').replace(/(^|[\s\-–(])(\p{L})/gu, function (m, a, b) { return a + b.toLocaleUpperCase('vi'); });
   }
@@ -1404,9 +1435,9 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     efSet('efSets', p.sets.join(', ')); efSet('efHow', p.how); efSet('efCost', p.cost); efSet('efNews', p.news);
     var name = evVal('efName'), g = evGuessType(name + '\n' + post + '\n' + evVal('efHow'), EV.list || [], name);
     if (g.known && !EF.touched.efName) $('efName').value = g.known;
-    efSet('efType', g.type); efSet('efRun', name ? (g.known ? 'Comeback' : 'Ra mắt') : '');
+    efSet('efType', g.type); efSet('efRun', name ? (g.known || /trở lại|comeback|tái xuất|quay lại/i.test(post) ? 'Comeback' : 'Ra mắt') : '');
     var type = evVal('efType'), miss = [];
-    if (!name) miss.push('tên sự kiện'); if (!evVal('efStart')) miss.push('ngày mở'); if (!EF.file) miss.push('ảnh');
+    if (!name) miss.push('tên sự kiện'); if (!evVal('efStart')) miss.push('ngày mở'); if (!EF.file && !(EF.edit && EF.edit.img)) miss.push('ảnh');
     var box = $('efGuess');
     box.hidden = !post.trim() && !name;
     box.innerHTML = '<b>Loại:</b> ' + esc(type) + (EF.touched.efType ? ' <span class="muted">(bạn tự chọn)</span>' : ' <span class="muted">(tự nhận: ' + esc(g.why) + ')</span>') +
@@ -1462,7 +1493,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     $('efNames').innerHTML = Object.keys(names).sort().map(function (n) { return '<option value="' + esc(n) + '">'; }).join('');
     efTokUi();
   }
-  function efTokUi() { var has = !!LS.get('ghtok', ''); $('efGhSum').textContent = has ? 'Đã kết nối GitHub · bấm Lưu là web tự cập nhật' : 'Kết nối GitHub để lưu thẳng lên web'; $('efGo').textContent = has ? 'Lưu sự kiện lên web' : 'Soạn sẵn để dán lên GitHub'; }
+  function efTokUi() { var has = !!LS.get('ghtok', ''); $('efGhSum').textContent = has ? 'Đã kết nối GitHub · bấm Lưu là web tự cập nhật' : 'Kết nối GitHub để lưu thẳng lên web'; $('efGo').textContent = EF.edit ? (has ? 'Lưu thay đổi' : 'Soạn sẵn dòng đã sửa') : (has ? 'Lưu sự kiện lên web' : 'Soạn sẵn để dán lên GitHub'); }
 
   /* GitHub API: đọc / ghi một file trong repo */
   function ghReq(path, method, body) {
@@ -1484,6 +1515,16 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       return ghReq('su-kien.txt', 'PUT', { message: msg, content: b64Text(txt), sha: f.sha, branch: GH_BRANCH }).then(function () { return txt; });
     }).catch(function (e) { if ((e.status === 409 || e.status === 422) && tries > 0) return efPutList(line, msg, tries - 1); throw e; });
   }
+  /* Sửa (line) hoặc xóa (line = null) đúng dòng cũ trong su-kien.txt */
+  function efPutSua(raw, line, msg, tries) {
+    return ghReq('su-kien.txt', 'GET').then(function (f) {
+      var ls = unb64Text(f.content || '').split('\n'), i = ls.findIndex(function (l) { return l.trim() === raw.trim(); });
+      if (i < 0) { var e = new Error('Dòng này đã bị đổi ở nơi khác. Bạn tải lại trang rồi sửa lại nhé.'); e.status = 0; throw e; }
+      if (line === null) ls.splice(i, 1); else ls[i] = line;
+      var txt = ls.join('\n');
+      return ghReq('su-kien.txt', 'PUT', { message: msg, content: b64Text(txt), sha: f.sha, branch: GH_BRANCH }).then(function () { return txt; });
+    }).catch(function (e) { if ((e.status === 409 || e.status === 422) && tries > 0) return efPutSua(raw, line, msg, tries - 1); throw e; });
+  }
   function efErr(e) {
     if (e && e.status === 401) return 'Mã GitHub sai hoặc đã hết hạn. Bạn tạo mã mới ở mục Kết nối GitHub nhé.';
     if (e && (e.status === 403 || e.status === 404)) return 'Mã GitHub chưa có quyền sửa repo nikki-nstt (cần Contents: Read and write).';
@@ -1499,22 +1540,24 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     var name = evVal('efName');
     if (!name) { $('efMore').open = true; $('efName').focus(); return efStatus('Bạn nhập tên sự kiện nhé', true); }
     if (!evVal('efStart')) { $('efMore').open = true; $('efStart').focus(); return efStatus('Bạn nhập ngày mở nhé', true); }
-    var dup = (EV.list || []).some(function (e) { return e.name.toLowerCase() === name.toLowerCase() && evDMY(efISO(e.start)) === evDMY(evVal('efStart')); });
+    var dup = (EV.list || []).some(function (e) { return e.raw !== (EF.edit && EF.edit.raw) && e.name.toLowerCase() === name.toLowerCase() && evDMY(efISO(e.start)) === evDMY(evVal('efStart')); });
     if (dup) return efStatus('Sự kiện này (cùng tên, cùng ngày mở) đã có trong lịch rồi.', true);
     var base = efImgName(), tok = LS.get('ghtok', ''), msg = 'Cập nhật lịch sự kiện: ' + name;
     EF.busy = true; $('efGo').disabled = true; efStatus(EF.file ? 'Đang xử lý ảnh…' : '');
     (EF.file ? efImgBlob(EF.file) : Promise.resolve(null)).then(function (im) {
-      var img = im ? base + '.' + im.ext : '', line = efLine(img);
+      var img = im ? base + '.' + im.ext : (EF.edit ? EF.edit.img : ''), line = efLine(img);
+      if (EF.edit) msg = 'Sửa lịch sự kiện: ' + name;
       if (!tok) return efManual(line, im, img);
       var step = im ? (efStatus('Đang tải ảnh lên…'), b64Blob(im.blob).then(function (b) {
         return ghReq('ev/' + img, 'GET').then(function (f) { return ghReq('ev/' + img, 'PUT', { message: msg, content: b, sha: f.status === 200 ? f.sha : undefined, branch: GH_BRANCH }); });
       })) : Promise.resolve();
-      return step.then(function () { efStatus('Đang thêm vào lịch…'); return efPutList(line, msg, 2); }).then(function (txt) {
+      return step.then(function () { efStatus(EF.edit ? 'Đang lưu thay đổi…' : 'Đang thêm vào lịch…'); return EF.edit ? efPutSua(EF.edit.raw, line, msg, 2) : efPutList(line, msg, 2); }).then(function (txt) {
         if (im) EV.localImg[img] = URL.createObjectURL(im.blob);
         EV.list = parseEvents(txt); EV.q = ''; EV.type = '';
         var st = evDate(evDMY(evVal('efStart')));
         if (st && st > today() || evState({ type: evVal('efType'), start: st, end: evDate(evDMY(evVal('efEnd'))) }, today())) EV.tab = 'now'; else { EV.tab = 'hist'; EV.year = st ? st.getFullYear() : 0; }
-        efReset(); efOpen(false); renderEvents(); toast('Đã lưu "' + name + '". Web công khai cập nhật sau 1–2 phút.');
+        var daSua = !!EF.edit; if (daSua) efThoiSua(); else { efReset(); efOpen(false); }
+        renderEvents(); toast((daSua ? 'Đã sửa "' : 'Đã lưu "') + name + '". Web công khai cập nhật sau 1–2 phút.');
       });
     }).catch(function (e) { efStatus(efErr(e), true); }).then(function () { EF.busy = false; $('efGo').disabled = false; });
   }
@@ -1523,6 +1566,13 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     try { navigator.clipboard.writeText(line).then(function () { toast('Đã chép dòng sự kiện'); }, function () {}); } catch (er) {}
     if (im) { var a = document.createElement('a'); a.href = URL.createObjectURL(im.blob); a.download = img; document.body.appendChild(a); a.click(); a.remove(); }
     efStatus('');
+    if (EF.edit) {
+      $('efManual').innerHTML = '<div style="margin-top:12px" class="small"><ol style="margin:0 0 8px;padding-left:20px;line-height:1.7">' +
+        (im ? '<li>Ảnh mới đã tải về máy với tên <b>' + esc(img) + '</b>. Tải vào <a href="https://github.com/' + GH_REPO + '/upload/' + GH_BRANCH + '/ev" target="_blank" rel="noopener">thư mục ev</a>.</li>' : '') +
+        '<li>Mở <a href="https://github.com/' + GH_REPO + '/edit/' + GH_BRANCH + '/su-kien.txt" target="_blank" rel="noopener">trang sửa su-kien.txt</a>, tìm dòng cũ (Ctrl + F), xóa dòng đó và dán dòng mới (đã chép sẵn) vào chỗ cũ, rồi bấm <b>Commit changes</b>.</li></ol>' +
+        '<div class="muted">Dòng cũ:</div><div class="evline">' + esc(EF.edit.raw) + '</div><div class="muted" style="margin-top:6px">Dòng mới:</div><div class="evline">' + esc(line) + '</div></div>';
+      return;
+    }
     $('efManual').innerHTML = '<div style="margin-top:12px" class="small"><ol style="margin:0 0 8px;padding-left:20px;line-height:1.7">' +
       (im ? '<li>Ảnh đã tải về máy với tên <b>' + esc(img) + '</b>. Mở <a href="https://github.com/' + GH_REPO + '/upload/' + GH_BRANCH + '/ev" target="_blank" rel="noopener">trang tải ảnh vào thư mục ev</a>, kéo ảnh vào rồi bấm <b>Commit changes</b>.</li>' : '') +
       '<li>Dòng bên dưới đã được chép. Mở <a href="https://github.com/' + GH_REPO + '/edit/' + GH_BRANCH + '/su-kien.txt" target="_blank" rel="noopener">trang sửa su-kien.txt</a>, bấm vào dòng trống ngay dưới phần ghi chú (các dòng có dấu #), bấm <b>Ctrl + V</b>, rồi bấm <b>Commit changes</b>.</li></ol>' +
@@ -1530,6 +1580,16 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   }
   $('efCancel').addEventListener('click', function () { efReset(); efStatus('Đã xóa nội dung đang soạn.'); });
   $('efGo').addEventListener('click', efSave);
+  $('efThoi').addEventListener('click', function () { efThoiSua(); });
+  $('efDel').addEventListener('click', function () {
+    if (!EF.edit || EF.busy) return;
+    if (!EF.xoa) { EF.xoa = true; this.textContent = 'Bấm lần nữa để xóa hẳn'; efStatus('Xóa rồi không lấy lại được trên web (vẫn còn trong lịch sử GitHub).', true); return; }
+    var tok = LS.get('ghtok', ''), name = EF.edit.name;
+    if (!tok) { efStatus('Cần kết nối GitHub để xóa. Hoặc mở trang sửa su-kien.txt và xóa tay dòng: ' + EF.edit.raw, true); return; }
+    EF.busy = true; efStatus('Đang xóa…');
+    efPutSua(EF.edit.raw, null, 'Xóa sự kiện: ' + name, 2).then(function (txt) { EV.list = parseEvents(txt); efThoiSua(); renderEvents(); toast('Đã xóa "' + name + '"'); })
+      .catch(function (e) { efStatus(efErr(e), true); }).then(function () { EF.busy = false; });
+  });
   $('efPost').addEventListener('input', efAuto);
   $('efLink').addEventListener('input', efAuto);
   EF_FIELDS.forEach(function (k) { $(k).addEventListener(k === 'efType' || k === 'efRun' ? 'change' : 'input', function () { EF.touched[k] = true; efAuto(); }); });
@@ -1609,17 +1669,83 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     var unseen = AD.fb.filter(function (f) { return !f.seen; }).length;
     var tab = function (k, label) { return '<button type="button" role="tab" data-adtab="' + k + '" aria-selected="' + (AD.tab === k) + '">' + label + '</button>'; };
     box.innerHTML = who +
-      '<div class="tabs evtabs adtabs" role="tablist">' + tab('gop-y', 'Góp ý' + (unseen ? ' (' + unseen + ' mới)' : '')) + tab('thong-ke', 'Thống kê') + tab('su-kien', 'Thêm sự kiện') + '</div>' +
-      (AD.tab === 'thong-ke' ? stHtml() : AD.tab === 'su-kien' ? '' : fbHtml(unseen));
+      '<div class="tabs evtabs adtabs" role="tablist">' + tab('gop-y', 'Góp ý' + (unseen ? ' (' + unseen + ' mới)' : '')) + tab('thong-ke', 'Thống kê') + tab('su-kien', 'Thêm sự kiện') + tab('ds-su-kien', 'Thống kê sự kiện') + '</div>' +
+      (AD.tab === 'thong-ke' ? stHtml() : AD.tab === 'su-kien' ? '' : AD.tab === 'ds-su-kien' ? (EF.edit ? '' : dsHtml()) : fbHtml(unseen));
     adSuKien();
   }
   /* Tab "Thêm sự kiện" trong admin: dùng lại khung soạn sự kiện; cần danh sách sự kiện để gợi ý tên */
   function adSuKien() {
-    var on = !!(AD.user && AD.admin && AD.tab === 'su-kien');
+    var ok = !!(AD.user && AD.admin);
+    if (ok && !EV.list) { fetch('su-kien.txt', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.text() : ''; }).then(function (t) { if (t) { EV.list = parseEvents(t); adRender(); } }); }
+    if (AD.tab !== 'ds-su-kien' && EF.edit) efThoiSua(true);
+    var on = ok && (AD.tab === 'su-kien' || (AD.tab === 'ds-su-kien' && !!EF.edit));
     if (!on) { $('evAddBox').hidden = true; return; }
-    if (!EV.list) { fetch('su-kien.txt', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.text() : ''; }).then(function (t) { if (t) EV.list = parseEvents(t); if (AD.tab === 'su-kien') efOpen(true); }); }
     efOpen(true);
   }
+  /* ---------- Thống kê sự kiện (admin): đếm, tìm, lọc, bấm Sửa để chỉnh từng dòng của su-kien.txt ---------- */
+  var DS = { q: '', type: '', thieu: '' };
+  function dsLoc() {
+    var q = DS.q.trim().toLowerCase();
+    return (EV.list || []).filter(function (e) {
+      if (DS.type && e.type !== DS.type) return false;
+      if (DS.thieu === 'anh' && e.img) return false;
+      if (DS.thieu === 'how' && e.how) return false;
+      if (DS.thieu === 'end' && (e.c[3] || evPerm(e))) return false;
+      if (DS.thieu === 'run' && e.run) return false;
+      return !q || (e.name + ' ' + e.sets).toLowerCase().indexOf(q) >= 0;
+    }).sort(function (a, b) { return (b.start || 0) - (a.start || 0); });
+  }
+  function dsHtml() {
+    if (!EV.list) return '<p class="muted">Đang tải lịch sự kiện…</p>';
+    var all = EV.list, dem = {}, nam = {};
+    all.forEach(function (e) { dem[e.type] = (dem[e.type] || 0) + 1; var y = e.start ? e.start.getFullYear() : 'Chưa rõ'; nam[y] = (nam[y] || 0) + 1; });
+    var thieu = { anh: all.filter(function (e) { return !e.img; }).length, how: all.filter(function (e) { return !e.how; }).length,
+      end: all.filter(function (e) { return !e.c[3] && !evPerm(e); }).length, run: all.filter(function (e) { return !e.run; }).length };
+    var ds = dsLoc(), types = Object.keys(dem).sort(function (a, b) { return dem[b] - dem[a]; });
+    var tile = function (lbl, v, sub) { return '<div class="sttile"><div class="stlbl">' + lbl + '</div><b class="num">' + fmt(v) + '</b>' + (sub ? '<div class="stsub">' + sub + '</div>' : '') + '</div>'; };
+    return '<div class="sttiles">' + tile('Tổng sự kiện', all.length, Object.keys(nam).length + ' năm') + tile('Thiếu ảnh', thieu.anh) + tile('Thiếu cách chơi', thieu.how) + '</div>' +
+      '<div class="evyears" style="margin-bottom:10px">' + types.map(function (t) { return '<button type="button" data-dstype="' + esc(t) + '" aria-pressed="' + (DS.type === t) + '">' + esc(t) + ' (' + dem[t] + ')</button>'; }).join('') + '</div>' +
+      '<div class="evbar"><div class="evq"><input type="search" id="dsQ" placeholder="Tìm tên sự kiện hoặc bộ đồ…" value="' + esc(DS.q) + '" aria-label="Tìm sự kiện"></div>' +
+      '<select id="dsThieu" aria-label="Lọc dòng thiếu thông tin"><option value="">Mọi dòng</option>' +
+      [['anh', 'Thiếu ảnh', thieu.anh], ['how', 'Thiếu cách chơi', thieu.how], ['end', 'Thiếu ngày đóng', thieu.end], ['run', 'Chưa ghi Ra mắt/Comeback', thieu.run]].map(function (o) { return '<option value="' + o[0] + '"' + (DS.thieu === o[0] ? ' selected' : '') + '>' + o[1] + ' (' + o[2] + ')</option>'; }).join('') + '</select>' +
+      '<div class="evcount">' + ds.length + ' sự kiện' + ((DS.q || DS.type || DS.thieu) ? ' · <button type="button" id="dsReset">Xóa bộ lọc</button>' : '') + '</div></div>' +
+      '<div class="dslist">' + ds.slice(0, 200).map(function (e) {
+        var i = all.indexOf(e), thieuGi = [!e.img && 'ảnh', !e.how && 'cách chơi', !e.c[3] && !evPerm(e) && 'ngày đóng'].filter(Boolean);
+        return '<div class="dsrow"><div><b>' + esc(e.name) + '</b><div class="muted small">' + esc(e.type) + ' · ' + evFmt(e.start) + (e.c[3] ? ' – ' + esc(e.c[3]) : '') + (e.run ? ' · ' + (e.run.indexOf('comeback') === 0 ? 'Comeback' : 'Ra mắt') : '') +
+          (thieuGi.length ? ' · <span class="dsthieu">thiếu ' + thieuGi.join(', ') + '</span>' : '') + '</div></div><button type="button" class="btn" data-dssua="' + i + '">Sửa</button></div>';
+      }).join('') + '</div>' + (ds.length > 200 ? '<p class="muted small">Đang hiện 200 dòng đầu, gõ tìm để thu hẹp.</p>' : '');
+  }
+  function dsSua(i) {
+    var e = EV.list[i]; if (!e) return;
+    efReset(); EF.edit = { raw: e.raw, img: e.img, name: e.name };
+    var c = e.c, iso = function (t) { var d = evDate(t); return d ? efISO(d) : ''; };
+    var v = { efName: c[0], efStart: iso(c[2]), efEnd: iso(c[3]), efSets: c[4], efHow: c[5], efNews: c[6], efRun: /^comeback/i.test(c[8] || '') ? 'Comeback' : (/^ra mắt/i.test(c[8] || '') ? 'Ra mắt' : ''), efCost: c[10] };
+    efOpen(true);
+    $('efType').value = e.type; $('efLink').value = c[7] || '';
+    Object.keys(v).forEach(function (k) { if ($(k)) $(k).value = v[k] || ''; });
+    EF_FIELDS.forEach(function (k) { EF.touched[k] = true; });
+    if (e.img) { $('efPrev').src = EV.localImg[e.img] || 'ev/' + e.img; $('efPrev').hidden = false; $('efImgTxt').textContent = 'Ảnh hiện tại · bấm để đổi ảnh'; }
+    $('efMore').open = true; $('efH').textContent = 'Sửa sự kiện: ' + e.name; $('efIntro').textContent = 'Sửa các ô bên dưới rồi bấm Lưu thay đổi. Muốn đổi ảnh thì bấm vào ảnh.';
+    $('efThoi').hidden = false; $('efDel').hidden = false; $('efCancel').hidden = true; efTokUi(); efAuto();
+    adRender(); window.scrollTo(0, 0);
+  }
+  function efThoiSua(khongVe) {
+    EF.edit = null; EF.xoa = false; efReset();
+    $('efH').textContent = 'Thêm sự kiện mới'; $('efIntro').textContent = 'Dán link, ảnh và nội dung bài đăng fanpage. Web tự điền thông tin và tự đoán loại sự kiện, bạn xem lại rồi bấm Lưu.'; $('efThoi').hidden = true; $('efDel').hidden = true; $('efDel').textContent = 'Xóa sự kiện này'; $('efCancel').hidden = false; efTokUi();
+    if (!khongVe) adRender();
+  }
+  $('adBody').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-dssua],[data-dstype],#dsReset'); if (!b) return;
+    if (b.hasAttribute('data-dssua')) { dsSua(+b.dataset.dssua); return; }
+    if (b.id === 'dsReset') { DS = { q: '', type: '', thieu: '' }; adRender(); return; }
+    DS.type = DS.type === b.dataset.dstype ? '' : b.dataset.dstype; adRender();
+  });
+  $('adBody').addEventListener('change', function (e) { if (e.target.id === 'dsThieu') { DS.thieu = e.target.value; adRender(); } });
+  var dsHen;
+  $('adBody').addEventListener('input', function (e) {
+    if (e.target.id !== 'dsQ') return;
+    clearTimeout(dsHen); dsHen = setTimeout(function () { DS.q = e.target.value; adRender(); var i = $('dsQ'); if (i) { i.focus(); i.setSelectionRange(i.value.length, i.value.length); } }, 250);
+  });
   function fbHtml(unseen) {
     var list = AD.fbAll ? AD.fb : AD.fb.filter(function (f) { return !f.seen; });
     return '<div class="evyears"><button type="button" data-fbfilter="new" aria-pressed="' + !AD.fbAll + '">Chưa xem (' + unseen + ')</button><button type="button" data-fbfilter="all" aria-pressed="' + AD.fbAll + '">Tất cả (' + AD.fb.length + ')</button>' +
@@ -1738,6 +1864,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   });
 
   /* ================= DỮ LIỆU ĐỒ (du-lieu.json + tinh-diem.js) ================= */
+  /* Số bản dữ liệu: đổi mỗi lần cập nhật du-lieu.json / cot-truyen.json để trình duyệt không dùng bản cũ trong bộ nhớ đệm */
+  var BAN = '20261112a';
   var KHO = null, TU = null, choDuLieu = [], dangTai = false;
   function moDuLieu(xong) {
     if (KHO) { xong(); return; }
@@ -1745,7 +1873,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     if (dangTai) return;
     dangTai = true;
     ['pdKq', 'tdCards', 'savedList'].forEach(function (id) { if ($(id)) $(id).innerHTML = '<p class="muted">Đang mở sổ…</p>'; });
-    fetch('du-lieu.json').then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (j) {
+    fetch('du-lieu.json?v=' + BAN).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (j) {
       KHO = TinhDiem.taoKho(j);
       KHO.bo = j.bo || []; KHO.boCua = {};
       KHO.bo.forEach(function (b, k) { b[2] = khongDau(b[0]); b[1].forEach(function (i) { (KHO.boCua[i] = KHO.boCua[i] || []).push(k); }); });
@@ -1857,7 +1985,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   function moCt(xong) {
     if (CT) { xong(); return; }
     if (ctDangTai) return; ctDangTai = true;
-    fetch('cot-truyen.json').then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (j) { CT = j; xong(); })
+    fetch('cot-truyen.json?v=' + BAN).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (j) { CT = j; xong(); })
       .catch(function () { ctDangTai = false; $('pdKq').innerHTML = '<div class="empty"><b>Chưa tải được dữ liệu ải</b>Bạn tải lại trang thử nhé.</div>'; });
   }
   function tenChuong(k) { if (CT.nhan && CT.nhan[k]) return CT.nhan[k]; var p = k.split('-'); return 'Q.' + p[0] + ' Chặng ' + p[1]; }
@@ -1866,7 +1994,12 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     moCt(function () {
       var ks = Object.keys(CT.chuong).sort(function (a, b) { var x = a.split('-').map(Number), y = b.split('-').map(Number); return x[0] - y[0] || x[1] - y[1]; });
       if (ks.indexOf(PD.chuong) < 0) PD.chuong = ks[0];
-      $('ctList').innerHTML = ks.map(function (k) { return '<button type="button" data-chuong="' + k + '" aria-pressed="' + (k === PD.chuong) + '">' + tenChuong(k) + '</button>'; }).join('');
+      var quyen = '';
+      $('ctList').innerHTML = ks.map(function (k) {
+        var q = k.split('-')[0], o = (q !== quyen ? (quyen ? '</optgroup>' : '') + '<optgroup label="Quyển ' + q + '">' : '');
+        quyen = q;
+        return o + '<option value="' + k + '"' + (k === PD.chuong ? ' selected' : '') + '>' + esc(tenChuong(k)) + '</option>';
+      }).join('') + '</optgroup>';
       var ds = CT.chuong[PD.chuong], html = '<div class="score"><div><div class="lbl">Món bắt buộc</div><div class="total" style="font-size:1.7rem">' + tenChuong(PD.chuong) + '</div></div>' +
         '<div class="sub">' + (TU ? 'Đã đánh dấu món có trong tủ đồ của bạn.' : '<a href="#tu-do">Nhập tủ đồ</a> để biết món nào bạn đã có.') + '</div></div>' +
         (CT.ghi_chu && CT.ghi_chu[PD.chuong] ? '<p class="basenote">' + esc(CT.ghi_chu[PD.chuong]) + '</p>' : '');
@@ -1905,7 +2038,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
         }).join('');
     }).join('') + '</div>';
   }
-  $('ctList').addEventListener('click', function (e) { var b = e.target.closest('[data-chuong]'); if (!b) return; PD.chuong = b.dataset.chuong; LS.set('chuong', PD.chuong); veCotTruyen(); });
+  $('ctList').addEventListener('change', function () { PD.chuong = this.value; LS.set('chuong', PD.chuong); veCotTruyen(); });
 
   /* ================= BỘ ĐÃ LƯU ================= */
   var BO = LS.get('bo2', []), xoaBo = null;
