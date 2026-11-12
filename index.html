@@ -1030,8 +1030,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
           <label class="field wide"><span>Tên sự kiện *</span><input id="efName" list="efNames" autocomplete="off"><datalist id="efNames"></datalist></label>
           <label class="field"><span>Loại</span><select id="efType"></select></label>
           <label class="field"><span>Lần mở</span><select id="efRun"><option value="">(không rõ)</option><option>Ra mắt</option><option>Comeback</option></select></label>
-          <label class="field"><span>Ngày mở *</span><input type="date" id="efStart" autocomplete="off"></label>
-          <label class="field"><span>Ngày đóng</span><input type="date" id="efEnd" autocomplete="off"></label>
+          <label class="field"><span>Ngày mở *</span><input type="text" id="efStart" autocomplete="off" inputmode="numeric" placeholder="ngày/tháng/năm, vd 02/04/2020"></label>
+          <label class="field"><span>Ngày đóng</span><input type="text" id="efEnd" autocomplete="off" inputmode="numeric" placeholder="ngày/tháng/năm"></label>
           <label class="field wide"><span>Bộ đồ (ngăn bằng dấu phẩy)</span><input id="efSets" autocomplete="off"></label>
           <label class="field wide"><span>Cách chơi</span><textarea id="efHow" rows="3"></textarea></label>
           <label class="field"><span>Chi phí</span><input id="efCost" placeholder="~1.740 KC" autocomplete="off"></label>
@@ -1261,6 +1261,9 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     var cb = e.type === 'Túi Phúc' ? 'Event nạp, đi kèm Big Event Tết, không comeback.' : isLc ? 'Mở vĩnh viễn, không còn comeback.'
       : (h.firstKnown ? 'Ra mắt <b>' + evFmt(h.first) + '</b>' : 'Ra mắt trước dữ liệu đang có') + (h.comebacks.length ? ' · comeback <b>' + h.comebacks.length + ' lần</b>' : ' · chưa comeback') +
         (h.last && h.last.start && h.last.start !== h.first && h.comebacks.length ? ' · gần nhất ' + evFmt(h.last.start) : '');
+    /* Đồng Thoại Mộng Ảo: chuỗi nhiều kỳ, kỳ 1 là ra mắt, các kỳ sau là comeback của chuỗi (thêm bộ mới) */
+    var ky = e.type === 'Đồng Thoại Mộng Ảo' && /kỳ\s*(\d+)/i.exec(e.name);
+    if (ky) { ky = +ky[1]; cb = 'Chuỗi Đồng Thoại Mộng Ảo · <b>Kỳ ' + ky + '</b>' + (ky === 1 ? ' (ra mắt)' : ' · comeback lần ' + (ky - 1) + ': thêm bộ mới và mở lại các bộ kỳ trước'); isCb = ky > 1; }
     if (vq && !isLc) cb += '<br>Bản chưa chế màu đã mở ở <b>Vô Cùng Quý Giá</b>' + (vq.from ? ' từ ' + evFmt(vq.from) : '') + ' · miễn phí';
     if (lk) cb += '<br><b>Đã vào Linh Cảm Không Gian</b> (' + esc(lk.lc) + ')' + (lk.from ? ' từ ' + evFmt(lk.from) : (lk.news ? ' · ' + esc(lk.news) : '')) + ' · mở vĩnh viễn';
     var date = isLc ? (e.type === 'Vô Cùng Quý Giá' ? 'Mở ở Vô Cùng Quý Giá từ ' + (e.start ? evFmt(e.start) : '(chưa rõ ngày)') : (e.start ? 'Vào Linh Cảm Không Gian từ ' + evFmt(e.start) : 'Đã vào Linh Cảm Không Gian (chưa rõ ngày)'))
@@ -1383,13 +1386,17 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   var EF = { file: null, url: '', touched: {}, busy: false };
   EV.localImg = {};
   function evVal(id) { var el = $(id); return el ? String(el.value).replace(/[|\r\n]+/g, ' ').replace(/\s+/g, ' ').trim() : ''; }
-  function evDMY(v) { var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v); return m ? m[3] + '/' + m[2] + '/' + m[1] : ''; }
-  function efISO(d) { return d ? d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2) : ''; }
+  function evDMY(v) {
+    var m = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(v || ''); if (m) return ('0' + m[3]).slice(-2) + '/' + ('0' + m[2]).slice(-2) + '/' + m[1];
+    m = /^(\d{1,2})[\/.\-](\d{1,2})[\/.\-](\d{4})$/.exec(String(v || '').trim()); return m && +m[2] >= 1 && +m[2] <= 12 && +m[1] >= 1 && +m[1] <= 31 ? ('0' + m[1]).slice(-2) + '/' + ('0' + m[2]).slice(-2) + '/' + m[3] : '';
+  }
+  function efISO(d) { return d ? ('0' + d.getDate()).slice(-2) + '/' + ('0' + (d.getMonth() + 1)).slice(-2) + '/' + d.getFullYear() : ''; }
   function efSlug(t) { return t.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[đĐ]/g, 'd').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60); }
   function efNum(t) { var n = +String(t).replace(/[.,]/g, ''); return isNaN(n) ? '' : n.toLocaleString('vi-VN'); }
   function efTitle(t) {
     /* bỏ ngoặc vuông và chữ đứng trước tên sự kiện: "[ Ra Mắt Sự Kiện - Vui Đùa Ác Ma ]" → "Vui Đùa Ác Ma" */
-    t = String(t).replace(/^[\[(\s]+|[\])\s]+$/g, '').replace(/^(?:ra mắt|trở lại|comeback|tái xuất|sự kiện mới|sự kiện|event)(?:\s+(?:sự kiện|event|mới))*\s*[-–:]\s*/iu, '').trim();
+    t = String(t).replace(/^[\[(\s]+|[\])\s]+$/g, '');
+    for (var k = 0; k < 3; k++) t = t.replace(/^sự trở lại của\s+(?:sự kiện\s*)?[-–:]?\s*/iu, '').replace(/^(?:ra mắt|trở lại|comeback|tái xuất|sự kiện mới|sự kiện|event)(?:\s+(?:sự kiện|event|mới))*\s*[-–:]\s*/iu, '').replace(/^lầu hạn giờ\s*/iu, '').trim();
     if (!/\p{Lu}/u.test(t) || t !== t.toLocaleUpperCase('vi')) return t;
     return t.toLocaleLowerCase('vi').replace(/(^|[\s\-–(])(\p{L})/gu, function (m, a, b) { return a + b.toLocaleUpperCase('vi'); });
   }
@@ -1435,9 +1442,10 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     efSet('efSets', p.sets.join(', ')); efSet('efHow', p.how); efSet('efCost', p.cost); efSet('efNews', p.news);
     var name = evVal('efName'), g = evGuessType(name + '\n' + post + '\n' + evVal('efHow'), EV.list || [], name);
     if (g.known && !EF.touched.efName) $('efName').value = g.known;
-    efSet('efType', g.type); efSet('efRun', name ? (g.known || /trở lại|comeback|tái xuất|quay lại/i.test(post) ? 'Comeback' : 'Ra mắt') : '');
+    efSet('efType', g.type); var kyDt = /đồng thoại mộng ảo/i.test(name) && /kỳ\s*(\d+)/i.exec(name);
+    efSet('efRun', name ? (kyDt ? (+kyDt[1] > 1 ? 'Comeback' : 'Ra mắt') : (g.known || /trở lại|comeback|tái xuất|quay lại/i.test(post) ? 'Comeback' : 'Ra mắt')) : '');
     var type = evVal('efType'), miss = [];
-    if (!name) miss.push('tên sự kiện'); if (!evVal('efStart')) miss.push('ngày mở'); if (!EF.file && !(EF.edit && EF.edit.img)) miss.push('ảnh');
+    if (!name) miss.push('tên sự kiện'); if (!evDMY(evVal('efStart'))) miss.push('ngày mở'); if (!EF.file && !(EF.edit && EF.edit.img)) miss.push('ảnh');
     var box = $('efGuess');
     box.hidden = !post.trim() && !name;
     box.innerHTML = '<b>Loại:</b> ' + esc(type) + (EF.touched.efType ? ' <span class="muted">(bạn tự chọn)</span>' : ' <span class="muted">(tự nhận: ' + esc(g.why) + ')</span>') +
@@ -1449,7 +1457,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   function efImgName() {
     var link = evVal('efLink'), id = /(?:posts|permalink|videos|photos|story_fbid=|fbid=)[\/=]?(\d{8,})/.exec(link) || /facebook\.com\/(\d{8,})(?:[\/?#]|$)/.exec(link);
     var used = {}; (EV.list || []).forEach(function (e) { if (e.img) used[e.img.replace(/\.\w+$/, '')] = 1; });
-    var base = id ? id[1] : (efSlug(evVal('efName')) || 'su-kien') + '-' + (evVal('efStart') ? evVal('efStart').slice(0, 4) : new Date().getFullYear()), n = base, k = 2;
+    var base = id ? id[1] : (efSlug(evVal('efName')) || 'su-kien') + '-' + (evDMY(evVal('efStart')) ? evDMY(evVal('efStart')).slice(-4) : new Date().getFullYear()), n = base, k = 2;
     while (used[n] && !id) n = base + '-' + k++;
     return n;
   }
@@ -1539,7 +1547,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     if (lo.length) { efStatus('Có ô đang chứa địa chỉ email (thường do trình duyệt tự điền). Bạn xóa email trong ô đó rồi bấm Lưu lại nhé.', true); $('efMore').open = true; $(lo[0]).focus(); return; }
     var name = evVal('efName');
     if (!name) { $('efMore').open = true; $('efName').focus(); return efStatus('Bạn nhập tên sự kiện nhé', true); }
-    if (!evVal('efStart')) { $('efMore').open = true; $('efStart').focus(); return efStatus('Bạn nhập ngày mở nhé', true); }
+    if (!evDMY(evVal('efStart'))) { $('efMore').open = true; $('efStart').focus(); return efStatus('Bạn nhập ngày mở dạng ngày/tháng/năm, vd 02/04/2020', true); }
+    if (evVal('efEnd') && !evDMY(evVal('efEnd'))) { $('efMore').open = true; $('efEnd').focus(); return efStatus('Ngày đóng chưa đúng dạng ngày/tháng/năm', true); }
     var dup = (EV.list || []).some(function (e) { return e.raw !== (EF.edit && EF.edit.raw) && e.name.toLowerCase() === name.toLowerCase() && evDMY(efISO(e.start)) === evDMY(evVal('efStart')); });
     if (dup) return efStatus('Sự kiện này (cùng tên, cùng ngày mở) đã có trong lịch rồi.', true);
     var base = efImgName(), tok = LS.get('ghtok', ''), msg = 'Cập nhật lịch sự kiện: ' + name;
