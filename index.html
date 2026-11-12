@@ -807,6 +807,29 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 .own[aria-pressed="true"] { background: var(--own-soft); color: var(--own); border-color: transparent; }
 .pager { display: flex; gap: 8px; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-top: 14px; }
 
+/* Tích KC */
+.kcwrap { display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: 18px; align-items: start; margin-top: 6px; }
+.kcng { display: grid; grid-template-columns: 22px minmax(0, 1fr) minmax(0, 1fr) 24px; gap: 4px 6px; align-items: center; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px dashed var(--line); }
+.kcng .check { grid-row: 1; grid-column: 1; }
+.kcng [data-kcten] { grid-row: 1; grid-column: 2 / 4; }
+.kcng .kcx { grid-row: 1; grid-column: 4; }
+.kcng [data-kcso] { grid-row: 2; grid-column: 2; }
+.kcng select { grid-row: 2; grid-column: 3; }
+.kcng input, .kcng select, .kcnhap input { min-width: 0; width: 100%; min-height: 38px; padding: 6px 10px; }
+.kcng .check { margin: 0; }
+.kcx { border: 0; background: none; color: var(--muted); font-size: 1rem; cursor: pointer; padding: 4px; }
+.kcsum { margin-top: 12px; background: var(--accent-soft); border-radius: 12px; padding: 10px 12px; font-size: .92rem; }
+.kcsum b { font-size: 1.15rem; color: var(--accent); }
+.kcmuc { display: grid; gap: 8px; margin-bottom: 10px; }
+.kcrow { display: flex; gap: 8px; align-items: flex-start; justify-content: space-between; border: 1px solid var(--line); border-left-width: 5px; border-radius: 14px; padding: 10px 12px; background: var(--surface); }
+.kcrow.du { border-left-color: var(--own); }
+.kcrow.thieu { border-left-color: var(--hot, #B4500F); }
+.kcinfo { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.kckq { font-weight: 800; font-size: .92rem; }
+.kcrow.du .kckq { color: var(--own); }
+.kcrow.thieu .kckq { color: var(--hot, #B4500F); }
+.kcadd > summary { cursor: pointer; font-weight: 700; color: var(--accent); }
+.kcnhap { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 90px) auto; gap: 6px; }
 /* Thống kê sự kiện (admin) */
 .dslist { display: grid; gap: 6px; }
 .dsrow { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
@@ -864,6 +887,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   .filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .filters select { min-width: 0; }
   .wbar { grid-template-columns: 88px minmax(0, 1fr) 34px; }
+  .kcwrap { grid-template-columns: minmax(0, 1fr); }
+  .kcnhap { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .evtop { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   .evcard { padding: 8px; border-radius: 14px; }
   .evimg { width: calc(100% + 16px); margin: -8px -8px 2px; border-radius: 14px 14px 0 0; }
@@ -1299,7 +1324,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       return (!EV.type || e.type === EV.type) && (!q || (e.name + ' ' + e.sets).toLowerCase().indexOf(q) >= 0);
     }).sort(function (a, b) { return (b.start || 0) - (a.start || 0); });
     var hist = EV.tab === 'hist';
-    var html = '<div class="tabs evtabs" role="tablist"><button type="button" role="tab" data-tab="now" aria-selected="' + !hist + '">Đang mở</button><button type="button" role="tab" data-tab="hist" aria-selected="' + hist + '">Lịch sử</button></div>';
+    var html = '<div class="tabs evtabs" role="tablist"><button type="button" role="tab" data-tab="now" aria-selected="' + (EV.tab === 'now') + '">Đang mở</button><button type="button" role="tab" data-tab="hist" aria-selected="' + hist + '">Lịch sử</button><button type="button" role="tab" data-tab="kc" aria-selected="' + (EV.tab === 'kc') + '">💎 Tích KC</button></div>';
+    if (EV.tab === 'kc') { $('evBody').innerHTML = html + kcHtml(now); $('live').textContent = 'Tính kim cương tích được'; return; }
     var shown, countTxt;
     if (!hist) {
       shown = list.filter(function (e) { return !evPerm(e) && evState(e, now); });
@@ -1332,6 +1358,78 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     $('evBody').innerHTML = html;
     $('live').textContent = countTxt.replace(/<[^>]+>/g, '').replace(/^Năm đang chọnTất cả các năm /, '');
   }
+  /* ---------- Tích KC: KC đang có + KC kiếm được mỗi ngày → tới ngày sự kiện có đủ không ---------- */
+  var KC_NGUON = [['Nhiệm vụ hằng ngày', 'ngay'], ['Thẻ tháng', 'ngay'], ['Khu Thi Đấu', 'tuan'], ['Hội', 'tuan'], ['Nguồn khác', 'thang']];
+  var KC = LS.get('kc', null) || { co: 0, nguon: KC_NGUON.map(function (n) { return { ten: n[0], so: 0, ky: n[1], bat: true }; }), muc: [] };
+  function kcLuu() { LS.set('kc', KC); }
+  var KC_KY = { ngay: ['mỗi ngày', 1], tuan: ['mỗi tuần', 7], thang: ['mỗi tháng', 30] };
+  function kcMoiNgay() { return KC.nguon.reduce(function (t, n) { return t + (n.bat ? (+n.so || 0) / KC_KY[n.ky][1] : 0); }, 0); }
+  function kcSo(t) { var m = String(t || '').match(/\d{1,3}(?:[.,]\d{3})+|\d+/g); return m ? Math.max.apply(null, m.map(function (x) { return +x.replace(/[.,]/g, ''); })) : 0; }
+  function kcSapToi(now) {
+    var byName = {}; (EV.list || []).forEach(function (e) { if (e.cost) byName[e.name] = e.cost; });
+    return (EV.list || []).filter(function (e) { return !evPerm(e) && e.start && e.start > now; }).sort(function (a, b) { return a.start - b.start; })
+      .map(function (e) { return { ten: e.name, ngay: evFmt(e.start), kc: kcSo(e.cost || byName[e.name]) }; });
+  }
+  function kcHtml(now) {
+    var ngay = kcMoiNgay(), sap = kcSapToi(now);
+    var muc = KC.muc.map(function (m, i) { return { i: i, ten: m.ten, d: evDate(m.ngay), ngay: m.ngay, kc: +m.kc || 0 }; }).filter(function (m) { return m.d; }).sort(function (a, b) { return a.d - b.d; });
+    var conLai = +KC.co || 0, truoc = now, kq = muc.map(function (m) {
+      var so = Math.max(0, Math.round((m.d - truoc) / DAY)); conLai += ngay * so; truoc = m.d < truoc ? truoc : m.d;
+      var du = conLai >= m.kc, thieu = m.kc - conLai, r = { m: m, coLuc: Math.floor(conLai), du: du, thieu: Math.ceil(thieu), them: ngay > 0 && !du ? Math.ceil(thieu / ngay) : 0 };
+      if (du) conLai -= m.kc; return r;
+    });
+    var nguon = KC.nguon.map(function (n, i) {
+      return '<div class="kcng"><label class="check"><input type="checkbox" data-kcbat="' + i + '"' + (n.bat ? ' checked' : '') + '></label>' +
+        '<input type="text" data-kcten="' + i + '" value="' + esc(n.ten) + '" aria-label="Tên nguồn">' +
+        '<input type="number" min="0" inputmode="numeric" data-kcso="' + i + '" value="' + (+n.so || '') + '" placeholder="0" aria-label="Số KC">' +
+        '<select data-kcky="' + i + '" aria-label="Chu kỳ">' + Object.keys(KC_KY).map(function (k) { return '<option value="' + k + '"' + (n.ky === k ? ' selected' : '') + '>' + KC_KY[k][0] + '</option>'; }).join('') + '</select>' +
+        '<button type="button" class="kcx" data-kcxoang="' + i + '" aria-label="Xóa nguồn">✕</button></div>';
+    }).join('');
+    return '<div class="kcwrap">' +
+      '<div class="panel pin kccol"><h2 class="sec">1. Kim cương của bạn</h2>' +
+        '<label class="field"><span>KC đang có</span><input type="number" min="0" inputmode="numeric" id="kcCo" value="' + (+KC.co || '') + '" placeholder="vd 12000"></label>' +
+        '<p class="lbl" style="margin:14px 0 6px">KC kiếm được (bỏ tick nguồn bạn không có)</p>' + nguon +
+        '<button type="button" class="btn ghost" id="kcThemNguon" style="margin-top:6px">＋ Thêm nguồn</button>' +
+        '<div class="kcsum">≈ <b class="num">' + fmt(ngay) + '</b> KC mỗi ngày · <b class="num">' + fmt(ngay * 30) + '</b> KC mỗi tháng</div></div>' +
+      '<div class="panel kccol"><h2 class="sec">2. Sự kiện muốn để dành</h2>' +
+        (muc.length ? '' : '<p class="muted small" style="margin:0 0 10px">Thêm sự kiện bạn muốn lấy, web tính xem tới ngày đó bạn có đủ KC không.</p>') +
+        '<div class="kcmuc">' + kq.map(function (r) {
+          return '<div class="kcrow ' + (r.du ? 'du' : 'thieu') + '"><div class="kcinfo"><b>' + esc(r.m.ten || 'Sự kiện') + '</b><span class="muted small">' + esc(r.m.ngay) + ' · cần <b class="num">' + fmt(r.m.kc) + '</b> KC · lúc đó có ~<b class="num">' + fmt(r.coLuc) + '</b></span>' +
+            '<span class="kckq">' + (r.du ? '✓ Đủ' + (r.coLuc - r.m.kc > 0 ? ', dư ~' + fmt(r.coLuc - r.m.kc) + ' KC' : '') : '✗ Thiếu ~' + fmt(r.thieu) + ' KC' + (r.them ? ' · cần tích thêm ~' + r.them + ' ngày' : '')) + '</span></div>' +
+            '<button type="button" class="kcx" data-kcxoa="' + r.m.i + '" aria-label="Bỏ sự kiện này">✕</button></div>';
+        }).join('') + '</div>' +
+        '<details class="kcadd"' + (muc.length ? '' : ' open') + '><summary>＋ Thêm sự kiện để dành</summary>' +
+          (sap.length ? '<p class="lbl" style="margin:10px 0 6px">Sắp mở trong lịch</p><div class="evyears">' + sap.map(function (e, i) { return '<button type="button" data-kcsap="' + i + '">' + esc(e.ten) + ' · ' + esc(e.ngay) + (e.kc ? ' · ~' + fmt(e.kc) + ' KC' : '') + '</button>'; }).join('') + '</div>' : '') +
+          '<p class="lbl" style="margin:10px 0 6px">Dự đoán theo bản Trung (ra ở VN sau khoảng 1 năm)</p><p class="muted small" style="margin:0">Sắp có. Web sẽ gợi ý các sự kiện bản Trung đã ra, kèm ngày dự kiến ở VN và số KC ước tính.</p>' +
+          '<p class="lbl" style="margin:12px 0 6px">Hoặc tự nhập</p><div class="kcnhap"><input type="text" id="kcTen" placeholder="Tên sự kiện"><input type="text" id="kcNgay" inputmode="numeric" placeholder="Ngày mở, vd 15/01/2027"><input type="number" min="0" inputmode="numeric" id="kcCan" placeholder="KC cần"><button type="button" class="btn primary" id="kcThem">Thêm</button></div><p class="small" id="kcLoi" style="color:var(--warn);margin:6px 0 0"></p>' +
+        '</details>' +
+        '<p class="basenote" style="margin-top:12px">Số KC là ước tính: lấy mức cao của chi phí sự kiện và giả sử bạn tích đều mỗi ngày. Sự kiện xếp theo ngày, KC dùng cho sự kiện trước sẽ trừ đi trước khi tính sự kiện sau. Dữ liệu chỉ lưu trên máy bạn.</p></div></div>';
+  }
+  function kcVe() { if (EV.tab === 'kc') renderEvents(); }
+  $('evBody').addEventListener('change', function (e) {
+    var t = e.target, d = t.dataset;
+    if (t.id === 'kcCo') KC.co = +t.value || 0;
+    else if (d.kcso !== undefined) KC.nguon[+d.kcso].so = +t.value || 0;
+    else if (d.kcten !== undefined) KC.nguon[+d.kcten].ten = t.value.trim() || 'Nguồn';
+    else if (d.kcky !== undefined) KC.nguon[+d.kcky].ky = t.value;
+    else if (d.kcbat !== undefined) KC.nguon[+d.kcbat].bat = t.checked;
+    else return;
+    kcLuu(); kcVe();
+  });
+  $('evBody').addEventListener('click', function (e) {
+    var b = e.target.closest('#kcThemNguon,#kcThem,[data-kcxoa],[data-kcxoang],[data-kcsap]'); if (!b) return;
+    if (b.id === 'kcThemNguon') KC.nguon.push({ ten: 'Nguồn mới', so: 0, ky: 'ngay', bat: true });
+    else if (b.hasAttribute('data-kcxoang')) KC.nguon.splice(+b.dataset.kcxoang, 1);
+    else if (b.hasAttribute('data-kcxoa')) KC.muc.splice(+b.dataset.kcxoa, 1);
+    else if (b.hasAttribute('data-kcsap')) { var x = kcSapToi(today())[+b.dataset.kcsap]; if (x) KC.muc.push({ ten: x.ten, ngay: x.ngay, kc: x.kc }); }
+    else if (b.id === 'kcThem') {
+      var ngay = evDMY($('kcNgay').value), kc = +$('kcCan').value || 0;
+      if (!ngay) { $('kcLoi').textContent = 'Ngày nhập dạng ngày/tháng/năm, vd 15/01/2027.'; return; }
+      if (!kc) { $('kcLoi').textContent = 'Bạn nhập số KC cần nhé.'; return; }
+      KC.muc.push({ ten: $('kcTen').value.trim() || 'Sự kiện', ngay: ngay, kc: kc });
+    }
+    kcLuu(); kcVe();
+  });
   $('evBody').addEventListener('click', function (e) {
     var b = e.target.closest('[data-tab],[data-year],[data-more],[data-scope],#evQx,#evReset'); if (!b) return;
     if (b.dataset.tab) EV.tab = b.dataset.tab;
