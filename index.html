@@ -1331,7 +1331,6 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   /* Linh Cảm Không Gian và Vô Cùng Quý Giá: vào là mở vĩnh viễn, không có ngày đóng, không tính comeback */
   function evPerm(e) { return e.type === 'Linh Cảm Không Gian' || e.type === 'Vô Cùng Quý Giá'; }
   /* Túi Phúc: event nạp đi kèm Big Event Tết, không comeback */
-  function evNoCb(e) { return evPerm(e) || e.type === 'Túi Phúc'; }
   function evState(e, now) {
     if (evPerm(e)) return e.start && e.start <= now ? { cls: 'perm', txt: 'Mở vĩnh viễn' } : (e.start ? { cls: 'soon', txt: 'Sắp mở' } : null);
     if (e.start && e.start > now) return { cls: 'soon', txt: 'Sắp mở' };
@@ -1493,9 +1492,9 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       DD = t.split(/\r?\n/).filter(function (l) { return l.trim() && l[0] !== '#'; }).map(function (l) {
         var c = l.split('|').map(function (x) { return x.trim(); });
         var moc = (c[5] || '').split(';').map(function (x) { var p = x.split('='); return p.length === 2 && +p[1] ? { ten: p[0].trim(), kc: +p[1] } : null; }).filter(Boolean);
-        var nam = /^\d{4}$/.test(c[2] || '') ? +c[2] : 0, so = (c[4] || '').replace(/[.,](?=\d{3})/g, '').match(/\d+/g) || [];
+        var nam = /^\d{4}$/.test(c[2] || '') ? +c[2] : 0, th = /^(\d{1,2})\/(\d{4})$/.exec(c[2] || ''), so = (c[4] || '').replace(/[.,](?=\d{3})/g, '').match(/\d+/g) || [];
         so = so.map(Number).filter(Boolean);
-        return { raw: l, c: c, ten: c[0], loai: c[1], ngay: c[2] || '', nam: nam, d: nam ? new Date(nam, 11, 31) : evDate(c[2]), bo: c[3] || '', tong: so.length ? Math.max.apply(null, so) : 0, tu: so.length > 1 ? Math.min.apply(null, so) : 0, moc: moc, anh: (c[6] || '').replace(/[^\w.-]/g, ''),
+        return { raw: l, c: c, ten: c[0], loai: c[1], ngay: c[2] || '', nam: nam, thang: th ? 1 : 0, d: nam ? new Date(nam, 11, 31) : th ? new Date(+th[2], +th[1] - 1, 1) : evDate(c[2]), bo: c[3] || '', tong: so.length ? Math.max.apply(null, so) : 0, tu: so.length > 1 ? Math.min.apply(null, so) : 0, moc: moc, anh: (c[6] || '').replace(/[^\w.-]/g, ''),
           link: ddLink(c[9]), an: /^ẩn$/i.test(c[10] || ''),
           mota: (c[8] || '').split('¶').map(function (x) { return x.trim(); }).filter(Boolean),
           bos: (c[7] || '').split(';;').map(function (x) { var q = x.split('^').map(function (y) { return y.trim(); }); return (q[1] || q[2] || q[3]) ? { loai: q[0] || 'Chính', ten: q[1] || '', gia: q[2] || '', anh: (q[3] || '').replace(/[^\w.-]/g, '') } : null; }).filter(Boolean) };
@@ -1510,7 +1509,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   }
   var DD_HIEN = 6;
   function ddLink(t) { t = String(t || '').trim().replace(/\s+/g, ''); if (!t) return ''; if (!/^https?:\/\//i.test(t)) t = 'https://' + t.replace(/^\/+/, ''); return /^https?:\/\/[^\s"'<>]+$/i.test(t) ? t : ''; }
-  function ddNgay(e) { return e.nam ? 'năm ' + e.nam : (e.d ? '~' + e.ngay : 'chưa rõ ngày'); }
+  /* Ngày dự kiến hiện theo tháng/năm (bà dặn: bản Trung chỉ đoán được tháng) */
+  function ddNgay(e) { return e.nam ? 'năm ' + e.nam : (e.d ? 'tháng ' + ('0' + (e.d.getMonth() + 1)).slice(-2) + '/' + e.d.getFullYear() : 'chưa rõ ngày'); }
   function ddKC(e) { return e.tong ? '~' + (e.tu ? fmt(e.tu) + '–' : '') + fmt(e.tong) + ' KC' : ''; }
   function ddSap(e, now) { return !e.d || e.d > now; }
   function ddHien(e) { return !e.an; } /* dòng bị ẩn trong admin thì không hiện ra web */
@@ -1537,7 +1537,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
         var z = ev.target.closest('[data-ddzoom]'); if (z) { ddZoom(z.dataset.ddzoom); return; }
         var b = ev.target.closest('[data-ddthem]'); if (!b) return;
         var de = DD[+b.dataset.ddthem], sel = dg.querySelector('select');
-        if (de && sel) { KC.muc.push({ ten: de.ten + ' (' + sel.options[sel.selectedIndex].text.split(' · ')[0] + ')', ngay: de.nam ? '31/12/' + de.nam : de.ngay, kc: +sel.value }); kcLuu(); dg.close(); kcVe(); toast('Đã thêm vào 💎 Tích KC'); }
+        if (de && sel) { KC.muc.push({ ten: de.ten + ' (' + sel.options[sel.selectedIndex].text.split(' · ')[0] + ')', ngay: de.nam ? '31/12/' + de.nam : efISO(de.d), kc: +sel.value }); kcLuu(); dg.close(); kcVe(); toast('Đã thêm vào 💎 Tích KC'); }
       });
     }
     var opts = !e.d ? [] : (e.tong ? [{ ten: 'Trọn bộ', kc: e.tong }] : []).concat(e.moc.filter(function (m) { return m.kc !== e.tong; }));
@@ -1555,7 +1555,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       (bo || '<p class="muted small">Chưa có danh sách bộ.</p>') +
       (e.link ? '<p style="margin:12px 0 0"><a class="ddlink" href="' + esc(e.link) + '" target="_blank" rel="noopener">Xem bài đăng gốc ↗</a></p>' : '') +
       '<p class="muted small" style="margin:10px 0 0">Theo bản Trung: tên, giá và ngày ở VN có thể chênh một chút. Giá tiền Việt quy đổi khoảng 1¥ ≈ ' + fmt(TY_GIA) + 'đ.</p></div>' +
-      '<div class="ddfoot">' + (opts.length ? (e.nam ? '<span class="muted small" style="flex-basis:100%">Chưa rõ ngày, tạm tính cuối năm ' + e.nam + '.</span>' : '') + '<select aria-label="Mốc muốn lấy">' + opts.map(function (o) { return '<option value="' + o.kc + '">' + esc(o.ten) + ' · ~' + fmt(o.kc) + ' KC</option>'; }).join('') + '</select><button type="button" class="btn primary" data-ddthem="' + i + '">Để dành</button>' : (!e.d ? '<span class="muted small">Chưa rõ ngày ra nên chưa tính KC để dành được.</span>' : '<span class="muted small">Chưa rõ số KC của sự kiện này.</span>')) + '</div>';
+      '<div class="ddfoot">' + (opts.length ? (e.nam ? '<span class="muted small" style="flex-basis:100%">Chưa rõ tháng, tạm tính cuối năm ' + e.nam + '.</span>' : '<span class="muted small" style="flex-basis:100%">Chưa rõ ngày cụ thể, tạm tính từ ' + esc(efISO(e.d)) + '.</span>') + '<select aria-label="Mốc muốn lấy">' + opts.map(function (o) { return '<option value="' + o.kc + '">' + esc(o.ten) + ' · ~' + fmt(o.kc) + ' KC</option>'; }).join('') + '</select><button type="button" class="btn primary" data-ddthem="' + i + '">Để dành</button>' : (!e.d ? '<span class="muted small">Chưa rõ ngày ra nên chưa tính KC để dành được.</span>' : '<span class="muted small">Chưa rõ số KC của sự kiện này.</span>')) + '</div>';
     dg.showModal(); dg.querySelector('.ddbody').scrollTop = 0;
   }
   function ddZoom(src) {
@@ -1805,7 +1805,6 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   }
   /* GitHub báo 409 khi nhánh vừa đổi (vd. vừa tải ảnh lên) mà máy chủ chưa kịp cập nhật: chờ một chút rồi thử lại */
   function ghCho(e, tries) { return (e.status === 409 || e.status === 422) && tries > 0 ? new Promise(function (ok) { setTimeout(ok, 1500 * (5 - tries)); }) : null; }
-  function b64Text(t) { var b = new TextEncoder().encode(t), s = ''; for (var i = 0; i < b.length; i += 0x8000) s += String.fromCharCode.apply(null, b.subarray(i, i + 0x8000)); return btoa(s); }
   function unb64Text(t) { var s = atob(t.replace(/\s/g, '')), b = new Uint8Array(s.length); for (var i = 0; i < s.length; i++) b[i] = s.charCodeAt(i); return new TextDecoder().decode(b); }
   function b64Blob(blob) { return new Promise(function (ok) { var fr = new FileReader(); fr.onload = function () { ok(String(fr.result).split(',')[1]); }; fr.readAsDataURL(blob); }); }
   function efInsert(txt, line) {
@@ -1985,7 +1984,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   document.addEventListener('input', function (e) {
     var t = e.target; if (!t.hasAttribute || !t.hasAttribute('data-ngay') || /^delete/.test(e.inputType || '')) return;
     var d = t.value.replace(/\D/g, '').slice(0, 8), v = d.slice(0, 2) + (d.length >= 2 ? '/' : '') + d.slice(2, 4) + (d.length >= 4 ? '/' : '') + d.slice(4);
-    if (d.length >= 4 && +d.slice(2, 4) > 12) v = d; /* gõ chỉ năm (vd 2027) thì để nguyên */
+    if (d.length >= 4 && +d.slice(2, 4) > 12) v = (+d.slice(0, 2) > 12 || d.length === 4 && d.slice(0, 2) === '20') ? d : d.slice(0, 2) + '/' + d.slice(2, 6); /* 2027 = chỉ năm; 022027 = tháng/năm */
     if (v !== t.value) t.value = v;
   });
   /* ---------- Sắp ra mắt (admin): tự điền / sửa / xóa dòng trong du-doan.txt (bản chính ở repo web) ---------- */
@@ -2047,7 +2046,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     return '<div class="fdbox"><div class="fdhd"><h3 style="margin:0">' + (e ? 'Sửa: ' + esc(e.ten) : 'Thêm sự kiện sắp ra mắt') + '</h3><button type="button" class="btn ghost" id="fdThoi">← Quay lại</button></div>' +
       '<div class="fdgrid">' + tt('fdTen', 'Tên sự kiện', c[0], 'vd Tết 2027 - Thánh Đình Chi Yết') +
       '<label class="fdf"><span class="adlbl">Loại</span><select id="fdLoai">' + EV_TYPES.map(function (t) { return '<option' + (t === (c[1] || 'Big Event') ? ' selected' : '') + '>' + esc(t) + '</option>'; }).join('') + '</select></label>' +
-      tt('fdNgay', 'Ngày dự kiến (không bắt buộc, ghi chỉ năm cũng được)', e ? e.ngay : '', 'vd 05/02/2027 hoặc 2027', ' inputmode="numeric" data-ngay maxlength="10"') +
+      tt('fdNgay', 'Tháng dự kiến (không bắt buộc)', e ? e.ngay : '', 'vd 02/2027, 05/02/2027 hoặc 2027', ' inputmode="numeric" data-ngay maxlength="10"') +
       tt('fdTong', 'KC cả sự kiện (để trống nếu chưa rõ)', e ? c[4] : '', 'vd 15900 hoặc 900-1200') + '</div>' +
       tt('fdLink', 'Link bài đăng (để dẫn nguồn)', c[9], 'vd facebook.com/1767346485393508', ' inputmode="url" spellcheck="false"') +
       '<label class="fdf"><span class="adlbl">Các mốc để tính KC (mỗi dòng: tên mốc = số KC)</span><textarea id="fdMoc" rows="3" placeholder="Mốc 114 = 3300&#10;Mốc 205 = 6030">' + esc(moc) + '</textarea></label>' +
@@ -2122,12 +2121,12 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   function fdLuu() {
     if (FD.busy) return; fdDoc();
     if (!LS.get('ghtok', '')) return fdTb('Bạn kết nối GitHub trước (tab Thêm sự kiện → Kết nối GitHub) nhé.', true);
-    var ten = fdSach($('fdTen').value), ngTho = $('fdNgay').value.trim(), ngay = /^\d{4}$/.test(ngTho) ? ngTho : evDMY(ngTho);
+    var ten = fdSach($('fdTen').value), ngTho = $('fdNgay').value.trim(), thTho = /^(\d{1,2})\/(\d{4})$/.exec(ngTho), ngay = /^\d{4}$/.test(ngTho) ? ngTho : thTho && +thTho[1] >= 1 && +thTho[1] <= 12 ? ('0' + thTho[1]).slice(-2) + '/' + thTho[2] : evDMY(ngTho);
     var so = $('fdTong').value.replace(/[.,](?=\d{3})/g, '').match(/\d+/g) || [], tong = so.length > 1 ? Math.min.apply(null, so.map(Number)) + '-' + Math.max.apply(null, so.map(Number)) : (so[0] || '');
     if (!ten) { $('fdTen').focus(); return fdTb('Bạn nhập tên sự kiện nhé.', true); }
     var link = $('fdLink').value.trim().replace(/\s+/g, '').replace(/\|/g, '');
     if (link && !ddLink(link)) { $('fdLink').focus(); return fdTb('Link bài đăng chưa đúng, bạn dán lại link nhé.', true); }
-    if (ngTho && !ngay) { $('fdNgay').focus(); return fdTb('Ngày dự kiến ghi dạng ngày/tháng/năm (vd 05/02/2027), chỉ ghi năm (vd 2027), hoặc để trống.', true); }
+    if (ngTho && !ngay) { $('fdNgay').focus(); return fdTb('Ghi tháng/năm (vd 02/2027), ngày/tháng/năm (vd 05/02/2027), chỉ năm (vd 2027), hoặc để trống.', true); }
     var moc = [], mota = $('fdMoTa').value.split('\n');
     /* dòng đúng mẫu "tên = số" thành mốc tính KC; dòng khác tự chuyển sang phần mô tả */
     $('fdMoc').value.split('\n').forEach(function (l) { if (!l.trim()) return; var m = l.match(/^(.*?)[=:]\s*([\d.,]+)\s*(kc)?\s*$/i); if (!m || !+m[2].replace(/\D/g, '')) { mota.push(l); return; } moc.push(fdSach(m[1]) + '=' + (+m[2].replace(/\D/g, ''))); });
@@ -2387,7 +2386,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 
   /* ================= DỮ LIỆU ĐỒ (du-lieu.json + tinh-diem.js) ================= */
   /* Số bản dữ liệu: đổi mỗi lần cập nhật du-lieu.json / cot-truyen.json để trình duyệt không dùng bản cũ trong bộ nhớ đệm */
-  var BAN = '20261113f';
+  var BAN = '20261113h';
   var KHO = null, TU = null, choDuLieu = [], dangTai = false;
   function moDuLieu(xong) {
     if (KHO) { xong(); return; }
