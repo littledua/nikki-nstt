@@ -1,6 +1,6 @@
 # Dự đoán theo bản Trung (ở VN ra sau khoảng 1 năm). Tên | Loại | Ngày mở dự kiến | Bộ đồ | Tổng KC | Các mốc | Ảnh | Các bộ (loại^tên^giá^ảnh) | Mô tả | Link bài
-Big Mùa Đông 2027 - U Đô Quỷ Sự Lục | Big Event | 11/11/2027 | Cửu U Minh Hách, Minh Phủ Linh Diệu, Độ Xuyên Quy Nguyên | 8640 | Mốc 114=3300; Mốc 205=6030; Mốc 292=8640 | 1767346485393508.webp | Chính^Cửu U Minh Hách^^ ;; Chính^Minh Phủ Linh Diệu^^ ;; Chính^Độ Xuyên Quy Nguyên^^ |  | facebook.com/1767346485393508 | ẩn
-Halloween 2027 - Tiệm May Mèo Đen | 6 Bước Chọn | 28/10/2027 | Quái Đàm U Ám, Khế Ước Mật Ảnh | 3630 | Ngày đầu=3630; Ngày cuối=3360 |  | Chính^Quái Đàm U Ám^^ ;; Chính^Khế Ước Mật Ảnh^^ |  | facebook.com/1751843110277179 | ẩn
+Big Mùa Đông 2027 - U Đô Quỷ Sự Lục | Big Event | 11/11/2027 | Cửu U Minh Hách, Minh Phủ Linh Diệu, Độ Xuyên Quy Nguyên | 8640 | Mốc 114=3300; Mốc 205=6030; Mốc 292=8640 | 1767346485393508.webp | Chính^Cửu U Minh Hách^^ ;; Chính^Minh Phủ Linh Diệu^^ ;; Chính^Độ Xuyên Quy Nguyên^^ |  | facebook.com/1767346485393508
+Halloween 2027 - Tiệm May Mèo Đen | 6 Bước Chọn | 28/10/2027 | Quái Đàm U Ám, Khế Ước Mật Ảnh | 3630 | Ngày đầu=3630; Ngày cuối=3360 |  | Chính^Quái Đàm U Ám^^ ;; Chính^Khế Ước Mật Ảnh^^ |  | facebook.com/1751843110277179
 Ký Ức Mùa Thu | Event lẻ | 23/10/2027 | Noãn Thu Thập Ức |  |  |  | Chính^Noãn Thu Thập Ức^^ |  | facebook.com/1745284500933040 | ẩn
 Mãn Thiên Phồn Tinh Kỳ 8 - Hư Nhật Thử | Event lẻ | 17/10/2027 | Hư Nhật Thử | 4200 | Thắng 100%=2472; Thua 100%=4200 |  | Chính^Hư Nhật Thử^^ |  | facebook.com/1739953884799435 | ẩn
 Thư Viện Bí Ẩn 9 - Đoàn Hợp Xướng U U | Event lẻ | 09/10/2027 | Tiểu Dạ Khúc U U | 4480 |  |  | Chính^Tiểu Dạ Khúc U U^^ |  | facebook.com/1731240142337476 | ẩn
@@ -17,7 +17,7 @@ Big Hè 2027 - Di Sản Của Herwist | Big Event | 22/07/2027 | Hành Trình B�
 Thư Viện Bí Ẩn 8 - Lần Theo Miêu Ảnh | Event lẻ | 15/07/2027 | Nghê Hồng Mị Ảnh |  |  |  | Chính^Nghê Hồng Mị Ảnh^^ |  | facebook.com/1646974694097355 | ẩn
 Cuộc Gọi Bí Ẩn | Đóng gói | 10/07/2027 | Quỷ Dạ Lai Điện | 2736 | Ngày đầu=2736; Ngày cuối=2016 |  | Chính^Quỷ Dạ Lai Điện^^ |  | facebook.com/1643148311146660 | ẩn
 Tường Vi Mộng Ảo | Event lẻ | 03/07/2027 | Tường Vi Lãng Mạn Đàm | 2445 | Ngày đầu=2445; Ngày cuối=1995 |  | Chính^Tường Vi Lãng Mạn Đàm^^ |  | facebook.com/1636702958457862 | ẩn
-Nhà Nhỏ Hạn Giờ - Không Gian Mộng Và Neon | Event lẻ | 2027 |  | 3000 | 85-90 lượt=3600 | ddmwei2yhk.webp |  | Tham gia rút thưởng tiểu ốc hạn giờ, thu thập đủ nội thất chủ đề sẽ mở khóa Tiểu Nikki "Thiếu Nữ Chí Nguyện" | facebook.com/1632013745593450 | ẩn
+Nhà Nhỏ Hạn Giờ - Không Gian Mộng Và Neon | Event lẻ | 2027 |  | 3000 | 85-90 lượt=3600 | ddmwei2yhk.webp |  | Tham gia rút thưởng tiểu ốc hạn giờ, thu thập đủ nội thất chủ đề sẽ mở khóa Tiểu Nikki "Thiếu Nữ Chí Nguyện" | facebook.com/1632013745593450
 Cực Dạ Tinh Dụ | Gacha |  | Vĩnh Dạ Tinh Dụ | 3500-5000 | Trung bình=5000 | ddmwehwtbk.webp | Chính^Vĩnh Dạ Tinh Dụ^^ |  | facebook.com/1626278502833641
 Đoan Ngọ 2027 - Tuyển Tập Đoan Dương Phong Vật | Event ngày lễ | 18/06/2027 | Trọng Hạ Phùng Tập | 2800 | Tim=2800 |  | Chính^Trọng Hạ Phùng Tập^^ |  | facebook.com/1621535223307969 | ẩn
 Mịch Li Ảnh | 6 Bước Chọn | 12/06/2027 | Cẩm Tâm Hiệp Cốt | 2100 | Ngày đầu=2100; Ngày cuối=1920 |  | Chính^Cẩm Tâm Hiệp Cốt^^ |  | facebook.com/1615794237215401 | ẩn
