@@ -807,7 +807,17 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 .icard .nm { font-weight: 700; text-align: center; font-size: .92rem; line-height: 1.3; overflow-wrap: anywhere; }
 .grades { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; }
 .grades span { font-size: .74rem; padding: 1px 8px; border-radius: 999px; background: var(--sunk); white-space: nowrap; }
-.grades span.top { background: var(--accent-soft); color: var(--accent); font-weight: 700; }
+.grades span.top { font-weight: 800; }
+/* Màu 10 phong cách lấy theo game (ô Phong Cách trong màn Tìm), cố định, không đổi theo màu sổ */
+.pc0 { --pc: #EEB262; --pci: #FFFFFF; --pcv: #B47A2E; } .pc1 { --pc: #CDDEE6; --pci: #5E7689; --pcv: #9FB6C2; }
+.pc2 { --pc: #EEE6FF; --pci: #8A6CA8; --pcv: #CBBBE6; } .pc3 { --pc: #FFE683; --pci: #E04A2F; --pcv: #E8C24A; }
+.pc4 { --pc: #FF797B; --pci: #FFFFFF; --pcv: #C8403F; } .pc5 { --pc: #FFE2DE; --pci: #E0505A; --pcv: #F5B4AE; }
+.pc6 { --pc: #ACA2C5; --pci: #FFFFFF; --pcv: #6E6292; } .pc7 { --pc: #DEF3D6; --pci: #3E9A8B; --pcv: #A9D9A0; }
+.pc8 { --pc: #FFDAB5; --pci: #D85E1E; --pcv: #F2B57A; } .pc9 { --pc: #CDEFFF; --pci: #3D8DB0; --pcv: #93CDE6; }
+.grades span[class*="pc"] { background: var(--pc); color: var(--pci); box-shadow: inset 0 0 0 1px var(--pcv); }
+.pc0, .pc4, .pc6 { text-shadow: -1px 0 var(--pcv), 1px 0 var(--pcv), 0 -1px var(--pcv), 0 1px var(--pcv); }
+.wbar.pc0 i, .wbar.pc1 i, .wbar.pc2 i, .wbar.pc3 i, .wbar.pc4 i, .wbar.pc5 i, .wbar.pc6 i, .wbar.pc7 i, .wbar.pc8 i, .wbar.pc9 i { background: var(--pc) !important; box-shadow: inset 0 0 0 1px var(--pcv); }
+.wbar[class*="pc"] { text-shadow: none; }
 .own { margin-top: auto; width: 100%; border: 1px solid var(--line); border-radius: 999px; padding: 6px; font: inherit; font-size: .82rem; font-weight: 700; background: var(--surface); color: var(--ink); cursor: pointer; }
 .own[aria-pressed="true"] { background: var(--own-soft); color: var(--own); border-color: transparent; }
 .pager { display: flex; gap: 8px; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-top: 14px; }
@@ -1077,7 +1087,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
         <select id="fO" aria-label="Lọc theo ô đồ"></select>
         <select id="fOwn" aria-label="Lọc theo đã có"><option value="all">Tất cả</option><option value="own">Đã có</option><option value="miss">Chưa có</option></select>
         <select id="fPc" aria-label="Lọc theo phong cách"></select>
-        <select id="fSort" aria-label="Sắp xếp"><option value="ten">Xếp theo tên</option><option value="pc">Xếp theo phong cách đang lọc</option></select>
+        <select id="fSort" aria-label="Sắp xếp"><option value="game">Xếp theo thứ tự trong game</option><option value="ten">Xếp theo tên</option><option value="pc">Xếp theo phong cách đang lọc</option></select>
       </div>
       <div id="tdBo"></div>
       <p class="muted small" id="fCount" style="margin:0"></p>
@@ -2392,7 +2402,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 
   /* ================= DỮ LIỆU ĐỒ (du-lieu.json + tinh-diem.js) ================= */
   /* Số bản dữ liệu: đổi mỗi lần cập nhật du-lieu.json / cot-truyen.json để trình duyệt không dùng bản cũ trong bộ nhớ đệm */
-  var BAN = '20261113j';
+  var BAN = '20261113k';
   var KHO = null, TU = null, choDuLieu = [], dangTai = false;
   function moDuLieu(xong) {
     if (KHO) { xong(); return; }
@@ -2452,7 +2462,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     veDsChuDe();
     $('pdW').innerHTML = '<div class="wbars">' + c.w.map(function (x, k) { return x ? [x, k] : null; }).filter(Boolean)
       .sort(function (a, b) { return b[0] - a[0]; }).map(function (p) {
-        return '<div class="wbar"><span>' + esc(KHO.pc[p[1]]) + '</span><span class="tr"><i style="width:' + Math.round(p[0] / 20 * 100) + '%"></i></span><b>×' + p[0] + '</b></div>';
+        return '<div class="wbar pc' + p[1] + '"><span>' + esc(KHO.pc[p[1]]) + '</span><span class="tr"><i style="width:' + Math.round(p[0] / 20 * 100) + '%"></i></span><b>×' + p[0] + '</b></div>';
       }).join('') + '</div>';
     $('pdWard').innerHTML = TU ? 'Đang phối từ <b>tủ đồ của bạn</b> (' + fmt(TU.size) + ' món).'
       : 'Đang phối từ <b>toàn bộ đồ</b> trong game. <a href="#tu-do">Nhập tủ đồ</a> để chỉ gợi ý món bạn có.';
@@ -2601,7 +2611,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 
   /* ================= TỦ ĐỒ / KHO ĐỒ ================= */
   function khongDau(t) { return String(t).normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[đĐ]/g, 'd').toLowerCase().trim(); }
-  var TD = { kho: false, q: '', o: '', own: 'all', pc: '', sort: 'ten', page: 0, bo: -1, che: 'bo' }, MOI_TRANG = 48, ganDay = null;
+  var TD = { kho: false, q: '', o: '', own: 'all', pc: '', sort: 'game', page: 0, bo: -1, che: 'bo' }, MOI_TRANG = 48, ganDay = null;
   function veTu(kho) {
     TD.kho = kho; TD.bo = -1;
     $('tdHead').innerHTML = kho
@@ -2639,16 +2649,17 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       ds.push(m);
     });
     if (TD.sort === 'pc' && pc >= 0) ds.sort(function (a, b) { return b.diem[pc] - a.diem[pc] || a.ten.localeCompare(b.ten, 'vi'); });
-    else ds.sort(function (a, b) { return a.ten.localeCompare(b.ten, 'vi'); });
+    else if (TD.sort === 'ten') ds.sort(function (a, b) { return a.ten.localeCompare(b.ten, 'vi'); });
+    else ds.sort(function (a, b) { return a.ma - b.ma; }); /* thứ tự trong game: theo loại đồ rồi theo số trong tủ */
     return ds;
   }
   function theMon(m) {
     var co = !!(TU && TU.has(m.ma)), cap = m.diem.map(function (d, k) { return [d, k]; }).filter(function (x) { return x[0]; }).sort(function (a, b) { return b[0] - a[0]; });
     return '<article class="icard"><div class="bigpic"><img loading="lazy" decoding="async" alt="" src="img/' + m.ma + '.webp" onerror="this.remove()"><span class="slotlbl">' + esc(m.o) + '</span></div>' +
       '<div class="body"><div class="nm">' + esc(m.ten) + '</div>' + ((KHO.boCua[m.ma] || []).slice(0, 1).map(function (k) { return '<button type="button" class="bolink" data-bo="' + k + '">Bộ ' + esc(KHO.bo[k][0]) + '</button>'; }).join('')) + '<div class="grades">' + cap.slice(0, 3).map(function (x, i) {
-        return '<span' + (i < 2 ? ' class="top"' : '') + '>' + esc(KHO.pc[x[1]]) + ' ' + CHU[m.chu.charAt(x[1])] + '</span>';
+        return '<span class="pc' + x[1] + (i < 2 ? ' top' : '') + '">' + esc(KHO.pc[x[1]]) + ' ' + CHU[m.chu.charAt(x[1])] + '</span>';
       }).join('') + '</div>' +
-      (TD.kho ? '<button type="button" class="own" data-co="' + m.ma + '" aria-pressed="' + co + '">' + (co ? '✓ Đã có trong tủ' : '+ Thêm vào tủ') + '</button>' : '') + '</div></article>';
+      (TD.kho ? '<button type="button" class="own" data-co="' + m.ma + '" aria-pressed="' + co + '">' + (co ? '✓ Đã có trong tủ' : KHO.boCua[m.ma] ? '+ Thêm cả bộ' : '+ Thêm vào tủ') + '</button>' : '') + '</div></article>';
   }
   function veThe() {
     if (!TD.kho && !TU) { $('tdCards').innerHTML = '<div class="empty" style="grid-column:1/-1"><b>Tủ đồ đang trống</b>Nhập file clothes_date ở trên để xem đồ của bạn.</div>'; $('fCount').textContent = ''; $('pInfo').textContent = ''; $('pPrev').disabled = $('pNext').disabled = true; return; }
@@ -2710,10 +2721,12 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   $('tdCards').addEventListener('click', function (e) {
     var bl = e.target.closest('[data-bo]'); if (bl) { chonBo(+bl.dataset.bo); return; }
     var b = e.target.closest('[data-co]'); if (!b) return;
-    var ma = +b.dataset.co, ds = TU ? Array.from(TU) : [], i = ds.indexOf(ma);
-    if (i >= 0) ds.splice(i, 1); else ds.push(ma);
-    datTu(ds, true); veChip();
-    b.setAttribute('aria-pressed', String(i < 0)); b.textContent = i < 0 ? '✓ Đã có trong tủ' : '+ Thêm vào tủ';
+    var ma = +b.dataset.co, s = new Set(TU ? Array.from(TU) : []), bk = (KHO.boCua[ma] || [])[0], bo = bk != null ? KHO.bo[bk] : null;
+    if (s.has(ma)) { s.delete(ma); datTu(Array.from(s), true); veChip(); veThe(); return; } /* bỏ: chỉ món này */
+    /* thêm: lưu cả bộ chứa món này (người dùng xin: có đủ bộ mà lưu từng món mệt) */
+    var n = 0; (bo ? bo[1] : [ma]).forEach(function (i) { if (!s.has(i)) { s.add(i); n++; } });
+    datTu(Array.from(s), true); veChip(); veThe();
+    if (bo && n > 1) toast('Đã lưu cả bộ ' + bo[0] + ' (' + n + ' món) vào tủ');
   });
   $('tdInfo').addEventListener('click', function (e) {
     if (e.target.id !== 'tdXoa') return;
