@@ -1747,6 +1747,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     return fetch(url, { method: method, cache: 'no-store', headers: { Authorization: 'Bearer ' + LS.get('ghtok', ''), Accept: 'application/vnd.github+json' }, body: body ? JSON.stringify(body) : undefined })
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok && !(method === 'GET' && r.status === 404)) { var e = new Error(j.message || r.status); e.status = r.status; throw e; } j.status = r.status; return j; }); });
   }
+  /* GitHub báo 409 khi nhánh vừa đổi (vd. vừa tải ảnh lên) mà máy chủ chưa kịp cập nhật: chờ một chút rồi thử lại */
+  function ghCho(e, tries) { return (e.status === 409 || e.status === 422) && tries > 0 ? new Promise(function (ok) { setTimeout(ok, 1500 * (5 - tries)); }) : null; }
   function b64Text(t) { var b = new TextEncoder().encode(t), s = ''; for (var i = 0; i < b.length; i += 0x8000) s += String.fromCharCode.apply(null, b.subarray(i, i + 0x8000)); return btoa(s); }
   function unb64Text(t) { var s = atob(t.replace(/\s/g, '')), b = new Uint8Array(s.length); for (var i = 0; i < s.length; i++) b[i] = s.charCodeAt(i); return new TextDecoder().decode(b); }
   function b64Blob(blob) { return new Promise(function (ok) { var fr = new FileReader(); fr.onload = function () { ok(String(fr.result).split(',')[1]); }; fr.readAsDataURL(blob); }); }
@@ -1759,7 +1761,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     return ghReq('su-kien.txt', 'GET').then(function (f) {
       var txt = efInsert(unb64Text(f.content || ''), line);
       return ghReq('su-kien.txt', 'PUT', { message: msg, content: b64Text(txt), sha: f.sha, branch: GH_BRANCH }).then(function () { return txt; });
-    }).catch(function (e) { if ((e.status === 409 || e.status === 422) && tries > 0) return efPutList(line, msg, tries - 1); throw e; });
+    }).catch(function (e) { var w = ghCho(e, tries); if (w) return w.then(function () { return efPutList(line, msg, tries - 1); }); throw e; });
   }
   /* Sửa (line) hoặc xóa (line = null) đúng dòng cũ trong su-kien.txt */
   function efPutSua(raw, line, msg, tries) {
@@ -1769,7 +1771,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       if (line === null) ls.splice(i, 1); else ls[i] = line;
       var txt = ls.join('\n');
       return ghReq('su-kien.txt', 'PUT', { message: msg, content: b64Text(txt), sha: f.sha, branch: GH_BRANCH }).then(function () { return txt; });
-    }).catch(function (e) { if ((e.status === 409 || e.status === 422) && tries > 0) return efPutSua(raw, line, msg, tries - 1); throw e; });
+    }).catch(function (e) { var w = ghCho(e, tries); if (w) return w.then(function () { return efPutSua(raw, line, msg, tries - 1); }); throw e; });
   }
   function efErr(e) {
     if (e && e.status === 401) return 'Mã GitHub sai hoặc đã hết hạn. Bạn tạo mã mới ở mục Kết nối GitHub nhé.';
@@ -1798,7 +1800,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       var step = im ? (efStatus('Đang tải ảnh lên…'), b64Blob(im.blob).then(function (b) {
         return ghReq('ev/' + img, 'GET').then(function (f) { return ghReq('ev/' + img, 'PUT', { message: msg, content: b, sha: f.status === 200 ? f.sha : undefined, branch: GH_BRANCH }); });
       })) : Promise.resolve();
-      return step.then(function () { efStatus(EF.edit ? 'Đang lưu thay đổi…' : 'Đang thêm vào lịch…'); return EF.edit ? efPutSua(EF.edit.raw, line, msg, 2) : efPutList(line, msg, 2); }).then(function (txt) {
+      return step.then(function () { efStatus(EF.edit ? 'Đang lưu thay đổi…' : 'Đang thêm vào lịch…'); return EF.edit ? efPutSua(EF.edit.raw, line, msg, 4) : efPutList(line, msg, 4); }).then(function (txt) {
         if (im) EV.localImg[img] = URL.createObjectURL(im.blob);
         EV.list = parseEvents(txt); EV.q = ''; EV.type = '';
         var st = evDate(evDMY(evVal('efStart')));
@@ -2005,7 +2007,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       } else ls.push(line);
       var txt = ls.join('\n') + '\n';
       return ghReq('du-doan.txt', 'PUT', { message: msg, content: b64Text(txt), sha: f.sha, branch: GH_BRANCH }).then(function () { return txt; });
-    }).catch(function (e) { if ((e.status === 409 || e.status === 422) && tries > 0) return fdGhi(raw, line, msg, tries - 1); throw e; });
+    }).catch(function (e) { var w = ghCho(e, tries); if (w) return w.then(function () { return fdGhi(raw, line, msg, tries - 1); }); throw e; });
   }
   function fdXong(txt, tb) {
     DD = null; ddTai = false; FD.mo = false; FD.edit = null;
@@ -2034,12 +2036,13 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       return efImgBlob(a.file).then(function (im) { var f = ten + '.' + im.ext; return b64Blob(im.blob).then(function (b64) { return ghReq('dd/' + f, 'PUT', { message: msg, content: b64, branch: GH_BRANCH }); }).then(function () { return f; }); });
     };
     fdTb('Đang tải ảnh lên…');
-    var anh = [len(FD.ban, goc)].concat(bos.map(function (b, k) { return len(b, goc + '-' + (k + 1)); }));
-    Promise.all(anh).then(function (fs) {
+    /* tải ảnh lần lượt từng cái (tải cùng lúc làm GitHub báo xung đột) */
+    var viec = [[FD.ban, goc]].concat(bos.map(function (b, k) { return [b, goc + '-' + (k + 1)]; })), fs = [];
+    viec.reduce(function (p, v) { return p.then(function () { return len(v[0], v[1]).then(function (f) { fs.push(f); }); }); }, Promise.resolve()).then(function () {
       var chinh = bos.filter(function (b) { return b.loai === 'Chính'; }).map(function (b) { return fdSach(b.ten); }).join(', ');
       var line = [ten, $('fdLoai').value, ngay, chinh, tong, moc.join('; '), fs[0], bos.map(function (b, k) { return [b.loai, fdSach(b.ten), fdSach(b.gia), fs[k + 1]].join('^'); }).join(' ;; '), mota.join(' ¶ '), link].join(' | ');
       fdTb('Đang lưu…');
-      return fdGhi(FD.edit ? FD.edit.raw : null, line, msg, 2).then(function (txt) { fdXong(txt, (FD.edit ? 'Đã sửa "' : 'Đã thêm "') + ten + '".'); });
+      return fdGhi(FD.edit ? FD.edit.raw : null, line, msg, 4).then(function (txt) { fdXong(txt, (FD.edit ? 'Đã sửa "' : 'Đã thêm "') + ten + '".'); });
     }).catch(function (e) { fdTb(efErr(e), true); }).then(function () { FD.busy = false; if ($('fdLuu')) $('fdLuu').disabled = false; });
   }
   function fdXoa() {
@@ -2047,7 +2050,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     if (!FD.xoa) { FD.xoa = true; $('fdXoa').textContent = 'Bấm lần nữa để xóa'; return; }
     if (!LS.get('ghtok', '')) return fdTb('Bạn kết nối GitHub trước nhé.', true);
     FD.busy = true; fdTb('Đang xóa…'); var ten = FD.edit.ten;
-    fdGhi(FD.edit.raw, null, 'Xóa sự kiện sắp ra mắt: ' + ten, 2).then(function (txt) { fdXong(txt, 'Đã xóa "' + ten + '".'); })
+    fdGhi(FD.edit.raw, null, 'Xóa sự kiện sắp ra mắt: ' + ten, 4).then(function (txt) { fdXong(txt, 'Đã xóa "' + ten + '".'); })
       .catch(function (e) { fdTb(efErr(e), true); }).then(function () { FD.busy = false; });
   }
   $('adBody').addEventListener('click', function (e) {
@@ -2266,7 +2269,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 
   /* ================= DỮ LIỆU ĐỒ (du-lieu.json + tinh-diem.js) ================= */
   /* Số bản dữ liệu: đổi mỗi lần cập nhật du-lieu.json / cot-truyen.json để trình duyệt không dùng bản cũ trong bộ nhớ đệm */
-  var BAN = '20261113b';
+  var BAN = '20261113c';
   var KHO = null, TU = null, choDuLieu = [], dangTai = false;
   function moDuLieu(xong) {
     if (KHO) { xong(); return; }
