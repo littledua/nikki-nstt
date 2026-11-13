@@ -225,6 +225,18 @@ body.no-phoido #wardChip { display: none !important; }
 .sttable th { text-align: left; font-size: .72rem; color: var(--muted); font-weight: 600; padding: 4px 6px; border-bottom: 1px solid var(--line); }
 .sttable td { padding: 5px 6px; border-bottom: 1px solid var(--line); }
 .sttable .num { text-align: right; }
+.stchon { margin-bottom: 10px; }
+.stchon .streload { margin-left: auto; }
+.sttiles.st4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 700px) { .sttiles.st4 { grid-template-columns: 1fr 1fr; } }
+.stup { color: #2E8B57; font-weight: 800; } .stdown { color: #C0503A; font-weight: 800; }
+.stgrid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 12px; align-items: start; margin-bottom: 8px; }
+.strk { padding: 12px 14px; } .sthd { display: block; margin-bottom: 6px; font-family: var(--f-display); }
+.strow { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "ten so" "tr tr"; gap: 2px 10px; align-items: end; font-size: .86rem; margin: 8px 0; }
+.stten { grid-area: ten; line-height: 1.3; } .strow b { grid-area: so; } .sttr { grid-area: tr; }
+.sttr { height: 8px; border-radius: 99px; background: var(--sunk); overflow: hidden; } .sttr i { display: block; height: 100%; border-radius: 99px; background: var(--fill); }
+.strow b { text-align: right; }
+.strk.m2 .sttr i { background: #F5B4AE; } .strk.m3 .sttr i { background: #A9D9A0; } .strk.m4 .sttr i { background: #CBBBE6; }
 @media (max-width: 480px) { .sttile b { font-size: 1.3rem; } .sttiles { gap: 6px; } .sttile { padding: 10px; } }
 /* Trang admin: danh sách góp ý */
 .evtabs button:disabled { opacity: .55; cursor: default; }
@@ -1325,7 +1337,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       body: JSON.stringify({ access_key: GOPY_KEY, subject: 'Góp ý web Nikki Diary' + (name ? ' – ' + name : ''), from_name: name || 'Người xem web', name: name || '(không ghi tên)', message: msg, botcheck: false })
     }).then(function (r) { return r.json(); }); }).then(function (j) {
       if (!j.success) throw new Error(j.message);
-      $('gyMsg').value = ''; note.textContent = 'Cảm ơn bạn đã góp ý!';
+      $('gyMsg').value = ''; note.textContent = 'Cảm ơn bạn đã góp ý!'; track('bam', 'gop-y', null);
     }).catch(function () { note.textContent = 'Chưa gửi được. Bạn kiểm tra mạng rồi bấm gửi lại nhé.'; })
       .then(function () { btn.disabled = false; });
   });
@@ -1572,7 +1584,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
         var z = ev.target.closest('[data-ddzoom]'); if (z) { ddZoom(z.dataset.ddzoom); return; }
         var b = ev.target.closest('[data-ddthem]'); if (!b) return;
         var de = DD[+b.dataset.ddthem], sel = dg.querySelector('select');
-        if (de && sel) { KC.muc.push({ ten: de.ten + ' (' + sel.options[sel.selectedIndex].text.split(' · ')[0] + ')', ngay: de.nam ? '31/12/' + de.nam : efISO(de.d), kc: +sel.value }); kcLuu(); dg.close(); kcVe(); toast('Đã thêm vào 💎 Tích KC'); }
+        if (de && sel) { KC.muc.push({ ten: de.ten + ' (' + sel.options[sel.selectedIndex].text.split(' · ')[0] + ')', ngay: de.nam ? '31/12/' + de.nam : efISO(de.d), kc: +sel.value }); kcLuu(); dg.close(); kcVe(); toast('Đã thêm vào 💎 Tích KC'); track('bam', 'de-danh', de.ten); }
       });
     }
     var opts = !e.d ? [] : (e.tong ? [{ ten: 'Trọn bộ', kc: e.tong }] : []).concat(e.moc.filter(function (m) { return m.kc !== e.tong; }));
@@ -1623,13 +1635,13 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     kcLuu(); kcVe();
   });
   $('evBody').addEventListener('click', function (e) {
-    var xem = e.target.closest('[data-ddxem]'); if (xem) { ddXem(+xem.dataset.ddxem); return; }
+    var xem = e.target.closest('[data-ddxem]'); if (xem) { ddXem(+xem.dataset.ddxem); if (DD[+xem.dataset.ddxem]) track('bam', 'chi-tiet-sap', DD[+xem.dataset.ddxem].ten); return; }
     if (e.target.closest('#ddThem')) { DD_HIEN += 10; kcVe(); return; }
     var b = e.target.closest('#kcThemNguon,#kcThem,[data-kcxoa],[data-kcxoang],[data-kcsap]'); if (!b) return;
     if (b.id === 'kcThemNguon') KC.nguon.push({ ten: 'Nguồn mới', so: 0, ky: 'ngay', bat: true });
     else if (b.hasAttribute('data-kcxoang')) KC.nguon.splice(+b.dataset.kcxoang, 1);
     else if (b.hasAttribute('data-kcxoa')) KC.muc.splice(+b.dataset.kcxoa, 1);
-    else if (b.hasAttribute('data-kcsap')) { var x = kcSapToi(today())[+b.dataset.kcsap]; if (x) KC.muc.push({ ten: x.ten, ngay: x.ngay, kc: x.kc }); }
+    else if (b.hasAttribute('data-kcsap')) { var x = kcSapToi(today())[+b.dataset.kcsap]; if (x) { KC.muc.push({ ten: x.ten, ngay: x.ngay, kc: x.kc }); track('bam', 'de-danh', x.ten); } }
     else if (b.id === 'kcThem') {
       var ngay = evDMY($('kcNgay').value), kc = +$('kcCan').value || 0;
       if (!ngay) { $('kcLoi').textContent = 'Ngày nhập dạng ngày/tháng/năm, vd 15/01/2027.'; return; }
@@ -1640,7 +1652,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   });
   $('evBody').addEventListener('click', function (e) {
     var b = e.target.closest('[data-tab],[data-year],[data-more],[data-scope],#evQx,#evReset'); if (!b) return;
-    if (b.dataset.tab) EV.tab = b.dataset.tab;
+    if (b.dataset.tab) { EV.tab = b.dataset.tab; track('xem', 'su-kien/' + (EV_TAB_PATH[EV.tab] || EV.tab), null); }
     else if (b.dataset.scope) EV.qAll = b.dataset.scope === 'all';
     else if (b.dataset.year !== undefined && b.hasAttribute('data-year')) { EV.year = +b.dataset.year; EV.qAll = false; }
     else if (b.hasAttribute('data-more')) { var k = b.getAttribute('data-more'); EV.more[k] = !EV.more[k]; }
@@ -2319,11 +2331,27 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   /* ---------- Thống kê truy cập (bảng page_views + hàm thong_ke trong Supabase, xem supabase/02-thong-ke.sql) ----------
      Mỗi lần mở một tab, web ghi 1 dòng: mã máy ngẫu nhiên (lưu ở trình duyệt, không phải thông tin cá nhân) + tên tab.
      Không ghi khi chạy thử trên máy (localhost) và khi ở trang admin. */
-  var ST_TAB = { 'phoi-do': 'Phối đồ', 'tu-do': 'Tủ đồ cá nhân', 'kho-do': 'Kho đồ chung', 'bo-da-luu': 'Bộ đã lưu', 'su-kien': 'Lịch sự kiện' };
-  function trackView(v) {
-    if (v === 'admin' || !ST_TAB[v]) return;
+  var ST_TAB = { 'phoi-do': 1, 'tu-do': 1, 'kho-do': 1, 'bo-da-luu': 1, 'su-kien': 1, 'nguon': 1 };
+  var EV_TAB_PATH = { sap: 'sap', now: 'dang-mo', hist: 'lich-su', kc: 'tich-kc' };
+  var stGan = {};
+  /* Thiết bị (theo bề ngang màn hình) và nguồn vào (lấy 1 lần mỗi phiên từ trang trước đó) — không phải thông tin cá nhân */
+  function stThietBi() { return matchMedia('(max-width: 860px)').matches ? 'dt' : 'mt'; }
+  function stNguon() {
+    var n = ''; try { n = sessionStorage.getItem('nstt.nguon') || ''; } catch (e) {}
+    if (n) return n;
+    var r = ''; try { r = document.referrer ? new URL(document.referrer).hostname : ''; } catch (e) {}
+    n = !r || r === location.hostname ? 'truc-tiep' : /(^|\.)(facebook|fb|messenger)\.|^l\.facebook|^m\.facebook/.test(r) || /fb\.com$|facebook\.com$|messenger\.com$/.test(r) ? 'facebook'
+      : /google\./.test(r) ? 'google' : /zalo/.test(r) ? 'zalo' : 'khac';
+    try { sessionStorage.setItem('nstt.nguon', n); } catch (e) {}
+    return n;
+  }
+  /* Ghi 1 dòng thống kê: loai = xem | bam | tim; path = chỗ; chi = chi tiết (tên chủ đề, sự kiện, từ khóa…) */
+  function track(loai, path, chi) {
+    if (document.body.classList.contains('admin-mode')) return;
     var h = location.hostname;
     if ((h === 'localhost' || h === '127.0.0.1' || location.protocol === 'file:') && !LS.get('statTest', false)) return;
+    chi = chi == null ? null : String(chi).replace(/[\u0000-\u001f<>]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 80) || null;
+    var k = loai + '|' + path + '|' + chi, t = Date.now(); if (stGan[k] && t - stGan[k] < 3000) return; stGan[k] = t; /* bấm 2 lần liền chỉ tính 1 */
     var id = LS.get('vid', '');
     if (!/^[a-z0-9]{8,32}$/.test(id)) {
       id = ''; var r = new Uint8Array(16); (window.crypto || window.msCrypto).getRandomValues(r);
@@ -2332,60 +2360,98 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     }
     try {
       fetch(SB_URL + '/rest/v1/page_views', { method: 'POST', keepalive: true, headers: { apikey: SB_KEY, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
-        body: JSON.stringify({ visitor: id, path: v }) }).catch(function () {});
+        body: JSON.stringify({ visitor: id, path: path, loai: loai, chi_tiet: chi, thiet_bi: stThietBi(), nguon: stNguon() }) }).catch(function () {});
     } catch (e) {}
   }
+  function trackView(v) {
+    if (v === 'admin' || !ST_TAB[v]) return;
+    if (v === 'su-kien') v += '/' + ((typeof EV !== 'undefined' && EV && EV_TAB_PATH[EV.tab]) || 'dang-mo');
+    else if (v === 'phoi-do') v += '/' + ((typeof PD !== 'undefined' && PD ? PD.loai : LS.get('loai', '')) === 'cot-truyen' ? 'cot-truyen' : 'khu-thi-dau');
+    track('xem', v, null);
+  }
+  var ST_TEN = { 'su-kien/sap': 'Sự kiện · Sắp ra mắt', 'su-kien/dang-mo': 'Sự kiện · Đang mở', 'su-kien/lich-su': 'Sự kiện · Lịch sử', 'su-kien/tich-kc': 'Sự kiện · Tích KC',
+    'phoi-do/khu-thi-dau': 'Phối đồ · Khu Thi Đấu', 'phoi-do/cot-truyen': 'Phối đồ · Ải cốt truyện', 'tu-do': 'Tủ đồ', 'kho-do': 'Kho đồ', 'bo-da-luu': 'Đã lưu', 'nguon': 'Nguồn',
+    'su-kien': 'Sự kiện (trước khi tách tab)', 'phoi-do': 'Phối đồ (trước khi tách loại)' };
+  var ST_BAM = { 'chi-tiet-sap': 'Xem chi tiết sắp ra mắt', 'de-danh': 'Để dành KC', 'them-ca-bo': '+ Thêm cả bộ', 'them-vao-tu': '+ Thêm vào tủ (món lẻ)', 'luu-bo': 'Lưu bộ phối', 'nhap-tu': 'Nhập tủ đồ', 'gop-y': 'Gửi góp ý' };
+  var ST_NGUON = { facebook: 'Facebook', google: 'Google', zalo: 'Zalo', 'truc-tiep': 'Gõ link / lưu sẵn', khac: 'Trang khác' };
+  var ST_TB = { dt: 'Điện thoại', mt: 'Máy tính' };
   function adLoadSt() {
-    AD.stErr = false;
-    return AD.sb.rpc('thong_ke', { so_ngay: 30 }).then(function (r) {
+    AD.stErr = false; var n = AD.stNgay || 30;
+    return AD.sb.rpc('thong_ke', { so_ngay: n }).then(function (r) {
       if (r.error) throw r.error;
-      AD.st = r.data; adRender();
+      AD.st = r.data; AD.st.n = n; adRender();
     }).catch(function () { AD.stErr = true; adRender(); });
   }
-  function stDays() {
-    /* đủ 30 ngày, ngày không có ai cũng hiện 0 */
+  function stDays(n) {
+    /* đủ n ngày, ngày không có ai cũng hiện 0 */
     var map = {}; (AD.st.ngay || []).forEach(function (x) { map[x.d] = x; });
     var end = new Date(AD.st.hom_nay + 'T00:00:00'), out = [];
-    for (var i = 29; i >= 0; i--) {
+    for (var i = n - 1; i >= 0; i--) {
       var d = new Date(end.getTime() - i * DAY), k = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
       out.push({ k: k, d: d, u: (map[k] || {}).u || 0, v: (map[k] || {}).v || 0 });
     }
     return out;
   }
   function stDM(d) { return ('0' + d.getDate()).slice(-2) + '/' + ('0' + (d.getMonth() + 1)).slice(-2); }
-  function stHtml() {
-    if (AD.stErr) return '<div class="note">Chưa tải được thống kê. Bạn bấm Tải lại thử nhé.</div><div class="evyears"><button type="button" data-streload="1">↻ Tải lại</button></div>';
-    if (!AD.st) { adLoadSt(); return '<p class="muted">Đang tải thống kê…</p>'; }
-    var t = AD.st.tong || {}, days = stDays();
-    var tile = function (label, u, v) { return '<div class="sttile"><span class="stlbl">' + label + '</span><b class="num">' + fmt(u || 0) + '</b><span class="stsub">người xem · ' + fmt(v || 0) + ' lượt</span></div>'; };
-    /* biểu đồ cột: số người xem mỗi ngày, 30 ngày gần nhất */
-    /* khung vẽ theo đúng bề ngang màn hình để chữ trục không bị thu nhỏ trên điện thoại */
-    var W = Math.max(300, Math.min(900, (($('adBody') && $('adBody').clientWidth) || 640) - 34)), H = W < 500 ? 180 : 220, L = 30, R = 4, TOP = 10, B = 24, max = Math.max.apply(null, days.map(function (x) { return x.u; }).concat([1]));
-    var raw = Math.max(1, max / 4), mag = Math.pow(10, Math.floor(Math.log(raw) / Math.LN10)), f = raw / mag, step = (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * mag, nice = Math.ceil(max / step) * step; /* vạch chia 1-2-5, khoảng 4 vạch */
-    var cw = (W - L - R) / days.length, bw = Math.max(4, cw - 2), y = function (v) { return TOP + (H - TOP - B) * (1 - v / nice); };
-    var grid = '', bars = '', xl = '';
+  /* biểu đồ cột (dùng cho theo ngày và theo giờ); khung vẽ theo bề ngang thật để chữ trục không bị thu nhỏ */
+  function stCot(ds, rong, nhanMoi, tipFn, nhanFn) {
+    var W = Math.max(260, rong), H = W < 500 ? 170 : 200, L = 30, R = 4, TOP = 10, B = 24, max = Math.max.apply(null, ds.map(function (x) { return x.y; }).concat([1]));
+    var raw = Math.max(1, max / 4), mag = Math.pow(10, Math.floor(Math.log(raw) / Math.LN10)), f = raw / mag, step = (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * mag, nice = Math.ceil(max / step) * step;
+    var cw = (W - L - R) / ds.length, bw = Math.max(3, cw - 2), y = function (v) { return TOP + (H - TOP - B) * (1 - v / nice); }, grid = '', bars = '', xl = '';
     for (var g = 0; g <= nice; g += step) grid += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + y(g) + '" y2="' + y(g) + '" class="stgrid"/><text x="' + (L - 6) + '" y="' + (y(g) + 3.5) + '" class="stax" text-anchor="end">' + g + '</text>';
-    days.forEach(function (x, i) {
-      var x0 = L + i * cw + (cw - bw) / 2, y0 = y(x.u), h = H - B - y0, rr = Math.min(4, bw / 2, h);
+    ds.forEach(function (x, i) {
+      var x0 = L + i * cw + (cw - bw) / 2, y0 = y(x.y), h = H - B - y0, rr = Math.min(4, bw / 2, h);
       var path = h > 0 ? 'M' + x0 + ',' + (H - B) + 'V' + (y0 + rr) + 'Q' + x0 + ',' + y0 + ' ' + (x0 + rr) + ',' + y0 + 'H' + (x0 + bw - rr) + 'Q' + (x0 + bw) + ',' + y0 + ' ' + (x0 + bw) + ',' + (y0 + rr) + 'V' + (H - B) + 'Z' : '';
-      var tip = stDM(x.d) + ': ' + fmt(x.u) + ' người xem, ' + fmt(x.v) + ' lượt xem';
-      bars += '<g class="stcol" tabindex="0" data-tip="' + esc(tip) + '"><rect x="' + (L + i * cw) + '" y="' + TOP + '" width="' + cw + '" height="' + (H - TOP - B) + '" fill="transparent"/>' + (path ? '<path d="' + path + '" class="stbar"/>' : '') + '</g>';
-      var lastI = i === days.length - 1; /* nhãn cuối canh phải để không bị cắt mép */
-      if ((days.length - 1 - i) % (W < 500 ? 10 : 7) === 0) xl += '<text x="' + (lastI ? x0 + bw : x0 + bw / 2) + '" y="' + (H - 7) + '" class="stax" text-anchor="' + (lastI ? 'end' : 'middle') + '">' + stDM(x.d) + '</text>';
+      bars += '<g class="stcol" tabindex="0" data-tip="' + esc(tipFn(x)) + '"><rect x="' + (L + i * cw) + '" y="' + TOP + '" width="' + cw + '" height="' + (H - TOP - B) + '" fill="transparent"/>' + (path ? '<path d="' + path + '" class="stbar"/>' : '') + '</g>';
+      var cuoi = i === ds.length - 1;
+      if ((ds.length - 1 - i) % nhanMoi === 0) xl += '<text x="' + (cuoi ? x0 + bw : x0 + bw / 2) + '" y="' + (H - 7) + '" class="stax" text-anchor="' + (cuoi ? 'end' : 'middle') + '">' + nhanFn(x) + '</text>';
     });
-    var last = days[days.length - 1];
-    var chart = '<div class="panel stchart"><div class="stchead"><b>Người xem mỗi ngày</b><span class="muted small">30 ngày gần nhất</span></div>' +
-      '<p class="sttip" id="stTip" aria-live="polite">' + esc(stDM(last.d) + ': ' + fmt(last.u) + ' người xem, ' + fmt(last.v) + ' lượt xem') + '</p>' +
-      '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Biểu đồ số người xem mỗi ngày trong 30 ngày">' + grid + bars + xl + '</svg></div>';
-    var pages = (AD.st.trang || []).map(function (x) { return '<tr><td>' + esc(ST_TAB[x.p] || x.p) + '</td><td class="num">' + fmt(x.v) + '</td></tr>'; }).join('');
-    var table = days.slice().reverse().map(function (x) { return '<tr><td>' + stDM(x.d) + '</td><td class="num">' + fmt(x.u) + '</td><td class="num">' + fmt(x.v) + '</td></tr>'; }).join('');
-    return '<div class="evyears"><button type="button" data-streload="1">↻ Tải lại</button></div>' +
-      '<div class="sttiles">' + tile('Hôm nay', t.hom_nay_u, t.hom_nay_v) + tile('7 ngày', t.tuan_u, t.tuan_v) + tile('30 ngày', t.ky_u, t.ky_v) + '</div>' + chart +
-      '<div class="stgrid2"><div class="panel"><b>Tab được mở nhiều</b><table class="sttable"><thead><tr><th>Tab</th><th class="num">Lượt xem</th></tr></thead><tbody>' + (pages || '<tr><td colspan="2" class="muted">Chưa có dữ liệu</td></tr>') + '</tbody></table></div>' +
-      '<details class="panel"><summary><b>Bảng theo ngày</b></summary><table class="sttable"><thead><tr><th>Ngày</th><th class="num">Người xem</th><th class="num">Lượt xem</th></tr></thead><tbody>' + table + '</tbody></table></details></div>' +
-      '<p class="muted small">"Người xem" đếm theo trình duyệt: một người vào bằng cả điện thoại và máy tính tính là 2. Người dùng trình chặn quảng cáo có thể không được đếm.</p>';
+    return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img">' + grid + bars + xl + '</svg>';
   }
-  function stHover(e) { var g = e.target.closest && e.target.closest('.stcol'); if (g && $('stTip')) $('stTip').textContent = g.getAttribute('data-tip'); }
+  function stSo(nay, truoc) { /* ▲▼ so với kỳ trước */
+    if (!truoc) return '<span class="muted">chưa có số kỳ trước</span>';
+    var p = Math.round((nay - truoc) / truoc * 100);
+    return p === 0 ? '<span class="muted">bằng kỳ trước</span>' : '<span class="' + (p > 0 ? 'stup' : 'stdown') + '">' + (p > 0 ? '▲ ' : '▼ ') + Math.abs(p) + '%</span> so với kỳ trước';
+  }
+  function stHang(tieu, ds, ten, mau, phanTram, ghi) { /* bảng xếp hạng có thanh */
+    ds = (ds || []).filter(function (x) { return x.k; });
+    var max = Math.max.apply(null, ds.map(function (x) { return x.v; }).concat([1])), tong = ds.reduce(function (a, x) { return a + x.v; }, 0) || 1;
+    return '<div class="panel strk ' + mau + '"><b class="sthd">' + tieu + (ghi ? ' <span class="muted small">' + ghi + '</span>' : '') + '</b>' +
+      (ds.length ? ds.slice(0, 8).map(function (x) {
+        return '<div class="strow"><span class="stten" title="' + esc(ten(x.k)) + '">' + esc(ten(x.k)) + '</span><span class="sttr"><i style="width:' + Math.max(2, Math.round(x.v / max * 100)) + '%"></i></span><b>' + (phanTram ? Math.round(x.v / tong * 100) + '%' : fmt(x.v)) + '</b></div>';
+      }).join('') : '<p class="muted small" style="margin:6px 0 0">Chưa có số liệu.</p>') + '</div>';
+  }
+  function stHtml() {
+    var n = AD.stNgay || 30;
+    var chon = '<div class="evyears stchon">' + [[1, 'Hôm nay'], [7, '7 ngày'], [30, '30 ngày'], [90, '90 ngày']].map(function (o) { return '<button type="button" data-stngay="' + o[0] + '" aria-pressed="' + (n === o[0]) + '">' + o[1] + '</button>'; }).join('') +
+      '<button type="button" data-streload="1" class="streload">↻ Tải lại</button></div>';
+    if (AD.stErr) return chon + '<div class="note">Chưa tải được thống kê. Bạn bấm Tải lại thử nhé.</div>';
+    if (!AD.st || AD.st.n !== n) { adLoadSt(); return chon + '<p class="muted">Đang tải thống kê…</p>'; }
+    var t = AD.st.tong || {}, u = t.u || 0, v = t.v || 0, moi = t.moi || 0, rong = (($('adBody') && $('adBody').clientWidth) || 640) - 34;
+    var tile = function (lbl, so, phu) { return '<div class="sttile"><span class="stlbl">' + lbl + '</span><b class="num">' + so + '</b><span class="stsub">' + phu + '</span></div>'; };
+    var tiles = '<div class="sttiles st4">' + tile('Người xem', fmt(u), stSo(u, t.u_truoc)) + tile('Lượt xem', fmt(v), stSo(v, t.v_truoc) + (u ? ' · ' + (v / u).toFixed(1).replace('.', ',') + ' lượt/người' : '')) +
+      tile('Người mới · Quay lại', fmt(moi) + ' · ' + fmt(Math.max(0, u - moi)), u ? Math.round((u - moi) / u * 100) + '% quay lại' : '') + tile('Nhập tủ đồ', fmt(t.nhap || 0), stSo(t.nhap || 0, t.nhap_truoc)) + '</div>';
+    /* theo ngày (bỏ khi xem Hôm nay) + theo giờ */
+    var bd = '';
+    if (n > 1) {
+      var days = stDays(n), last = days[days.length - 1];
+      bd += '<div class="panel stchart"><div class="stchead"><b>Người xem mỗi ngày</b><span class="muted small">' + n + ' ngày</span></div><p class="sttip" id="stTip" aria-live="polite">' + esc(stDM(last.d) + ': ' + fmt(last.u) + ' người xem, ' + fmt(last.v) + ' lượt xem') + '</p>' +
+        stCot(days.map(function (x) { return { y: x.u, x: x }; }), Math.min(900, rong), rong < 500 ? (n > 30 ? 30 : 10) : (n > 30 ? 15 : 7), function (o) { return stDM(o.x.d) + ': ' + fmt(o.x.u) + ' người xem, ' + fmt(o.x.v) + ' lượt xem'; }, function (o) { return stDM(o.x.d); }) + '</div>';
+    }
+    var gm = {}; (AD.st.gio || []).forEach(function (x) { gm[x.h] = x.v; });
+    var gio = []; for (var h = 0; h < 24; h++) gio.push({ y: gm[h] || 0, h: h });
+    var dinh = 0, dv = -1; for (h = 0; h < 24; h++) { var s2 = gio[h].y + gio[(h + 1) % 24].y; if (s2 > dv) { dv = s2; dinh = h; } }
+    bd += '<div class="panel stchart"><div class="stchead"><b>Giờ cao điểm</b><span class="muted small">giờ Việt Nam · lượt xem</span></div><p class="sttip" id="stTip2">' + (dv > 0 ? 'Đông nhất khoảng ' + dinh + 'h–' + ((dinh + 2) % 24) + 'h. Nên đăng bài trước giờ này một chút.' : 'Chưa có số liệu.') + '</p>' +
+      stCot(gio, Math.min(900, rong), 6, function (o) { return o.h + 'h: ' + fmt(o.y) + ' lượt xem'; }, function (o) { return o.h + 'h'; }) + '</div>';
+    var nhan = function (m) { return function (k) { return m[k] || k; }; }, giu = function (k) { return k; };
+    return chon + tiles + bd +
+      '<div class="stgrid3">' + stHang('Mục được xem nhiều', AD.st.muc, nhan(ST_TEN), 'm1') + stHang('Tính năng được dùng', AD.st.bam, nhan(ST_BAM), 'm2') +
+      stHang('Thiết bị', AD.st.thiet_bi, nhan(ST_TB), 'm3', true, 'theo người xem') + stHang('Vào từ đâu', AD.st.nguon, nhan(ST_NGUON), 'm3', true, 'theo người xem') +
+      stHang('Chủ đề Khu Thi Đấu phối nhiều', AD.st.chu_de, giu, 'm4') + stHang('Sự kiện sắp ra mắt được quan tâm', AD.st.sap, giu, 'm4') +
+      stHang('Từ khóa tìm nhiều', AD.st.tim, giu, 'm4', false, 'Kho đồ / Tủ đồ') + '</div>' +
+      '<p class="muted small">"Người xem" đếm theo trình duyệt: một người vào bằng cả điện thoại và máy tính tính là 2. Người dùng trình chặn quảng cáo có thể không được đếm. Thiết bị, nguồn vào, tính năng, chủ đề, từ khóa bắt đầu đếm từ 13/11/2026. Không lưu tên, email hay địa chỉ IP.</p>';
+  }
+  function stHover(e) { var g = e.target.closest && e.target.closest('.stcol'); if (!g) return; var p = g.closest('.stchart'), tip = p && p.querySelector('.sttip'); if (tip) tip.textContent = g.getAttribute('data-tip'); }
   $('adBody').addEventListener('mouseover', stHover);
   $('adBody').addEventListener('focusin', stHover);
   $('adBody').addEventListener('submit', function (e) {
@@ -2405,7 +2471,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     var d = b.dataset;
     if (d.adout) { AD.sb.auth.signOut().then(function () { AD.user = null; AD.admin = false; AD.fb = null; AD.st = null; adRender(); }); return; }
     if (d.adtab) { AD.tab = d.adtab; adRender(); return; }
-    if (d.streload) { AD.st = null; adRender(); return; }
+    if (d.streload) { AD.st = null; AD.stErr = false; adRender(); return; }
+    if (d.stngay) { AD.stNgay = +d.stngay; AD.stErr = false; adRender(); return; }
     if (d.fbfilter) { AD.fbAll = d.fbfilter === 'all'; adRender(); return; }
     if (d.fbreload) { $('adBody').innerHTML = '<p class="muted">Đang tải…</p>'; adLoadFb(); return; }
     if (d.fbdel) { AD.del = d.fbdel; adRender(); return; }
@@ -2422,7 +2489,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 
   /* ================= DỮ LIỆU ĐỒ (du-lieu.json + tinh-diem.js) ================= */
   /* Số bản dữ liệu: đổi mỗi lần cập nhật du-lieu.json / cot-truyen.json để trình duyệt không dùng bản cũ trong bộ nhớ đệm */
-  var BAN = '20261113l';
+  var BAN = '20261113m';
   var KHO = null, TU = null, choDuLieu = [], dangTai = false;
   function moDuLieu(xong) {
     if (KHO) { xong(); return; }
@@ -2521,7 +2588,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   }
   $('pdList').addEventListener('click', function (e) {
     var b = e.target.closest('[data-cd]'); if (!b) return;
-    PD.cd = b.dataset.cd; PD.ov = {}; PD.mo = null; LS.set('cd', PD.cd); vePhoi();
+    PD.cd = b.dataset.cd; PD.ov = {}; PD.mo = null; LS.set('cd', PD.cd); vePhoi(); track('bam', 'chu-de', PD.cd);
   });
   $('pdQ').addEventListener('input', function () { PD.q = this.value; veDsChuDe(); });
   $('pdKq').addEventListener('click', function (e) {
@@ -2538,7 +2605,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   var CT = null, ctDangTai = false;
   PD.loai = LS.get('loai', 'khu-thi-dau'); PD.chuong = LS.get('chuong', '');
   $('pdLoai').value = PD.loai;
-  $('pdLoai').addEventListener('change', function () { PD.loai = this.value; LS.set('loai', PD.loai); if (PD.loai === 'cot-truyen') vePhoi(); else moDuLieu(vePhoi); });
+  $('pdLoai').addEventListener('change', function () { PD.loai = this.value; LS.set('loai', PD.loai); trackView('phoi-do'); if (PD.loai === 'cot-truyen') vePhoi(); else moDuLieu(vePhoi); });
   function moCt(xong) {
     if (CT) { xong(); return; }
     if (ctDangTai) return; ctDangTai = true;
@@ -2602,7 +2669,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   function luuBo() {
     var k = PD.kq, mon = KHO.o.filter(function (o) { return k.bo[o]; }).map(function (o) { return [o, k.bo[o].ma, k.bo[o].ten]; });
     BO.unshift({ id: 'b' + Date.now().toString(36), ten: k.c.ten, cd: k.c.ten, tong: k.t.tong, at: Date.now(), mon: mon });
-    LS.set('bo2', BO); toast('Đã lưu vào mục Đã lưu');
+    LS.set('bo2', BO); toast('Đã lưu vào mục Đã lưu'); track('bam', 'luu-bo', PD.cd || null);
   }
   function veLuu() {
     var box = $('savedList');
@@ -2734,7 +2801,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   function chonBo(k) { TD.bo = k; TD.page = 0; veThe(); $('tdBo').scrollIntoView({ block: 'start', behavior: 'smooth' }); }
   $('tdBo').addEventListener('click', function (e) { var b = e.target.closest('[data-bo]'); if (b) chonBo(+b.dataset.bo); });
   var tdHen;
-  $('fQ').addEventListener('input', function () { var v = this.value; clearTimeout(tdHen); tdHen = setTimeout(function () { TD.q = v; TD.bo = -1; TD.page = 0; veThe(); }, 200); });
+  var timHen = 0;
+  $('fQ').addEventListener('input', function () { var v = this.value; clearTimeout(timHen); timHen = setTimeout(function () { var q = v.trim().toLowerCase(); if (q.length >= 2) track('tim', TD.kho ? 'kho-do' : 'tu-do', q); }, 1500); clearTimeout(tdHen); tdHen = setTimeout(function () { TD.q = v; TD.bo = -1; TD.page = 0; veThe(); }, 200); });
   [['fChe', 'che'], ['fO', 'o'], ['fOwn', 'own'], ['fPc', 'pc'], ['fSort', 'sort']].forEach(function (p) { $(p[0]).addEventListener('change', function () { TD[p[1]] = this.value; TD.page = 0; veThe(); }); });
   $('pPrev').addEventListener('click', function () { TD.page--; veThe(); window.scrollTo(0, $('tdCards').getBoundingClientRect().top + window.scrollY - 120); });
   $('pNext').addEventListener('click', function () { TD.page++; veThe(); window.scrollTo(0, $('tdCards').getBoundingClientRect().top + window.scrollY - 120); });
@@ -2747,6 +2815,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     var n = 0; (bo ? bo[1] : [ma]).forEach(function (i) { if (!s.has(i)) { s.add(i); n++; } });
     datTu(Array.from(s), true); veChip(); veThe();
     if (bo && n > 1) toast('Đã lưu cả bộ ' + bo[0] + ' (' + n + ' món) vào tủ');
+    track('bam', bo ? 'them-ca-bo' : 'them-vao-tu', bo ? bo[0] : null);
   });
   $('tdInfo').addEventListener('click', function (e) {
     if (e.target.id !== 'tdXoa') return;
@@ -2759,7 +2828,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       var ds = [];
       try { ds = TinhDiem.docTuDo(rd.result); } catch (e) { ds = []; }
       if (!ds.length) { $('tdInfo').innerHTML = '<div class="note">File này không đọc được. Bạn kiểm tra lại đúng file <b>clothes_date…</b> lấy từ giả lập (không phải furniture_date) nhé.</div>'; return; }
-      datTu(ds, true); veChip(); PD.ov = {}; veTuInfo(); TD.page = 0; veThe(); toast('Đã nhập ' + fmt(ds.length) + ' món');
+      datTu(ds, true); veChip(); PD.ov = {}; veTuInfo(); TD.page = 0; veThe(); toast('Đã nhập ' + fmt(ds.length) + ' món'); track('bam', 'nhap-tu', ds.length < 1000 ? 'dưới 1000 món' : ds.length < 5000 ? '1000–5000 món' : ds.length < 10000 ? '5000–10000 món' : 'trên 10000 món');
     };
     rd.readAsText(f);
   }
