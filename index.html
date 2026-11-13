@@ -807,7 +807,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 .icard .nm { font-weight: 700; text-align: center; font-size: .92rem; line-height: 1.3; overflow-wrap: anywhere; }
 .grades { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; }
 .grades span { font-size: .74rem; padding: 1px 8px; border-radius: 999px; background: var(--sunk); white-space: nowrap; }
-.grades span.top { font-weight: 800; }
+.grades span { font-weight: 400; } /* bà dặn: các ô đều viết thường, không ô đậm ô nhạt */
 /* Màu 10 phong cách lấy theo game (ô Phong Cách trong màn Tìm), cố định, không đổi theo màu sổ */
 .pc0 { --pc: #EEB262; --pci: #FFFFFF; --pcv: #B47A2E; } .pc1 { --pc: #CDDEE6; --pci: #5E7689; --pcv: #9FB6C2; }
 .pc2 { --pc: #EEE6FF; --pci: #8A6CA8; --pcv: #CBBBE6; } .pc3 { --pc: #FFE683; --pci: #E04A2F; --pcv: #E8C24A; }
@@ -2402,7 +2402,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 
   /* ================= DỮ LIỆU ĐỒ (du-lieu.json + tinh-diem.js) ================= */
   /* Số bản dữ liệu: đổi mỗi lần cập nhật du-lieu.json / cot-truyen.json để trình duyệt không dùng bản cũ trong bộ nhớ đệm */
-  var BAN = '20261113k';
+  var BAN = '20261113l';
   var KHO = null, TU = null, choDuLieu = [], dangTai = false;
   function moDuLieu(xong) {
     if (KHO) { xong(); return; }
