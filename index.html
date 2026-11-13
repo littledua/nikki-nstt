@@ -201,6 +201,9 @@ body.no-phoido #wardChip { display: none !important; }
 .sttile { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .sttile .stlbl { font-size: .78rem; color: var(--muted); font-weight: 600; }
 .sttile b { font-size: 1.6rem; line-height: 1.2; }
+.dstile { font: inherit; color: inherit; text-align: left; cursor: pointer; }
+.dstile:hover { border-color: var(--accent); }
+.dstile[aria-pressed="true"] { border-color: var(--accent); background: var(--fill); box-shadow: inset 0 0 0 1px var(--accent); }
 .sttile .stsub { font-size: .76rem; color: var(--muted); }
 .stchart { padding: 14px 16px; margin-bottom: 12px; }
 .stchead { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
@@ -878,7 +881,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 .fdban { display: flex; align-items: flex-end; gap: 10px; }
 .fdanh { flex: none; display: flex; align-items: center; justify-content: center; width: 84px; height: 84px; border: 1px dashed var(--line); border-radius: 12px; overflow: hidden; background: var(--sunk); cursor: pointer; color: var(--accent); font-size: .78rem; font-weight: 700; text-align: center; }
 .fdban .fdanh { width: 120px; height: 120px; }
-.fdanh img { width: 100%; height: 100%; object-fit: cover; }
+.fdanh img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.fdanh.keo { border: 2px solid var(--accent); background: var(--fill); }
 .fdbo { display: grid; grid-template-columns: auto 1fr auto; gap: 8px 10px; align-items: start; padding: 10px 0; border-top: 1px dashed var(--line); }
 .fdbo > .linkbtn { grid-column: 1; grid-row: 2; justify-self: center; }
 .fdbof { display: grid; gap: 6px; min-width: 0; }
@@ -1952,7 +1956,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   }
   function fdAnh(k, a) {
     var src = a && (a.url || (a.anh && 'dd/' + a.anh));
-    return '<label class="fdanh">' + (src ? '<img alt="" src="' + esc(src) + '">' : '<span>＋ Chọn ảnh</span>') + '<input type="file" accept="image/*" data-fdanh="' + k + '" hidden></label>' +
+    return '<label class="fdanh">' + (src ? '<img alt="" src="' + esc(src) + '">' : '<span>＋ Chọn hoặc<br>kéo ảnh vào</span>') + '<input type="file" accept="image/*" data-fdanh="' + k + '" hidden></label>' +
       (src ? '<button type="button" class="linkbtn small" data-fdboanh="' + k + '">Bỏ ảnh</button>' : '');
   }
   function fdBo(b, k) {
@@ -2035,11 +2039,26 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     if (t.id === 'fdLuu') return fdLuu();
     if (t.id === 'fdXoa') return fdXoa();
   });
-  $('adBody').addEventListener('change', function (e) {
-    var k = e.target.dataset && e.target.dataset.fdanh, f = e.target.files && e.target.files[0]; if (k == null || !f) return;
+  function fdChonAnh(k, f) {
+    if (k == null || !f || !/^image\//.test(f.type)) return;
     var a = { file: f, url: URL.createObjectURL(f) };
-    fdDoc(); if (k === 'ban') FD.ban = a; else { FD.bos[+k].file = a.file; FD.bos[+k].url = a.url; FD.bos[+k].anh = ''; } fdVe();
+    fdDoc(); if (k === 'ban') FD.ban = a; else if (FD.bos[+k]) { FD.bos[+k].file = a.file; FD.bos[+k].url = a.url; FD.bos[+k].anh = ''; } fdVe();
+  }
+  $('adBody').addEventListener('change', function (e) { var k = e.target.dataset && e.target.dataset.fdanh; if (k != null) fdChonAnh(k, e.target.files && e.target.files[0]); });
+  /* Kéo thả ảnh vào ô banner / ô ảnh bộ */
+  ['dragenter', 'dragover'].forEach(function (ev) { $('adBody').addEventListener(ev, function (e) { var o = e.target.closest && e.target.closest('.fdanh'); if (!o) return; e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; o.classList.add('keo'); }); });
+  $('adBody').addEventListener('dragleave', function (e) { var o = e.target.closest && e.target.closest('.fdanh'); if (o && !o.contains(e.relatedTarget)) o.classList.remove('keo'); });
+  $('adBody').addEventListener('drop', function (e) {
+    var o = e.target.closest && e.target.closest('.fdanh'); if (!o) return; e.preventDefault(); o.classList.remove('keo');
+    var fs = [].slice.call(e.dataTransfer.files || []).filter(function (f) { return /^image\//.test(f.type); }); if (!fs.length) return;
+    var k = o.querySelector('[data-fdanh]').dataset.fdanh;
+    if (k === 'ban' || fs.length === 1) return fdChonAnh(k, fs[0]);
+    /* thả nhiều ảnh vào một ô bộ: điền lần lượt từ bộ đó, thiếu bộ thì tự thêm bộ mới */
+    fdDoc(); fs.forEach(function (f, j) { var i = +k + j; if (!FD.bos[i]) FD.bos.push({ loai: 'Phụ', ten: '', gia: '' }); FD.bos[i].file = f; FD.bos[i].url = URL.createObjectURL(f); FD.bos[i].anh = ''; }); fdVe();
   });
+  /* Thả ảnh lệch ra ngoài ô thì trình duyệt không tự mở ảnh (mất form đang điền) */
+  window.addEventListener('dragover', function (e) { if (FD.mo && document.body.classList.contains('admin-mode')) e.preventDefault(); });
+  window.addEventListener('drop', function (e) { if (FD.mo && document.body.classList.contains('admin-mode') && !(e.target.closest && e.target.closest('.fdanh'))) e.preventDefault(); });
 
   /* ---------- Thống kê sự kiện (admin): đếm, tìm, lọc, bấm Sửa để chỉnh từng dòng của su-kien.txt ---------- */
   var DS = { q: '', type: '', thieu: '' };
@@ -2061,8 +2080,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     var thieu = { anh: all.filter(function (e) { return !e.img; }).length, how: all.filter(function (e) { return !e.how; }).length,
       end: all.filter(function (e) { return !e.c[3] && !evPerm(e); }).length, run: all.filter(function (e) { return !e.run; }).length };
     var ds = dsLoc(), types = Object.keys(dem).sort(function (a, b) { return dem[b] - dem[a]; });
-    var tile = function (lbl, v, sub) { return '<div class="sttile"><div class="stlbl">' + lbl + '</div><b class="num">' + fmt(v) + '</b>' + (sub ? '<div class="stsub">' + sub + '</div>' : '') + '</div>'; };
-    return '<div class="sttiles">' + tile('Tổng sự kiện', all.length, Object.keys(nam).length + ' năm') + tile('Thiếu ảnh', thieu.anh) + tile('Thiếu cách chơi', thieu.how) + '</div>' +
+    var tile = function (k, lbl, v, sub) { return '<button type="button" class="sttile dstile" data-dsloc="' + k + '" aria-pressed="' + (DS.thieu === k) + '"><span class="stlbl">' + lbl + '</span><b class="num">' + fmt(v) + '</b><span class="stsub">' + (sub || (DS.thieu === k ? 'Đang lọc · bấm để bỏ' : 'Bấm để lọc')) + '</span></button>'; };
+    return '<div class="sttiles">' + tile('', 'Tổng sự kiện', all.length, Object.keys(nam).length + ' năm · bấm để xem tất cả') + tile('anh', 'Thiếu ảnh', thieu.anh) + tile('how', 'Thiếu cách chơi', thieu.how) + '</div>' +
       '<div class="evyears" style="margin-bottom:10px">' + types.map(function (t) { return '<button type="button" data-dstype="' + esc(t) + '" aria-pressed="' + (DS.type === t) + '">' + esc(t) + ' (' + dem[t] + ')</button>'; }).join('') + '</div>' +
       '<div class="evbar"><div class="evq"><input type="search" id="dsQ" placeholder="Tìm tên sự kiện hoặc bộ đồ…" value="' + esc(DS.q) + '" aria-label="Tìm sự kiện"></div>' +
       '<select id="dsThieu" aria-label="Lọc dòng thiếu thông tin"><option value="">Mọi dòng</option>' +
@@ -2094,7 +2113,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     if (!khongVe) adRender();
   }
   $('adBody').addEventListener('click', function (e) {
-    var b = e.target.closest('[data-dssua],[data-dstype],#dsReset'); if (!b) return;
+    var b = e.target.closest('[data-dssua],[data-dstype],[data-dsloc],#dsReset'); if (!b) return;
+    if (b.hasAttribute('data-dsloc')) { var k = b.dataset.dsloc; DS.thieu = k && DS.thieu !== k ? k : ''; if (!k) DS = { q: '', type: '', thieu: '' }; adRender(); return; }
     if (b.hasAttribute('data-dssua')) { dsSua(+b.dataset.dssua); return; }
     if (b.id === 'dsReset') { DS = { q: '', type: '', thieu: '' }; adRender(); return; }
     DS.type = DS.type === b.dataset.dstype ? '' : b.dataset.dstype; adRender();
