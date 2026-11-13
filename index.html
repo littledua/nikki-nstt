@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}.steps.buoc { line-height: 1.6; }
+</style>
 <title>Nikki Diary – Sổ tay phối đồ, lịch sự kiện Ngôi Sao Thời Trang (NSTT)</title>
 <meta name="description" content="Nikki Diary: web tiếng Việt cho game Ngôi Sao Thời Trang (NSTT). Gợi ý phối đồ điểm cao cho Khu Thi Đấu, quản lý tủ đồ, tra lịch sự kiện đang mở và các năm trước.">
 <link rel="canonical" href="https://littledua.github.io/nikki-nstt/">
@@ -510,6 +511,13 @@ a.btn { text-decoration: none; color: inherit; display: inline-flex; align-items
 ol.steps { list-style: none; counter-reset: st; margin: 10px 0 0; padding: 0; display: grid; gap: 9px; }
 ol.steps li { counter-increment: st; position: relative; padding-left: 32px; min-height: 22px; font-size: .88rem; line-height: 1.5; }
 ol.steps li::before { content: counter(st); position: absolute; left: 0; top: 0; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 8px; background: rgba(255,255,255,.75); color: var(--accent); font-weight: 800; font-size: .78rem; }
+/* Hướng dẫn lấy file tủ đồ: dòng con không đánh số */
+ol.steps.buoc > li { margin-bottom: 4px; }
+ol.steps.buoc ul { list-style: disc; margin: 4px 0 0; padding-left: 18px; display: grid; gap: 3px; }
+ol.steps.buoc ul li { counter-increment: none; padding-left: 0; min-height: 0; }
+ol.steps.buoc ul li::before { content: none; display: none; }
+ol.steps.buoc code { word-break: break-all; font-size: .8rem; }
+.huongdan-luuy { margin: 0 0 10px; }
 ol.steps code { font-size: .78rem; background: rgba(255,255,255,.7); padding: 1px 5px; border-radius: 5px; word-break: break-all; }
 /* Tủ đồ */
 .wgrid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; align-items: start; margin-bottom: 16px; }
@@ -1068,14 +1076,26 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
         <input type="file" id="fileIn" hidden>
       </div>
       <div class="panel">
-        <h2 class="sec">Lấy file từ Nox</h2>
-        <p class="muted small" style="margin:0">Làm một lần trên máy tính có giả lập Nox.</p>
-        <ol class="steps">
-          <li>Bật Root trong cài đặt Nox (tab Cơ bản).</li>
-          <li>Mở game, vào Tủ đồ cho game tải dữ liệu, rồi tắt game.</li>
-          <li>Mở Amaze, vào <code>/data/data/com.vng.ngoisaothoitrang/files/usrdat</code></li>
-          <li>Sao chép file <code>clothes_date…</code> sang <code>/mnt/shared/Other</code>, rồi lấy ra từ thư mục <code>Nox_share</code> trên máy tính.</li>
+        <h2 class="sec">Cách lấy file tủ đồ</h2>
+        <div class="note huongdan-luuy"><b>Cần máy tính có giả lập Android</b> (Nox, LDPlayer hoặc BlueStacks). Điện thoại thật không lấy được, vì file nằm trong thư mục hệ thống của game, phải bật <b>Root</b> mới mở được.</div>
+        <ol class="steps buoc">
+          <li><b>Cài giả lập và bật Root.</b>
+            <ul>
+              <li>Nox: Cài đặt → Cơ bản → bật <b>Root</b>, khởi động lại Nox.</li>
+              <li>LDPlayer: Cài đặt → Cài đặt khác → <b>Quyền ROOT</b> → Bật, khởi động lại.</li>
+              <li>BlueStacks không có nút bật Root sẵn nên khó làm, bạn nên dùng Nox hoặc LDPlayer.</li>
+            </ul></li>
+          <li><b>Mở game trong giả lập</b>, đăng nhập đúng tài khoản, vào <b>Tủ đồ</b> một lần cho game lưu dữ liệu, rồi tắt game.</li>
+          <li><b>Cài app quản lý file</b> trong giả lập (vd. <b>Amaze File Manager</b> trên CH Play). Khi app hỏi quyền Root thì bấm <b>Cho phép</b>.</li>
+          <li><b>Tìm file:</b> trong app, đi tới thư mục<br><code>/data/data/com.vng.ngoisaothoitrang/files/usrdat</code><br>Chọn file có tên bắt đầu bằng <code>clothes_date</code> (đuôi là dãy số tài khoản). <span class="muted">Không lấy file furniture_date.</span></li>
+          <li><b>Chép file ra máy tính</b> qua thư mục chia sẻ của giả lập:
+            <ul>
+              <li>Nox: dán file vào <code>/mnt/shared/Other</code>, trên máy tính mở thư mục <b>Nox_share</b> sẽ thấy file.</li>
+              <li>LDPlayer: dán file vào thư mục <code>Pictures</code>, trên máy tính bấm nút <b>Thư mục chia sẻ</b> ở thanh bên của LDPlayer để mở.</li>
+            </ul></li>
+          <li><b>Quay lại trang này</b>, kéo thả file vào ô <b>Nhập tủ đồ</b> (hoặc bấm vào ô để chọn file). Xong!</li>
         </ol>
+        <p class="muted small" style="margin:8px 0 0">Có đồ mới thì làm lại bước 2, 4, 5, 6 để cập nhật. File chỉ đọc trên máy bạn, web không gửi đi đâu.</p>
       </div>
     </div>
     <div class="panel">
@@ -2662,7 +2682,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       (TD.kho ? '<button type="button" class="own" data-co="' + m.ma + '" aria-pressed="' + co + '">' + (co ? '✓ Đã có trong tủ' : KHO.boCua[m.ma] ? '+ Thêm cả bộ' : '+ Thêm vào tủ') + '</button>' : '') + '</div></article>';
   }
   function veThe() {
-    if (!TD.kho && !TU) { $('tdCards').innerHTML = '<div class="empty" style="grid-column:1/-1"><b>Tủ đồ đang trống</b>Nhập file clothes_date ở trên để xem đồ của bạn.</div>'; $('fCount').textContent = ''; $('pInfo').textContent = ''; $('pPrev').disabled = $('pNext').disabled = true; return; }
+    if (!TD.kho && !TU) { $('tdCards').innerHTML = '<div class="empty" style="grid-column:1/-1"><b>Tủ đồ đang trống</b>Nhập file clothes_date (cách lấy file ở khung bên cạnh) để xem đồ của bạn.</div>'; $('fCount').textContent = ''; $('pInfo').textContent = ''; $('pPrev').disabled = $('pNext').disabled = true; return; }
     var theoBo = TD.kho && TD.bo < 0 && TD.che === 'bo';
     $('view-tu-do').classList.toggle('theobo', theoBo);
     $('tdCards').className = theoBo ? 'boluoi' : 'cards';
@@ -2738,7 +2758,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     rd.onload = function () {
       var ds = [];
       try { ds = TinhDiem.docTuDo(rd.result); } catch (e) { ds = []; }
-      if (!ds.length) { $('tdInfo').innerHTML = '<div class="note">File này không đọc được. Bạn kiểm tra lại đúng file <b>clothes_date…</b> lấy từ Nox nhé.</div>'; return; }
+      if (!ds.length) { $('tdInfo').innerHTML = '<div class="note">File này không đọc được. Bạn kiểm tra lại đúng file <b>clothes_date…</b> lấy từ giả lập (không phải furniture_date) nhé.</div>'; return; }
       datTu(ds, true); veChip(); PD.ov = {}; veTuInfo(); TD.page = 0; veThe(); toast('Đã nhập ' + fmt(ds.length) + ' món');
     };
     rd.readAsText(f);
