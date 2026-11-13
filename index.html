@@ -848,12 +848,12 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 .dddlg { border: 0; padding: 0; border-radius: 16px; max-width: min(94vw, 560px); background: none; cursor: zoom-out; }
 .dddlg img { display: block; width: 100%; height: auto; max-height: 90vh; object-fit: contain; border-radius: 16px; }
 .dddlg::backdrop, .ddsheet::backdrop { background: rgba(25,45,38,.55); }
-.ddsheet { border: 0; padding: 0; width: min(94vw, 620px); max-height: 88vh; border-radius: 18px; background: var(--surface); color: var(--ink); display: none; flex-direction: column; overflow: hidden; box-shadow: 0 12px 40px rgba(0,0,0,.25); }
-.ddsheet[open] { display: flex; }
-.ddhead { display: flex; gap: 10px; align-items: flex-start; justify-content: space-between; padding: 12px 14px 10px; border-bottom: 1px dashed var(--line); }
+.ddsheet { border: 0; padding: 0; width: min(94vw, 620px); max-height: 88vh; max-height: 88dvh; border-radius: 18px; background: var(--surface); color: var(--ink); overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; box-shadow: 0 12px 40px rgba(0,0,0,.25); }
+/* Cả khung cuộn; đầu và chân dính (Safari iPhone tính sai chiều cao khung kiểu flex nên bỏ flex) */
+.ddhead { position: sticky; top: 0; z-index: 2; background: var(--surface); display: flex; gap: 10px; align-items: flex-start; justify-content: space-between; padding: 12px 14px 10px; border-bottom: 1px dashed var(--line); }
 .ddhead > div { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .ddx { flex: none; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); background: var(--sunk); font-size: 1rem; cursor: pointer; color: inherit; }
-.ddbody { overflow-y: auto; overscroll-behavior: contain; padding: 12px 14px; flex: 1; }
+.ddbody { padding: 12px 14px; }
 .ddban { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
 .ddban img { display: block; width: 100%; max-height: 46vh; object-fit: contain; border-radius: 12px; background: var(--sunk); }
 .ddnhom { margin: 14px 0 6px; font-size: .95rem; }
@@ -867,11 +867,11 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 .ddboanh { display: flex; align-items: center; justify-content: center; aspect-ratio: 3 / 4; width: 100%; padding: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--sunk); cursor: zoom-in; color: var(--muted); font-size: 1.4rem; }
 .ddboanh.trong { cursor: default; }
 .ddboanh img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.ddfoot { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 10px 14px calc(10px + env(safe-area-inset-bottom)); border-top: 1px dashed var(--line); background: var(--surface); }
+.ddfoot { position: sticky; bottom: 0; z-index: 2; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 10px 14px calc(10px + env(safe-area-inset-bottom)); border-top: 1px dashed var(--line); background: var(--surface); }
 .ddfoot select { flex: 1; min-width: 0; min-height: 40px; padding: 4px 8px; }
 .ddfoot .btn { min-height: 40px; flex: none; }
 @media (max-width: 860px) {
-  .ddsheet { width: 100vw; max-width: 100vw; max-height: 90vh; margin: auto 0 0; border-radius: 18px 18px 0 0; }
+  .ddsheet { width: 100vw; max-width: 100vw; max-height: 88vh; max-height: 88dvh; margin: auto 0 0; border-radius: 18px 18px 0 0; }
   .ddban img { max-height: 30vh; }
 }
 .kcnhap { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 90px) auto; gap: 6px; }
@@ -1555,8 +1555,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       (bo || '<p class="muted small">Chưa có danh sách bộ.</p>') +
       (e.link ? '<p style="margin:12px 0 0"><a class="ddlink" href="' + esc(e.link) + '" target="_blank" rel="noopener">Xem bài đăng gốc ↗</a></p>' : '') +
       '<p class="muted small" style="margin:10px 0 0">Theo bản Trung: tên, giá và ngày ở VN có thể chênh một chút. Giá tiền Việt quy đổi khoảng 1¥ ≈ ' + fmt(TY_GIA) + 'đ.</p></div>' +
-      '<div class="ddfoot">' + (opts.length ? (e.nam ? '<span class="muted small" style="flex-basis:100%">Chưa rõ tháng, tạm tính cuối năm ' + e.nam + '.</span>' : '<span class="muted small" style="flex-basis:100%">Chưa rõ ngày cụ thể, tạm tính từ ' + esc(efISO(e.d)) + '.</span>') + '<select aria-label="Mốc muốn lấy">' + opts.map(function (o) { return '<option value="' + o.kc + '">' + esc(o.ten) + ' · ~' + fmt(o.kc) + ' KC</option>'; }).join('') + '</select><button type="button" class="btn primary" data-ddthem="' + i + '">Để dành</button>' : (!e.d ? '<span class="muted small">Chưa rõ ngày ra nên chưa tính KC để dành được.</span>' : '<span class="muted small">Chưa rõ số KC của sự kiện này.</span>')) + '</div>';
-    dg.showModal(); dg.querySelector('.ddbody').scrollTop = 0;
+      '<div class="ddfoot">' + (opts.length ? (e.nam ? '<span class="muted small" style="flex-basis:100%">Chưa rõ tháng, tạm tính cuối năm ' + e.nam + '.</span>' : e.thang ? '<span class="muted small" style="flex-basis:100%">Chưa rõ ngày cụ thể, tạm tính từ ' + esc(efISO(e.d)) + '.</span>' : '') + '<select aria-label="Mốc muốn lấy">' + opts.map(function (o) { return '<option value="' + o.kc + '">' + esc(o.ten) + ' · ~' + fmt(o.kc) + ' KC</option>'; }).join('') + '</select><button type="button" class="btn primary" data-ddthem="' + i + '">Để dành</button>' : (!e.d ? '<span class="muted small">Chưa rõ ngày ra nên chưa tính KC để dành được.</span>' : '<span class="muted small">Chưa rõ số KC của sự kiện này.</span>')) + '</div>';
+    dg.showModal(); dg.scrollTop = 0;
   }
   function ddZoom(src) {
     var dg = $('ddDlg'); if (!dg) { dg = document.createElement('dialog'); dg.id = 'ddDlg'; dg.className = 'dddlg'; dg.addEventListener('click', function () { dg.close(); }); document.body.appendChild(dg); }
@@ -2386,7 +2386,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 
   /* ================= DỮ LIỆU ĐỒ (du-lieu.json + tinh-diem.js) ================= */
   /* Số bản dữ liệu: đổi mỗi lần cập nhật du-lieu.json / cot-truyen.json để trình duyệt không dùng bản cũ trong bộ nhớ đệm */
-  var BAN = '20261113h';
+  var BAN = '20261113i';
   var KHO = null, TU = null, choDuLieu = [], dangTai = false;
   function moDuLieu(xong) {
     if (KHO) { xong(); return; }
