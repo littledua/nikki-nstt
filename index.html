@@ -1700,7 +1700,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
         var moc = (c[5] || '').split(';').map(function (x) { var p = x.split('='); return p.length === 2 && +p[1] ? { ten: p[0].trim(), kc: +p[1] } : null; }).filter(Boolean);
         var nam = /^\d{4}$/.test(c[2] || '') ? +c[2] : 0, th = /^(\d{1,2})\/(\d{4})$/.exec(c[2] || ''), so = (c[4] || '').replace(/[.,](?=\d{3})/g, '').match(/\d+/g) || [];
         so = so.map(Number).filter(Boolean);
-        return { raw: l, c: c, ten: c[0], loai: c[1], ngay: c[2] || '', nam: nam, thang: th ? 1 : 0, d: nam ? new Date(nam, 11, 31) : th ? new Date(+th[2], +th[1] - 1, 1) : evDate(c[2]), bo: c[3] || '', tong: so.length ? Math.max.apply(null, so) : 0, tu: so.length > 1 ? Math.min.apply(null, so) : 0, moc: moc, anh: (c[6] || '').replace(/[^\w.-]/g, ''),
+        return { raw: l, c: c, ten: c[0], loai: c[1], ngay: c[2] || '', nam: nam, thang: th ? 1 : 0, d: nam ? new Date(nam, 11, 31) : th ? new Date(+th[2], +th[1], 0) : evDate(c[2]), bo: c[3] || '', tong: so.length ? Math.max.apply(null, so) : 0, tu: so.length > 1 ? Math.min.apply(null, so) : 0, moc: moc, anh: (c[6] || '').replace(/[^\w.-]/g, ''),
           link: ddLink(c[9]), an: /^ẩn$/i.test(c[10] || ''), ma: /^[\w-]{1,40}$/.test(c[11] || '') ? c[11] : '', thuoc: thuocDoc(c[12]),
           mota: (c[8] || '').split('¶').map(function (x) { return x.trim(); }).filter(Boolean),
           bos: boDoc(c[7]) };
