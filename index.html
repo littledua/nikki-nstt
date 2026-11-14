@@ -2190,7 +2190,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     AD.sb.rpc('thong_ke', { so_ngay: 7 }).then(function (r) { if (r.error) throw r.error; AD.st7 = r.data; if (AD.tab === 'tong-quan') adRender(); })
       .catch(function () { AD.st7 = { tong: {} }; }).then(function () { AD.st7Tai = false; });
   }
-  /* ---------- Thông báo đẩy (góp ý mới) — xem supabase/03-thong-bao.sql và supabase/functions/bao-gop-y ----------
+  /* ---------- Thông báo đẩy (góp ý mới) — xem supabase/03-thong-bao.sql và supabase/functions/quick-endpoint ----------
      iPhone chỉ nhận được khi mở web từ icon ở màn hình chính (iOS 16.4 trở lên). */
   var TB = { on: null, busy: false, msg: '', loi: false, xet: false };
   function tbIos() { return /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1); }
@@ -2214,7 +2214,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   }
   function tbVe(msg, loi) { if (msg !== undefined) { TB.msg = msg; TB.loi = !!loi; } var x = $('tbBox'); if (x) x.innerHTML = tbHtml(); }
   function tbKhoa(b64) { var s = atob(b64.replace(/-/g, '+').replace(/_/g, '/') + '==='.slice((b64.length + 3) % 4)), a = new Uint8Array(s.length); for (var i = 0; i < s.length; i++) a[i] = s.charCodeAt(i); return a; }
-  function tbGoi(loai) { return AD.sb.functions.invoke('bao-gop-y', { body: { loai: loai } }).then(function (r) { if (r.error) throw r.error; return r.data || {}; }); }
+  function tbGoi(loai) { return AD.sb.functions.invoke('quick-endpoint', { body: { loai: loai } }).then(function (r) { if (r.error) throw r.error; return r.data || {}; }); }
   function tbBat() {
     TB.busy = true; tbVe('Đang bật…');
     /* iPhone: phải hỏi quyền ngay trong lúc bấm nút, trước mọi việc chờ khác */

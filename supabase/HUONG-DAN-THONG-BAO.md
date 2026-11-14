@@ -11,8 +11,8 @@ Làm 1 lần, khoảng 5 phút, trên máy tính cho dễ. Không cần tạo ha
 ## Bước 2: Tạo Edge Function
 
 1. Bấm **Edge Functions** › **Deploy a new function** › **Via Editor**.
-2. Đặt tên đúng: `bao-gop-y`.
-3. Xóa code mẫu, dán toàn bộ file [`functions/bao-gop-y/index.ts`](functions/bao-gop-y/index.ts), bấm **Deploy**.
+2. Đặt tên đúng: `quick-endpoint`.
+3. Xóa code mẫu, dán toàn bộ file [`functions/quick-endpoint/index.ts`](functions/quick-endpoint/index.ts), bấm **Deploy**.
 4. Vào function vừa tạo › **Details** (hoặc Settings), **tắt "Verify JWT"** (Enforce JWT Verification) rồi lưu. Hàm tự kiểm tra quyền nên tắt chỗ này là an toàn.
 
 ## Bước 3: Bật trên iPhone (iOS 16.4 trở lên)
@@ -28,4 +28,4 @@ Bấm vào thông báo góp ý mới sẽ mở thẳng Hộp thư.
 
 - Cài đặt iPhone › Thông báo › Nikki Diary: bật **Cho phép thông báo**.
 - Chế độ Tập trung / Không làm phiền có thể chặn.
-- Supabase › Edge Functions › `bao-gop-y` › **Logs** xem có lỗi không.
+- Supabase › Edge Functions › `quick-endpoint` › **Logs** xem có lỗi không.

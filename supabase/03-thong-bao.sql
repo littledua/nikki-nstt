@@ -35,12 +35,12 @@ create policy "admin them may" on public.push_subs for insert to authenticated w
 create policy "admin sua may" on public.push_subs for update to authenticated using (user_id = auth.uid() and public.is_admin()) with check (user_id = auth.uid());
 create policy "admin xoa may" on public.push_subs for delete to authenticated using (user_id = auth.uid() and public.is_admin());
 
--- Có góp ý mới thì gọi Edge Function bao-gop-y để gửi thông báo
+-- Có góp ý mới thì gọi Edge Function quick-endpoint để gửi thông báo
 create or replace function public.bao_gop_y_moi() returns trigger
 language plpgsql security definer set search_path = public, extensions as $$
 begin
   perform net.http_post(
-    url := 'https://yxlrhuzkgdigoacowsee.supabase.co/functions/v1/bao-gop-y',
+    url := 'https://yxlrhuzkgdigoacowsee.supabase.co/functions/v1/quick-endpoint',
     body := jsonb_build_object('loai', 'gop-y', 'ten', new.name, 'noi_dung', new.message, 'trang', new.page),
     headers := jsonb_build_object('Content-Type', 'application/json', 'x-bao', (select bi_mat from public.push_cfg where id = 1))
   );
