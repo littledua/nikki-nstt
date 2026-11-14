@@ -2193,7 +2193,9 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     FD.ban = e && e.anh ? { anh: e.anh } : null;
     FD.bos = e ? e.bos.map(function (b) { return { loai: b.loai, ten: b.ten, gia: b.gia, anh: b.anh }; }) : [{ loai: 'Chính', ten: '', gia: '' }];
     var n = LS.get('fdNhap', null);
-    if (n && n.key === fdKey()) {
+    /* nháp của bản sửa: khớp mã dòng, hoặc cùng tên + ngày (dòng cũ trong bộ nhớ đệm khác dòng mới trên GitHub) */
+    var cungSk = n && FD.edit && typeof n.key === 'string' && n.key.indexOf('sua:') === 0 && timDong([FD.edit.raw], n.key.slice(4)) === 0;
+    if (n && (n.key === fdKey() || cungSk)) {
       FD.ban = fdTuNhap(n.ban); FD.bos = (n.bos || []).map(fdTuNhap);
       adRender(); FD_O.forEach(function (id) { if ($(id) && n.f[id] != null) $(id).value = n.f[id]; }); if ($('fdHien') && n.f.fdHien != null) $('fdHien').checked = n.f.fdHien;
       var x = $('fdTb'); if (x) x.innerHTML = 'Đã mở lại bản nháp chưa lưu lúc ' + esc(adTime(n.t)) + '. <button type="button" class="linkbtn" id="fdBoNhap">Bỏ nháp</button>';
@@ -2563,7 +2565,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 
   /* ================= DỮ LIỆU ĐỒ (du-lieu.json + tinh-diem.js) ================= */
   /* Số bản dữ liệu: đổi mỗi lần cập nhật du-lieu.json / cot-truyen.json để trình duyệt không dùng bản cũ trong bộ nhớ đệm */
-  var BAN = '20261114a';
+  var BAN = '20261114b';
   var KHO = null, TU = null, choDuLieu = [], dangTai = false;
   function moDuLieu(xong) {
     if (KHO) { xong(); return; }
