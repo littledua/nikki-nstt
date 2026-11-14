@@ -2704,6 +2704,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     if (!ten) { $('fdTen').focus(); return fdTb('Bạn nhập tên sự kiện nhé.', true); }
     var link = $('fdLink').value.trim().replace(/\s+/g, '').replace(/\|/g, '');
     if (link && !ddLink(link)) { $('fdLink').focus(); return fdTb('Link bài đăng chưa đúng, bạn dán lại link nhé.', true); }
+    var namGo = +((ngTho.match(/(\d{4})$/) || [])[1] || 0); if (namGo && namGo < new Date().getFullYear() - 1) { $('fdNgay').focus(); return fdTb('Năm ' + namGo + ' có vẻ gõ nhầm, bạn kiểm tra lại ngày dự kiến nhé.', true); }
     if (ngTho && !ngay) { $('fdNgay').focus(); return fdTb('Ghi tháng/năm (vd 02/2027), ngày/tháng/năm (vd 05/02/2027), chỉ năm (vd 2027), hoặc để trống.', true); }
     var moc = [], mota = $('fdMoTa').value.split('\n');
     /* dòng đúng mẫu "tên = số" thành mốc tính KC; dòng khác tự chuyển sang phần mô tả */
@@ -2874,7 +2875,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     if (EF.edit) efThoiSua(true);
     efReset(); FD.mo = false; AD.skSub = 'lich'; AD.efMoi = true; EF.tuDD = e.raw;
     adRender();
-    var v = { efName: e.ten, efStart: /^\d{1,2}\/\d{1,2}\/\d{4}$/.test(e.ngay) ? e.ngay : '', efSets: e.bo || e.bos.filter(function (b) { return b.ten; }).map(function (b) { return b.ten; }).join(', '), efHow: e.mota.join(' '), efRun: 'Ra mắt' };
+    var v = { efName: e.ten, efStart: /^\d{1,2}\/\d{1,2}\/\d{4}$/.test(e.ngay) ? e.ngay : (e.thang ? '01/' + e.ngay : ''), efSets: e.bo || e.bos.filter(function (b) { return b.ten; }).map(function (b) { return b.ten; }).join(', '), efHow: e.mota.join(' ') + (e.moc.length ? ' Mốc: ' + e.moc.map(function (m) { return m.ten + ' = ' + fmt(m.kc) + ' KC'; }).join('; ') + '.' : '') + (e.bos.length ? ' Các bộ: ' + e.bos.map(function (b) { return b.loai + (b.ten ? ': ' + b.ten : '') + (b.gia ? ' (' + b.gia + ')' : ''); }).join('; ') + '.' : ''), efCost: ddKC(e), efRun: 'Ra mắt' };
     Object.keys(v).forEach(function (k) { if ($(k)) { $(k).value = v[k] || ''; EF.touched[k] = true; } });
     if (EV_TYPES.indexOf(e.loai) >= 0) { $('efType').value = e.loai; EF.touched.efType = true; }
     $('efLink').value = e.link || '';
