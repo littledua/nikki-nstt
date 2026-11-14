@@ -852,6 +852,12 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 .kcng select { grid-row: 2; grid-column: 3; }
 .kcng input, .kcng select, .kcnhap input { min-width: 0; width: 100%; min-height: 38px; padding: 6px 10px; }
 .kcng .check { margin: 0; }
+.fbsua { margin: 8px 0; padding: 10px 12px; border: 1px dashed var(--line); border-radius: 12px; background: var(--sunk); display: grid; gap: 6px; }
+.fbsua p { margin: 0; } .fbsua textarea { width: 100%; box-sizing: border-box; border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; font: inherit; }
+.gybao { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 60; width: min(92vw, 420px); background: var(--surface); border: 2px solid var(--accent); border-radius: 16px; padding: 14px 16px; box-shadow: 0 10px 30px rgba(0,0,0,.18); display: grid; gap: 6px; }
+.gybao p { margin: 0; font-size: .92rem; } .gybao .btn { justify-self: end; }
+.kcng .kcphu { grid-row: 3; grid-column: 2 / 4; display: flex; align-items: center; gap: 6px; font-size: .85rem; color: var(--muted); }
+.kcng .kcphu input { flex: 1; min-height: 34px; }
 .kcx { border: 0; background: none; color: var(--muted); font-size: 1rem; cursor: pointer; padding: 4px; }
 .kcsum { margin-top: 12px; background: var(--accent-soft); border-radius: 12px; padding: 10px 12px; font-size: .92rem; }
 .kcsum b { font-size: 1.15rem; color: var(--accent); }
@@ -1316,6 +1322,29 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 
 
   /* Góp ý: gửi qua Web3Forms về email chủ web */
+  /* ---- Báo lại cho người gửi góp ý: máy họ nhớ mã góp ý (uuid ngẫu nhiên), mở web thì hỏi xem đã được sửa chưa ---- */
+  function gyMaMoi() {
+    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    var b = new Uint8Array(16); crypto.getRandomValues(b); b[6] = b[6] & 15 | 64; b[8] = b[8] & 63 | 128;
+    var h = Array.prototype.map.call(b, function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
+    return h.slice(0, 8) + '-' + h.slice(8, 12) + '-' + h.slice(12, 16) + '-' + h.slice(16, 20) + '-' + h.slice(20);
+  }
+  function gyKiemTra() {
+    var ma = LS.get('gyMa', []); if (!ma.length || document.body.classList.contains('admin-mode')) return;
+    fetch(SB_URL + '/rest/v1/rpc/gop_y_tra_loi', { method: 'POST', headers: { apikey: SB_KEY, 'Content-Type': 'application/json' }, body: JSON.stringify({ ma: ma }) })
+      .then(function (r) { return r.ok ? r.json() : []; }).then(function (ds) {
+        if (!Array.isArray(ds) || !ds.length) return;
+        var box = document.createElement('div'); box.className = 'gybao'; box.setAttribute('role', 'status');
+        box.innerHTML = '<b>💌 Góp ý của bạn đã được xử lý</b>' + ds.map(function (x) { return '<p>' + (x.tra_loi ? esc(x.tra_loi) : 'Cảm ơn bạn, góp ý đã được sửa trên web.') + '</p>'; }).join('') +
+          '<button type="button" class="btn primary">Đã xem</button>';
+        box.querySelector('button').addEventListener('click', function () {
+          var xong = ds.map(function (x) { return x.id; });
+          LS.set('gyMa', LS.get('gyMa', []).filter(function (m) { return xong.indexOf(m) < 0; })); box.remove();
+        });
+        document.body.appendChild(box);
+      }).catch(function () {});
+  }
+  setTimeout(gyKiemTra, 1500);
   function gyShow() { var d = $('gyDlg'); if (!d.open) { $('gyNote').textContent = ''; d.showModal(); if (!matchMedia('(pointer: coarse)').matches) $('gyMsg').focus(); } } /* điện thoại: không tự bật bàn phím */ 
   $('gyOpen').addEventListener('click', gyShow);
   $('gyClose').addEventListener('click', function () { $('gyDlg').close(); });
@@ -1328,16 +1357,19 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     if ($('gyBot').checked) return;
     var name = $('gyName').value.trim();
     btn.disabled = true; note.textContent = 'Đang gửi…';
+    var ma = gyMaMoi(), vaoSb = false;
     /* Lưu vào Supabase (admin đọc ở trang #admin); nếu lỗi thì gửi email qua Web3Forms như cũ */
     fetch(SB_URL + '/rest/v1/feedback', {
       method: 'POST', headers: { apikey: SB_KEY, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
-      body: JSON.stringify({ name: name.slice(0, 60) || null, message: msg.slice(0, 3000), page: (location.hash || '#phoi-do').slice(0, 200) })
-    }).then(function (r) { if (!r.ok) throw new Error(r.status); return { success: true }; }).catch(function () { return fetch('https://api.web3forms.com/submit', {
+      body: JSON.stringify({ id: ma, name: name.slice(0, 60) || null, message: msg.slice(0, 3000), page: (location.hash || '#phoi-do').slice(0, 200) })
+    }).then(function (r) { if (!r.ok) throw new Error(r.status); vaoSb = true; return { success: true }; }).catch(function () { return fetch('https://api.web3forms.com/submit', {
       method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify({ access_key: GOPY_KEY, subject: 'Góp ý web Nikki Diary' + (name ? ' – ' + name : ''), from_name: name || 'Người xem web', name: name || '(không ghi tên)', message: msg, botcheck: false })
     }).then(function (r) { return r.json(); }); }).then(function (j) {
       if (!j.success) throw new Error(j.message);
-      $('gyMsg').value = ''; note.textContent = 'Cảm ơn bạn đã góp ý!'; track('bam', 'gop-y', null);
+      $('gyMsg').value = ''; track('bam', 'gop-y', null);
+      if (vaoSb) { var ds = LS.get('gyMa', []); ds.push(ma); LS.set('gyMa', ds.slice(-20)); note.textContent = 'Cảm ơn bạn đã góp ý! Khi được sửa, web sẽ báo cho bạn ngay trên máy này.'; }
+      else note.textContent = 'Cảm ơn bạn đã góp ý!';
     }).catch(function () { note.textContent = 'Chưa gửi được. Bạn kiểm tra mạng rồi bấm gửi lại nhé.'; })
       .then(function () { btn.disabled = false; });
   });
@@ -1488,8 +1520,14 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   var KC_NGUON = [['Nhiệm vụ hằng ngày', 'ngay'], ['Thẻ tháng', 'ngay'], ['Khu Thi Đấu', 'tuan'], ['Hội', 'tuan'], ['Nguồn khác', 'thang']];
   var KC = LS.get('kc', null) || { co: 0, nguon: KC_NGUON.map(function (n) { return { ten: n[0], so: 0, ky: n[1], bat: true }; }), muc: [] };
   function kcLuu() { LS.set('kc', KC); }
-  var KC_KY = { ngay: ['mỗi ngày', 1], tuan: ['mỗi tuần', 7], thang: ['mỗi tháng', 30] };
-  function kcMoiNgay() { return KC.nguon.reduce(function (t, n) { return t + (n.bat ? (+n.so || 0) / KC_KY[n.ky][1] : 0); }, 0); }
+  /* Chu kỳ nguồn KC: đều đặn (ngày/tuần/tháng/mỗi N ngày) hoặc một lần (tích sẵn bây giờ / nhận vào 1 ngày) — bà xin thêm 14/11/2026 */
+  var KC_KY = { ngay: ['mỗi ngày', 1], tuan: ['mỗi tuần', 7], thang: ['mỗi tháng', 30], moi: ['mỗi … ngày', 0], lan: ['tích sẵn', -1], luc: ['nhận 1 lần', -2] };
+  function kcChuKy(n) { return n.ky === 'moi' ? Math.max(1, +n.n || 0) : (KC_KY[n.ky] || KC_KY.ngay)[1]; }
+  function kcMoiNgay() { return KC.nguon.reduce(function (t, n) { var k = kcChuKy(n); return t + (n.bat && k > 0 ? (+n.so || 0) / k : 0); }, 0); }
+  function kcSan() { return KC.nguon.reduce(function (t, n) { return t + (n.bat && n.ky === 'lan' ? +n.so || 0 : 0); }, 0); } /* KC tích sẵn (một lần) */
+  function kcLuc(now, toi) { /* KC một lần nhận vào ngày từ hôm nay tới ngày "toi" */
+    return KC.nguon.reduce(function (t, n) { var d = n.bat && n.ky === 'luc' ? evDate(n.d) : null; return t + (d && d >= now && d <= toi ? +n.so || 0 : 0); }, 0);
+  }
   function kcSo(t) { var m = String(t || '').match(/\d{1,3}(?:[.,]\d{3})+|\d+/g); return m ? Math.max.apply(null, m.map(function (x) { return +x.replace(/[.,]/g, ''); })) : 0; }
   function kcSapToi(now) {
     var byName = {}; (EV.list || []).forEach(function (e) { if (e.cost) byName[e.name] = e.cost; });
@@ -1499,16 +1537,18 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   function kcHtml(now) {
     var ngay = kcMoiNgay(), sap = kcSapToi(now);
     var muc = KC.muc.map(function (m, i) { return { i: i, ten: m.ten, d: evDate(m.ngay), ngay: m.ngay, kc: +m.kc || 0 }; }).filter(function (m) { return m.d; }).sort(function (a, b) { return a.d - b.d; });
-    var conLai = +KC.co || 0, truoc = now, kq = muc.map(function (m) {
-      var so = Math.max(0, Math.round((m.d - truoc) / DAY)); conLai += ngay * so; truoc = m.d < truoc ? truoc : m.d;
+    var daChi = 0, kq = muc.map(function (m) {
+      var conLai = (+KC.co || 0) + kcSan() + ngay * Math.max(0, Math.round((m.d - now) / DAY)) + kcLuc(now, m.d) - daChi;
       var du = conLai >= m.kc, thieu = m.kc - conLai, r = { m: m, coLuc: Math.floor(conLai), du: du, thieu: Math.ceil(thieu), them: ngay > 0 && !du ? Math.ceil(thieu / ngay) : 0 };
-      if (du) conLai -= m.kc; return r;
+      if (du) daChi += m.kc; return r;
     });
     var nguon = KC.nguon.map(function (n, i) {
       return '<div class="kcng"><label class="check"><input type="checkbox" data-kcbat="' + i + '"' + (n.bat ? ' checked' : '') + '></label>' +
         '<input type="text" data-kcten="' + i + '" value="' + esc(n.ten) + '" aria-label="Tên nguồn">' +
         '<input type="number" min="0" inputmode="numeric" data-kcso="' + i + '" value="' + (+n.so || '') + '" placeholder="0" aria-label="Số KC">' +
         '<select data-kcky="' + i + '" aria-label="Chu kỳ">' + Object.keys(KC_KY).map(function (k) { return '<option value="' + k + '"' + (n.ky === k ? ' selected' : '') + '>' + KC_KY[k][0] + '</option>'; }).join('') + '</select>' +
+        (n.ky === 'moi' ? '<label class="kcphu">cứ <input type="number" min="1" inputmode="numeric" data-kcn="' + i + '" value="' + (+n.n || '') + '" placeholder="vd 14"> ngày nhận 1 lần</label>' : '') +
+        (n.ky === 'luc' ? '<label class="kcphu">nhận vào ngày <input type="text" inputmode="numeric" data-ngay maxlength="10" data-kcd="' + i + '" value="' + esc(n.d || '') + '" placeholder="vd 20/12/2026"></label>' : '') +
         '<button type="button" class="kcx" data-kcxoang="' + i + '" aria-label="Xóa nguồn">✕</button></div>';
     }).join('');
     return '<div class="kcwrap">' +
@@ -1516,7 +1556,9 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
         '<label class="field"><span>KC đang có</span><input type="number" min="0" inputmode="numeric" id="kcCo" value="' + (+KC.co || '') + '" placeholder="vd 12000"></label>' +
         '<p class="lbl" style="margin:14px 0 6px">KC kiếm được (bỏ tick nguồn bạn không có)</p>' + nguon +
         '<button type="button" class="btn ghost" id="kcThemNguon" style="margin-top:6px">＋ Thêm nguồn</button>' +
-        '<div class="kcsum">≈ <b class="num">' + fmt(ngay) + '</b> KC mỗi ngày · <b class="num">' + fmt(ngay * 30) + '</b> KC mỗi tháng</div></div>' +
+        '<div class="kcsum">≈ <b class="num">' + fmt(ngay) + '</b> KC mỗi ngày · <b class="num">' + fmt(ngay * 30) + '</b> KC mỗi tháng' +
+          (kcSan() ? '<br>＋ <b class="num">' + fmt(kcSan()) + '</b> KC tích sẵn' : '') +
+          (kcLuc(now, new Date(8.64e15)) ? '<br>＋ <b class="num">' + fmt(kcLuc(now, new Date(8.64e15))) + '</b> KC sẽ nhận theo ngày đã ghi' : '') + '</div></div>' +
       '<div class="panel kccol"><h2 class="sec">2. Sự kiện muốn để dành</h2>' +
         (muc.length ? '' : '<p class="muted small" style="margin:0 0 10px">Thêm sự kiện bạn muốn lấy, web tính xem tới ngày đó bạn có đủ KC không.</p>') +
         '<div class="kcmuc">' + kq.map(function (r) {
@@ -1535,7 +1577,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   var DD = null, ddTai = false, DD_TXT = null;
   function ddNap() {
     if (DD || ddTai) return; ddTai = true;
-    (DD_TXT != null ? Promise.resolve(DD_TXT) : fetch('du-doan.txt?v=' + BAN + (document.body.classList.contains('admin-mode') ? '&t=' + Date.now() : '')).then(function (r) { return r.ok ? r.text() : ''; })).then(function (t) {
+    (DD_TXT != null ? Promise.resolve(DD_TXT) : document.body.classList.contains('admin-mode') ? docMoi('du-doan.txt') : fetch('du-doan.txt?v=' + BAN).then(function (r) { return r.ok ? r.text() : ''; })).then(function (t) {
       DD = t.split(/\r?\n/).filter(function (l) { return l.trim() && l[0] !== '#'; }).map(function (l) {
         var c = l.split('|').map(function (x) { return x.trim(); });
         var moc = (c[5] || '').split(';').map(function (x) { var p = x.split('='); return p.length === 2 && +p[1] ? { ten: p[0].trim(), kc: +p[1] } : null; }).filter(Boolean);
@@ -1630,6 +1672,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     else if (d.kcso !== undefined) KC.nguon[+d.kcso].so = +t.value || 0;
     else if (d.kcten !== undefined) KC.nguon[+d.kcten].ten = t.value.trim() || 'Nguồn';
     else if (d.kcky !== undefined) KC.nguon[+d.kcky].ky = t.value;
+    else if (d.kcn !== undefined) KC.nguon[+d.kcn].n = Math.max(1, +t.value || 0);
+    else if (d.kcd !== undefined) { var dm = evDMY(t.value); if (!dm && t.value.trim()) { toast('Ngày ghi dạng ngày/tháng/năm, vd 20/12/2026'); return; } KC.nguon[+d.kcd].d = dm; }
     else if (d.kcbat !== undefined) KC.nguon[+d.kcbat].bat = t.checked;
     else return;
     kcLuu(); kcVe();
@@ -1863,10 +1907,28 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     return ghMotLan('su-kien.txt', function (t) { return efInsert(t, line); }, anh, msg, tries);
   }
   /* Sửa (line) hoặc xóa (line = null) đúng dòng cũ trong su-kien.txt */
+  /* Tìm đúng dòng cần sửa: khớp nguyên dòng; lệch (vd bản cũ trong bộ nhớ đệm) thì tìm theo tên + ngày, chỉ nhận khi ra đúng 1 dòng */
+  function timDong(ls, raw) {
+    var i = ls.findIndex(function (l) { return l.trim() === raw.trim(); }); if (i >= 0) return i;
+    var c = raw.split('|').map(function (x) { return x.trim(); }), ten = (c[0] || '').toLowerCase(), ngay = c[2] || '';
+    var ds = function (cungNgay) { var o = []; ls.forEach(function (l, k) { if (!l.trim() || l.trim()[0] === '#') return; var d = l.split('|').map(function (x) { return x.trim(); }); if ((d[0] || '').toLowerCase() === ten && (!cungNgay || (d[2] || '') === ngay)) o.push(k); }); return o; };
+    var a = ds(true); if (a.length === 1) return a[0];
+    var b = ds(false); return b.length === 1 ? b[0] : -1;
+  }
+  /* Admin đọc file thẳng từ GitHub (bản mới nhất); bản web công khai bị GitHub giữ trong bộ nhớ đệm ~10 phút sau mỗi lần lưu */
+  function docMoi(path) {
+    var tep = function () { return fetch(path + '?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : ''; }); };
+    if (!LS.get('ghtok', '') || !document.body.classList.contains('admin-mode')) return tep();
+    return fetch('https://api.github.com/repos/' + GH_REPO + '/contents/' + path + '?ref=' + GH_BRANCH + '&t=' + Date.now(), { cache: 'no-store', headers: { Authorization: 'Bearer ' + LS.get('ghtok', ''), Accept: 'application/vnd.github.raw' } })
+      .then(function (r) {
+        if (!r.ok) throw r.status;
+        return /json/.test(r.headers.get('content-type') || '') ? r.json().then(function (j) { if (typeof j.content !== 'string') throw 0; return unb64Text(j.content); }) : r.text();
+      }).catch(tep);
+  }
   function efPutSua(raw, line, msg, tries, anh) {
     return ghMotLan('su-kien.txt', function (t) {
-      var ls = t.split('\n'), i = ls.findIndex(function (l) { return l.trim() === raw.trim(); });
-      if (i < 0) { var e = new Error('Dòng này đã bị đổi ở nơi khác. Bạn tải lại trang rồi sửa lại nhé.'); e.status = 0; throw e; }
+      var ls = t.split('\n'), i = timDong(ls, raw);
+      if (i < 0) { var e = new Error('Không tìm thấy sự kiện này trong file (có thể đã bị xóa hoặc trùng tên). Bạn tải lại trang rồi sửa lại nhé.'); e.status = 0; throw e; }
       if (line === null) ls.splice(i, 1); else ls[i] = line;
       return ls.join('\n');
     }, anh, msg, tries);
@@ -1990,7 +2052,11 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     });
   }
   function adLoadFb() {
-    return AD.sb.from('feedback').select('id,created_at,name,message,page,seen').order('created_at', { ascending: false }).limit(300).then(function (r) {
+    var lay = function (cot) { return AD.sb.from('feedback').select(cot).order('created_at', { ascending: false }).limit(300); };
+    return lay('id,created_at,name,message,page,seen,da_sua,tra_loi,da_sua_luc').then(function (r) {
+      if (r.error) { AD.fbCu = true; return lay('id,created_at,name,message,page,seen'); } /* Supabase chưa thêm cột "đã sửa" */
+      AD.fbCu = false; return r;
+    }).then(function (r) {
       if (r.error) throw r.error;
       AD.fb = r.data || []; adRender();
     }).catch(adFail);
@@ -2021,7 +2087,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   /* Tab "Thêm sự kiện" trong admin: dùng lại khung soạn sự kiện; cần danh sách sự kiện để gợi ý tên */
   function adSuKien() {
     var ok = !!(AD.user && AD.admin);
-    if (ok && !EV.list) { fetch('su-kien.txt', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.text() : ''; }).then(function (t) { if (t) { EV.list = parseEvents(t); adRender(); } }); }
+    if (ok && !EV.list) { docMoi('su-kien.txt').then(function (t) { if (t) { EV.list = parseEvents(t); adRender(); } }); }
     if (AD.tab !== 'ds-su-kien' && EF.edit) efThoiSua(true);
     var on = ok && (AD.tab === 'su-kien' || (AD.tab === 'ds-su-kien' && !!EF.edit));
     if (!on) { $('evAddBox').hidden = true; return; }
@@ -2072,14 +2138,15 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     FD.busy = true; tb('Đang lưu…'); document.querySelectorAll('[data-fdlam]').forEach(function (b) { b.disabled = true; });
     var msg = (lam === 'xoa' ? 'Xóa ' : lam === 'an' ? 'Ẩn ' : 'Hiện lại ') + raws.length + ' sự kiện sắp ra mắt';
     ghMotLan('du-doan.txt', function (t) {
-      var ls = t.replace(/\n+$/, '').split('\n'), con = raws.slice();
-      ls = ls.map(function (l) {
-        var k = con.findIndex(function (r) { return r.trim() === l.trim(); }); if (k < 0) return l; con.splice(k, 1);
+      var ls = t.replace(/\n+$/, '').split('\n'), chon = {}, thieu = 0;
+      raws.forEach(function (r) { var k = timDong(ls, r); if (k < 0) thieu++; else chon[k] = 1; });
+      if (thieu) { var er = new Error('Có ' + thieu + ' mục không tìm thấy trong file (có thể đã bị xóa). Bạn tải lại trang rồi làm lại nhé.'); er.status = 0; throw er; }
+      ls = ls.map(function (l, k) {
+        if (!chon[k]) return l;
         if (lam === 'xoa') return null;
         var c = l.split('|').map(function (x) { return x.trim(); }); while (c.length < 11) c.push('');
         c[10] = lam === 'an' ? 'ẩn' : ''; return c.join(' | ').replace(/( \| )+$/, '');
       }).filter(function (l) { return l !== null; });
-      if (con.length) { var er = new Error('Có ' + con.length + ' mục vừa bị đổi ở nơi khác. Bạn tải lại trang rồi làm lại nhé.'); er.status = 0; throw er; }
       return ls.join('\n') + '\n';
     }, [], msg, 4).then(function (txt) {
       FD.chon = {}; FD.xoaLoat = false; FD.busy = false;
@@ -2155,8 +2222,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     return ghMotLan('du-doan.txt', function (t) {
       var ls = t.replace(/\n+$/, '').split('\n');
       if (raw != null) {
-        var i = ls.findIndex(function (l) { return l.trim() === raw.trim(); });
-        if (i < 0) { var er = new Error('Dòng này đã bị đổi ở nơi khác. Bạn tải lại trang rồi sửa lại nhé.'); er.status = 0; throw er; }
+        var i = timDong(ls, raw);
+        if (i < 0) { var er = new Error('Không tìm thấy sự kiện này trong file (có thể đã bị xóa hoặc trùng tên). Bạn tải lại trang rồi sửa lại nhé.'); er.status = 0; throw er; }
         if (line === null) ls.splice(i, 1); else ls[i] = line;
       } else ls.push(line);
       return ls.join('\n') + '\n';
@@ -2321,7 +2388,11 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       '<button type="button" data-fbreload="1">↻ Tải lại</button></div>' +
       (list.length ? '<div class="fblist">' + list.map(function (f) {
         return '<article class="panel fbcard' + (f.seen ? ' seen' : '') + '"><div class="fbhead"><b>' + esc(f.name || '(không ghi tên)') + '</b><span class="muted small">' + adTime(f.created_at) + (f.page ? ' · ' + esc(f.page) : '') + '</span></div>' +
-          '<p class="fbmsg">' + esc(f.message) + '</p><div class="row">' +
+          '<p class="fbmsg">' + esc(f.message) + '</p>' +
+          (AD.fbCu ? '' : f.da_sua ? '<div class="fbsua"><b>✓ Đã báo người gửi</b>' + (f.da_sua_luc ? ' <span class="muted small">' + adTime(f.da_sua_luc) + '</span>' : '') + (f.tra_loi ? '<p>' + esc(f.tra_loi) + '</p>' : '') + '<button type="button" class="linkbtn small" data-fbbosua="' + f.id + '">Bỏ đánh dấu</button></div>'
+            : AD.fbSua === f.id ? '<div class="fbsua"><label class="adlbl" for="fbTraLoi">Trả lời ngắn (người gửi sẽ thấy trên máy của họ)</label><textarea id="fbTraLoi" rows="2" maxlength="500" placeholder="vd: Đã thêm nút lưu cả bộ, bạn thử lại nha 💛"></textarea>' +
+              '<div class="row"><button type="button" class="btn primary" data-fbsualuu="' + f.id + '">Lưu & báo người gửi</button><button type="button" class="btn ghost" data-fbcancel="1">Thôi</button></div></div>' : '') +
+          '<div class="row">' + (AD.fbCu || f.da_sua || AD.fbSua === f.id ? '' : '<button type="button" class="btn" data-fbsua="' + f.id + '">🛠 Đã sửa</button>') +
           '<button type="button" class="btn" data-fbseen="' + f.id + '">' + (f.seen ? 'Đánh dấu chưa xem' : '✓ Đã xem') + '</button>' +
           (AD.del === f.id ? '<span class="small">Xóa góp ý này?</span><button type="button" class="btn danger" data-fbdel2="' + f.id + '">Xóa</button><button type="button" class="btn ghost" data-fbcancel="1">Giữ lại</button>'
             : '<button type="button" class="btn ghost danger" data-fbdel="' + f.id + '">Xóa</button>') + '</div></article>';
@@ -2476,20 +2547,23 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     if (d.fbfilter) { AD.fbAll = d.fbfilter === 'all'; adRender(); return; }
     if (d.fbreload) { $('adBody').innerHTML = '<p class="muted">Đang tải…</p>'; adLoadFb(); return; }
     if (d.fbdel) { AD.del = d.fbdel; adRender(); return; }
-    if (d.fbcancel) { AD.del = null; adRender(); return; }
+    if (d.fbcancel) { AD.del = null; AD.fbSua = null; adRender(); return; }
+    if (d.fbsua) { AD.fbSua = d.fbsua; adRender(); if ($('fbTraLoi')) $('fbTraLoi').focus(); return; }
     var act = null;
     if (d.fbseen) { var f = AD.fb.filter(function (x) { return x.id === d.fbseen; })[0]; if (f) act = AD.sb.from('feedback').update({ seen: !f.seen }).eq('id', f.id); }
     if (d.fbdel2) act = AD.sb.from('feedback').delete().eq('id', d.fbdel2);
+    if (d.fbsualuu) { var tl = ($('fbTraLoi') ? $('fbTraLoi').value : '').trim().slice(0, 500); act = AD.sb.from('feedback').update({ da_sua: true, seen: true, tra_loi: tl || null, da_sua_luc: new Date().toISOString() }).eq('id', d.fbsualuu); }
+    if (d.fbbosua) act = AD.sb.from('feedback').update({ da_sua: false, tra_loi: null, da_sua_luc: null }).eq('id', d.fbbosua);
     if (!act) return;
     AD.busy = true;
-    act.then(function (r) { if (r.error) throw r.error; AD.del = null; return adLoadFb(); })
+    act.then(function (r) { if (r.error) throw r.error; AD.del = null; AD.fbSua = null; if (d.fbsualuu) toast('Đã lưu. Người gửi sẽ thấy lời báo khi mở web (góp ý chuyển sang mục Tất cả).'); return adLoadFb(); })
       .catch(function () { toast('Chưa lưu được, bạn thử lại nhé.'); })
       .then(function () { AD.busy = false; });
   });
 
   /* ================= DỮ LIỆU ĐỒ (du-lieu.json + tinh-diem.js) ================= */
   /* Số bản dữ liệu: đổi mỗi lần cập nhật du-lieu.json / cot-truyen.json để trình duyệt không dùng bản cũ trong bộ nhớ đệm */
-  var BAN = '20261113m';
+  var BAN = '20261114a';
   var KHO = null, TU = null, choDuLieu = [], dangTai = false;
   function moDuLieu(xong) {
     if (KHO) { xong(); return; }
