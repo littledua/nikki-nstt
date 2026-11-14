@@ -212,9 +212,6 @@ body.no-phoido #wardChip { display: none !important; }
 .stchart svg { width: 100%; height: auto; display: block; }
 .stgrid { stroke: var(--line); stroke-width: 1; }
 .stax { fill: var(--muted); font-size: 11px; font-family: inherit; }
-.adtabs { flex-wrap: nowrap; overflow-x: auto; max-width: 100%; scrollbar-width: none; }
-.adtabs::-webkit-scrollbar { display: none; }
-.adtabs button { white-space: nowrap; flex: none; }
 .stbar { fill: var(--accent); }
 .stcol { outline: none; cursor: default; }
 .stcol:hover .stbar, .stcol:focus .stbar { fill: var(--fill-ink); }
@@ -722,14 +719,44 @@ body.admin-mode .book::before { display: none; }
 .adsubmit { font-family: var(--f-display); font-size: 1.02rem; box-shadow: 0 3px 0 color-mix(in srgb, var(--fill) 55%, #000 15%); }
 .adinput input { border-radius: 14px; background: #fff; }
 .adtop { border-bottom: 2px dashed var(--line); padding-top: 26px; }
-.adtabs { background: none !important; border: 0 !important; padding: 0 0 6px !important; gap: 10px !important; overflow: visible; flex-wrap: wrap; }
-.adtabs button { font-family: var(--f-display); font-weight: 700; padding: 9px 16px !important; border-radius: 4px 14px 14px 4px !important; color: var(--ink) !important;
-  box-shadow: 0 2px 0 rgba(0,0,0,.06), 0 6px 14px rgba(60,80,110,.10); transform: rotate(-1.5deg); }
-.adtabs button:nth-child(3n+1) { background: color-mix(in srgb, var(--fill) 45%, #fff) !important; }
-.adtabs button:nth-child(3n+2) { background: var(--tag2) !important; transform: rotate(1.2deg); }
-.adtabs button:nth-child(3n+3) { background: color-mix(in srgb, var(--heart) 20%, #fff) !important; transform: rotate(-.8deg); }
-.adtabs button[aria-selected="true"] { transform: rotate(0) translateY(-3px); outline: 2px solid var(--accent); outline-offset: -2px; }
 .fbcard { border-radius: 18px; }
+/* Admin: cột mục bên trái (điện thoại: hàng ngang cuộn được) */
+.adshell { display: grid; grid-template-columns: 196px minmax(0, 1fr); gap: 24px; align-items: start; }
+.adnav { position: sticky; top: 16px; display: grid; gap: 6px; }
+.adnav button { display: flex; align-items: center; gap: 10px; width: 100%; border: 1px solid transparent; background: none; border-radius: 4px 14px 14px 4px; padding: 10px 12px; font: inherit; font-family: var(--f-display); font-weight: 700; color: var(--ink); cursor: pointer; text-align: left; }
+.adnav button:hover { background: var(--surface); border-color: var(--line); }
+.adnav button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.adnav button[aria-selected="true"] { background: var(--fill); color: var(--fill-ink); box-shadow: 0 3px 0 color-mix(in srgb, var(--fill) 55%, #000 15%); }
+.adnav svg { flex: none; }
+.adcnt { margin-left: auto; min-width: 22px; text-align: center; font: 700 .74rem/1.5 var(--f-body); padding: 0 7px; border-radius: 999px; background: var(--hot); color: #fff; }
+.admain { min-width: 0; }
+.adhead { margin: 2px 0 14px; }
+.adhead h2 { margin: 0; font-family: var(--f-display); font-size: 1.45rem; line-height: 1.2; }
+.adhead p { margin: 4px 0 0; }
+.adseg { margin-top: 0; }
+.adtodo { padding: 12px 16px; }
+.tdrow { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px dashed var(--line); font-size: .92rem; }
+.adtodo .sthd + .tdrow { border-top: 0; }
+.tdrow .t { flex: 1; min-width: 0; }
+.tdrow .btn { flex: none; min-height: 32px; padding: 4px 14px; }
+.tdtag { flex: none; min-width: 78px; text-align: center; font-size: .72rem; font-weight: 700; padding: 2px 9px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+.tdtag.hot { background: var(--hot-soft); color: var(--hot); }
+.tdtag.warn { background: var(--warn-soft); color: var(--warn); }
+.adsets { display: grid; gap: 12px; }
+.adset { padding: 14px 16px; }
+.adset .sthd { margin: 0 0 4px; font-size: 1.05rem; }
+.adset p { margin: 0 0 8px; }
+.adgh { margin: 0; }
+.adfiles { display: grid; gap: 8px; margin-top: 6px; }
+.adfiles > div { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; }
+.efghnote { margin: 10px 0 0; }
+@media (max-width: 860px) {
+  .adshell { grid-template-columns: 1fr; gap: 12px; }
+  .adnav { position: static; display: flex; overflow-x: auto; scrollbar-width: none; gap: 6px; padding-bottom: 4px; }
+  .adnav::-webkit-scrollbar { display: none; }
+  .adnav button { width: auto; flex: none; white-space: nowrap; padding: 8px 12px; }
+}
+@media (max-width: 480px) { .tdrow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 10px; } .tdtag { grid-column: 1 / -1; justify-self: start; min-width: 0; } }
 
 /* ---------- Phối đồ ---------- */
 .pgrid { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 22px; align-items: start; }
@@ -1001,15 +1028,15 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   .kcwrap { grid-template-columns: minmax(0, 1fr); }
   .kcnhap { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .evtop { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-  .evtabs:not(.adtabs) { width: 100%; display: grid; grid-auto-flow: column; grid-auto-columns: auto; justify-content: space-between; gap: 2px; padding: 3px; }
-  .evtabs:not(.adtabs) button { white-space: nowrap; padding: 7px 8px; font-size: .84rem; }
+  .evtabs { width: 100%; display: grid; grid-auto-flow: column; grid-auto-columns: auto; justify-content: space-between; gap: 2px; padding: 3px; }
+  .evtabs button { white-space: nowrap; padding: 7px 8px; font-size: .84rem; }
 }
 @media (max-width: 420px) {
-  .evtabs:not(.adtabs) button { padding: 7px 5px; font-size: .8rem; }
+  .evtabs button { padding: 7px 5px; font-size: .8rem; }
   .evtabs .emo { display: none; }
 }
 @media (max-width: 340px) {
-  .evtabs:not(.adtabs) { grid-auto-flow: row; grid-template-columns: 1fr 1fr; border-radius: 18px; }
+  .evtabs { grid-auto-flow: row; grid-template-columns: 1fr 1fr; border-radius: 18px; }
   .evcard { padding: 8px; border-radius: 14px; }
   .evimg { width: calc(100% + 16px); margin: -8px -8px 2px; border-radius: 14px 14px 0 0; }
   .evcard .t { font-size: .86rem; line-height: 1.3; min-height: 0; }
@@ -1198,17 +1225,19 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
         </div>
       </details>
       <div class="row" style="margin-top:12px;align-items:center"><button type="button" class="btn primary" id="efGo">Lưu sự kiện</button><button type="button" class="btn ghost" id="efCancel">Xóa nội dung</button><button type="button" class="btn ghost" id="efThoi" hidden>← Về danh sách</button><button type="button" class="btn ghost danger" id="efDel" hidden>Xóa sự kiện này</button><span class="small muted" id="efStatus" role="status"></span></div>
+      <p class="small muted efghnote" id="efGhNote"></p>
       <div id="efManual"></div>
-      <details class="efmore" id="efGhBox" style="margin-top:14px">
+    </div>
+    <details class="efmore adgh" id="efGhBox" open hidden>
         <summary id="efGhSum">Kết nối GitHub để lưu thẳng lên web</summary>
         <div class="small" style="margin-top:8px;line-height:1.6">
-          <p style="margin:0 0 6px">Đã kết nối thì bấm Lưu là web tự đưa ảnh vào thư mục <code>ev</code> và thêm dòng vào <code>su-kien.txt</code>. Chưa kết nối thì web soạn sẵn dòng, tải ảnh về máy và chỉ chỗ dán trên GitHub.</p>
+          <p style="margin:0 0 6px">Đã kết nối thì bấm Lưu là web tự đưa ảnh vào thư mục <code>ev</code> và sửa thẳng <code>su-kien.txt</code> và <code>du-doan.txt</code>. Chưa kết nối thì web soạn sẵn dòng, tải ảnh về máy và chỉ chỗ dán trên GitHub.</p>
           <p style="margin:0 0 6px">Cách lấy mã: vào <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub › Fine-grained token</a>. Ở mục <b>Repository access</b> chọn <b>Only select repositories</b> › <b>nikki-nstt</b>. Ở mục <b>Permissions › Contents</b> chọn <b>Read and write</b>. Bấm <b>Generate token</b> rồi chép mã dán vào đây.</p>
           <p style="margin:0 0 8px">Mã chỉ lưu trong trình duyệt này và chỉ gửi tới GitHub. Đừng lưu mã trên máy dùng chung.</p>
           <div class="row"><input id="efTok" type="text" placeholder="github_pat_…" autocomplete="off" spellcheck="false" data-lpignore="true" data-1p-ignore aria-label="Mã GitHub" style="flex:1 1 220px;min-width:0;border:1px solid var(--line);border-radius:10px;padding:7px 10px;font:inherit;background:var(--surface);color:inherit;-webkit-text-security:disc"><button type="button" class="btn" id="efTokSave">Lưu mã</button><button type="button" class="btn ghost" id="efTokDel">Xóa mã</button></div>
+          <p class="small muted" id="efGhSt" role="status" style="margin:8px 0 0"></p>
         </div>
       </details>
-    </div>
   </section>
   </main>
 
@@ -1590,7 +1619,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
           mota: (c[8] || '').split('¶').map(function (x) { return x.trim(); }).filter(Boolean),
           bos: (c[7] || '').split(';;').map(function (x) { var q = x.split('^').map(function (y) { return y.trim(); }); return (q[1] || q[2] || q[3]) ? { loai: q[0] || 'Chính', ten: q[1] || '', gia: q[2] || '', anh: (q[3] || '').replace(/[^\w.-]/g, '') } : null; }).filter(Boolean) };
       });
-      kcVe(); if (document.body.classList.contains('admin-mode') && AD.tab === 'du-doan') adRender();
+      kcVe(); if (document.body.classList.contains('admin-mode') && (AD.tab === 'tong-quan' || AD.tab === 'su-kien')) adRender();
     }).catch(function () { DD = []; kcVe(); });
   }
   var TY_GIA = 4000; /* 1 tệ ≈ 4.000 đ (ước tính, bà dặn) */
@@ -1866,7 +1895,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     $('efNames').innerHTML = Object.keys(names).sort().map(function (n) { return '<option value="' + esc(n) + '">'; }).join('');
     efTokUi();
   }
-  function efTokUi() { var has = !!LS.get('ghtok', ''); $('efGhSum').textContent = has ? 'Đã kết nối GitHub · bấm Lưu là web tự cập nhật' : 'Kết nối GitHub để lưu thẳng lên web'; $('efGo').textContent = EF.edit ? (has ? 'Lưu thay đổi' : 'Soạn sẵn dòng đã sửa') : (has ? 'Lưu sự kiện lên web' : 'Soạn sẵn để dán lên GitHub'); }
+  function efTokUi() { var has = !!LS.get('ghtok', ''); $('efGhSum').textContent = has ? 'Đã kết nối GitHub · bấm Lưu là web tự cập nhật' : 'Kết nối GitHub để lưu thẳng lên web'; $('efGo').textContent = EF.edit ? (has ? 'Lưu thay đổi' : 'Soạn sẵn dòng đã sửa') : (has ? 'Lưu sự kiện lên web' : 'Soạn sẵn để dán lên GitHub');
+    $('efGhNote').innerHTML = has ? 'Đã kết nối GitHub. Đổi mã ở mục <button type="button" class="linkbtn" data-adtab="cai-dat">Cài đặt</button>.' : 'Chưa kết nối GitHub nên web chỉ soạn sẵn dòng. Kết nối ở mục <button type="button" class="linkbtn" data-adtab="cai-dat">Cài đặt</button> để bấm Lưu là xong.'; }
 
   /* GitHub API: đọc / ghi một file trong repo */
   function ghReq(path, method, body) {
@@ -1965,7 +1995,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
         EV.list = parseEvents(txt); EV.q = ''; EV.type = '';
         var st = evDate(evDMY(evVal('efStart')));
         if (st && st > today() || evState({ type: evVal('efType'), start: st, end: evDate(evDMY(evVal('efEnd'))) }, today())) EV.tab = 'now'; else { EV.tab = 'hist'; EV.year = st ? st.getFullYear() : 0; }
-        var daSua = !!EF.edit; if (daSua) efThoiSua(); else { efReset(); efOpen(false); }
+        var daSua = !!EF.edit; if (daSua) efThoiSua(); else { efReset(); AD.efMoi = false; adRender(); }
         renderEvents(); toast((daSua ? 'Đã sửa "' : 'Đã lưu "') + name + '". Web công khai cập nhật sau 1–2 phút.');
       });
     }).catch(function (e) { efStatus(efErr(e), true); }).then(function () { EF.busy = false; $('efGo').disabled = false; });
@@ -1985,11 +2015,11 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     $('efManual').innerHTML = '<div style="margin-top:12px" class="small"><ol style="margin:0 0 8px;padding-left:20px;line-height:1.7">' +
       (im ? '<li>Ảnh đã tải về máy với tên <b>' + esc(img) + '</b>. Mở <a href="https://github.com/' + GH_REPO + '/upload/' + GH_BRANCH + '/ev" target="_blank" rel="noopener">trang tải ảnh vào thư mục ev</a>, kéo ảnh vào rồi bấm <b>Commit changes</b>.</li>' : '') +
       '<li>Dòng bên dưới đã được chép. Mở <a href="https://github.com/' + GH_REPO + '/edit/' + GH_BRANCH + '/su-kien.txt" target="_blank" rel="noopener">trang sửa su-kien.txt</a>, bấm vào dòng trống ngay dưới phần ghi chú (các dòng có dấu #), bấm <b>Ctrl + V</b>, rồi bấm <b>Commit changes</b>.</li></ol>' +
-      '<div class="evline">' + esc(line) + '</div><p class="muted" style="margin:6px 0 0">Kết nối GitHub ở mục bên dưới thì lần sau bấm Lưu là xong, không phải làm tay.</p></div>';
+      '<div class="evline">' + esc(line) + '</div><p class="muted" style="margin:6px 0 0">Kết nối GitHub ở mục Cài đặt thì lần sau bấm Lưu là xong, không phải làm tay.</p></div>';
   }
   $('efCancel').addEventListener('click', function () { efReset(); efStatus('Đã xóa nội dung đang soạn.'); });
   $('efGo').addEventListener('click', efSave);
-  $('efThoi').addEventListener('click', function () { efThoiSua(); });
+  $('efThoi').addEventListener('click', function () { if (EF.edit) efThoiSua(); else { AD.efMoi = false; adRender(); window.scrollTo(0, 0); } });
   $('efDel').addEventListener('click', function () {
     if (!EF.edit || EF.busy) return;
     if (!EF.xoa) { EF.xoa = true; this.textContent = 'Bấm lần nữa để xóa hẳn'; efStatus('Xóa rồi không lấy lại được trên web (vẫn còn trong lịch sử GitHub).', true); return; }
@@ -2014,18 +2044,19 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   });
   $('efTokSave').addEventListener('click', function () {
     var t = $('efTok').value.trim(); if (!t) return toast('Bạn dán mã GitHub vào ô nhé');
-    LS.set('ghtok', t); $('efTok').value = ''; efTokUi(); efStatus('Đang kiểm tra mã…');
-    ghReq('su-kien.txt', 'GET').then(function (f) { if (f.status === 404) throw { status: 404 }; efStatus('Đã kết nối GitHub.'); $('efGhBox').open = false; })
-      .catch(function (e) { efStatus(efErr(e), true); });
+    LS.set('ghtok', t); $('efTok').value = ''; efTokUi(); ghSt('Đang kiểm tra mã…');
+    ghReq('su-kien.txt', 'GET').then(function (f) { if (f.status === 404) throw { status: 404 }; ghSt('Đã kết nối GitHub.'); if (AD.tab === 'cai-dat') adRender(); })
+      .catch(function (e) { ghSt(efErr(e), true); });
   });
-  $('efTokDel').addEventListener('click', function () { LS.set('ghtok', ''); efTokUi(); efStatus('Đã xóa mã GitHub khỏi trình duyệt này.'); });
+  $('efTokDel').addEventListener('click', function () { LS.set('ghtok', ''); efTokUi(); ghSt('Đã xóa mã GitHub khỏi trình duyệt này.'); if (AD.tab === 'cai-dat') adRender(); });
+  function ghSt(t, err) { var x = $('efGhSt'); x.textContent = t || ''; x.style.color = err ? 'var(--warn)' : ''; }
 
   /* ---------- Trang admin (nút "Quản trị" ở cuối trang, …/#admin) ----------
      Supabase: đăng nhập email + mật khẩu. Quyền admin theo bảng admins (supabase/01-gop-y.sql).
      Khóa publishable được phép để công khai: dữ liệu đã khóa bằng luật (RLS) trong Supabase. */
   var SB_URL = 'https://yxlrhuzkgdigoacowsee.supabase.co', SB_KEY = 'sb_publishable_mUagOfOiaQ2AeIYJ3XVIqQ_fYmBXtX1';
   var SB_LIB = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js';
-  var AD = { sb: null, loading: null, user: null, admin: false, fb: null, fbAll: false, del: null, busy: false, tab: 'gop-y', st: null, stErr: false };
+  var AD = { sb: null, loading: null, user: null, admin: false, fb: null, fbAll: false, del: null, busy: false, tab: LS.get('adTab', 'tong-quan'), skSub: 'lich', efMoi: false, st: null, stErr: false, st7: null };
   var AD_MARK = '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/><path d="M12.5 6.5l.7 1.6 1.6.7-1.6.7-.7 1.6-.7-1.6-1.6-.7 1.6-.7z"/></svg>', AD_MAIL = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>', AD_LOCK = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>', AD_EYE = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
   function sbClient() {
     if (AD.sb) return Promise.resolve(AD.sb);
@@ -2066,6 +2097,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   function adTime(t) { var d = new Date(t); return isNaN(d) ? '' : d.toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' }); }
   function adRender() {
     var box = $('adBody');
+    adCat();
     var HOME = '<a class="adhome" href="#su-kien"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Về trang chủ</a>';
     if (!AD.user) {
       box.innerHTML = '<div class="adauth">' + HOME + '<form class="adcard" id="adLogin" novalidate><div class="adlogo">' + AD_MARK + '</div>' +
@@ -2080,20 +2112,100 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       '<div class="adacts"><span class="muted">' + esc(AD.user.email || '') + '</span><button type="button" class="btn ghost" data-adout="1">Đăng xuất</button><a class="btn" href="#su-kien" style="text-decoration:none">← Về trang chủ</a></div></div>';
     if (!AD.admin) { box.innerHTML = who + '<div class="note">Tài khoản này chưa có quyền admin. Bạn thêm email vào bảng <code>admins</code> trong Supabase nhé.</div>'; return; }
     var unseen = AD.fb.filter(function (f) { return !f.seen; }).length;
-    var tab = function (k, label) { return '<button type="button" role="tab" data-adtab="' + k + '" aria-selected="' + (AD.tab === k) + '">' + label + '</button>'; };
-    box.innerHTML = who +
-      '<div class="tabs evtabs adtabs" role="tablist">' + tab('gop-y', 'Góp ý' + (unseen ? ' (' + unseen + ' mới)' : '')) + tab('thong-ke', 'Thống kê') + tab('su-kien', 'Thêm sự kiện') + tab('ds-su-kien', 'Thống kê sự kiện') + tab('du-doan', 'Sắp ra mắt') + '</div>' +
-      (AD.tab === 'du-doan' ? fdHtml() : AD.tab === 'thong-ke' ? stHtml() : AD.tab === 'su-kien' ? '' : AD.tab === 'ds-su-kien' ? (EF.edit ? '' : dsHtml()) : fbHtml(unseen));
+    if (!AD_TAB[AD.tab]) AD.tab = 'tong-quan';
+    var nav = '<nav class="adnav" role="tablist" aria-label="Mục quản trị">' + AD_TABS.map(function (t) {
+      return '<button type="button" role="tab" data-adtab="' + t[0] + '" aria-selected="' + (AD.tab === t[0]) + '">' + t[2] + '<span>' + t[1] + '</span>' + (t[0] === 'gop-y' && unseen ? '<b class="adcnt" aria-label="' + unseen + ' góp ý chưa xem">' + unseen + '</b>' : '') + '</button>';
+    }).join('') + '</nav>';
+    var head = function (h, sub) { return '<div class="adhead"><h2>' + h + '</h2>' + (sub ? '<p class="muted small">' + sub + '</p>' : '') + '</div>'; };
+    var body = AD.tab === 'su-kien' ? head('Sự kiện', 'Lịch đã mở nằm trong su-kien.txt, sắp ra mắt nằm trong du-doan.txt.') + skHtml()
+      : AD.tab === 'gop-y' ? head('Hộp thư', 'Góp ý người chơi gửi từ nút 💬 trên web.') + fbHtml(unseen)
+      : AD.tab === 'thong-ke' ? head('Lượt truy cập') + stHtml()
+      : AD.tab === 'cai-dat' ? head('Cài đặt') + cdHtml()
+      : tqHtml(unseen);
+    box.innerHTML = who + '<div class="adshell">' + nav + '<div class="admain" role="tabpanel">' + body + '</div></div>';
     adSuKien();
+    var sl = $('adGhSlot'); if (sl) { sl.appendChild($('efGhBox')); $('efGhBox').hidden = false; efTokUi(); }
+  }
+  /* Khung form sự kiện và khung GitHub là HTML có sẵn: cất về chỗ cũ trước khi vẽ lại, vẽ xong thì gắn vào đúng tab */
+  function adCat() { var v = $('view-admin'); ['evAddBox', 'efGhBox'].forEach(function (id) { if ($(id).parentNode !== v) v.appendChild($(id)); }); $('efGhBox').hidden = true; }
+  var AD_IC = function (d) { return '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>'; };
+  var AD_TABS = [
+    ['tong-quan', 'Tổng quan', AD_IC('<rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>')],
+    ['su-kien', 'Sự kiện', AD_IC('<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>')],
+    ['gop-y', 'Hộp thư', AD_IC('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>')],
+    ['thong-ke', 'Lượt truy cập', AD_IC('<path d="M4 20V11M10 20V5M16 20v-6M21 20H3"/>')],
+    ['cai-dat', 'Cài đặt', AD_IC('<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>')]
+  ], AD_TAB = {}; AD_TABS.forEach(function (t) { AD_TAB[t[0]] = 1; });
+  /* ---------- Sự kiện: 2 danh sách (lịch đã mở / sắp ra mắt) chung một chỗ ---------- */
+  function skHtml() {
+    var lich = AD.skSub !== 'sap', sub = function (k, l) { return '<button type="button" role="tab" data-adsub="' + k + '" aria-selected="' + (AD.skSub === k) + '">' + l + '</button>'; };
+    var seg = '<div class="tabs evtabs adseg" role="tablist" aria-label="Danh sách sự kiện">' + sub('lich', 'Lịch đã mở' + (EV.list ? ' (' + EV.list.length + ')' : '')) + sub('sap', 'Sắp ra mắt' + (DD ? ' (' + DD.length + ')' : '')) + '</div>';
+    if (!lich) return seg + fdHtml();
+    if (AD.efMoi || EF.edit) return seg + '<div id="adFormSlot"></div>';
+    return seg + '<button type="button" class="btn primary" data-efmoi="1" style="margin-bottom:10px">＋ Thêm sự kiện</button>' + dsHtml();
+  }
+  /* ---------- Tổng quan: số chính + việc cần làm, bấm là tới đúng chỗ đã lọc sẵn ---------- */
+  function tqHtml(unseen) {
+    var now = today(), ev = EV.list, dd = DD, tok = !!LS.get('ghtok', '');
+    if (ev && !AD.st7 && !AD.st7Tai) adLoadSt7();
+    var mo = ev ? ev.filter(function (e) { var st = !e.an && evState(e, now); return st && st.live; }) : [];
+    var sapHien = dd ? dd.filter(function (e) { return !e.an && ddSap(e, now); }).length : null;
+    var tile = function (lbl, so, sub, go) { return '<button type="button" class="sttile dstile" data-adgo="' + go + '"><span class="stlbl">' + lbl + '</span><b class="num">' + so + '</b><span class="stsub">' + sub + '</span></button>'; };
+    var cho = '…';
+    var tiles = '<div class="sttiles st4">' + tile('Góp ý chưa xem', fmt(unseen), unseen ? 'Bấm để đọc' : 'Đã đọc hết', 'gop-y') +
+      tile('Sự kiện đang mở', ev ? fmt(mo.length) : cho, ev ? fmt(ev.length) + ' dòng trong lịch' : 'Đang tải…', 'su-kien:lich:') +
+      tile('Sắp ra mắt đang hiện', sapHien == null ? cho : fmt(sapHien), dd ? dd.length + ' dòng dự đoán' : 'Đang tải…', 'su-kien:sap') +
+      tile('Người xem 7 ngày', AD.st7 ? fmt((AD.st7.tong || {}).u || 0) : cho, AD.st7 ? stSo((AD.st7.tong || {}).u || 0, (AD.st7.tong || {}).u_truoc) : 'Đang tải…', 'thong-ke') + '</div>';
+    var viec = [];
+    var them = function (tag, cls, txt, go, nut) { viec.push('<div class="tdrow"><span class="tdtag ' + cls + '">' + tag + '</span><span class="t">' + txt + '</span><button type="button" class="btn" data-adgo="' + go + '">' + nut + '</button></div>'); };
+    if (unseen) them('Góp ý', 'hot', '<b>' + unseen + '</b> góp ý chưa xem', 'gop-y', 'Đọc');
+    if (!tok) them('GitHub', 'hot', 'Chưa kết nối GitHub trên trình duyệt này, bấm Lưu sẽ chỉ soạn sẵn dòng', 'cai-dat', 'Kết nối');
+    mo.filter(function (e) { return e.end && (e.end - now) / DAY <= 2; }).forEach(function (e) {
+      var con = Math.round((e.end - now) / DAY);
+      them('Sắp đóng', 'warn', esc(e.name) + ' đóng ' + (con <= 0 ? 'hôm nay' : con === 1 ? 'ngày mai' : 'sau ' + con + ' ngày') + ' (' + evFmt(e.end) + ')', 'su-kien:lich:', 'Xem');
+    });
+    if (ev) {
+      var dem = function (f) { return ev.filter(f).length; };
+      var thieu = [['how', 'cách chơi', dem(function (e) { return !e.how; })], ['end', 'ngày đóng', dem(function (e) { return !e.c[3] && !evPerm(e); })], ['anh', 'ảnh', dem(function (e) { return !e.img; })], ['run', 'ghi Ra mắt / Comeback', dem(function (e) { return !e.run; })]];
+      thieu.forEach(function (t) { if (t[2]) them('Thiếu', 'warn', '<b>' + fmt(t[2]) + '</b> sự kiện chưa có ' + t[1], 'su-kien:lich:' + t[0], 'Lọc'); });
+    }
+    if (dd) {
+      var khongLink = dd.filter(function (e) { return !e.link; }).length;
+      if (khongLink) them('Sắp ra mắt', '', '<b>' + khongLink + '</b> dòng dự đoán chưa có link bài đăng', 'su-kien:sap', 'Xem');
+    }
+    var xong = ev && dd ? '<p class="muted small" style="margin:6px 0">Không còn việc gì. 🎉</p>' : '<p class="muted small" style="margin:6px 0">Đang tải dữ liệu…</p>';
+    return '<div class="adhead"><h2>Tổng quan</h2><p class="muted small">Hôm nay ' + evFmt(now) + '. Bấm một dòng để tới đúng chỗ, danh sách đã lọc sẵn.</p></div>' + tiles +
+      '<div class="panel adtodo"><b class="sthd">Việc cần làm</b>' + (viec.join('') || xong) + '</div>';
+  }
+  function adLoadSt7() {
+    AD.st7Tai = true;
+    AD.sb.rpc('thong_ke', { so_ngay: 7 }).then(function (r) { if (r.error) throw r.error; AD.st7 = r.data; if (AD.tab === 'tong-quan') adRender(); })
+      .catch(function () { AD.st7 = { tong: {} }; }).then(function () { AD.st7Tai = false; });
+  }
+  /* ---------- Cài đặt ---------- */
+  function cdHtml() {
+    var gh = function (tep) { return '<a href="https://github.com/' + GH_REPO + '/blob/' + GH_BRANCH + '/' + tep + '" target="_blank" rel="noopener">Mở trên GitHub</a>'; };
+    return '<div class="adsets">' +
+      '<section class="panel adset"><h3 class="sthd">Kết nối GitHub</h3><p class="muted small">Dùng chung cho cả Lịch đã mở và Sắp ra mắt.</p><div id="adGhSlot"></div></section>' +
+      '<section class="panel adset"><h3 class="sthd">Tài khoản</h3><p class="small">Đang đăng nhập: <b>' + esc(AD.user.email || '') + '</b></p>' +
+        '<p class="muted small">Thêm hoặc bỏ người quản trị: hiện vẫn làm trong Supabase (bảng <code>admins</code>).</p>' +
+        '<div class="row"><button type="button" class="btn ghost" data-adout="1">Đăng xuất</button></div></section>' +
+      '<section class="panel adset"><h3 class="sthd">Tệp dữ liệu</h3><div class="adfiles">' +
+        '<div><b>su-kien.txt</b><span class="muted small">' + (EV.list ? fmt(EV.list.length) + ' sự kiện' : '…') + ' · ' + gh('su-kien.txt') + '</span></div>' +
+        '<div><b>du-doan.txt</b><span class="muted small">' + (DD ? fmt(DD.length) + ' dòng dự đoán' : '…') + ' · ' + gh('du-doan.txt') + '</span></div>' +
+        '<div><b>du-lieu.json, cot-truyen.json</b><span class="muted small">Bản dữ liệu ' + esc(BAN) + ' · ' + gh('du-lieu.json') + '</span></div></div></section>' +
+      '</div>';
   }
   /* Tab "Thêm sự kiện" trong admin: dùng lại khung soạn sự kiện; cần danh sách sự kiện để gợi ý tên */
   function adSuKien() {
     var ok = !!(AD.user && AD.admin);
-    if (ok && !EV.list) { docMoi('su-kien.txt').then(function (t) { if (t) { EV.list = parseEvents(t); adRender(); } }); }
-    if (AD.tab !== 'ds-su-kien' && EF.edit) efThoiSua(true);
-    var on = ok && (AD.tab === 'su-kien' || (AD.tab === 'ds-su-kien' && !!EF.edit));
-    if (!on) { $('evAddBox').hidden = true; return; }
-    efOpen(true);
+    if (ok && !EV.list && !AD.evTai) { AD.evTai = true; docMoi('su-kien.txt').then(function (t) { AD.evTai = false; if (t) { EV.list = parseEvents(t); adRender(); } }); }
+    if (ok && !DD && (AD.tab === 'tong-quan' || AD.tab === 'cai-dat' || AD.tab === 'su-kien')) ddNap();
+    var lich = AD.tab === 'su-kien' && AD.skSub !== 'sap';
+    if (!lich && EF.edit) efThoiSua(true);
+    if (!ok || !lich || !(AD.efMoi || EF.edit)) { $('evAddBox').hidden = true; return; }
+    efOpen(true); $('efThoi').hidden = false;
+    var sl = $('adFormSlot'); if (sl) sl.appendChild($('evAddBox'));
   }
   /* Ô ngày: bàn phím số trên điện thoại không có dấu /, nên tự chèn khi gõ (09112027 → 09/11/2027) */
   document.addEventListener('input', function (e) {
@@ -2115,7 +2227,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
         '<div style="flex:1;min-width:0"><b>' + esc(e.ten) + '</b>' + (e.an ? ' <span class="fdtag">Đang ẩn</span>' : '') + '<div class="muted small">' + esc(e.loai) + ' · ' + esc(ddNgay(e)) + (e.tong ? ' · ' + ddKC(e) : '') + (e.bos.length ? ' · ' + e.bos.length + ' bộ' : '') + (e.link ? '' : ' · <span class="dsthieu">chưa có link</span>') + '</div></div>' +
         '<button type="button" class="btn" data-fdsua="' + e.i + '">Sửa</button></div>';
     };
-    return '<div class="note" style="margin-bottom:10px">Các sự kiện này hiện ở mục Sự kiện → tab <b>Sắp ra mắt</b> (và trong 💎 Tích KC). Bấm <b>Sửa</b> để đổi hoặc xóa dòng sai.' + (LS.get('ghtok', '') ? '' : ' <b>Cần kết nối GitHub trước</b> (ở tab Thêm sự kiện, mục Kết nối GitHub).') + '</div>' +
+    return '<div class="note" style="margin-bottom:10px">Các sự kiện này hiện ở trang Sự kiện → tab <b>Sắp ra mắt</b> (và trong 💎 Tích KC). Bấm <b>Sửa</b> để đổi hoặc xóa dòng sai.' + (LS.get('ghtok', '') ? '' : ' <b>Cần kết nối GitHub trước</b> (ở mục <button type="button" class="linkbtn" data-adtab="cai-dat">Cài đặt</button>).') + '</div>' +
       '<button type="button" class="btn primary" id="fdMoi" style="margin-bottom:10px">＋ Thêm sự kiện sắp ra mắt' + ((LS.get('fdNhap', null) || {}).key === 'moi' ? ' (có bản nháp chưa lưu)' : '') + '</button>' +
       fdThanh(ds) +
       '<p class="lbl"><label class="fdtatca"><input type="checkbox" data-fdtatca="sap"' + (sap.length && sap.every(function (e) { return FD.chon[e.raw]; }) ? ' checked' : '') + '> Sắp ra mắt (' + sap.length + ')</label></p><div class="dslist">' + (sap.map(row).join('') || '<p class="muted small">Chưa có.</p>') + '</div>' +
@@ -2544,8 +2656,17 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     var b = e.target.closest('button'); if (!b || AD.busy) return;
     if (b.id === 'adEye') { var pw = $('adPass'), show = pw.type === 'password'; pw.type = show ? 'text' : 'password'; b.setAttribute('aria-pressed', show); b.setAttribute('aria-label', show ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'); return; }
     var d = b.dataset;
-    if (d.adout) { AD.sb.auth.signOut().then(function () { AD.user = null; AD.admin = false; AD.fb = null; AD.st = null; adRender(); }); return; }
-    if (d.adtab) { AD.tab = d.adtab; adRender(); return; }
+    if (d.adout) { AD.sb.auth.signOut().then(function () { AD.user = null; AD.admin = false; AD.fb = null; AD.st = null; AD.st7 = null; adRender(); }); return; }
+    if (d.adtab) { AD.tab = d.adtab; LS.set('adTab', AD.tab); adRender(); window.scrollTo(0, 0); return; }
+    if (d.adsub) { AD.skSub = d.adsub; adRender(); return; }
+    if (d.efmoi) { AD.efMoi = true; adRender(); window.scrollTo(0, 0); if ($('efLink')) $('efLink').focus(); return; }
+    if (d.adgo) { /* "tab:danh sách:lọc thiếu" */
+      var g = d.adgo.split(':'); AD.tab = g[0]; LS.set('adTab', AD.tab);
+      if (g[1]) { AD.skSub = g[1]; AD.efMoi = false; if (EF.edit) efThoiSua(true); }
+      if (g.length > 2) DS = { q: '', type: '', thieu: g[2] };
+      if (g[1] === 'sap') FD.mo = false;
+      adRender(); window.scrollTo(0, 0); return;
+    }
     if (d.streload) { AD.st = null; AD.stErr = false; adRender(); return; }
     if (d.stngay) { AD.stNgay = +d.stngay; AD.stErr = false; adRender(); return; }
     if (d.fbfilter) { AD.fbAll = d.fbfilter === 'all'; adRender(); return; }
