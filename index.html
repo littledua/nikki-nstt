@@ -310,6 +310,8 @@ button.crchip { border: 0; background: none; padding: 0; font: inherit; color: v
 .icard .nm { font-weight: 600; text-align: center; font-size: .92rem; line-height: 1.3; overflow-wrap: anywhere; }
 .icard .attrs { justify-content: center; }
 .icard .own { margin-top: auto; width: 100%; padding: 6px; }
+.icard .own2 { margin-top: auto; display: flex; flex-wrap: wrap; gap: 6px; width: 100%; }
+.icard .own2 .own { margin-top: 0; padding: 6px 4px; flex: 1 1 84px; min-width: 0; }
 .cards .empty { grid-column: 1 / -1; }
 .attrs { display: flex; flex-wrap: wrap; gap: 4px; }
 .attrs span { font-size: .75rem; padding: 1px 7px; border-radius: 6px; background: var(--sunk); white-space: nowrap; }
@@ -2445,7 +2447,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   var ST_TEN = { 'su-kien/sap': 'Sự kiện · Sắp ra mắt', 'su-kien/dang-mo': 'Sự kiện · Đang mở', 'su-kien/lich-su': 'Sự kiện · Lịch sử', 'su-kien/tich-kc': 'Sự kiện · Tích KC',
     'phoi-do/khu-thi-dau': 'Phối đồ · Khu Thi Đấu', 'phoi-do/cot-truyen': 'Phối đồ · Ải cốt truyện', 'tu-do': 'Tủ đồ', 'kho-do': 'Kho đồ', 'bo-da-luu': 'Đã lưu', 'nguon': 'Nguồn',
     'su-kien': 'Sự kiện (trước khi tách tab)', 'phoi-do': 'Phối đồ (trước khi tách loại)' };
-  var ST_BAM = { 'chi-tiet-sap': 'Xem chi tiết sắp ra mắt', 'de-danh': 'Để dành KC', 'them-ca-bo': '+ Thêm cả bộ', 'them-vao-tu': '+ Thêm vào tủ (món lẻ)', 'luu-bo': 'Lưu bộ phối', 'nhap-tu': 'Nhập tủ đồ', 'gop-y': 'Gửi góp ý' };
+  var ST_BAM = { 'chi-tiet-sap': 'Xem chi tiết sắp ra mắt', 'de-danh': 'Để dành KC', 'them-ca-bo': '+ Thêm cả bộ', 'them-vao-tu': '+ Thêm từng món', 'luu-bo': 'Lưu bộ phối', 'nhap-tu': 'Nhập tủ đồ', 'gop-y': 'Gửi góp ý' };
   var ST_NGUON = { facebook: 'Facebook', google: 'Google', zalo: 'Zalo', 'truc-tiep': 'Gõ link / lưu sẵn', khac: 'Trang khác' };
   var ST_TB = { dt: 'Điện thoại', mt: 'Máy tính' };
   function adLoadSt() {
@@ -2565,7 +2567,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 
   /* ================= DỮ LIỆU ĐỒ (du-lieu.json + tinh-diem.js) ================= */
   /* Số bản dữ liệu: đổi mỗi lần cập nhật du-lieu.json / cot-truyen.json để trình duyệt không dùng bản cũ trong bộ nhớ đệm */
-  var BAN = '20261114b';
+  var BAN = '20261114c';
   var KHO = null, TU = null, choDuLieu = [], dangTai = false;
   function moDuLieu(xong) {
     if (KHO) { xong(); return; }
@@ -2822,7 +2824,9 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       '<div class="body"><div class="nm">' + esc(m.ten) + '</div>' + ((KHO.boCua[m.ma] || []).slice(0, 1).map(function (k) { return '<button type="button" class="bolink" data-bo="' + k + '">Bộ ' + esc(KHO.bo[k][0]) + '</button>'; }).join('')) + '<div class="grades">' + cap.slice(0, 3).map(function (x, i) {
         return '<span class="pc' + x[1] + (i < 2 ? ' top' : '') + '">' + esc(KHO.pc[x[1]]) + ' ' + CHU[m.chu.charAt(x[1])] + '</span>';
       }).join('') + '</div>' +
-      (TD.kho ? '<button type="button" class="own" data-co="' + m.ma + '" aria-pressed="' + co + '">' + (co ? '✓ Đã có trong tủ' : KHO.boCua[m.ma] ? '+ Thêm cả bộ' : '+ Thêm vào tủ') + '</button>' : '') + '</div></article>';
+      (TD.kho ? (co || !KHO.boCua[m.ma] ? '<button type="button" class="own" data-co="' + m.ma + '" aria-pressed="' + co + '">' + (co ? '✓ Đã có trong tủ' : '+ Thêm vào tủ') + '</button>'
+        /* món thuộc bộ: lưu riêng món này, hoặc lưu cả bộ (người chơi xin cả hai, 14/11/2026) */
+        : '<div class="own2"><button type="button" class="own" data-co="' + m.ma + '" data-mot="1" aria-pressed="false">+ Món này</button><button type="button" class="own" data-co="' + m.ma + '" aria-pressed="false">+ Cả bộ</button></div>') : '') + '</div></article>';
   }
   function veThe() {
     if (!TD.kho && !TU) { $('tdCards').innerHTML = '<div class="empty" style="grid-column:1/-1"><b>Tủ đồ đang trống</b>Nhập file clothes_date (cách lấy file ở khung bên cạnh) để xem đồ của bạn.</div>'; $('fCount').textContent = ''; $('pInfo').textContent = ''; $('pPrev').disabled = $('pNext').disabled = true; return; }
@@ -2888,6 +2892,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     var ma = +b.dataset.co, s = new Set(TU ? Array.from(TU) : []), bk = (KHO.boCua[ma] || [])[0], bo = bk != null ? KHO.bo[bk] : null;
     if (s.has(ma)) { s.delete(ma); datTu(Array.from(s), true); veChip(); veThe(); return; } /* bỏ: chỉ món này */
     /* thêm: lưu cả bộ chứa món này (người dùng xin: có đủ bộ mà lưu từng món mệt) */
+    if (b.hasAttribute('data-mot')) bo = null; /* chỉ lưu món này */
     var n = 0; (bo ? bo[1] : [ma]).forEach(function (i) { if (!s.has(i)) { s.add(i); n++; } });
     datTu(Array.from(s), true); veChip(); veThe();
     if (bo && n > 1) toast('Đã lưu cả bộ ' + bo[0] + ' (' + n + ' món) vào tủ');
