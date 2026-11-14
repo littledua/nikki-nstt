@@ -21,6 +21,13 @@
 <!-- Xác minh Google Search Console: dán thẻ <meta name="google-site-verification" content="..."> vào dòng dưới -->
 
 <meta name="claude:viewport-fit-sides" content="cover">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="img/icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png">
+<meta name="theme-color" content="#7BBFEC">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Nikki Diary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Nunito:wght@500;600;700;800&display=swap&subset=vietnamese">
@@ -2057,6 +2064,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   var SB_URL = 'https://yxlrhuzkgdigoacowsee.supabase.co', SB_KEY = 'sb_publishable_mUagOfOiaQ2AeIYJ3XVIqQ_fYmBXtX1';
   var SB_LIB = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js';
   var AD = { sb: null, loading: null, user: null, admin: false, fb: null, fbAll: false, del: null, busy: false, tab: LS.get('adTab', 'tong-quan'), skSub: 'lich', efMoi: false, st: null, stErr: false, st7: null };
+  if (/[?&]mo=hop-thu/.test(location.search)) { AD.tab = 'gop-y'; try { history.replaceState(null, '', location.pathname + location.hash); } catch (er) {} } /* bấm thông báo góp ý mới */
   var AD_MARK = '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/><path d="M12.5 6.5l.7 1.6 1.6.7-1.6.7-.7 1.6-.7-1.6-1.6-.7 1.6-.7z"/></svg>', AD_MAIL = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>', AD_LOCK = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>', AD_EYE = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
   function sbClient() {
     if (AD.sb) return Promise.resolve(AD.sb);
@@ -2182,11 +2190,70 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     AD.sb.rpc('thong_ke', { so_ngay: 7 }).then(function (r) { if (r.error) throw r.error; AD.st7 = r.data; if (AD.tab === 'tong-quan') adRender(); })
       .catch(function () { AD.st7 = { tong: {} }; }).then(function () { AD.st7Tai = false; });
   }
+  /* ---------- Thông báo đẩy (góp ý mới) — xem supabase/03-thong-bao.sql và supabase/functions/bao-gop-y ----------
+     iPhone chỉ nhận được khi mở web từ icon ở màn hình chính (iOS 16.4 trở lên). */
+  var TB = { on: null, busy: false, msg: '', loi: false, xet: false };
+  function tbIos() { return /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1); }
+  function tbApp() { return navigator.standalone === true || matchMedia('(display-mode: standalone)').matches; }
+  function tbCo() { return 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window; }
+  function tbXet() { /* xem máy này đã bật chưa */
+    if (TB.xet || !tbCo()) return; TB.xet = true;
+    navigator.serviceWorker.getRegistration().then(function (r) { return r ? r.pushManager.getSubscription() : null; })
+      .then(function (sub) { TB.on = !!sub && Notification.permission === 'granted'; tbVe(); }, function () { TB.on = false; tbVe(); });
+  }
+  function tbHtml() {
+    var msg = TB.msg ? '<p class="small" role="status" style="margin:8px 0 0;color:' + (TB.loi ? 'var(--warn)' : 'var(--accent)') + '">' + esc(TB.msg) + '</p>' : '';
+    if (tbIos() && !tbApp()) return '<div class="note small">iPhone chỉ nhận thông báo khi mở web từ <b>icon ở màn hình chính</b>. Bạn bấm nút Chia sẻ ⎋ của Safari › <b>Thêm vào MH chính</b>, rồi mở web từ icon đó và vào lại mục này. Nếu đã có icon từ trước khi web cập nhật, bạn xóa icon cũ rồi thêm lại.</div>';
+    if (!tbCo()) return '<div class="note small">Trình duyệt này chưa hỗ trợ thông báo. iPhone cần iOS 16.4 trở lên.</div>';
+    if (Notification.permission === 'denied') return '<div class="note small">Máy đang chặn thông báo của web. Vào Cài đặt của máy › Thông báo › Nikki Diary và bật lại, rồi tải lại trang.</div>';
+    tbXet();
+    if (TB.on == null) return '<p class="muted small">Đang kiểm tra…</p>';
+    var nut = TB.on ? '<span class="tdtag" style="min-width:0">Máy này đang bật</span><button type="button" class="btn" data-tbthu="1"' + (TB.busy ? ' disabled' : '') + '>Gửi thử</button><button type="button" class="btn ghost" data-tbtat="1"' + (TB.busy ? ' disabled' : '') + '>Tắt trên máy này</button>'
+      : '<button type="button" class="btn primary" data-tbbat="1"' + (TB.busy ? ' disabled' : '') + '>Bật thông báo trên máy này</button>';
+    return '<div class="row" style="align-items:center">' + nut + '</div>' + msg;
+  }
+  function tbVe(msg, loi) { if (msg !== undefined) { TB.msg = msg; TB.loi = !!loi; } var x = $('tbBox'); if (x) x.innerHTML = tbHtml(); }
+  function tbKhoa(b64) { var s = atob(b64.replace(/-/g, '+').replace(/_/g, '/') + '==='.slice((b64.length + 3) % 4)), a = new Uint8Array(s.length); for (var i = 0; i < s.length; i++) a[i] = s.charCodeAt(i); return a; }
+  function tbGoi(loai) { return AD.sb.functions.invoke('bao-gop-y', { body: { loai: loai } }).then(function (r) { if (r.error) throw r.error; return r.data || {}; }); }
+  function tbBat() {
+    TB.busy = true; tbVe('Đang bật…');
+    /* iPhone: phải hỏi quyền ngay trong lúc bấm nút, trước mọi việc chờ khác */
+    Notification.requestPermission().then(function (q) {
+      if (q !== 'granted') throw { tb: 'Bạn chưa cho phép thông báo. Bấm lại và chọn Cho phép nhé.' };
+      return navigator.serviceWorker.register('sw.js');
+    }).then(function () { return navigator.serviceWorker.ready; }).then(function (reg) {
+      return tbGoi('khoa').then(function (j) {
+        if (!j.khoa) throw { tb: 'Máy chủ chưa sẵn sàng. Bạn kiểm tra đã làm đủ 2 bước Supabase trong supabase/HUONG-DAN-THONG-BAO.md chưa nhé.' };
+        return reg.pushManager.getSubscription().then(function (cu) { return cu || reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: tbKhoa(j.khoa) }); })
+          .catch(function (e) { throw { tb: 'Máy chưa đăng ký nhận thông báo được (' + ((e && e.message) || e) + '). Bạn đóng hẳn app rồi mở lại từ icon và thử lại nhé.' }; });
+      });
+    }).then(function (sub) {
+      var k = sub.toJSON();
+      return AD.sb.from('push_subs').upsert({ endpoint: k.endpoint, p256dh: k.keys.p256dh, auth: k.keys.auth, thiet_bi: (tbIos() ? 'iPhone' : navigator.platform || '') + ' · ' + new Date().toLocaleDateString('vi-VN') }, { onConflict: 'endpoint' })
+        .then(function (r) { if (r.error) throw r.error; });
+    }).then(function () { TB.on = true; TB.busy = false; tbVe('Đã bật. Bấm Gửi thử để xem thông báo về máy.'); })
+      .catch(function (e) { TB.busy = false; tbVe(e && e.tb || 'Chưa bật được (' + ((e && e.message) || e) + '). Bạn kiểm tra đã làm đủ 2 bước Supabase trong supabase/HUONG-DAN-THONG-BAO.md chưa nhé.', true); });
+  }
+  function tbTat() {
+    TB.busy = true; tbVe('Đang tắt…');
+    navigator.serviceWorker.getRegistration().then(function (r) { return r && r.pushManager.getSubscription(); }).then(function (sub) {
+      if (!sub) return;
+      var ep = sub.endpoint;
+      return sub.unsubscribe().then(function () { return AD.sb.from('push_subs').delete().eq('endpoint', ep); });
+    }).then(function () { TB.on = false; TB.busy = false; tbVe('Đã tắt thông báo trên máy này.'); })
+      .catch(function (e) { TB.busy = false; tbVe('Chưa tắt được (' + ((e && e.message) || e) + ').', true); });
+  }
+  function tbThu() {
+    TB.busy = true; tbVe('Đang gửi thử…');
+    tbGoi('thu').then(function (j) { TB.busy = false; tbVe(j.gui ? 'Đã gửi. Thông báo sẽ hiện trong vài giây (khóa màn hình để xem rõ hơn).' : 'Máy chủ không tìm thấy máy nào đã bật. Bạn tắt rồi bật lại thử nhé.', !j.gui); })
+      .catch(function (e) { TB.busy = false; tbVe('Gửi thử chưa được (' + ((e && e.message) || e) + ').', true); });
+  }
   /* ---------- Cài đặt ---------- */
   function cdHtml() {
     var gh = function (tep) { return '<a href="https://github.com/' + GH_REPO + '/blob/' + GH_BRANCH + '/' + tep + '" target="_blank" rel="noopener">Mở trên GitHub</a>'; };
     return '<div class="adsets">' +
       '<section class="panel adset"><h3 class="sthd">Kết nối GitHub</h3><p class="muted small">Dùng chung cho cả Lịch đã mở và Sắp ra mắt.</p><div id="adGhSlot"></div></section>' +
+      '<section class="panel adset"><h3 class="sthd">Thông báo về điện thoại</h3><p class="muted small">Có góp ý mới là máy rung báo, bấm vào thông báo là mở thẳng Hộp thư.</p><div id="tbBox">' + tbHtml() + '</div></section>' +
       '<section class="panel adset"><h3 class="sthd">Tài khoản</h3><p class="small">Đang đăng nhập: <b>' + esc(AD.user.email || '') + '</b></p>' +
         '<p class="muted small">Thêm hoặc bỏ người quản trị: hiện vẫn làm trong Supabase (bảng <code>admins</code>).</p>' +
         '<div class="row"><button type="button" class="btn ghost" data-adout="1">Đăng xuất</button></div></section>' +
@@ -2659,6 +2726,9 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     if (d.adout) { AD.sb.auth.signOut().then(function () { AD.user = null; AD.admin = false; AD.fb = null; AD.st = null; AD.st7 = null; adRender(); }); return; }
     if (d.adtab) { AD.tab = d.adtab; LS.set('adTab', AD.tab); adRender(); window.scrollTo(0, 0); return; }
     if (d.adsub) { AD.skSub = d.adsub; adRender(); return; }
+    if (d.tbbat) { tbBat(); return; }
+    if (d.tbtat) { tbTat(); return; }
+    if (d.tbthu) { tbThu(); return; }
     if (d.efmoi) { AD.efMoi = true; adRender(); window.scrollTo(0, 0); if ($('efLink')) $('efLink').focus(); return; }
     if (d.adgo) { /* "tab:danh sách:lọc thiếu" */
       var g = d.adgo.split(':'); AD.tab = g[0]; LS.set('adTab', AD.tab);
