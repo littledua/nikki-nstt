@@ -1504,7 +1504,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   function parseEvents(txt) {
     return txt.split(/\r?\n/).filter(function (l) { return l.trim() && l.trim()[0] !== '#'; }).map(function (l) {
       var c = l.split('|').map(function (x) { return x.trim(); });
-      var e = { name: c[0] || '', type: (!c[1] || c[1] === 'Khác') ? 'Event lẻ' : c[1], start: evDate(c[2]), end: evDate(c[3]), sets: c[4] || '', how: c[5] || '', news: c[6] || '', link: c[7] || '', run: (c[8] || '').toLowerCase(), img: (c[9] || '').replace(/[^\w.-]/g, ''), cost: c[10] || '', an: /^ẩn$/i.test(c[11] || ''), thuoc: thuocDoc(c[12]), bos: boDoc(c[13]), raw: l, c: c };
+      var e = { name: c[0] || '', type: (!c[1] || c[1] === 'Khác') ? 'Event lẻ' : c[1], start: evDate(c[2]), end: evDate(c[3]), sets: c[4] || '', how: c[5] || '', news: c[6] || '', link: c[7] || '', run: (c[8] || '').toLowerCase(), img: (c[9] || '').replace(/[^\w.-]/g, ''), cost: c[10] || '', an: /^ẩn$/i.test(c[11] || ''), thuoc: thuocDoc(c[12]), bos: boDoc(c[13]), dd: (c[14] || '').replace(/[^\w-]/g, ''), raw: l, c: c };
       /* Sự kiện 100 / 150 ngày chưa ghi ngày đóng: tự tính ngày mở + 100 / 150 ngày (dự kiến) */
       if (EV_DAI[e.type] && e.start && !e.end) { e.end = new Date(e.start.getTime() + (EV_DAI[e.type].ngay - 1) * DAY); e.endGuess = true; }
       return e;
@@ -1545,6 +1545,25 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   }
   /* Comeback y hệt lần ra mắt: dòng nào thiếu cách chơi / chi phí / bộ đồ thì lấy từ dòng cùng tên có ghi */
   function evShared(runs, k) { for (var i = 0; i < runs.length; i++) if (runs[i][k]) return runs[i][k]; return ''; }
+  /* Comeback: các bộ, tổn thất giữ nguyên; chỉ tắt khung top 200 và bộ nạp (bà dặn 14/11/2026) */
+  function ddBoCb(bos) { return bos.filter(function (b) { return b.loai !== 'Khung top' && b.loai !== 'Nạp'; }); }
+  /* Sự kiện chuyển từ Sắp ra mắt: thẻ y hệt thẻ Sắp ra mắt, bấm mở khung chi tiết các bộ */
+  function evSapThe(e, d, k, st, cb, date) {
+    var bos = cb ? ddBoCb(d.bos) : d.bos, dem = {};
+    bos.forEach(function (b) { var x = /^Khung/.test(b.loai) ? 'khung' : 'bộ'; dem[x] = (dem[x] || 0) + 1; });
+    var anh = e.img ? (EV.localImg[e.img] || 'ev/' + e.img) : d.anh ? 'dd/' + d.anh : '';
+    return '<button type="button" class="evcard sapthe' + (st && st.live ? ' now' : '') + '" data-ddxem="' + k + '" data-lich="1"' + (cb ? ' data-cb="1"' : '') + '>' + (anh ? '<img class="evimg" loading="lazy" decoding="async" alt="" src="' + esc(anh) + '" onerror="this.remove()">' : '') +
+      '<span class="t">' + esc(e.name) + '</span><span class="meta"><span class="evtype">' + esc(e.type) + '</span>' + (st ? '<span class="evstate ' + st.cls + '">' + st.txt + '</span>' : '') + (cb ? '<span class="evtype">Comeback</span>' : '') + (ddKC(d) ? '<span class="evcost">' + ddKC(d) + '</span>' : '') + '</span>' +
+      '<span class="d">' + date + '</span>' +
+      ((dem['bộ'] || dem.khung) ? '<span class="muted small">' + [dem['bộ'] && dem['bộ'] + ' bộ', dem.khung && dem.khung + ' khung'].filter(Boolean).join(' · ') + '</span>' : '') + '</button>';
+  }
+  /* Lịch sử: chỉ cần điền lần ra mắt; các lần comeback cùng tên tự dùng mã/thông tin của lần đó (bà dặn 14/11/2026) */
+  function evDD(e, runs) {
+    if (!DD) { ddNap(); return -1; }
+    var ma = e.dd || ((runs || []).filter(function (x) { return x.dd; })[0] || {}).dd, n = e.name.normalize('NFC');
+    for (var k = 0; k < DD.length; k++) if (ma ? DD[k].ma === ma : DD[k].ten.normalize('NFC') === n) return k;
+    return -1;
+  }
   function evCard(e, byName, now) {
     var st = evBadge(e, now), runs = byName[e.name] || [e], h = evHistory(runs), lk = EV.lckg[e.name], isLc = evPerm(e), vq = EV.vcqg[e.name];
     var how = e.how || evShared(runs, 'how'), cost = e.cost || evShared(runs, 'cost'), sets = e.sets || evShared(runs, 'sets');
@@ -1563,7 +1582,9 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     if (lk) cb += '<br><b>Đã vào Linh Cảm Không Gian</b> (' + esc(lk.lc) + ')' + (lk.from ? ' từ ' + evFmt(lk.from) : (lk.news ? ' · ' + esc(lk.news) : '')) + ' · mở vĩnh viễn';
     var date = isLc ? (e.type === 'Vô Cùng Quý Giá' ? 'Mở ở Vô Cùng Quý Giá từ ' + (e.start ? evFmt(e.start) : '(chưa rõ ngày)') : (e.start ? 'Vào Linh Cảm Không Gian từ ' + evFmt(e.start) : 'Đã vào Linh Cảm Không Gian (chưa rõ ngày)'))
       : evFmt(e.start) + ' – ' + (e.end ? evFmt(e.end) + (e.endGuess ? ' (dự kiến)' : '') : 'chưa rõ ngày đóng');
+    var kd = evDD(e, runs); if (kd >= 0) return evSapThe(e.img ? e : Object.assign({}, e, { img: (runs.filter(function (x) { return x.img; })[0] || e).img }), DD[kd], kd, st, isCb, date);
     var key = e.name + '|' + (e.start ? e.start.getTime() : ''), open = EV.more[key], long = how.length > 140;
+    if (!e.img) { var imgCu = (runs.filter(function (x) { return x.img; })[0] || {}).img; if (imgCu) e = Object.assign({}, e, { img: imgCu }); }
     return '<article class="evcard' + (st && st.live ? ' now' : '') + '">' + (e.img ? '<img class="evimg" src="' + esc(EV.localImg[e.img] || 'ev/' + e.img) + '" alt="" loading="lazy" decoding="async" onerror="this.outerHTML=\'<div class=&quot;evimg none&quot;>Chưa có ảnh</div>\'">' : '<div class="evimg none">Chưa có ảnh</div>') +
       '<div class="evbody"><div class="t" title="' + esc(e.name) + '">' + esc(e.name) + '</div>' +
       '<div class="meta"><span class="evtype">' + esc(e.type) + '</span>' + (st ? '<span class="evstate ' + st.cls + '">' + st.txt + '</span>' : '') + (cost ? '<span class="evcost" title="Ước tính cho người chưa chơi lần nào">' + esc(cost) + '</span>' : '') + '</div>' +
@@ -1705,7 +1726,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
           mota: (c[8] || '').split('¶').map(function (x) { return x.trim(); }).filter(Boolean),
           bos: boDoc(c[7]) };
       });
-      kcVe(); if (document.body.classList.contains('admin-mode') && (AD.tab === 'tong-quan' || AD.tab === 'su-kien' || AD.tab === 'thong-ke')) adRender();
+      kcVe(); if (EV.list && EV.tab !== 'kc') try { renderEvents(); } catch (x) {} if (document.body.classList.contains('admin-mode') && (AD.tab === 'tong-quan' || AD.tab === 'su-kien' || AD.tab === 'thong-ke')) adRender();
     }).catch(function () { DD = []; kcVe(); });
   }
   /* Mã cố định của sự kiện (cột 12): thống kê ghi theo mã nên đổi tên không bị tách số liệu. Dòng cũ chưa có mã thì dùng tên. */
@@ -1736,8 +1757,9 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     }).join('') + '</div>' + (con > 0 ? '<button type="button" class="btn ddthem" id="ddThem">Xem thêm ' + con + ' sự kiện</button>' : '');
   }
   /* Khung chi tiết 1 sự kiện dự đoán: banner + các bộ (chính / nạp / phụ) + chọn mốc để dành */
-  function ddXem(i) {
+  function ddXem(i, lich, cb) {
     var e = DD[i]; if (!e) return;
+    if (cb) e = Object.assign({}, e, { bos: ddBoCb(e.bos) });
     var dg = $('ddSheet');
     if (!dg) {
       dg = document.createElement('dialog'); dg.id = 'ddSheet'; dg.className = 'ddsheet'; document.body.appendChild(dg);
@@ -1759,14 +1781,14 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
           '<b>' + esc(b.ten || (/^Khung/.test(b.loai) ? 'Khung avatar' : '')) + '</b>' + (boViTri(b) ? '<span class="small muted">' + esc(boViTri(b)) + '</span>' : '') + (b.gia ? '<span class="small">' + ddGia(b.gia) + '</span>' : '') + '</div>';
       }).join('') + '</div>';
     }).join('');
-    dg.innerHTML = '<div class="ddhead"><div><b>' + esc(e.ten) + '</b><span class="muted small">' + esc(e.loai) + ' · ' + (e.d ? 'dự kiến ' : '') + esc(ddNgay(e)) + '</span>' + (e.thuoc ? '<span class="small">Nhiệm vụ đặc biệt' + (e.thuoc.ky ? ' Kỳ ' + e.thuoc.ky : '') + ' của ' + esc(e.thuoc.ten) + '</span>' : '') + '</div><button type="button" class="ddx" data-ddong aria-label="Đóng">✕</button></div>' +
+    dg.innerHTML = '<div class="ddhead"><div><b>' + esc(e.ten) + '</b><span class="muted small">' + esc(e.loai) + (lich ? '' : ' · ' + (e.d ? 'dự kiến ' : '') + esc(ddNgay(e))) + '</span>' + (e.thuoc ? '<span class="small">Nhiệm vụ đặc biệt' + (e.thuoc.ky ? ' Kỳ ' + e.thuoc.ky : '') + ' của ' + esc(e.thuoc.ten) + '</span>' : '') + '</div><button type="button" class="ddx" data-ddong aria-label="Đóng">✕</button></div>' +
       '<div class="ddbody">' + (e.anh ? '<button type="button" class="ddban" data-ddzoom="dd/' + e.anh + '" aria-label="Xem banner"><img alt="" src="dd/' + e.anh + '"></button>' : '') +
       (e.mota.length ? '<h4 class="ddnhom">Cách chơi / ghi chú</h4><div class="ddmota">' + e.mota.map(function (x) { return '<p>' + esc(x) + '</p>'; }).join('') + '</div>' : '') +
       (dai ? '<div class="evdai ddai">' + daiHtml(e.loai, [], DD.filter(function (x) { return x.thuoc && x.thuoc.ten === e.ten.normalize('NFC'); }).map(function (x) { return { ky: x.thuoc.ky, ten: x.ten, phu: [ddNgay(x), ddKC(x)].filter(Boolean).join(' · ') }; })) + '</div>' : '') +
       (bo || '<p class="muted small">Chưa có danh sách bộ.</p>') +
       (e.link ? '<p style="margin:12px 0 0"><a class="ddlink" href="' + esc(e.link) + '" target="_blank" rel="noopener">Xem bài đăng gốc ↗</a></p>' : '') +
-      '<p class="muted small" style="margin:10px 0 0">Theo bản Trung: tên, giá và ngày ở VN có thể chênh một chút. Giá tiền Việt quy đổi khoảng 1¥ ≈ ' + fmt(TY_GIA) + 'đ.</p></div>' +
-      '<div class="ddfoot">' + (opts.length ? (e.nam ? '<span class="muted small" style="flex-basis:100%">Chưa rõ tháng, tạm tính cuối năm ' + e.nam + '.</span>' : e.thang ? '<span class="muted small" style="flex-basis:100%">Chưa rõ ngày cụ thể, tạm tính từ ' + esc(efISO(e.d)) + '.</span>' : '') + '<select aria-label="Mốc muốn lấy">' + opts.map(function (o) { return '<option value="' + o.kc + '">' + esc(o.ten) + ' · ~' + fmt(o.kc) + ' KC</option>'; }).join('') + '</select><button type="button" class="btn primary" data-ddthem="' + i + '">Để dành</button>' : (!e.d ? '<span class="muted small">Chưa rõ ngày ra nên chưa tính KC để dành được.</span>' : '<span class="muted small">Chưa rõ số KC của sự kiện này.</span>')) + '</div>';
+      (lich ? '' : '<p class="muted small" style="margin:10px 0 0">Theo bản Trung: tên, giá và ngày ở VN có thể chênh một chút. Giá tiền Việt quy đổi khoảng 1¥ ≈ ' + fmt(TY_GIA) + 'đ.</p>') + '</div>' +
+      (lich ? '<div class="ddfoot"><button type="button" class="btn" data-ddong="1">Đóng</button></div>' : '') + (lich ? '' : '<div class="ddfoot">' + (opts.length ? (e.nam ? '<span class="muted small" style="flex-basis:100%">Chưa rõ tháng, tạm tính cuối năm ' + e.nam + '.</span>' : e.thang ? '<span class="muted small" style="flex-basis:100%">Chưa rõ ngày cụ thể, tạm tính từ ' + esc(efISO(e.d)) + '.</span>' : '') + '<select aria-label="Mốc muốn lấy">' + opts.map(function (o) { return '<option value="' + o.kc + '">' + esc(o.ten) + ' · ~' + fmt(o.kc) + ' KC</option>'; }).join('') + '</select><button type="button" class="btn primary" data-ddthem="' + i + '">Để dành</button>' : (!e.d ? '<span class="muted small">Chưa rõ ngày ra nên chưa tính KC để dành được.</span>' : '<span class="muted small">Chưa rõ số KC của sự kiện này.</span>')) + '</div>');
     dg.showModal(); dg.scrollTop = 0;
   }
   function ddZoom(src) {
@@ -1801,7 +1823,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     kcLuu(); kcVe();
   });
   $('evBody').addEventListener('click', function (e) {
-    var xem = e.target.closest('[data-ddxem]'); if (xem) { ddXem(+xem.dataset.ddxem); if (DD[+xem.dataset.ddxem]) track('bam', 'chi-tiet-sap', ddMa(DD[+xem.dataset.ddxem])); return; }
+    var xem = e.target.closest('[data-ddxem]'); if (xem) { ddXem(+xem.dataset.ddxem, !!xem.dataset.lich, !!xem.dataset.cb); if (DD[+xem.dataset.ddxem]) track('bam', 'chi-tiet-sap', ddMa(DD[+xem.dataset.ddxem])); return; }
     if (e.target.closest('#ddThem')) { DD_HIEN += 10; kcVe(); return; }
     var b = e.target.closest('#kcThemNguon,#kcThem,[data-kcxoa],[data-kcxoang],[data-kcsap]'); if (!b) return;
     if (b.id === 'kcThemNguon') KC.nguon.push({ ten: 'Nguồn mới', so: 0, ky: 'ngay', bat: true });
@@ -2000,12 +2022,12 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     efAuto();
   }
   function efLine(img) {
-    return [evVal('efName'), evVal('efType'), evDMY(evVal('efStart')), evDMY(evVal('efEnd')), evVal('efSets'), evVal('efHow'), evVal('efNews'), evVal('efLink'), evVal('efRun'), img || '', evVal('efCost'), $('efHien').checked ? '' : 'ẩn', EV_DAI[evVal('efType')] ? '' : thuocGhi('ef'), efDaiGhi()].join(' | ').replace(/( \| )+$/, '');
+    return [evVal('efName'), evVal('efType'), evDMY(evVal('efStart')), evDMY(evVal('efEnd')), evVal('efSets'), evVal('efHow'), evVal('efNews'), evVal('efLink'), evVal('efRun'), img || '', evVal('efCost'), $('efHien').checked ? '' : 'ẩn', EV_DAI[evVal('efType')] ? '' : thuocGhi('ef'), efDaiGhi(), EF.ddMa || ''].join(' | ').replace(/( \| )+$/, '');
   }
   function efStatus(t, err) { var s = $('efStatus'); s.textContent = t || ''; s.className = 'small ' + (err ? 'err' : 'muted'); }
   function efReset() {
     ['efLink', 'efPost'].concat(EF_FIELDS).forEach(function (k) { if ($(k)) $(k).value = ''; });
-    EF.file = null; EF.touched = {}; EF.bos = []; EF.anhCu = ''; EF.tuDD = null; efThuocVe(null); $('efHien').checked = true; $('efPrev').hidden = true; $('efImgTxt').textContent = 'Bấm để chọn ảnh, kéo thả ảnh vào đây, hoặc dán ảnh (Ctrl + V)';
+    EF.file = null; EF.touched = {}; EF.bos = []; EF.anhCu = ''; EF.tuDD = null; EF.ddMa = ''; efThuocVe(null); $('efHien').checked = true; $('efPrev').hidden = true; $('efImgTxt').textContent = 'Bấm để chọn ảnh, kéo thả ảnh vào đây, hoặc dán ảnh (Ctrl + V)';
     $('efGuess').hidden = true; $('efManual').innerHTML = ''; efStatus('');
   }
   function efOpen(show) {
@@ -2873,7 +2895,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   function fdChuyen(i) {
     var e = DD && DD[i]; if (!e) return;
     if (EF.edit) efThoiSua(true);
-    efReset(); FD.mo = false; AD.skSub = 'lich'; AD.efMoi = true; EF.tuDD = e.raw;
+    efReset(); FD.mo = false; AD.skSub = 'lich'; AD.efMoi = true; EF.tuDD = e.raw; EF.ddMa = e.ma || '';
     adRender();
     var v = { efName: e.ten, efStart: /^\d{1,2}\/\d{1,2}\/\d{4}$/.test(e.ngay) ? e.ngay : (e.thang ? '01/' + e.ngay : ''), efSets: e.bo || e.bos.filter(function (b) { return b.ten; }).map(function (b) { return b.ten; }).join(', '), efHow: e.mota.join(' ') + (e.moc.length ? ' Mốc: ' + e.moc.map(function (m) { return m.ten + ' = ' + fmt(m.kc) + ' KC'; }).join('; ') + '.' : '') + (e.bos.length ? ' Các bộ: ' + e.bos.map(function (b) { return b.loai + (b.ten ? ': ' + b.ten : '') + (b.gia ? ' (' + b.gia + ')' : ''); }).join('; ') + '.' : ''), efCost: ddKC(e), efRun: 'Ra mắt' };
     Object.keys(v).forEach(function (k) { if ($(k)) { $(k).value = v[k] || ''; EF.touched[k] = true; } });
@@ -2895,7 +2917,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   }
   function dsSua(i) {
     var e = EV.list[i]; if (!e) return;
-    efReset(); EF.edit = { raw: e.raw, img: e.img, name: e.name };
+    efReset(); EF.edit = { raw: e.raw, img: e.img, name: e.name }; EF.ddMa = e.dd || '';
     EF.bos = e.bos.map(function (b) { return { loai: b.loai, ten: b.ten, quyen: b.quyen, chang: b.chang }; });
     var c = e.c, iso = function (t) { var d = evDate(t); return d ? efISO(d) : ''; };
     var v = { efName: c[0], efStart: iso(c[2]), efEnd: iso(c[3]), efSets: c[4], efHow: c[5], efNews: c[6], efRun: /^comeback/i.test(c[8] || '') ? 'Comeback' : (/^ra mắt/i.test(c[8] || '') ? 'Ra mắt' : ''), efCost: c[10] };
