@@ -758,6 +758,38 @@ body.admin-mode .book::before { display: none; }
 .adfiles > div { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; }
 .efghnote { margin: 10px 0 0; }
 @media (max-width: 600px) { .dsrow { flex-wrap: wrap; } .dsrow > div { flex: 1 1 60% !important; } .dsrow > div + .btn { margin-left: auto; } }
+.chaokhoi { margin: 0 0 22px; }
+.chaohead { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.chaohead a { color: var(--accent); font-weight: 700; font-size: .9rem; text-decoration: none; }
+.chaohead a:hover { text-decoration: underline; }
+.chaoluoi { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; }
+.chaothe { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; text-decoration: none; color: inherit; transition: transform .15s, box-shadow .15s; }
+.chaothe:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(60,80,110,.12); }
+.chaothe img, .chaothe-trong { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; display: block; background: var(--sunk); }
+.chaothe-trong { display: grid; place-items: center; color: var(--muted); font-weight: 700; font-size: .85rem; }
+.chaothe-chu { padding: 10px 12px 12px; display: grid; gap: 6px; }
+.chaothe-chu b { font-family: var(--f-display); line-height: 1.25; }
+.chaotag { justify-self: start; font-size: .76rem; font-weight: 700; padding: 2px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+.chaotag.gap { background: var(--hot-soft); color: var(--hot); }
+.chaocot { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; align-items: start; }
+.chaosap { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.chaosap a { display: flex; gap: 12px; align-items: center; text-decoration: none; color: inherit; padding: 6px; border-radius: 12px; }
+.chaosap a:hover { background: var(--sunk); }
+.chaosap img { width: 56px; height: 56px; border-radius: 10px; object-fit: cover; flex: none; }
+.chaosap a > span { display: grid; gap: 2px; min-width: 0; }
+.chaolam { display: grid; gap: 8px; }
+.chaolam a { display: flex; gap: 12px; align-items: center; padding: 12px 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); text-decoration: none; color: inherit; }
+.chaolam a:hover { border-color: var(--accent); }
+.chaolam svg { width: 22px; height: 22px; flex: none; color: var(--accent); }
+.chaolam a > span { display: grid; gap: 1px; min-width: 0; }
+.chaolam b { font-family: var(--f-display); }
+.chaogy { text-align: center; margin: 4px 0 0; }
+/* điện thoại: 7 thẻ mục phải vừa màn hình */
+@media (max-width: 860px) and (max-height: 820px) { nav.marks { top: 62px; gap: 4px; } nav.marks a { padding: 6px 0 8px; font-size: .7rem; gap: 4px; } nav.marks a svg { width: 14px; height: 14px; } }
+@media (max-width: 860px) { button.gyfab { right: calc(var(--mark-w) + 12px + env(safe-area-inset-right, 0px)); } }
+@media (max-width: 860px) and (max-height: 620px) { nav.marks a svg { display: none; } nav.marks a { font-size: .66rem; padding: 6px 0; } }
+@media (max-width: 860px) { .chaocot { grid-template-columns: minmax(0, 1fr); } .chaoluoi { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } }
+@media (prefers-reduced-motion: reduce) { .chaothe { transition: none; } .chaothe:hover { transform: none; } }
 .dschon { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; margin: 0 0 8px; }
 .tvgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
 .tvanh { position: relative; margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
@@ -1105,11 +1137,12 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 <div class="book">
   <div class="tape" aria-hidden="true"></div>
   <header class="bhead">
-    <a class="brand" href="#su-kien"><span class="mark"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/><path d="M12.5 6.5l.7 1.6 1.6.7-1.6.7-.7 1.6-.7-1.6-1.6-.7 1.6-.7z"/></svg></span><div><h1>Nikki Diary</h1><small>Sổ tay của người chơi Ngôi Sao Thời Trang</small></div></a>
+    <a class="brand" href="#chao"><span class="mark"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/><path d="M12.5 6.5l.7 1.6 1.6.7-1.6.7-.7 1.6-.7-1.6-1.6-.7 1.6-.7z"/></svg></span><div><h1>Nikki Diary</h1><small>Sổ tay của người chơi Ngôi Sao Thời Trang</small></div></a>
     <span class="chip-status" id="wardChip" hidden></span>
   </header>
 
   <nav class="marks" aria-label="Các mục trong sổ">
+    <a href="#chao" data-view="chao"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11.5 12 5l8 6.5"/><path d="M6 10v9h12v-9"/><path d="M10 19v-5h4v5"/></svg><span>Trang chủ</span></a>
     <a href="#su-kien" data-view="su-kien"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Sự kiện</span></a>
     <a href="#phoi-do" data-view="phoi-do"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg><span>Phối đồ</span></a>
     <a href="#tu-do" data-view="tu-do"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3 4 6l2 4 2-1v12h8V9l2 1 2-4-4-3c0 2-1.8 3-4 3S8 5 8 3z"/></svg><span>Tủ đồ</span></a>
@@ -1121,6 +1154,10 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   <p class="sr" id="live" aria-live="polite"></p>
   <main id="main">
   <!-- LỊCH SỰ KIỆN -->
+  <section class="view" id="view-chao" hidden>
+    <div id="chaoBody"><p class="muted">Đang mở sổ…</p></div>
+  </section>
+
   <section class="view" id="view-su-kien" hidden>
     <div class="phead"><p class="eyebrow">Nhật ký Miraland</p><h2 class="h1">Hôm nay <span class="hl">có sự kiện gì</span>?</h2>
       <p class="lede">Xem sự kiện đang mở hoặc lục lại các năm trước. Tìm kiếm và lọc năm dùng cùng lúc được.</p></div>
@@ -1320,19 +1357,20 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   };
 
   /* ---------- Điều hướng: mỗi mục là một thẻ kẹp ở mép phải cuốn sổ ---------- */
-  var VIEWS = ['su-kien', 'phoi-do', 'tu-do', 'kho-do', 'bo-da-luu', 'nguon', 'admin'];
+  var VIEWS = ['chao', 'su-kien', 'phoi-do', 'tu-do', 'kho-do', 'bo-da-luu', 'nguon', 'admin'];
   var KHUNG = { 'kho-do': 'tu-do' }; /* Kho đồ dùng chung khung với Tủ đồ */
   var CAN_DU_LIEU = { 'phoi-do': 1, 'tu-do': 1, 'kho-do': 1, 'bo-da-luu': 1 };
   function route() {
     var v = (location.hash || '').slice(1);
     if (v === 'gop-y') { gyShow(); history.replaceState(null, '', location.pathname + location.search); v = ''; }
-    if (VIEWS.indexOf(v) < 0) v = 'su-kien';
-    ['su-kien', 'phoi-do', 'tu-do', 'bo-da-luu', 'nguon', 'admin'].forEach(function (x) { $('view-' + x).hidden = x !== (KHUNG[v] || v); });
+    if (VIEWS.indexOf(v) < 0) v = 'chao';
+    ['chao', 'su-kien', 'phoi-do', 'tu-do', 'bo-da-luu', 'nguon', 'admin'].forEach(function (x) { $('view-' + x).hidden = x !== (KHUNG[v] || v); });
     document.querySelectorAll('.marks a').forEach(function (a) {
       if (a.getAttribute('data-view') === v) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
     });
     document.body.classList.toggle('admin-mode', v === 'admin');
     if (v === 'su-kien') loadEvents();
+    if (v === 'chao') { chaoVe(); loadEvents(); ddNap(); }
     if (CAN_DU_LIEU[v]) moDuLieu(function () { veMuc(v); });
     trackView(v);
     if (v === 'admin') adOpen(); else $('evAddBox').hidden = true;
@@ -1596,7 +1634,44 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       (e.type === 'Sự kiện 100 ngày' && !vq && !bosDai.length ? '<div class="muted small">Đồ nhận ở đây là bản đã chế màu. Sau khi kết thúc, bản chưa chế màu mở miễn phí ở Vô Cùng Quý Giá.</div>' : '') +
       '<div class="evcb">' + cb + '</div>' + (/^https?:\/\//.test(e.link) ? '<a href="' + esc(e.link) + '" target="_blank" rel="noopener">' + (/facebook\.com/.test(e.link) ? 'Xem bài đăng ↗' : 'Xem cách chơi ↗') + '</a>' : '') + '</div></article>';
   }
+  /* ---------- Trang chào: mở web là thấy cái này trước ---------- */
+  function chaoVe() {
+    var box = $('chaoBody'); if (!box || $('view-chao').hidden) return;
+    var now = today(), h = new Date().getHours(), buoi = h < 11 ? 'buổi sáng' : h < 13 ? 'buổi trưa' : h < 18 ? 'buổi chiều' : 'buổi tối';
+    var thu = ['Chủ nhật', 'thứ Hai', 'thứ Ba', 'thứ Tư', 'thứ Năm', 'thứ Sáu', 'thứ Bảy'][now.getDay()];
+    var ev = EV.list, dd = DD, icon = function (v) { var x = document.querySelector('.marks a[data-view="' + v + '"] svg'); return x ? x.outerHTML : ''; };
+    var mo = ev ? ev.filter(function (e) { var st = !e.an && evState(e, now); return st && st.live; }).sort(function (a, b) { return (a.end || 9e15) - (b.end || 9e15); }) : null;
+    var sapMo = ev ? ev.filter(function (e) { return !e.an && !evPerm(e) && e.start && e.start > now; }).sort(function (a, b) { return a.start - b.start; }) : [];
+    var du = dd ? dd.filter(function (e) { return !e.an && ddSap(e, now); }).sort(function (a, b) { return (a.d || 9e15) - (b.d || 9e15); }) : null;
+    var the = function (e, st) {
+      var con = e.end ? Math.round((e.end - now) / DAY) : -1;
+      var nhan = st === 'sap' ? 'Mở ' + evFmt(e.start).slice(0, 5) : con < 0 ? 'Đang diễn ra' : con === 0 ? 'Đóng hôm nay' : 'Còn ' + (con + 1) + ' ngày';
+      return '<a class="chaothe" href="#su-kien" data-chaotab="now">' + (e.img ? '<img loading="lazy" alt="" src="' + esc(EV.localImg[e.img] || 'ev/' + e.img) + '" onerror="this.remove()">' : '<span class="chaothe-trong">' + esc(e.type) + '</span>') +
+        '<span class="chaothe-chu"><b>' + esc(e.name) + '</b><span class="chaotag' + (st !== 'sap' && con >= 0 && con <= 2 ? ' gap' : '') + '">' + nhan + '</span></span></a>';
+    };
+    var dang = mo == null ? '<p class="muted">Đang tải sự kiện…</p>' : mo.length || sapMo.length ? '<div class="chaoluoi">' + mo.slice(0, 4).map(function (e) { return the(e); }).concat(sapMo.slice(0, Math.max(0, 4 - mo.length)).map(function (e) { return the(e, 'sap'); })).join('') + '</div>'
+      : '<p class="muted">Hôm nay chưa có sự kiện nào đang mở.</p>';
+    var sap = du == null ? '<p class="muted small">Đang tải…</p>' : du.length ? '<ul class="chaosap">' + du.slice(0, 3).map(function (e) {
+      return '<li><a href="#su-kien" data-chaotab="sap">' + (e.anh ? '<img loading="lazy" alt="" src="dd/' + esc(e.anh) + '" onerror="this.remove()">' : '') + '<span><b>' + esc(e.ten) + '</b><span class="muted small">' + esc(e.loai) + ' · ' + esc(ddNgay(e)) + (e.tong ? ' · ' + ddKC(e) : '') + '</span></span></a></li>';
+    }).join('') + '</ul>' : '<p class="muted small">Chưa có dự đoán mới.</p>';
+    var lam = [['phoi-do', 'Phối đồ', 'Gợi ý bộ điểm cao cho Khu Thi Đấu và ải cốt truyện'], ['tu-do', 'Tủ đồ', 'Nhập file clothes_date để chỉ gợi ý đồ bạn có'], ['kho-do', 'Kho đồ', 'Tra mọi bộ đồ, đánh dấu món đã có'],
+      ['kc', 'Tích kim cương', 'Tính cần để dành bao nhiêu KC cho sự kiện sắp tới'], ['bo-da-luu', 'Bộ đã lưu', 'Mở lại các bộ phối bạn đã lưu']];
+    box.innerHTML = '<div class="phead"><p class="eyebrow">Trang đầu sổ · ' + thu + ', ' + evFmt(now) + '</p><h2 class="h1">Chào ' + buoi + ', <span class="hl">stylist</span>!</h2>' +
+      '<p class="lede">Đây là những gì đang diễn ra ở Miraland hôm nay. Muốn làm gì khác thì chọn ở các thẻ bên dưới hoặc thanh mục bên phải.</p></div>' +
+      '<section class="chaokhoi"><div class="chaohead"><h3 class="sec">Đang diễn ra</h3>' + (mo ? '<a href="#su-kien" data-chaotab="now">Xem lịch sự kiện →</a>' : '') + '</div>' + dang + '</section>' +
+      '<div class="chaocot"><section class="panel chaokhoi"><div class="chaohead"><h3 class="sec">Sắp ra mắt</h3><a href="#su-kien" data-chaotab="sap">Xem hết →</a></div><p class="muted small" style="margin:0 0 8px">Dự đoán theo bản Trung, VN thường ra sau khoảng 1 năm.</p>' + sap + '</section>' +
+      '<section class="chaokhoi"><h3 class="sec">Bạn muốn làm gì?</h3><div class="chaolam">' + lam.map(function (l) {
+        return '<a href="#' + (l[0] === 'kc' ? 'su-kien' : l[0]) + '"' + (l[0] === 'kc' ? ' data-chaotab="kc"' : '') + '>' + icon(l[0] === 'kc' ? 'su-kien' : l[0]) + '<span><b>' + l[1] + '</b><span class="muted small">' + l[2] + '</span></span></a>';
+      }).join('') + '</div></section></div>' +
+      '<p class="muted small chaogy">Thấy thiếu hay sai gì? <button type="button" class="linkbtn" data-chaogy="1">Gửi góp ý</button> cho tụi mình nha.</p>';
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('#chaoBody [data-chaotab], #chaoBody [data-chaogy]'); if (!a) return;
+    if (a.hasAttribute('data-chaogy')) { gyShow(); return; }
+    EV.tab = a.getAttribute('data-chaotab'); if (EV.list) renderEvents();
+  });
   function renderEvents() {
+    chaoVe();
     var now = today(), all = (EV.list || []).filter(function (e) { return !e.an; }), byName = {}; /* dòng bị ẩn trong admin không hiện ra web */
     EV.vcqg = {};
     all.forEach(function (e) {
@@ -1726,7 +1801,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
           mota: (c[8] || '').split('¶').map(function (x) { return x.trim(); }).filter(Boolean),
           bos: boDoc(c[7]) };
       });
-      kcVe(); if (EV.list && EV.tab !== 'kc') try { renderEvents(); } catch (x) {} if (document.body.classList.contains('admin-mode') && (AD.tab === 'tong-quan' || AD.tab === 'su-kien' || AD.tab === 'thong-ke')) adRender();
+      kcVe(); chaoVe(); if (EV.list && EV.tab !== 'kc') try { renderEvents(); } catch (x) {} if (document.body.classList.contains('admin-mode') && (AD.tab === 'tong-quan' || AD.tab === 'su-kien' || AD.tab === 'thong-ke')) adRender();
     }).catch(function () { DD = []; kcVe(); });
   }
   /* Mã cố định của sự kiện (cột 12): thống kê ghi theo mã nên đổi tên không bị tách số liệu. Dòng cũ chưa có mã thì dùng tên. */
@@ -2255,7 +2330,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   function adRender() {
     var box = $('adBody');
     adCat();
-    var HOME = '<a class="adhome" href="#su-kien"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Về trang chủ</a>';
+    var HOME = '<a class="adhome" href="#chao"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Về trang chủ</a>';
     if (!AD.user) {
       box.innerHTML = '<div class="adauth">' + HOME + '<form class="adcard" id="adLogin" novalidate><div class="adlogo">' + AD_MARK + '</div>' +
         '<h2>Admin Login</h2><p class="adsub">Nikki Diary — Trang quản trị</p>' +
@@ -2266,7 +2341,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       return;
     }
     var who = '<div class="adtop"><div class="adbrand"><span class="adlogo">' + AD_MARK + '</span><span>Nikki Diary<small>Trang quản trị</small></span></div>' +
-      '<div class="adacts"><span class="muted">' + esc(AD.user.email || '') + '</span><button type="button" class="btn ghost" data-adout="1">Đăng xuất</button><a class="btn" href="#su-kien" style="text-decoration:none">← Về trang chủ</a></div></div>';
+      '<div class="adacts"><span class="muted">' + esc(AD.user.email || '') + '</span><button type="button" class="btn ghost" data-adout="1">Đăng xuất</button><a class="btn" href="#chao" style="text-decoration:none">← Về trang chủ</a></div></div>';
     if (!AD.admin) { box.innerHTML = who + '<div class="note">Tài khoản này chưa có quyền admin. Bạn thêm email vào bảng <code>admins</code> trong Supabase nhé.</div>'; return; }
     var unseen = AD.fb.filter(function (f) { return !f.seen; }).length;
     if (!AD_TAB[AD.tab]) AD.tab = 'tong-quan';
@@ -2980,7 +3055,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   /* ---------- Thống kê truy cập (bảng page_views + hàm thong_ke trong Supabase, xem supabase/02-thong-ke.sql) ----------
      Mỗi lần mở một tab, web ghi 1 dòng: mã máy ngẫu nhiên (lưu ở trình duyệt, không phải thông tin cá nhân) + tên tab.
      Không ghi khi chạy thử trên máy (localhost) và khi ở trang admin. */
-  var ST_TAB = { 'phoi-do': 1, 'tu-do': 1, 'kho-do': 1, 'bo-da-luu': 1, 'su-kien': 1, 'nguon': 1 };
+  var ST_TAB = { 'chao': 1, 'phoi-do': 1, 'tu-do': 1, 'kho-do': 1, 'bo-da-luu': 1, 'su-kien': 1, 'nguon': 1 };
   var EV_TAB_PATH = { sap: 'sap', now: 'dang-mo', hist: 'lich-su', kc: 'tich-kc' };
   var stGan = {};
   /* Thiết bị (theo bề ngang màn hình) và nguồn vào (lấy 1 lần mỗi phiên từ trang trước đó) — không phải thông tin cá nhân */
@@ -3018,7 +3093,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     else if (v === 'phoi-do') v += '/' + ((typeof PD !== 'undefined' && PD ? PD.loai : LS.get('loai', '')) === 'cot-truyen' ? 'cot-truyen' : 'khu-thi-dau');
     track('xem', v, null);
   }
-  var ST_TEN = { 'su-kien/sap': 'Sự kiện · Sắp ra mắt', 'su-kien/dang-mo': 'Sự kiện · Đang mở', 'su-kien/lich-su': 'Sự kiện · Lịch sử', 'su-kien/tich-kc': 'Sự kiện · Tích KC',
+  var ST_TEN = { 'chao': 'Trang chủ', 'su-kien/sap': 'Sự kiện · Sắp ra mắt', 'su-kien/dang-mo': 'Sự kiện · Đang mở', 'su-kien/lich-su': 'Sự kiện · Lịch sử', 'su-kien/tich-kc': 'Sự kiện · Tích KC',
     'phoi-do/khu-thi-dau': 'Phối đồ · Khu Thi Đấu', 'phoi-do/cot-truyen': 'Phối đồ · Ải cốt truyện', 'tu-do': 'Tủ đồ', 'kho-do': 'Kho đồ', 'bo-da-luu': 'Đã lưu', 'nguon': 'Nguồn',
     'su-kien': 'Sự kiện (trước khi tách tab)', 'phoi-do': 'Phối đồ (trước khi tách loại)' };
   var ST_BAM = { 'chi-tiet-sap': 'Xem chi tiết sắp ra mắt', 'de-danh': 'Để dành KC', 'them-ca-bo': '+ Thêm cả bộ', 'them-vao-tu': '+ Thêm từng món', 'luu-bo': 'Lưu bộ phối', 'nhap-tu': 'Nhập tủ đồ', 'gop-y': 'Gửi góp ý' };
