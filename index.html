@@ -1656,8 +1656,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     }).join('') + '</ul>' : '<p class="muted small">Chưa có dự đoán mới.</p>';
     var lam = [['phoi-do', 'Phối đồ', 'Gợi ý bộ điểm cao cho Khu Thi Đấu và ải cốt truyện'], ['tu-do', 'Tủ đồ', 'Nhập file clothes_date để chỉ gợi ý đồ bạn có'], ['kho-do', 'Kho đồ', 'Tra mọi bộ đồ, đánh dấu món đã có'],
       ['kc', 'Tích kim cương', 'Tính cần để dành bao nhiêu KC cho sự kiện sắp tới'], ['bo-da-luu', 'Bộ đã lưu', 'Mở lại các bộ phối bạn đã lưu']];
-    box.innerHTML = '<div class="phead"><p class="eyebrow">Trang đầu sổ · ' + thu + ', ' + evFmt(now) + '</p><h2 class="h1">Chào ' + buoi + ', <span class="hl">stylist</span>!</h2>' +
-      '<p class="lede">Đây là những gì đang diễn ra ở Miraland hôm nay. Muốn làm gì khác thì chọn ở các thẻ bên dưới hoặc thanh mục bên phải.</p></div>' +
+    box.innerHTML = '<div class="phead"><p class="eyebrow">Chào ' + buoi + ' · ' + thu + ', ' + evFmt(now) + '</p><h2 class="h1">Chào mừng đến với <span class="hl">sổ nhật ký của Nikki</span></h2>' +
+      '<p class="lede">Nơi bạn có thể theo dõi các sự kiện đã, đang và sắp diễn ra trong game Ngôi Sao Thời Trang.</p></div>' +
       '<section class="chaokhoi"><div class="chaohead"><h3 class="sec">Đang diễn ra</h3>' + (mo ? '<a href="#su-kien" data-chaotab="now">Xem lịch sự kiện →</a>' : '') + '</div>' + dang + '</section>' +
       '<div class="chaocot"><section class="panel chaokhoi"><div class="chaohead"><h3 class="sec">Sắp ra mắt</h3><a href="#su-kien" data-chaotab="sap">Xem hết →</a></div><p class="muted small" style="margin:0 0 8px">Dự đoán theo bản Trung, VN thường ra sau khoảng 1 năm.</p>' + sap + '</section>' +
       '<section class="chaokhoi"><h3 class="sec">Bạn muốn làm gì?</h3><div class="chaolam">' + lam.map(function (l) {
