@@ -1672,7 +1672,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     if (!e.img) { var imgCu = (runs.filter(function (x) { return x.img; })[0] || {}).img; if (imgCu) e = Object.assign({}, e, { img: imgCu }); }
     return '<article class="evcard' + (st && st.live ? ' now' : '') + '">' + (e.img ? '<img class="evimg" src="' + esc(EV.localImg[e.img] || 'ev/' + e.img) + '" alt="" loading="lazy" decoding="async" onerror="this.outerHTML=\'<div class=&quot;evimg none&quot;>Chưa có ảnh</div>\'">' : '<div class="evimg none">Chưa có ảnh</div>') +
       '<div class="evbody"><div class="t" title="' + esc(e.name) + '">' + esc(e.name) + '</div>' +
-      '<div class="meta"><span class="evtype">' + esc(e.type) + '</span>' + (st ? '<span class="evstate ' + st.cls + '">' + st.txt + '</span>' : '') + (cost ? '<span class="evcost" title="Ước tính cho người chưa chơi lần nào">' + esc(cost) + '</span>' : '') + '</div>' +
+      '<div class="meta"><span class="evtype">' + esc(e.type) + '</span>' + (st ? '<span class="evstate ' + st.cls + '">' + st.txt + '</span>' : '') + (cost ? '<span class="evcost" title="Ước tính cho người chưa chơi lần nào">' + esc(String(cost).replace(/^~\s*/, 'khoảng ')) + '</span>' : '') + '</div>' +
       '<div class="d">' + date + (e.news ? ' <span class="muted">· ' + (/^Bản /.test(e.news) ? '' : 'Bản tin ') + esc(e.news) + '</span>' : '') + '</div>' +
       '<div class="sets" title="' + esc(sets) + '"><b>Bộ đồ:</b> ' + (sets ? esc(sets) : '<span class="muted">—</span>') + '</div>' +
       (how ? '<div class="how' + (long && !open ? ' clamp' : '') + '">' + esc(how) + '</div>' + (long ? '<button type="button" class="evmore" data-more="' + esc(key) + '">' + (open ? 'Thu gọn ▴' : 'Đọc thêm ▾') + '</button>' : '') : '') +
@@ -1816,18 +1816,18 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
         '<label class="field"><span>KC đang có</span><input type="number" min="0" inputmode="numeric" id="kcCo" value="' + (+KC.co || '') + '" placeholder="vd 12000"></label>' +
         '<p class="lbl" style="margin:14px 0 6px">KC kiếm được (bỏ tick nguồn bạn không có)</p>' + nguon +
         '<button type="button" class="btn ghost" id="kcThemNguon" style="margin-top:6px">＋ Thêm nguồn</button>' +
-        '<div class="kcsum">≈ <b class="num">' + fmt(ngay) + '</b> KC mỗi ngày · <b class="num">' + fmt(ngay * 30) + '</b> KC mỗi tháng' +
+        '<div class="kcsum">Khoảng <b class="num">' + fmt(ngay) + '</b> KC mỗi ngày · <b class="num">' + fmt(ngay * 30) + '</b> KC mỗi tháng' +
           (kcSan() ? '<br>＋ <b class="num">' + fmt(kcSan()) + '</b> KC tích sẵn' : '') +
           (kcLuc(now, new Date(8.64e15)) ? '<br>＋ <b class="num">' + fmt(kcLuc(now, new Date(8.64e15))) + '</b> KC sẽ nhận theo ngày đã ghi' : '') + '</div></div>' +
       '<div class="panel kccol"><h2 class="sec">2. Sự kiện muốn để dành</h2>' +
         (muc.length ? '' : '<p class="muted small" style="margin:0 0 10px">Thêm sự kiện bạn muốn lấy, web tính xem tới ngày đó bạn có đủ KC không.</p>') +
         '<div class="kcmuc">' + kq.map(function (r) {
-          return '<div class="kcrow ' + (r.du ? 'du' : 'thieu') + '"><div class="kcinfo"><b>' + esc(r.m.ten || 'Sự kiện') + '</b><span class="muted small">' + esc(r.m.ngay) + ' · cần <b class="num">' + fmt(r.m.kc) + '</b> KC · lúc đó có ~<b class="num">' + fmt(r.coLuc) + '</b></span>' +
-            '<span class="kckq">' + (r.du ? '✓ Đủ' + (r.coLuc - r.m.kc > 0 ? ', dư ~' + fmt(r.coLuc - r.m.kc) + ' KC' : '') : '✗ Thiếu ~' + fmt(r.thieu) + ' KC' + (r.them ? ' · cần tích thêm ~' + r.them + ' ngày' : '')) + '</span></div>' +
+          return '<div class="kcrow ' + (r.du ? 'du' : 'thieu') + '"><div class="kcinfo"><b>' + esc(r.m.ten || 'Sự kiện') + '</b><span class="muted small">' + esc(r.m.ngay) + ' · cần <b class="num">' + fmt(r.m.kc) + '</b> KC · lúc đó có khoảng <b class="num">' + fmt(Math.max(0, r.coLuc)) + '</b></span>' +
+            '<span class="kckq">' + (r.du ? '✓ Đủ' + (r.coLuc - r.m.kc > 0 ? ', dư khoảng ' + fmt(r.coLuc - r.m.kc) + ' KC' : '') : '✗ Thiếu khoảng ' + fmt(r.thieu) + ' KC' + (r.them ? ' · cần tích thêm khoảng ' + r.them + ' ngày' : '')) + '</span></div>' +
             '<button type="button" class="kcx" data-kcxoa="' + r.m.i + '" aria-label="Bỏ sự kiện này">✕</button></div>';
         }).join('') + '</div>' +
         '<details class="kcadd"' + (muc.length ? '' : ' open') + '><summary>＋ Thêm sự kiện để dành</summary>' +
-          (sap.length ? '<p class="lbl" style="margin:10px 0 6px">Sắp mở trong lịch</p><div class="evyears">' + sap.map(function (e, i) { return '<button type="button" data-kcsap="' + i + '">' + esc(e.ten) + ' · ' + esc(e.ngay) + (e.kc ? ' · ~' + fmt(e.kc) + ' KC' : '') + '</button>'; }).join('') + '</div>' : '') +
+          (sap.length ? '<p class="lbl" style="margin:10px 0 6px">Sắp mở trong lịch</p><div class="evyears">' + sap.map(function (e, i) { return '<button type="button" data-kcsap="' + i + '">' + esc(e.ten) + ' · ' + esc(e.ngay) + (e.kc ? ' · khoảng ' + fmt(e.kc) + ' KC' : '') + '</button>'; }).join('') + '</div>' : '') +
           '<p class="lbl" style="margin:10px 0 6px">Dự đoán theo bản Trung (ra ở VN sau khoảng 1 năm)</p><p class="muted small" style="margin:0 0 6px">Tên, chi phí và gói nạp (nếu có) lấy theo bản Trung. Khi về bản Việt, tên và số tiền có thể chênh một chút, ngày ra mắt cũng có thể lệch vài ngày.</p>' + ddHtml(now) +
           '<p class="lbl" style="margin:12px 0 6px">Hoặc tự nhập</p><div class="kcnhap"><input type="text" id="kcTen" placeholder="Tên sự kiện"><input type="text" id="kcNgay" inputmode="numeric" data-ngay maxlength="10" placeholder="Ngày mở, vd 15/01/2027"><input type="number" min="0" inputmode="numeric" id="kcCan" placeholder="KC cần"><button type="button" class="btn primary" id="kcThem">Thêm</button></div><p class="small" id="kcLoi" style="color:var(--warn);margin:6px 0 0"></p>' +
         '</details>' +
@@ -1863,7 +1863,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   function ddLink(t) { t = String(t || '').trim().replace(/\s+/g, ''); if (!t) return ''; if (!/^https?:\/\//i.test(t)) t = 'https://' + t.replace(/^\/+/, ''); return /^https?:\/\/[^\s"'<>]+$/i.test(t) ? t : ''; }
   /* Ngày dự kiến hiện theo tháng/năm (bà dặn: bản Trung chỉ đoán được tháng) */
   function ddNgay(e) { return e.nam ? 'năm ' + e.nam : (e.d ? 'tháng ' + ('0' + (e.d.getMonth() + 1)).slice(-2) + '/' + e.d.getFullYear() : 'chưa rõ ngày'); }
-  function ddKC(e) { return e.tong ? '~' + (e.tu ? fmt(e.tu) + '–' : '') + fmt(e.tong) + ' KC' : ''; }
+  function ddKC(e) { return e.tong ? 'khoảng ' + (e.tu ? fmt(e.tu) + '–' : '') + fmt(e.tong) + ' KC' : ''; }
   function ddSap(e, now) { return !e.d || e.d > now; }
   function ddHien(e) { return !e.an; } /* dòng bị ẩn trong admin thì không hiện ra web */
   function ddXep(a, b) { return (a.d ? +a.d : 9e15) - (b.d ? +b.d : 9e15); }
@@ -1910,7 +1910,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       (bo || '<p class="muted small">Chưa có danh sách bộ.</p>') +
       (e.link ? '<p style="margin:12px 0 0"><a class="ddlink" href="' + esc(e.link) + '" target="_blank" rel="noopener">Xem bài đăng gốc ↗</a></p>' : '') +
       (lich ? '' : '<p class="muted small" style="margin:10px 0 0">Theo bản Trung: tên, giá và ngày ở VN có thể chênh một chút. Giá tiền Việt quy đổi khoảng 1¥ ≈ ' + fmt(TY_GIA) + 'đ.</p>') + '</div>' +
-      (lich ? '<div class="ddfoot"><button type="button" class="btn" data-ddong="1">Đóng</button></div>' : '') + (lich ? '' : '<div class="ddfoot">' + (opts.length ? (e.nam ? '<span class="muted small" style="flex-basis:100%">Chưa rõ tháng, tạm tính cuối năm ' + e.nam + '.</span>' : e.thang ? '<span class="muted small" style="flex-basis:100%">Chưa rõ ngày cụ thể, tạm tính từ ' + esc(efISO(e.d)) + '.</span>' : '') + '<select aria-label="Mốc muốn lấy">' + opts.map(function (o) { return '<option value="' + o.kc + '">' + esc(o.ten) + ' · ~' + fmt(o.kc) + ' KC</option>'; }).join('') + '</select><button type="button" class="btn primary" data-ddthem="' + i + '">Để dành</button>' : (!e.d ? '<span class="muted small">Chưa rõ ngày ra nên chưa tính KC để dành được.</span>' : '<span class="muted small">Chưa rõ số KC của sự kiện này.</span>')) + '</div>');
+      (lich ? '<div class="ddfoot"><button type="button" class="btn" data-ddong="1">Đóng</button></div>' : '') + (lich ? '' : '<div class="ddfoot">' + (opts.length ? (e.nam ? '<span class="muted small" style="flex-basis:100%">Chưa rõ tháng, tạm tính cuối năm ' + e.nam + '.</span>' : e.thang ? '<span class="muted small" style="flex-basis:100%">Chưa rõ ngày cụ thể, tạm tính từ ' + esc(efISO(e.d)) + '.</span>' : '') + '<select aria-label="Mốc muốn lấy">' + opts.map(function (o) { return '<option value="' + o.kc + '">' + esc(o.ten) + ' · khoảng ' + fmt(o.kc) + ' KC</option>'; }).join('') + '</select><button type="button" class="btn primary" data-ddthem="' + i + '">Để dành</button>' : (!e.d ? '<span class="muted small">Chưa rõ ngày ra nên chưa tính KC để dành được.</span>' : '<span class="muted small">Chưa rõ số KC của sự kiện này.</span>')) + '</div>');
     dg.showModal(); dg.scrollTop = 0;
   }
   function ddZoom(src) {
@@ -3296,7 +3296,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 
   /* ================= DỮ LIỆU ĐỒ (du-lieu.json + tinh-diem.js) ================= */
   /* Số bản dữ liệu: đổi mỗi lần cập nhật du-lieu.json / cot-truyen.json để trình duyệt không dùng bản cũ trong bộ nhớ đệm */
-  var BAN = '20261114e';
+  var BAN = '20261116a';
   var KHO = null, TU = null, choDuLieu = [], dangTai = false;
   function moDuLieu(xong) {
     if (KHO) { xong(); return; }
