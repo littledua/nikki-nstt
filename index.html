@@ -355,6 +355,7 @@ button.crchip { border: 0; background: none; padding: 0; font: inherit; color: v
 .evcount .evscope button { border: 1px solid var(--line); background: var(--surface); color: var(--ink); text-decoration: none; padding: 5px 12px; border-radius: 999px; font-size: .85rem; }
 .evcount .evscope button[aria-pressed="true"] { background: var(--fill); color: var(--fill-ink); border-color: var(--fill); font-weight: 600; }
 .evq input::-webkit-search-cancel-button { display: none; }
+.evlan { font-size: .72rem; font-weight: 700; padding: 1px 9px; border-radius: 999px; background: var(--tag2); color: var(--tag2-ink); }
 .evcost { font-size: .72rem; font-weight: 700; padding: 1px 9px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink); }
 .evstate.hot { background: var(--hot-soft, #FDE4D0); color: var(--hot, #B4500F); }
 .evstate.end { background: var(--sunk); color: var(--muted); }
@@ -1136,7 +1137,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   .evimg { width: calc(100% + 16px); margin: -8px -8px 2px; border-radius: 14px 14px 0 0; }
   .evcard .t { font-size: .86rem; line-height: 1.3; min-height: 0; }
   .evcard .meta { gap: 3px; }
-  .evtype, .evstate, .evcost { font-size: .64rem !important; padding: 1px 6px !important; }
+  .evtype, .evstate, .evcost, .evlan { font-size: .64rem !important; padding: 1px 6px !important; }
   .evcard .d { font-size: .74rem; }
   .evcard .d .muted { display: none; }
   .evcard .sets, .evcard .how { font-size: .74rem; }
@@ -1628,6 +1629,15 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     var firstKnown = !(r[0] && r[0].run.indexOf('comeback') === 0);
     return { first: firstKnown ? r[0].start : null, firstKnown: firstKnown, comebacks: firstKnown ? r.slice(1) : r, last: r.filter(function (x) { return x.start; }).pop() || r[r.length - 1] };
   }
+  /* Lần mở thứ mấy của sự kiện (theo đúng tên): ra mắt = Lần 1, comeback lần k = Lần k+1 (bà dặn 16/11/2026).
+     Dòng sớm nhất ghi Comeback → lần ra mắt nằm trước dữ liệu, nên đếm từ Lần 2. */
+  function evLan(e, runs) {
+    if (evPerm(e) || e.type === 'Túi Phúc' || e.type === 'Đồng Thoại Mộng Ảo' || !e.start) return '';
+    var r = runs.filter(function (x) { return x.start; }).sort(function (a, b) { return a.start - b.start; });
+    var i = r.indexOf(e); if (i < 0) return '';
+    var n = i + 1 + (r[0].run.indexOf('comeback') === 0 ? 1 : 0);
+    return n === 1 ? 'Lần 1 · Ra mắt' : 'Lần ' + n + ' · Comeback lần ' + (n - 1);
+  }
   /* Comeback y hệt lần ra mắt: dòng nào thiếu cách chơi / chi phí / bộ đồ thì lấy từ dòng cùng tên có ghi */
   function evShared(runs, k) { for (var i = 0; i < runs.length; i++) if (runs[i][k]) return runs[i][k]; return ''; }
   /* Comeback: các bộ, tổn thất giữ nguyên; chỉ tắt khung top 200 và bộ nạp (bà dặn 14/11/2026) */
@@ -1638,7 +1648,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     bos.forEach(function (b) { var x = /^Khung/.test(b.loai) ? 'khung' : 'bộ'; dem[x] = (dem[x] || 0) + 1; });
     var anh = e.img ? (EV.localImg[e.img] || 'ev/' + e.img) : d.anh ? 'dd/' + d.anh : '';
     return '<button type="button" class="evcard sapthe' + (st && st.live ? ' now' : '') + '" data-ddxem="' + k + '" data-lich="1"' + (cb ? ' data-cb="1"' : '') + '>' + (anh ? '<img class="evimg" loading="lazy" decoding="async" alt="" src="' + esc(anh) + '" onerror="this.remove()">' : '') +
-      '<span class="t">' + esc(e.name) + '</span><span class="meta"><span class="evtype">' + esc(e.type) + '</span>' + (st ? '<span class="evstate ' + st.cls + '">' + st.txt + '</span>' : '') + (cb ? '<span class="evtype">Comeback</span>' : '') + (ddKC(d) ? '<span class="evcost">' + ddKC(d) + '</span>' : '') + '</span>' +
+      '<span class="t">' + esc(e.name) + '</span><span class="meta"><span class="evtype">' + esc(e.type) + '</span>' + (st ? '<span class="evstate ' + st.cls + '">' + st.txt + '</span>' : '') + (e._lan ? '<span class="evlan">' + e._lan + '</span>' : cb ? '<span class="evtype">Comeback</span>' : '') + (ddKC(d) ? '<span class="evcost">' + ddKC(d) + '</span>' : '') + '</span>' +
       '<span class="d">' + date + '</span>' +
       ((dem['bộ'] || dem.khung) ? '<span class="muted small">' + [dem['bộ'] && dem['bộ'] + ' bộ', dem.khung && dem.khung + ' khung'].filter(Boolean).join(' · ') + '</span>' : '') + '</button>';
   }
@@ -1667,12 +1677,13 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     if (lk) cb += '<br><b>Đã vào Linh Cảm Không Gian</b> (' + esc(lk.lc) + ')' + (lk.from ? ' từ ' + evFmt(lk.from) : (lk.news ? ' · ' + esc(lk.news) : '')) + ' · mở vĩnh viễn';
     var date = isLc ? (e.type === 'Vô Cùng Quý Giá' ? 'Mở ở Vô Cùng Quý Giá từ ' + (e.start ? evFmt(e.start) : '(chưa rõ ngày)') : (e.start ? 'Vào Linh Cảm Không Gian từ ' + evFmt(e.start) : 'Đã vào Linh Cảm Không Gian (chưa rõ ngày)'))
       : evFmt(e.start) + ' – ' + (e.end ? evFmt(e.end) + (e.endGuess ? ' (dự kiến)' : '') : 'chưa rõ ngày đóng');
-    var kd = evDD(e, runs); if (kd >= 0) return evSapThe(e.img ? e : Object.assign({}, e, { img: (runs.filter(function (x) { return x.img; })[0] || e).img }), DD[kd], kd, st, isCb, date);
+    var lan = evLan(e, runs);
+    var kd = evDD(e, runs); if (kd >= 0) return evSapThe(Object.assign({}, e, { _lan: lan }, e.img ? {} : { img: (runs.filter(function (x) { return x.img; })[0] || e).img }), DD[kd], kd, st, isCb, date);
     var key = e.name + '|' + (e.start ? e.start.getTime() : ''), open = EV.more[key], long = how.length > 140;
     if (!e.img) { var imgCu = (runs.filter(function (x) { return x.img; })[0] || {}).img; if (imgCu) e = Object.assign({}, e, { img: imgCu }); }
     return '<article class="evcard' + (st && st.live ? ' now' : '') + '">' + (e.img ? '<img class="evimg" src="' + esc(EV.localImg[e.img] || 'ev/' + e.img) + '" alt="" loading="lazy" decoding="async" onerror="this.outerHTML=\'<div class=&quot;evimg none&quot;>Chưa có ảnh</div>\'">' : '<div class="evimg none">Chưa có ảnh</div>') +
       '<div class="evbody"><div class="t" title="' + esc(e.name) + '">' + esc(e.name) + '</div>' +
-      '<div class="meta"><span class="evtype">' + esc(e.type) + '</span>' + (st ? '<span class="evstate ' + st.cls + '">' + st.txt + '</span>' : '') + (cost ? '<span class="evcost" title="Ước tính cho người chưa chơi lần nào">' + esc(String(cost).replace(/^~\s*/, 'khoảng ')) + '</span>' : '') + '</div>' +
+      '<div class="meta"><span class="evtype">' + esc(e.type) + '</span>' + (lan ? '<span class="evlan">' + lan + '</span>' : '') + (st ? '<span class="evstate ' + st.cls + '">' + st.txt + '</span>' : '') + (cost ? '<span class="evcost" title="Ước tính cho người chưa chơi lần nào">' + esc(String(cost).replace(/^~\s*/, 'khoảng ')) + '</span>' : '') + '</div>' +
       '<div class="d">' + date + (e.news ? ' <span class="muted">· ' + (/^Bản /.test(e.news) ? '' : 'Bản tin ') + esc(e.news) + '</span>' : '') + '</div>' +
       '<div class="sets" title="' + esc(sets) + '"><b>Bộ đồ:</b> ' + (sets ? esc(sets) : '<span class="muted">—</span>') + '</div>' +
       (how ? '<div class="how' + (long && !open ? ' clamp' : '') + '">' + esc(how) + '</div>' + (long ? '<button type="button" class="evmore" data-more="' + esc(key) + '">' + (open ? 'Thu gọn ▴' : 'Đọc thêm ▾') + '</button>' : '') : '') +
@@ -1762,7 +1773,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     html += '<div class="evbar"><select id="evType" aria-label="Loại sự kiện"><option value="">Tất cả loại (' + types.length + ')</option>' +
       types.map(function (t) { return '<option' + (EV.type === t ? ' selected' : '') + '>' + esc(t) + '</option>'; }).join('') + '</select>' +
       '<div class="evq"><input type="search" id="evQ" placeholder="Tìm tên sự kiện hoặc bộ đồ…" value="' + esc(EV.q) + '" aria-label="Tìm sự kiện">' + (EV.q ? '<button type="button" id="evQx" aria-label="Xóa từ khóa">✕</button>' : '') + '</div>' +
-      '<div class="evcount">' + countTxt + ((EV.q || EV.type) ? ' · <button type="button" id="evReset">Xóa bộ lọc</button>' : '') + '</div></div>';
+      '<div class="evcount">' + countTxt + (function () { var nb = shown.filter(function (e) { return e.type === 'Big Event'; }).length; return nb && EV.type !== 'Big Event' ? ' · ' + nb + ' Big Event' : ''; })() + ((EV.q || EV.type) ? ' · <button type="button" id="evReset">Xóa bộ lọc</button>' : '') + '</div></div>';
     if (!hist) html += shown.length ? '<div class="evtop">' + shown.map(function (e) { return evCard(e, byName, now); }).join('') + '</div>' : '<div class="empty"><b>Hiện chưa có sự kiện nào đang mở</b>Bạn xem tab Lịch sử nhé.</div>';
     else {
       var month = '';
@@ -3296,7 +3307,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 
   /* ================= DỮ LIỆU ĐỒ (du-lieu.json + tinh-diem.js) ================= */
   /* Số bản dữ liệu: đổi mỗi lần cập nhật du-lieu.json / cot-truyen.json để trình duyệt không dùng bản cũ trong bộ nhớ đệm */
-  var BAN = '20261116a';
+  var BAN = '20261116b';
   var KHO = null, TU = null, choDuLieu = [], dangTai = false;
   function moDuLieu(xong) {
     if (KHO) { xong(); return; }
