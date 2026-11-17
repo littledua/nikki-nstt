@@ -3852,13 +3852,20 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
         '<li>Nói chuyện lịch sự, không chửi bới, không công kích ai.</li><li>Không đăng thông tin cá nhân (số điện thoại, địa chỉ, mật khẩu, tài khoản game).</li>' +
         '<li>Không quảng cáo, không mua bán tài khoản, không spam.</li><li>Thấy tin xấu thì bấm <b>Báo cáo</b>. 3 người báo cáo thì tin tự ẩn. Chủ web có thể xóa tin và khóa chat ID vi phạm.</li></ul></details>' +
         '<div class="panel chkhung"><div class="chds" id="chDs" role="log" aria-live="polite" aria-label="Tin nhắn"></div><div id="chSoan"></div></div>';
-      ds = $('chDs'); sat = true;
+      ds = $('chDs'); sat = true; CH.htm = null; CH.soanMa = null;
     }
-    ds.innerHTML = chDs();
-    $('chSoan').innerHTML = ST.ma ? '<form id="chForm" class="chsoan"><textarea id="chNhap" rows="2" maxlength="500" placeholder="Nhắn với mọi người… (Enter để gửi, Shift + Enter để xuống dòng)" aria-label="Tin nhắn"></textarea>' +
-        '<button type="submit" class="btn primary"' + (CH.gui ? ' disabled' : '') + '>Gửi</button></form><p class="chtb small" role="status">' + (CH.loi ? '<span style="color:var(--warn)">' + esc(CH.loi) + '</span>' : '<span class="muted">Đang nhắn với tên <b>' + esc(ST.ma) + '</b></span>') + '</p>'
-      : '<div class="chdn"><span class="muted">Đăng nhập <b>Sổ của tôi</b> để nhắn tin.</span><button type="button" class="btn primary" data-ch="dn">Đăng nhập / Mở sổ mới</button></div>';
-    if ($('chNhap')) { $('chNhap').value = nhap; }
+    /* chỉ vẽ lại danh sách khi nội dung đổi; ô gõ tin KHÔNG bao giờ bị thay khi đang đăng nhập (giữ con trỏ và bộ gõ tiếng Việt) */
+    var htm = chDs(); if (htm !== CH.htm) { CH.htm = htm; ds.innerHTML = htm; }
+    var tb = CH.loi ? '<span style="color:var(--warn)">' + esc(CH.loi) + '</span>' : '<span class="muted">Đang nhắn với tên <b>' + esc(ST.ma) + '</b></span>';
+    if (ST.ma && $('chNhap') && CH.soanMa === ST.ma) {
+      $('chGo').disabled = !!CH.gui; if ($('chTb').innerHTML !== tb) $('chTb').innerHTML = tb;
+    } else {
+      CH.soanMa = ST.ma || '';
+      $('chSoan').innerHTML = ST.ma ? '<form id="chForm" class="chsoan"><textarea id="chNhap" rows="2" maxlength="500" placeholder="Nhắn với mọi người… (Enter để gửi, Shift + Enter để xuống dòng)" aria-label="Tin nhắn"></textarea>' +
+          '<button type="submit" class="btn primary" id="chGo"' + (CH.gui ? ' disabled' : '') + '>Gửi</button></form><p class="chtb small" id="chTb" role="status">' + tb + '</p>'
+        : '<div class="chdn"><span class="muted">Đăng nhập <b>Sổ của tôi</b> để nhắn tin.</span><button type="button" class="btn primary" data-ch="dn">Đăng nhập / Mở sổ mới</button></div>';
+      if ($('chNhap')) $('chNhap').value = nhap;
+    }
     if (cuon || sat) ds.scrollTop = ds.scrollHeight;
   }
   function chTai(cu) {
