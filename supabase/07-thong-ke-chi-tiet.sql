@@ -2,6 +2,8 @@
 -- Chạy 1 lần trong Supabase › SQL Editor (dán cả file rồi bấm Run). Chạy lại cũng không sao.
 -- Đọc bảng page_views (đã có), so_tay, chat, chat_bao, feedback. Giờ tính theo giờ Việt Nam.
 -- "Phiên" = một lần vào web: các lượt xem của cùng một máy cách nhau không quá 30 phút.
+-- Trang chủ (path 'chao') là trang tự mở khi vào web nên KHÔNG tính vào lượt xem và các bảng xếp hạng mục;
+-- vẫn dùng để tính phiên và người xem.
 
 create index if not exists page_views_created_at on public.page_views (created_at);
 create index if not exists page_views_visitor on public.page_views (visitor, created_at);
@@ -30,7 +32,8 @@ begin
            case when lag(created_at) over w is null or created_at - lag(created_at) over w > interval '30 minutes' then 1 else 0 end as moi
          from ht where loai = 'xem' window w as (partition by visitor order by created_at)),
   x2 as (select *, sum(moi) over (partition by visitor order by created_at) as so_phien from x1),
-  ph as (select visitor, so_phien, count(*) as luot, max(created_at) - min(created_at) as dai from x2 group by visitor, so_phien),
+  ph as (select visitor, so_phien, count(*) as luot, count(*) filter (where path <> 'chao') as mo, max(created_at) - min(created_at) as dai from x2 group by visitor, so_phien),
+  vao as (select distinct on (visitor, so_phien) path from x2 where path <> 'chao' order by visitor, so_phien, created_at),
   x1t as (select case when lag(created_at) over (partition by visitor order by created_at) is null
                   or created_at - lag(created_at) over (partition by visitor order by created_at) > interval '30 minutes' then 1 else 0 end as moi
           from tr where loai = 'xem'),
@@ -39,31 +42,31 @@ begin
     'tu', p_tu, 'den', p_den, 'so_ngay', p_den - p_tu + 1,
     'tong', jsonb_build_object(
       'u', (select count(distinct visitor) from ht),
-      'v', (select count(*) from ht where loai = 'xem'),
+      'v', (select count(*) from ht where loai = 'xem' and path <> 'chao'),
       'phien', (select count(*) from ph),
       'phut_tb', (select round(coalesce(avg(extract(epoch from dai)) filter (where luot > 1), 0) / 60.0, 1) from ph),
-      'mot_trang', (select count(*) from ph where luot = 1),
+      'chi_chao', (select count(*) from ph where mo = 0),
       'moi', (select count(*) from dau where f >= a),
       'nhieu_ngay', (select count(*) from (select visitor from ht group by visitor having count(distinct l::date) >= 2) q),
       'nhap', (select count(*) from ht where loai = 'bam' and path = 'nhap-tu'),
       'bam', (select count(*) from ht where loai = 'bam'),
       'tim', (select count(*) from ht where loai = 'tim'),
       'u_truoc', (select count(distinct visitor) from tr),
-      'v_truoc', (select count(*) from tr where loai = 'xem'),
+      'v_truoc', (select count(*) from tr where loai = 'xem' and path <> 'chao'),
       'phien_truoc', (select coalesce(sum(moi), 0) from x1t),
       'nhap_truoc', (select count(*) from tr where loai = 'bam' and path = 'nhap-tu')
     ),
     'ngay', (select coalesce(jsonb_agg(jsonb_build_object('d', to_char(n.d, 'YYYY-MM-DD'),
                 'u', coalesce(q.u, 0), 'v', coalesce(q.v, 0), 'moi', coalesce(m.moi, 0)) order by n.d), '[]'::jsonb)
              from ngay n
-             left join (select l::date as d, count(distinct visitor) as u, count(*) filter (where loai = 'xem') as v from ht group by 1) q on q.d = n.d
+             left join (select l::date as d, count(distinct visitor) as u, count(*) filter (where loai = 'xem' and path <> 'chao') as v from ht group by 1) q on q.d = n.d
              left join (select (f at time zone tz)::date as d, count(*) as moi from dau where f >= a group by 1) m on m.d = n.d),
     'gio_thu', (select coalesce(jsonb_agg(jsonb_build_object('t', t, 'h', h, 'v', c)), '[]'::jsonb)
-                from (select (extract(isodow from l)::int - 1) as t, extract(hour from l)::int as h, count(*) as c from ht where loai = 'xem' group by 1, 2) q),
+                from (select (extract(isodow from l)::int - 1) as t, extract(hour from l)::int as h, count(*) as c from ht where loai = 'xem' group by 1, 2) q),  -- giờ vàng: tính mọi lượt vào, kể cả Trang chủ
     'muc', (select coalesce(jsonb_agg(jsonb_build_object('k', path, 'v', c, 'u', u) order by c desc), '[]'::jsonb)
-            from (select path, count(*) as c, count(distinct visitor) as u from ht where loai = 'xem' group by path order by 2 desc limit 30) q),
+            from (select path, count(*) as c, count(distinct visitor) as u from ht where loai = 'xem' and path <> 'chao' group by path order by 2 desc limit 30) q),
     'vao', (select coalesce(jsonb_agg(jsonb_build_object('k', path, 'v', c) order by c desc), '[]'::jsonb)
-            from (select path, count(*) as c from x2 where moi = 1 group by path order by 2 desc limit 15) q),
+            from (select path, count(*) as c from vao group by path order by 2 desc limit 15) q),
     'bam', (select coalesce(jsonb_agg(jsonb_build_object('k', path, 'v', c, 'u', u) order by c desc), '[]'::jsonb)
             from (select path, count(*) as c, count(distinct visitor) as u from ht where loai = 'bam' group by path order by 2 desc limit 30) q),
     'chu_de', (select coalesce(jsonb_agg(jsonb_build_object('k', chi_tiet, 'v', c) order by c desc), '[]'::jsonb)

@@ -3441,9 +3441,9 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     var khoang = d.tu === d.den ? evFmt(new Date(d.tu + 'T00:00:00')) : evFmt(new Date(d.tu + 'T00:00:00')) + ' – ' + evFmt(new Date(d.den + 'T00:00:00'));
     var tiles = '<p class="muted small" style="margin:0 0 8px">' + khoang + ' · ' + d.so_ngay + ' ngày · so với ' + d.so_ngay + ' ngày liền trước</p><div class="sttiles st4">' +
       tile('Người xem', fmt(t.u || 0), s2So(t.u || 0, t.u_truoc)) +
-      tile('Lượt xem', fmt(t.v || 0), s2So(t.v || 0, t.v_truoc)) +
+      tile('Lượt xem <span class="muted">(trừ Trang chủ)</span>', fmt(t.v || 0), s2So(t.v || 0, t.v_truoc)) +
       tile('Lần vào web (phiên)', fmt(t.phien || 0), s2So(t.phien || 0, t.phien_truoc)) +
-      tile('Lượt xem / phiên', t.phien ? (t.v / t.phien).toFixed(1).replace('.', ',') : '0', s2Pt(t.mot_trang, t.phien) + '% phiên chỉ xem 1 trang') +
+      tile('Mục mở / phiên', t.phien ? (t.v / t.phien).toFixed(1).replace('.', ',') : '0', s2Pt(t.chi_chao, t.phien) + '% lần vào chỉ xem Trang chủ rồi thôi') +
       tile('Thời gian / phiên', String(t.phut_tb || 0).replace('.', ',') + ' phút', 'ước tính, phiên xem ≥ 2 trang') +
       tile('Người mới', fmt(t.moi || 0), s2Pt(t.moi, t.u) + '% người xem lần đầu vào web') +
       tile('Quay lại nhiều ngày', fmt(t.nhieu_ngay || 0), s2Pt(t.nhieu_ngay, t.u) + '% người xem vào ≥ 2 ngày') +
@@ -3458,7 +3458,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     var nhan = function (mp) { return function (x) { return mp[x] || x; }; }, giu = function (x) { return x; };
     var bamTen = Object.assign({}, ST_BAM, { 'chu-de': 'Chọn chủ đề phối', 'so-tao': 'Tạo sổ', 'so-dang-nhap': 'Đăng nhập sổ', 'chat-gui': 'Gửi tin chat' });
     var lists = '<div class="stgrid3">' +
-      stHang('Mục được xem nhiều', d.muc, nhan(ST_TEN), 'm1') + stHang('Trang vào đầu tiên', d.vao, nhan(ST_TEN), 'm1', false, 'mỗi lần vào web') +
+      stHang('Mục được xem nhiều', (d.muc || []).filter(function (x) { return x.k !== 'chao'; }), nhan(ST_TEN), 'm1', false, 'không tính Trang chủ') + stHang('Mục mở đầu tiên', (d.vao || []).filter(function (x) { return x.k !== 'chao'; }), nhan(ST_TEN), 'm1', false, 'sau Trang chủ, mỗi lần vào web') +
       stHang('Tính năng được dùng', d.bam, nhan(bamTen), 'm2') + stHang('Thiết bị', d.thiet_bi, nhan(Object.assign({ '?': 'Không rõ' }, ST_TB)), 'm3', true, 'theo người xem') +
       stHang('Vào từ đâu', d.nguon, nhan(Object.assign({ '?': 'Không rõ' }, ST_NGUON)), 'm3', true, 'theo người xem') + stHang('Chủ đề Khu Thi Đấu phối nhiều', d.chu_de, giu, 'm4') +
       stHang('Bộ được thêm vào tủ nhiều', d.bo, giu, 'm4') + stHang('Sự kiện sắp ra mắt được quan tâm', stSap(d.sap || []), giu, 'm4') + stHang('Từ khóa tìm nhiều', d.tim, giu, 'm4', false, 'Kho đồ / Tủ đồ') + '</div>';
@@ -3466,7 +3466,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       (d.ngay || []).slice().reverse().map(function (x) { return '<tr><td>' + evFmt(new Date(x.d + 'T00:00:00')) + '</td><td class="num">' + fmt(x.u) + '</td><td class="num">' + fmt(x.moi) + '</td><td class="num">' + fmt(x.v) + '</td></tr>'; }).join('') +
       '</tbody></table></div><div class="row" style="margin-top:8px"><button type="button" class="btn" data-s2csv="1">Tải file CSV</button></div></details>';
     return chon + tiles + cd + bd + lists + bang +
-      '<p class="muted small">"Người xem" đếm theo trình duyệt: một người vào bằng cả điện thoại và máy tính tính là 2. "Phiên" là một lần vào web, các lượt xem cách nhau quá 30 phút tính là phiên mới. Người dùng trình chặn quảng cáo có thể không được đếm. Không lưu tên, email hay địa chỉ IP.</p>';
+      '<p class="muted small">Trang chủ tự mở khi vào web nên không tính vào lượt xem và các bảng xếp hạng mục (vẫn tính vào người xem, số lần vào web và giờ vàng). "Người xem" đếm theo trình duyệt: một người vào bằng cả điện thoại và máy tính tính là 2. "Phiên" là một lần vào web, các lượt xem cách nhau quá 30 phút tính là phiên mới. Người dùng trình chặn quảng cáo có thể không được đếm. Không lưu tên, email hay địa chỉ IP.</p>';
   }
   $('adBody').addEventListener('click', function (e) {
     var b = e.target.closest('[data-s2],[data-s2tai],[data-s2csv]'); if (!b) return;
@@ -3505,7 +3505,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       stCot(gio, Math.min(900, rong), 6, function (o) { return o.h + 'h: ' + fmt(o.y) + ' lượt xem'; }, function (o) { return o.h + 'h'; }) + '</div>';
     var nhan = function (m) { return function (k) { return m[k] || k; }; }, giu = function (k) { return k; };
     return chon + tiles + bd +
-      '<div class="stgrid3">' + stHang('Mục được xem nhiều', AD.st.muc, nhan(ST_TEN), 'm1') + stHang('Tính năng được dùng', AD.st.bam, nhan(ST_BAM), 'm2') +
+      '<div class="stgrid3">' + stHang('Mục được xem nhiều', (AD.st.muc || []).filter(function (x) { return x.k !== 'chao'; }), nhan(ST_TEN), 'm1', false, 'không tính Trang chủ') + stHang('Tính năng được dùng', AD.st.bam, nhan(ST_BAM), 'm2') +
       stHang('Thiết bị', AD.st.thiet_bi, nhan(ST_TB), 'm3', true, 'theo người xem') + stHang('Vào từ đâu', AD.st.nguon, nhan(ST_NGUON), 'm3', true, 'theo người xem') +
       stHang('Chủ đề Khu Thi Đấu phối nhiều', AD.st.chu_de, giu, 'm4') + stHang('Sự kiện sắp ra mắt được quan tâm', stSap(AD.st.sap), giu, 'm4') +
       stHang('Từ khóa tìm nhiều', AD.st.tim, giu, 'm4', false, 'Kho đồ / Tủ đồ') + '</div>' +
