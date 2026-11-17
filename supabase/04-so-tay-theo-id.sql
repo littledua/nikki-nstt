@@ -41,8 +41,10 @@ begin
 end $$;
 revoke all on function public.so_tay_kt(text, text) from public, anon, authenticated;
 
--- Mở sổ (p_tao = true: chưa có thì tạo mới với PIN này)
-create or replace function public.so_tay_mo(p_ma text, p_pin text, p_tao boolean default false) returns jsonb
+-- Mở sổ (p_tao = true: chưa có thì tạo mới với PIN này).
+-- p_luc = lần lưu máy đang có; nếu trên mạng không có gì mới thì không gửi lại dữ liệu (đỡ tốn băng thông).
+drop function if exists public.so_tay_mo(text, text, boolean);
+create or replace function public.so_tay_mo(p_ma text, p_pin text, p_tao boolean default false, p_luc timestamptz default null) returns jsonb
 language plpgsql security definer set search_path = public, extensions as $$
 declare k text := lower(trim(coalesce(p_ma, ''))); kq text; r public.so_tay;
 begin
@@ -53,6 +55,7 @@ begin
   end if;
   if kq <> 'ok' then return jsonb_build_object('loi', kq); end if;
   select * into r from public.so_tay where ma = k;
+  if p_luc is not null and r.sua_luc = p_luc then return jsonb_build_object('ok', true, 'giong', true, 'sua_luc', r.sua_luc); end if;
   return jsonb_build_object('ok', true, 'du_lieu', r.du_lieu, 'sua_luc', r.sua_luc);
 end $$;
 
@@ -68,7 +71,7 @@ begin
   return jsonb_build_object('ok', true, 'sua_luc', luc);
 end $$;
 
-revoke all on function public.so_tay_mo(text, text, boolean) from public;
+revoke all on function public.so_tay_mo(text, text, boolean, timestamptz) from public;
 revoke all on function public.so_tay_luu(text, text, jsonb) from public;
-grant execute on function public.so_tay_mo(text, text, boolean) to anon, authenticated;
+grant execute on function public.so_tay_mo(text, text, boolean, timestamptz) to anon, authenticated;
 grant execute on function public.so_tay_luu(text, text, jsonb) to anon, authenticated;

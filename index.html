@@ -3588,7 +3588,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     if (!ST.ma || ST.busy) return Promise.resolve();
     ST.keoLuc = Date.now();
     if (LS.get('sotayCho', false)) return stDay().catch(function () {}); /* còn thay đổi chưa lưu lên: đẩy lên trước */
-    return stRpc('so_tay_mo', { p_ma: ST.ma, p_pin: ST.pin }).then(function (j) {
+    return stRpc('so_tay_mo', { p_ma: ST.ma, p_pin: ST.pin, p_luc: ST.luc }).then(function (j) { /* có p_luc: không có gì mới thì máy chủ không gửi lại cả sổ */
       if (j.loi) { if (j.loi === 'sai_pin' || j.loi === 'chua_co') { var t = stLoi(j.loi); stThoat(true); ST.loi = t; } stNut(); return; }
       if (j.sua_luc !== ST.luc && j.du_lieu && Object.keys(j.du_lieu).length) { stDat(j.du_lieu); ST.luc = j.sua_luc; stNho(); }
       ST.loi = ''; stNut();
