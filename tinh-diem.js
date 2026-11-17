@@ -40,9 +40,11 @@
   }
 
   // Điểm một món với bộ trọng số (10 số, phong cách ải không cần = 0)
+  /* trongSo.tagMon (không bắt buộc): { mã món: số tag ải cần mà món có } → cộng trongSo.tagDiem mỗi tag (ước tính) */
   function chamMon(mon, trongSo) {
     var tong = 0;
     for (var k = 0; k < 10; k++) tong += mon.diem[k] * trongSo[k];
+    if (trongSo.tagMon && trongSo.tagMon[mon.ma]) tong += trongSo.tagMon[mon.ma] * (trongSo.tagDiem || 0);
     return tong * (mon.trangSuc ? CO_TRANG_SUC : (CO_O[mon.o] || 1));
   }
 
