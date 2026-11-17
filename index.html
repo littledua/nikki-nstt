@@ -773,6 +773,25 @@ body.admin-mode .book::before { display: none; }
 @media (max-width: 480px) { .stbtn span { display: none; } .stbtn { padding: 0 10px; } }
 .stpinmoi { font: 700 1.05rem ui-monospace, Menlo, Consolas, monospace; letter-spacing: .1em; user-select: all; }
 .sttabs { margin: 4px 0 12px; }
+.chnq { margin: 0 0 12px; padding: 12px 16px; } .chnq summary { cursor: pointer; } .chnq ul { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 4px; font-size: .9rem; }
+.chkhung { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+.chds { height: min(62vh, 560px); overflow-y: auto; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; overscroll-behavior: contain; }
+.chtin { display: flex; flex-direction: column; align-items: flex-start; max-width: 85%; }
+.chtin.minh { align-self: flex-end; align-items: flex-end; }
+.chbong { background: var(--sunk); border: 1px solid var(--line); border-radius: 4px 16px 16px 16px; padding: 7px 12px; min-width: 0; }
+.chtin.minh .chbong { background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent) 35%, var(--line)); border-radius: 16px 4px 16px 16px; }
+.chai { display: flex; gap: 8px; align-items: baseline; font-size: .78rem; } .chai b { color: var(--accent); } .chai span { color: var(--muted); }
+.chnd { white-space: pre-wrap; overflow-wrap: anywhere; font-size: .95rem; line-height: 1.45; }
+.chnut { font-size: .74rem; min-height: 1.1em; padding: 0 6px; opacity: .75; } .chnut .linkbtn { color: var(--muted); }
+.chtin:hover .chnut, .chtin:focus-within .chnut { opacity: 1; }
+.chngay { text-align: center; margin: 6px 0; font-size: .76rem; color: var(--muted); } .chngay span { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px; }
+.chcu { text-align: center; }
+@media (max-width: 860px) { #view-chat .phead .lede { display: none; } #view-chat .phead { margin-bottom: 8px; } .chds { height: 50vh; padding: 10px; } body.dang-chat .gyfab { display: none; } .chtin { max-width: 92%; } .chnq { padding: 10px 14px; margin-bottom: 8px; } }
+.chsoan { display: flex; gap: 8px; align-items: flex-end; padding: 10px 12px 4px; border-top: 1px solid var(--line); }
+.chsoan textarea { flex: 1; min-width: 0; resize: none; border: 1px solid var(--line); border-radius: 12px; padding: 9px 12px; font: inherit; background: var(--surface); color: var(--ink); }
+.chsoan textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.chtb { margin: 0; padding: 0 14px 10px; }
+.chdn { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; padding: 12px 14px; border-top: 1px solid var(--line); }
 .stkp { font: 700 1.6rem/1.2 ui-monospace, Menlo, Consolas, monospace; letter-spacing: .12em; text-align: center; padding: 14px; border: 2px dashed var(--accent); border-radius: 12px; background: var(--accent-soft); color: var(--ink); user-select: all; }
 .stds { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
 .modebtn { width: 40px; height: 40px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); display: grid; place-items: center; cursor: pointer; flex: none; }
@@ -1180,7 +1199,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     <a href="#tu-do" data-view="tu-do"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3 4 6l2 4 2-1v12h8V9l2 1 2-4-4-3c0 2-1.8 3-4 3S8 5 8 3z"/></svg><span>Tủ đồ</span></a>
     <a href="#kho-do" data-view="kho-do"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Kho đồ</span></a>
     <a href="#bo-da-luu" data-view="bo-da-luu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg><span>Đã lưu</span></a>
-    <a href="#nguon" data-view="nguon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10z"/></svg><span>Nguồn</span></a>
+    <a href="#chat" data-view="chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01"/></svg><span>Chat</span></a>
   </nav>
 
   <p class="sr" id="live" aria-live="polite"></p>
@@ -1287,6 +1306,12 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   </section>
 
   <!-- NGUỒN & CREDIT -->
+  <section class="view" id="view-chat" hidden>
+    <div class="phead"><p class="eyebrow">Góc tám chuyện</p><h2 class="h1">Phòng chat <span class="hl">chung</span></h2>
+      <p class="lede">Hỏi phối đồ, khoe bộ mới, rủ nhau săn sự kiện. Ai cũng đọc được; muốn nhắn thì đăng nhập Sổ của tôi.</p></div>
+    <div id="chatBody"><p class="muted">Đang mở phòng chat…</p></div>
+  </section>
+
   <section class="view" id="view-nguon" hidden>
     <div class="phead"><p class="eyebrow">Trang cuối sổ</p><h2 class="h1">Nguồn dữ liệu <span class="hl">và Credit</span>.</h2>
       <p class="lede">Cảm ơn những nguồn đã giúp cuốn sổ này có dữ liệu.</p></div>
@@ -1359,7 +1384,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   </section>
   </main>
 
-  <footer><div class="themes" role="radiogroup" aria-label="Màu sổ"><span>Màu sổ:</span></div>Web làm cho vui, không liên quan nhà phát hành.<div class="footadmin"><a href="#admin" id="adLink">⚙ Quản trị</a></div></footer>
+  <footer><div class="themes" role="radiogroup" aria-label="Màu sổ"><span>Màu sổ:</span></div>Web làm cho vui, không liên quan nhà phát hành. <a href="#nguon">Nguồn dữ liệu &amp; credit</a><div class="footadmin"><a href="#admin" id="adLink">⚙ Quản trị</a></div></footer>
 </div>
 
 <button type="button" class="totop" id="toTop" aria-label="Lên đầu trang" title="Lên đầu trang" hidden><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
@@ -1393,20 +1418,22 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   };
 
   /* ---------- Điều hướng: mỗi mục là một thẻ kẹp ở mép phải cuốn sổ ---------- */
-  var VIEWS = ['chao', 'su-kien', 'phoi-do', 'tu-do', 'kho-do', 'bo-da-luu', 'nguon', 'admin'];
+  var VIEWS = ['chao', 'su-kien', 'phoi-do', 'tu-do', 'kho-do', 'bo-da-luu', 'chat', 'nguon', 'admin'];
   var KHUNG = { 'kho-do': 'tu-do' }; /* Kho đồ dùng chung khung với Tủ đồ */
   var CAN_DU_LIEU = { 'phoi-do': 1, 'tu-do': 1, 'kho-do': 1, 'bo-da-luu': 1 };
   function route() {
     var v = (location.hash || '').slice(1);
     if (v === 'gop-y') { gyShow(); history.replaceState(null, '', location.pathname + location.search); v = ''; }
     if (VIEWS.indexOf(v) < 0) v = 'chao';
-    ['chao', 'su-kien', 'phoi-do', 'tu-do', 'bo-da-luu', 'nguon', 'admin'].forEach(function (x) { $('view-' + x).hidden = x !== (KHUNG[v] || v); });
+    ['chao', 'su-kien', 'phoi-do', 'tu-do', 'bo-da-luu', 'chat', 'nguon', 'admin'].forEach(function (x) { $('view-' + x).hidden = x !== (KHUNG[v] || v); });
     document.querySelectorAll('.marks a').forEach(function (a) {
       if (a.getAttribute('data-view') === v) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
     });
     document.body.classList.toggle('admin-mode', v === 'admin');
     if (v === 'su-kien') loadEvents();
     if (v === 'chao') { chaoVe(); loadEvents(); ddNap(); }
+    if (v === 'chat') chMo(); else if (typeof CH !== 'undefined') chDong();
+    document.body.classList.toggle('dang-chat', v === 'chat');
     if (CAN_DU_LIEU[v]) moDuLieu(function () { veMuc(v); });
     trackView(v);
     if (v === 'admin') adOpen(); else $('evAddBox').hidden = true;
@@ -1731,7 +1758,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       return '<li><a href="#su-kien" data-chaotab="sap">' + (e.anh ? '<img loading="lazy" alt="" src="dd/' + esc(e.anh) + '" onerror="this.remove()">' : '') + '<span><b>' + esc(e.ten) + '</b><span class="muted small">' + esc(e.loai) + ' · ' + esc(ddNgay(e)) + (e.tong ? ' · ' + ddKC(e) : '') + '</span></span></a></li>';
     }).join('') + '</ul>' : '<p class="muted small">Chưa có dự đoán mới.</p>';
     var lam = [['phoi-do', 'Phối đồ', 'Gợi ý bộ điểm cao cho Khu Thi Đấu và ải cốt truyện'], ['tu-do', 'Tủ đồ', 'Nhập file clothes_date để chỉ gợi ý đồ bạn có'], ['kho-do', 'Kho đồ', 'Tra mọi bộ đồ, đánh dấu món đã có'],
-      ['kc', 'Tích kim cương', 'Tính cần để dành bao nhiêu KC cho sự kiện sắp tới'], ['bo-da-luu', 'Bộ đã lưu', 'Mở lại các bộ phối bạn đã lưu']];
+      ['kc', 'Tích kim cương', 'Tính cần để dành bao nhiêu KC cho sự kiện sắp tới'], ['bo-da-luu', 'Bộ đã lưu', 'Mở lại các bộ phối bạn đã lưu'], ['chat', 'Phòng chat chung', 'Hỏi phối đồ, khoe bộ mới, tám chuyện với mọi người']];
     box.innerHTML = '<div class="phead"><p class="eyebrow">Chào ' + buoi + ' · ' + thu + ', ' + evFmt(now) + '</p><h2 class="h1">Chào mừng đến với <span class="hl">sổ nhật ký của Nikki</span></h2>' +
       '<p class="lede">Nơi bạn có thể theo dõi các sự kiện đã, đang và sắp diễn ra trong game Ngôi Sao Thời Trang.</p></div>' +
       '<section class="chaokhoi"><div class="chaohead"><h3 class="sec">Đang diễn ra</h3>' + (mo ? '<a href="#su-kien" data-chaotab="now">Xem lịch sự kiện →</a>' : '') + '</div>' + dang + '</section>' +
@@ -2467,6 +2494,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     var viec = [];
     var them = function (tag, cls, txt, go, nut) { viec.push('<div class="tdrow"><span class="tdtag ' + cls + '">' + tag + '</span><span class="t">' + txt + '</span><button type="button" class="btn" data-adgo="' + go + '">' + nut + '</button></div>'); };
     if (unseen) them('Góp ý', 'hot', '<b>' + unseen + '</b> góp ý chưa xem', 'gop-y', 'Đọc');
+    if (CA.tbBao == null && !CA.tbTai) { CA.tbTai = true; AD.sb.rpc('chat_admin_ds', { p_chi_bao: true }).then(function (r) { CA.tbTai = false; CA.tbBao = r.error || !Array.isArray(r.data) ? 0 : r.data.filter(function (m) { return m.bao_cao > 0; }).length; if (AD.tab === 'tong-quan') adRender(); }, function () { CA.tbTai = false; CA.tbBao = 0; }); }
+    if (CA.tbBao) them('Chat', 'hot', '<b>' + CA.tbBao + '</b> tin trong phòng chat bị báo cáo', 'cai-dat:chat', 'Xem');
     if (!tok) them('GitHub', 'hot', 'Chưa kết nối GitHub trên trình duyệt này, bấm Lưu sẽ chỉ soạn sẵn dòng', 'cai-dat', 'Kết nối');
     mo.filter(function (e) { return e.end && (e.end - now) / DAY <= 2; }).forEach(function (e) {
       var con = Math.round((e.end - now) / DAY);
@@ -2727,9 +2756,62 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     if (b.hasAttribute('data-saxn')) { SA.xn = b.dataset.saxn || null; adRender(); return; }
     if (b.hasAttribute('data-sapin2')) saLam('pin', b.dataset.sapin2); else saLam('xoa', b.dataset.saxoa2);
   });
+  /* ---------- Phòng chat (admin): tin bị báo cáo, ẩn/hiện/xóa, khóa chat ID, danh sách từ tục ---------- */
+  var CA = { ds: null, loc: 'bao', cam: null, tu: null, loi: '', xn: null, busy: false };
+  function caTai() {
+    CA.ds = 'dang'; CA.loi = '';
+    Promise.all([AD.sb.rpc('chat_admin_ds', { p_chi_bao: CA.loc === 'bao' }), AD.sb.rpc('chat_admin_cam_ds'), CA.tu ? Promise.resolve({ data: CA.tu }) : AD.sb.rpc('chat_admin_tu', {})]).then(function (rs) {
+      rs.forEach(function (r) { if (r.error) throw r.error; });
+      var mang = function (x) { return Array.isArray(x) ? x : []; };
+      CA.ds = mang(rs[0].data); CA.cam = mang(rs[1].data); CA.tu = mang(rs[2].data); adRender();
+    }).catch(function (e) { CA.ds = null; CA.loi = /chat_admin|schema cache|does not exist/i.test(e.message || '') ? 'Chưa có phòng chat. Bạn chạy file supabase/05-chat-chung.sql trong Supabase › SQL Editor trước nhé.' : 'Chưa tải được (' + (e.message || e) + ').'; adRender(); });
+  }
+  function caHtml() {
+    var lui = '<button type="button" class="linkbtn" data-cdxem="">← Cài đặt</button>';
+    var dau = lui + '<div class="adhead"><h2>Phòng chat</h2><p class="muted small">3 người báo cáo thì tin tự ẩn. Bạn xem lại: tin không sao thì bấm Hiện lại, tin xấu thì Xóa, người cố tình phá thì Khóa chat ID đó (họ vẫn dùng web bình thường).</p></div>';
+    if (CA.loi) return dau + '<div class="note">' + esc(CA.loi) + '</div>';
+    if (!CA.ds) { caTai(); return dau + '<p class="muted">Đang tải…</p>'; }
+    if (CA.ds === 'dang') return dau + '<p class="muted">Đang tải…</p>';
+    var chip = function (k, l) { return '<button type="button" data-caloc="' + k + '" aria-pressed="' + (CA.loc === k) + '">' + l + '</button>'; };
+    var camMa = {}; CA.cam.forEach(function (m) { camMa[m.ma] = 1; });
+    var hang = CA.ds.map(function (m) {
+      var x = CA.xn;
+      return '<div class="dsrow' + (m.an ? ' fdan' : '') + '"><div style="flex:1;min-width:0"><b>' + esc(m.ma) + '</b> <span class="muted small">' + adTime(m.tao_luc) + '</span>' + (m.an ? ' <span class="fdtag">Đang ẩn</span>' : '') + (m.bao_cao ? ' <span class="fdtag">' + m.bao_cao + ' báo cáo</span>' : '') + (camMa[m.ma] ? ' <span class="fdtag">ID đã khóa chat</span>' : '') +
+        '<div class="small" style="white-space:pre-wrap;overflow-wrap:anywhere;margin-top:2px">' + esc(m.noi_dung) + '</div></div>' +
+        (m.an ? '<button type="button" class="btn" data-ca="hien" data-id="' + m.id + '">Hiện lại</button>' : '<button type="button" class="btn" data-ca="an" data-id="' + m.id + '">Ẩn</button>') +
+        (x === 'xoa' + m.id ? '<button type="button" class="btn danger" data-ca="xoa2" data-id="' + m.id + '">Xóa hẳn</button>' : '<button type="button" class="btn ghost danger" data-ca="xoa" data-id="' + m.id + '">Xóa</button>') +
+        (camMa[m.ma] ? '' : x === 'cam' + m.ma ? '<button type="button" class="btn danger" data-ca="cam2" data-ma="' + esc(m.ma) + '">Khóa chat ' + esc(m.ma) + '?</button>' : '<button type="button" class="btn ghost" data-ca="cam" data-ma="' + esc(m.ma) + '">Khóa chat</button>') + '</div>';
+    }).join('');
+    return dau + '<div class="evyears" style="margin-bottom:10px">' + chip('bao', 'Bị báo cáo / đang ẩn') + chip('tat', '200 tin gần nhất') + '<button type="button" data-catai="1">↻ Tải lại</button></div>' +
+      (hang ? '<div class="dslist">' + hang + '</div>' : '<div class="empty"><b>' + (CA.loc === 'bao' ? 'Không có tin nào bị báo cáo' : 'Chưa có tin nhắn') + '</b></div>') +
+      '<section class="panel adset" style="margin-top:14px"><h3 class="sthd">ID đang bị khóa chat</h3>' + (CA.cam.length ? CA.cam.map(function (m) { return '<div class="tdrow"><span class="t"><b>' + esc(m.ma) + '</b> <span class="muted small">từ ' + adTime(m.luc) + (m.ly_do ? ' · ' + esc(m.ly_do) : '') + '</span></span><button type="button" class="btn" data-ca="bocam" data-ma="' + esc(m.ma) + '">Mở khóa</button></div>'; }).join('') : '<p class="muted small">Không có.</p>') + '</section>' +
+      '<section class="panel adset" style="margin-top:12px"><h3 class="sthd">Từ bị che</h3><p class="muted small">Mỗi dòng một từ hoặc cụm từ. Chỉ che khi khớp nguyên từ (vd che "vl" nhưng không che "vlog"). Chữ hoa thường như nhau.</p>' +
+      '<textarea id="caTu" rows="6" style="width:100%;border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:inherit;background:var(--surface);color:var(--ink)">' + esc((CA.tu || []).join('\n')) + '</textarea><div class="row" style="margin-top:8px"><button type="button" class="btn primary" data-ca="tu">Lưu danh sách</button></div></section>';
+  }
+  function caLam(b) {
+    var k = b.dataset.ca, id = +b.dataset.id, ma = b.dataset.ma;
+    if (k === 'xoa' || k === 'cam') { CA.xn = k + (k === 'xoa' ? id : ma); adRender(); return; }
+    if (CA.busy) return; CA.busy = true; CA.xn = null;
+    var q = k === 'tu' ? AD.sb.rpc('chat_admin_tu', { p_tu: $('caTu').value.split('\n') })
+      : k === 'cam2' || k === 'bocam' ? AD.sb.rpc('chat_admin_cam', { p_ma: ma, p_cam: k === 'cam2', p_ly_do: null })
+      : AD.sb.rpc('chat_admin_sua', { p_id: id, p_lam: k === 'xoa2' ? 'xoa' : k });
+    q.then(function (r) {
+      CA.busy = false; if (r.error) throw r.error;
+      if (k === 'tu') { CA.tu = Array.isArray(r.data) ? r.data : []; toast('Đã lưu ' + CA.tu.length + ' từ'); }
+      else toast({ an: 'Đã ẩn tin', hien: 'Đã hiện lại tin', xoa2: 'Đã xóa tin', cam2: 'Đã khóa chat ' + ma, bocam: 'Đã mở khóa ' + ma }[k]);
+      CA.ds = null; CA.tbBao = null; adRender();
+    }).catch(function (e) { CA.busy = false; toast('Chưa làm được (' + (e.message || e) + ')'); adRender(); });
+  }
+  $('adBody').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-ca],[data-caloc],[data-catai]'); if (!b) return;
+    if (b.hasAttribute('data-caloc')) { CA.loc = b.dataset.caloc; CA.ds = null; adRender(); return; }
+    if (b.hasAttribute('data-catai')) { CA.ds = null; adRender(); return; }
+    caLam(b);
+  });
   /* ---------- Cài đặt ---------- */
   function cdHtml() {
     if (AD.cdXem === 'so-tay') return saHtml();
+    if (AD.cdXem === 'chat') return caHtml();
     if (AD.cdXem === 'anh') return tvHtml();
     if (AD.cdXem === 'lich-su') return lsHtml();
     var gh = function (tep) { return '<a href="https://github.com/' + GH_REPO + '/blob/' + GH_BRANCH + '/' + tep + '" target="_blank" rel="noopener">Mở trên GitHub</a>'; };
@@ -2742,7 +2824,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       '<section class="panel adset"><h3 class="sthd">Ảnh, lịch sử, người chơi</h3><div class="adfiles">' +
         '<div><b>Thư viện ảnh</b><span class="muted small">Xem ảnh sự kiện và ảnh dự đoán, dọn ảnh không dùng · <button type="button" class="linkbtn" data-cdxem="anh">Mở</button></span></div>' +
         '<div><b>Lịch sử lưu</b><span class="muted small">Xem các lần lưu gần đây, hoàn tác lần lưu sai · <button type="button" class="linkbtn" data-cdxem="lich-su">Mở</button></span></div>' +
-        '<div><b>Sổ người chơi</b><span class="muted small">Tìm ID, đặt PIN mới khi người chơi quên, xóa sổ · <button type="button" class="linkbtn" data-cdxem="so-tay">Mở</button></span></div></div></section>' +
+        '<div><b>Sổ người chơi</b><span class="muted small">Tìm ID, đặt PIN mới khi người chơi quên, xóa sổ · <button type="button" class="linkbtn" data-cdxem="so-tay">Mở</button></span></div>' +
+        '<div><b>Phòng chat</b><span class="muted small">Tin bị báo cáo, ẩn/xóa tin, khóa chat ID, từ bị che · <button type="button" class="linkbtn" data-cdxem="chat">Mở</button></span></div></div></section>' +
       '<section class="panel adset"><h3 class="sthd">Tệp dữ liệu</h3><div class="adfiles">' +
         '<div><b>su-kien.txt</b><span class="muted small">' + (EV.list ? fmt(EV.list.length) + ' sự kiện' : '…') + ' · ' + gh('su-kien.txt') + '</span></div>' +
         '<div><b>du-doan.txt</b><span class="muted small">' + (DD ? fmt(DD.length) + ' dòng dự đoán' : '…') + ' · ' + gh('du-doan.txt') + '</span></div>' +
@@ -3174,7 +3257,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   /* ---------- Thống kê truy cập (bảng page_views + hàm thong_ke trong Supabase, xem supabase/02-thong-ke.sql) ----------
      Mỗi lần mở một tab, web ghi 1 dòng: mã máy ngẫu nhiên (lưu ở trình duyệt, không phải thông tin cá nhân) + tên tab.
      Không ghi khi chạy thử trên máy (localhost) và khi ở trang admin. */
-  var ST_TAB = { 'chao': 1, 'phoi-do': 1, 'tu-do': 1, 'kho-do': 1, 'bo-da-luu': 1, 'su-kien': 1, 'nguon': 1 };
+  var ST_TAB = { 'chao': 1, 'chat': 1, 'phoi-do': 1, 'tu-do': 1, 'kho-do': 1, 'bo-da-luu': 1, 'su-kien': 1, 'nguon': 1 };
   var EV_TAB_PATH = { sap: 'sap', now: 'dang-mo', hist: 'lich-su', kc: 'tich-kc' };
   var stGan = {};
   /* Thiết bị (theo bề ngang màn hình) và nguồn vào (lấy 1 lần mỗi phiên từ trang trước đó) — không phải thông tin cá nhân */
@@ -3212,7 +3295,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     else if (v === 'phoi-do') v += '/' + ((typeof PD !== 'undefined' && PD ? PD.loai : LS.get('loai', '')) === 'cot-truyen' ? 'cot-truyen' : 'khu-thi-dau');
     track('xem', v, null);
   }
-  var ST_TEN = { 'chao': 'Trang chủ', 'su-kien/sap': 'Sự kiện · Sắp ra mắt', 'su-kien/dang-mo': 'Sự kiện · Đang mở', 'su-kien/lich-su': 'Sự kiện · Lịch sử', 'su-kien/tich-kc': 'Sự kiện · Tích KC',
+  var ST_TEN = { 'chao': 'Trang chủ', 'chat': 'Phòng chat', 'su-kien/sap': 'Sự kiện · Sắp ra mắt', 'su-kien/dang-mo': 'Sự kiện · Đang mở', 'su-kien/lich-su': 'Sự kiện · Lịch sử', 'su-kien/tich-kc': 'Sự kiện · Tích KC',
     'phoi-do/khu-thi-dau': 'Phối đồ · Khu Thi Đấu', 'phoi-do/cot-truyen': 'Phối đồ · Ải cốt truyện', 'tu-do': 'Tủ đồ', 'kho-do': 'Kho đồ', 'bo-da-luu': 'Đã lưu', 'nguon': 'Nguồn',
     'su-kien': 'Sự kiện (trước khi tách tab)', 'phoi-do': 'Phối đồ (trước khi tách loại)' };
   var ST_BAM = { 'chi-tiet-sap': 'Xem chi tiết sắp ra mắt', 'de-danh': 'Để dành KC', 'them-ca-bo': '+ Thêm cả bộ', 'them-vao-tu': '+ Thêm từng món', 'luu-bo': 'Lưu bộ phối', 'nhap-tu': 'Nhập tủ đồ', 'gop-y': 'Gửi góp ý' };
@@ -3342,6 +3425,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     if (d.efmoi) { AD.efMoi = true; adRender(); window.scrollTo(0, 0); if ($('efLink')) $('efLink').focus(); return; }
     if (d.adgo) { /* "tab:danh sách:lọc thiếu" */
       var g = d.adgo.split(':'); AD.tab = g[0]; LS.set('adTab', AD.tab);
+      if (g[0] === 'cai-dat') { AD.cdXem = g[1] || null; adRender(); window.scrollTo(0, 0); return; }
       if (g[1]) { AD.skSub = g[1]; AD.efMoi = false; if (EF.edit) efThoiSua(true); }
       if (g.length > 2) DS.q = ''; DS.type = ''; DS.thieu = g[2];
       if (g[1] === 'sap') FD.mo = false;
@@ -3650,6 +3734,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     stNut(); stVe();
   }
   function stNut() {
+    if (typeof chVe === 'function') chVe();
     $('stBtnTxt').textContent = ST.ma ? ST.ma : 'Sổ của tôi'; $('stBtn').setAttribute('aria-label', ST.ma ? 'Sổ của tôi: ' + ST.ma : 'Sổ của tôi');
     $('stBtn').classList.toggle('dang', !!ST.ma); $('stBtn').classList.toggle('loi', !!(ST.ma && ST.loi));
     $('stBtn').title = ST.ma ? (ST.loi || (LS.get('sotayCho', false) ? 'Đang lưu…' : 'Đã lưu lên mạng')) : 'Mở sổ để lưu tủ đồ theo ID';
@@ -3737,6 +3822,85 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   stNut();
   if (ST.ma) stKeo();
   document.addEventListener('visibilitychange', function () { if (!document.hidden && ST.ma && Date.now() - (ST.keoLuc || 0) > 60000) stKeo(); });
+
+  /* ---------- Phòng chat chung (supabase/05-chat-chung.sql). Ai cũng đọc; nhắn phải mở Sổ của tôi. Đang mở mục Chat thì 5 giây tải tin mới 1 lần ---------- */
+  var CH = { ds: [], cuoi: 0, dau: null, het: false, busy: false, gui: false, loi: '', tb: '', hen: null, xn: null, chuaCo: false };
+  function chRpc(ham, body) { return stRpc(ham, body); }
+  function chLoi(k) {
+    return { cam: 'ID này đã bị chủ web tạm khóa chat.', nhanh: 'Bạn nhắn nhanh quá, đợi vài giây rồi gửi tiếp nha.', nhieu: 'Bạn đã nhắn 20 tin trong 10 phút, nghỉ chút rồi nhắn tiếp nha.', dai: 'Tin nhắn tối đa 500 ký tự.', trong: 'Bạn chưa nhập nội dung.' }[k] || stLoi(k);
+  }
+  function chGio(t) { var d = new Date(t); return ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2); }
+  function chNgay(t) { var d = new Date(t), h = today(); var n = Math.round((new Date(d.getFullYear(), d.getMonth(), d.getDate()) - h) / DAY); return n === 0 ? 'Hôm nay' : n === -1 ? 'Hôm qua' : evFmt(d); }
+  function chTin(m) {
+    var minh = ST.ma && m.ma === ST.ma;
+    var nut = ST.ma ? (minh ? (CH.xn === 'xoa' + m.id ? '<button type="button" class="linkbtn" data-ch="xoa2" data-id="' + m.id + '">Xóa hẳn?</button>' : '<button type="button" class="linkbtn" data-ch="xoa" data-id="' + m.id + '">Xóa</button>')
+      : (CH.xn === 'bao' + m.id ? '<button type="button" class="linkbtn" data-ch="bao2" data-id="' + m.id + '">Báo cáo tin này?</button>' : '<button type="button" class="linkbtn" data-ch="bao" data-id="' + m.id + '">Báo cáo</button>')) : '';
+    return '<div class="chtin' + (minh ? ' minh' : '') + '"><div class="chbong"><div class="chai"><b>' + esc(m.ma) + '</b><span>' + chGio(m.tao_luc) + '</span></div><div class="chnd">' + esc(m.noi_dung) + '</div></div><div class="chnut">' + nut + '</div></div>';
+  }
+  function chDs() {
+    if (CH.chuaCo) return '<div class="empty"><b>Phòng chat chưa mở</b>Chủ web đang cài đặt, bạn quay lại sau nha.</div>';
+    if (!CH.ds.length) return CH.busy ? '<p class="muted">Đang tải tin nhắn…</p>' : '<div class="empty"><b>Chưa có ai nhắn</b>Bạn mở lời trước nha 💬</div>';
+    var ra = CH.het ? '' : '<div class="chcu"><button type="button" class="btn ghost" data-ch="cu">Xem tin cũ hơn</button></div>', ngay = '';
+    CH.ds.forEach(function (m) { var n = chNgay(m.tao_luc); if (n !== ngay) { ngay = n; ra += '<div class="chngay"><span>' + n + '</span></div>'; } ra += chTin(m); });
+    return ra;
+  }
+  function chVe(cuon) {
+    var box = $('chatBody'); if (!box || $('view-chat').hidden) return;
+    var ds = $('chDs'), sat = ds && ds.scrollHeight - ds.scrollTop - ds.clientHeight < 80, nhap = $('chNhap') ? $('chNhap').value : '';
+    if (!ds) {
+      box.innerHTML = '<details class="panel chnq"><summary><b>Nội quy phòng chat</b> <span class="muted small">(bấm để xem)</span></summary><ul>' +
+        '<li>Nói chuyện lịch sự, không chửi bới, không công kích ai.</li><li>Không đăng thông tin cá nhân (số điện thoại, địa chỉ, mật khẩu, tài khoản game).</li>' +
+        '<li>Không quảng cáo, không mua bán tài khoản, không spam.</li><li>Thấy tin xấu thì bấm <b>Báo cáo</b>. 3 người báo cáo thì tin tự ẩn. Chủ web có thể xóa tin và khóa chat ID vi phạm.</li></ul></details>' +
+        '<div class="panel chkhung"><div class="chds" id="chDs" role="log" aria-live="polite" aria-label="Tin nhắn"></div><div id="chSoan"></div></div>';
+      ds = $('chDs'); sat = true;
+    }
+    ds.innerHTML = chDs();
+    $('chSoan').innerHTML = ST.ma ? '<form id="chForm" class="chsoan"><textarea id="chNhap" rows="2" maxlength="500" placeholder="Nhắn với mọi người… (Enter để gửi, Shift + Enter để xuống dòng)" aria-label="Tin nhắn"></textarea>' +
+        '<button type="submit" class="btn primary"' + (CH.gui ? ' disabled' : '') + '>Gửi</button></form><p class="chtb small" role="status">' + (CH.loi ? '<span style="color:var(--warn)">' + esc(CH.loi) + '</span>' : '<span class="muted">Đang nhắn với tên <b>' + esc(ST.ma) + '</b></span>') + '</p>'
+      : '<div class="chdn"><span class="muted">Đăng nhập <b>Sổ của tôi</b> để nhắn tin.</span><button type="button" class="btn primary" data-ch="dn">Đăng nhập / Mở sổ mới</button></div>';
+    if ($('chNhap')) { $('chNhap').value = nhap; }
+    if (cuon || sat) ds.scrollTop = ds.scrollHeight;
+  }
+  function chTai(cu) {
+    if (CH.busy) return Promise.resolve(); CH.busy = true;
+    var body = cu ? { p_truoc: CH.dau } : { p_sau: CH.cuoi };
+    return chRpc('chat_doc', body).then(function (ds) {
+      CH.busy = false; CH.chuaCo = false; if (!Array.isArray(ds)) return;
+      if (cu) { if (ds.length < 60) CH.het = true; var ds0 = $('chDs'), cao = ds0 ? ds0.scrollHeight : 0; CH.ds = ds.concat(CH.ds); if (ds.length) CH.dau = ds[0].id; chVe(); if (ds0) ds0.scrollTop = ds0.scrollHeight - cao; return; }
+      if (!CH.cuoi && ds.length < 60) CH.het = true;
+      if (ds.length) { CH.ds = CH.ds.concat(ds); CH.cuoi = ds[ds.length - 1].id; if (CH.dau == null) CH.dau = ds[0].id; chVe(); }
+      else if (!CH.ds.length) chVe();
+    }).catch(function (e) { CH.busy = false; if (/chat_doc|schema cache|404|Could not find/i.test(e.message || '')) { CH.chuaCo = true; chVe(); } });
+  }
+  function chMo() { chVe(true); chTai().then(function () { chVe(true); }); clearInterval(CH.hen); CH.hen = setInterval(function () { if (!document.hidden && !$('view-chat').hidden) chTai(); }, 5000); }
+  function chDong() { clearInterval(CH.hen); CH.hen = null; }
+  function chGui() {
+    var o = $('chNhap'), t = o ? o.value.trim() : ''; if (!t || CH.gui || !ST.ma) return;
+    CH.gui = true; CH.loi = '';
+    chRpc('chat_gui', { p_ma: ST.ma, p_pin: ST.pin, p_noi_dung: t }).then(function (j) {
+      CH.gui = false;
+      if (j.loi) { CH.loi = chLoi(j.loi); if (j.loi === 'sai_pin' || j.loi === 'chua_co') stThoat(true); chVe(); return; }
+      o.value = ''; return chTai().then(function () { chVe(true); if ($('chNhap')) $('chNhap').focus(); });
+    }).catch(function () { CH.gui = false; CH.loi = 'Chưa gửi được, bạn kiểm tra mạng rồi thử lại nha.'; chVe(); });
+  }
+  document.addEventListener('submit', function (e) { if (e.target.id === 'chForm') { e.preventDefault(); chGui(); } });
+  document.addEventListener('keydown', function (e) { if (e.target.id === 'chNhap' && e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); chGui(); } });
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('#chatBody [data-ch]'); if (!b) return;
+    var k = b.dataset.ch, id = +b.dataset.id;
+    if (k === 'dn') { $('stBtn').click(); return; }
+    if (k === 'cu') { chTai(true); return; }
+    if (k === 'xoa' || k === 'bao') { CH.xn = k + id; chVe(); return; }
+    if (k === 'xoa2' || k === 'bao2') {
+      CH.xn = null;
+      chRpc(k === 'xoa2' ? 'chat_xoa' : 'chat_bao_cao', { p_ma: ST.ma, p_pin: ST.pin, p_id: id }).then(function (j) {
+        if (j.loi) { CH.loi = chLoi(j.loi); chVe(); return; }
+        if (k === 'xoa2' || j.an) CH.ds = CH.ds.filter(function (m) { return m.id !== id; });
+        toast(k === 'xoa2' ? 'Đã xóa tin nhắn' : j.an ? 'Đã báo cáo. Tin đã bị ẩn chờ chủ web xem.' : 'Đã báo cáo, cảm ơn bạn. Chủ web sẽ xem lại.');
+        chVe();
+      }).catch(function () { toast('Chưa làm được, bạn thử lại nha'); });
+    }
+  });
 
   var TD = { kho: false, q: '', o: '', own: 'all', pc: '', sort: 'game', page: 0, bo: -1, che: 'bo' }, MOI_TRANG = 48, ganDay = null;
   function veTu(kho) {
