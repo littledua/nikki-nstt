@@ -773,6 +773,16 @@ body.admin-mode .book::before { display: none; }
 @media (max-width: 480px) { .stbtn span { display: none; } .stbtn { padding: 0 10px; } }
 .stpinmoi { font: 700 1.05rem ui-monospace, Menlo, Consolas, monospace; letter-spacing: .1em; user-select: all; }
 .sttabs { margin: 4px 0 12px; }
+.s2cu { fill: color-mix(in srgb, var(--accent) 30%, var(--surface)); }
+.s2o { fill: var(--accent); }
+.s2chu { display: inline-flex; gap: 6px; align-items: center; font-size: .78rem; color: var(--muted); margin-left: auto; }
+.s2chu i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; background: var(--accent); }
+.s2chu i.s2cu { background: color-mix(in srgb, var(--accent) 30%, var(--surface)); margin-left: 8px; }
+.s2tuy { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; margin: -2px 0 12px; font-size: .88rem; }
+.s2tuy input { border: 1px solid var(--line); border-radius: 10px; padding: 5px 8px; font: inherit; background: var(--surface); color: var(--ink); margin-left: 4px; }
+.s2cd { margin: 8px 0 0; }
+.s2bang { max-height: 360px; overflow: auto; margin-top: 8px; }
+.stchart summary { cursor: pointer; }
 .chnq { margin: 0 0 12px; padding: 12px 16px; } .chnq summary { cursor: pointer; } .chnq ul { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 4px; font-size: .9rem; }
 .chkhung { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
 .chds { height: min(62vh, 560px); overflow-y: auto; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; overscroll-behavior: contain; }
@@ -2456,7 +2466,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     var head = function (h, sub) { return '<div class="adhead"><h2>' + h + '</h2>' + (sub ? '<p class="muted small">' + sub + '</p>' : '') + '</div>'; };
     var body = AD.tab === 'su-kien' ? head('Sự kiện', 'Lịch đã mở nằm trong su-kien.txt, sắp ra mắt nằm trong du-doan.txt.') + skHtml()
       : AD.tab === 'gop-y' ? head('Hộp thư', 'Góp ý người chơi gửi từ nút 💬 trên web.') + fbHtml(unseen)
-      : AD.tab === 'thong-ke' ? head('Lượt truy cập') + stHtml()
+      : AD.tab === 'thong-ke' ? head('Lượt truy cập') + (S2.cu ? '<div class="note small" style="margin-bottom:10px">Đang dùng bản thống kê cũ. Chạy file <code>supabase/07-thong-ke-chi-tiet.sql</code> trong Supabase để có bản chi tiết (phiên, người mới, giờ vàng, cộng đồng…).</div>' + stHtml() : s2Html())
       : AD.tab === 'cai-dat' ? (AD.cdXem ? '' : head('Cài đặt')) + cdHtml()
       : tqHtml(unseen);
     box.innerHTML = who + '<div class="adshell">' + nav + '<div class="admain" role="tabpanel">' + body + '</div></div>';
@@ -3307,7 +3317,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   var ST_TEN = { 'chao': 'Trang chủ', 'chat': 'Phòng chat', 'su-kien/sap': 'Sự kiện · Sắp ra mắt', 'su-kien/dang-mo': 'Sự kiện · Đang mở', 'su-kien/lich-su': 'Sự kiện · Lịch sử', 'su-kien/tich-kc': 'Sự kiện · Tích KC',
     'phoi-do/khu-thi-dau': 'Phối đồ · Khu Thi Đấu', 'phoi-do/cot-truyen': 'Phối đồ · Ải cốt truyện', 'tu-do': 'Tủ đồ', 'kho-do': 'Kho đồ', 'bo-da-luu': 'Đã lưu', 'nguon': 'Nguồn',
     'su-kien': 'Sự kiện (trước khi tách tab)', 'phoi-do': 'Phối đồ (trước khi tách loại)' };
-  var ST_BAM = { 'chi-tiet-sap': 'Xem chi tiết sắp ra mắt', 'de-danh': 'Để dành KC', 'them-ca-bo': '+ Thêm cả bộ', 'them-vao-tu': '+ Thêm từng món', 'luu-bo': 'Lưu bộ phối', 'nhap-tu': 'Nhập tủ đồ', 'gop-y': 'Gửi góp ý' };
+  var ST_BAM = { 'chi-tiet-sap': 'Xem chi tiết sắp ra mắt', 'de-danh': 'Để dành KC', 'them-ca-bo': '+ Thêm cả bộ', 'them-vao-tu': '+ Thêm từng món', 'luu-bo': 'Lưu bộ phối', 'nhap-tu': 'Nhập tủ đồ', 'gop-y': 'Gửi góp ý', 'so-tao': 'Tạo sổ', 'so-dang-nhap': 'Đăng nhập sổ', 'chat-gui': 'Gửi tin chat' };
   var ST_NGUON = { facebook: 'Facebook', google: 'Google', zalo: 'Zalo', 'truc-tiep': 'Gõ link / lưu sẵn', khac: 'Trang khác' };
   var ST_TB = { dt: 'Điện thoại', mt: 'Máy tính' };
   function adLoadSt() {
@@ -3368,6 +3378,109 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     });
     return thu.sort(function (a, b) { return b.v - a.v; });
   }
+  /* ---------- Lượt truy cập chi tiết (supabase/07-thong-ke-chi-tiet.sql). Chưa chạy file đó thì dùng bản thống kê cũ ---------- */
+  var S2 = { kieu: 30, tu: '', den: '', ds: null, loi: '', cu: false, bang: false };
+  function s2Ngay(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+  function s2Khoang() {
+    if (S2.kieu === 'tuy' && S2.tu && S2.den) return [S2.tu, S2.den];
+    var den = today(), n = S2.kieu === 'tuy' ? 30 : S2.kieu; return [s2Ngay(new Date(den.getTime() - (n - 1) * DAY)), s2Ngay(den)];
+  }
+  function s2Tai() {
+    var k = s2Khoang(); S2.ds = 'dang'; S2.loi = ''; S2.khoa = k.join('|');
+    AD.sb.rpc('thong_ke_chi_tiet', { p_tu: k[0], p_den: k[1] }).then(function (r) {
+      if (r.error) throw r.error; S2.ds = r.data; adRender();
+    }).catch(function (e) {
+      if (/thong_ke_chi_tiet|schema cache|does not exist|Could not find/i.test(e.message || '')) { S2.cu = true; S2.ds = null; adRender(); return; }
+      S2.ds = null; S2.loi = 'Chưa tải được thống kê (' + (e.message || e) + ').'; adRender();
+    });
+  }
+  function s2Pt(a, b) { return b ? Math.round(a / b * 100) : 0; }
+  function s2So(nay, truoc) { return truoc ? stSo(nay, truoc) : '<span class="muted">chưa có số kỳ trước</span>'; }
+  /* cột chồng: người mới (đậm) + người cũ (nhạt) theo ngày */
+  function s2Cot(ds, rong) {
+    var W = Math.max(280, rong), H = W < 520 ? 180 : 220, L = 32, R = 6, TOP = 12, B = 26, max = Math.max.apply(null, ds.map(function (x) { return x.u; }).concat([1]));
+    var raw = Math.max(1, max / 4), mag = Math.pow(10, Math.floor(Math.log(raw) / Math.LN10)), f = raw / mag, step = (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * mag, nice = Math.ceil(max / step) * step;
+    var cw = (W - L - R) / ds.length, bw = Math.max(2, Math.min(28, cw - 2)), y = function (v) { return TOP + (H - TOP - B) * (1 - v / nice); }, s = '', nhan = Math.max(1, Math.ceil(ds.length / (W < 520 ? 6 : 10)));
+    for (var g = 0; g <= nice; g += step) s += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + y(g) + '" y2="' + y(g) + '" class="stgrid"/><text x="' + (L - 6) + '" y="' + (y(g) + 3.5) + '" class="stax" text-anchor="end">' + fmt(g) + '</text>';
+    ds.forEach(function (x, i) {
+      var x0 = L + i * cw + (cw - bw) / 2, cu = Math.max(0, x.u - x.moi), yc = y(x.u), ym = y(x.moi);
+      var tip = stDM(new Date(x.d + 'T00:00:00')) + ': ' + fmt(x.u) + ' người xem (' + fmt(x.moi) + ' người mới), ' + fmt(x.v) + ' lượt xem';
+      s += '<g class="stcol" tabindex="0" data-tip="' + esc(tip) + '"><rect x="' + (L + i * cw) + '" y="' + TOP + '" width="' + cw + '" height="' + (H - TOP - B) + '" fill="transparent"/>' +
+        (cu ? '<rect x="' + x0 + '" y="' + yc + '" width="' + bw + '" height="' + (ym - yc) + '" rx="2" class="s2cu"/>' : '') + (x.moi ? '<rect x="' + x0 + '" y="' + ym + '" width="' + bw + '" height="' + (H - B - ym) + '" rx="2" class="stbar"/>' : '') + '</g>';
+      if ((ds.length - 1 - i) % nhan === 0) s += '<text x="' + (x0 + bw / 2) + '" y="' + (H - 8) + '" class="stax" text-anchor="middle">' + stDM(new Date(x.d + 'T00:00:00')) + '</text>';
+    });
+    return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Người xem mỗi ngày">' + s + '</svg>';
+  }
+  /* bảng nhiệt: thứ × giờ */
+  function s2Nhiet(ds, rong) {
+    var m = {}, max = 1; (ds || []).forEach(function (x) { m[x.t + '-' + x.h] = x.v; if (x.v > max) max = x.v; });
+    var W = Math.max(300, rong), L = 34, T = 18, cw = (W - L - 4) / 24, ch = Math.min(26, Math.max(16, cw)), H = T + ch * 7 + 4, thu = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'], s = '';
+    for (var h = 0; h < 24; h += (W < 520 ? 3 : 2)) s += '<text x="' + (L + h * cw + cw / 2) + '" y="12" class="stax" text-anchor="middle">' + h + 'h</text>';
+    thu.forEach(function (t, i) {
+      s += '<text x="' + (L - 6) + '" y="' + (T + i * ch + ch / 2 + 4) + '" class="stax" text-anchor="end">' + t + '</text>';
+      for (var h = 0; h < 24; h++) { var v = m[i + '-' + h] || 0; s += '<rect x="' + (L + h * cw + 1) + '" y="' + (T + i * ch + 1) + '" width="' + (cw - 2) + '" height="' + (ch - 2) + '" rx="3" class="s2o" style="fill-opacity:' + (v ? (0.12 + 0.88 * v / max).toFixed(2) : 0.05) + '"><title>' + t + ' ' + h + 'h: ' + fmt(v) + ' lượt xem</title></rect>'; }
+    });
+    return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Lượt xem theo thứ và giờ">' + s + '</svg>';
+  }
+  function s2Csv() {
+    var d = S2.ds; if (!d || !d.ngay) return;
+    var dong = ['Ngày,Người xem,Người mới,Lượt xem'].concat(d.ngay.map(function (x) { return x.d + ',' + x.u + ',' + x.moi + ',' + x.v; }));
+    var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['﻿' + dong.join('\n')], { type: 'text/csv;charset=utf-8' }));
+    a.download = 'nikki-diary-thong-ke-' + d.tu + '-den-' + d.den + '.csv'; document.body.appendChild(a); a.click(); a.remove();
+  }
+  function s2Html() {
+    var k = s2Khoang(), chip = function (v, l) { return '<button type="button" data-s2="' + v + '" aria-pressed="' + (S2.kieu === v) + '">' + l + '</button>'; };
+    var chon = '<div class="evyears stchon">' + chip(1, 'Hôm nay') + chip(7, '7 ngày') + chip(30, '30 ngày') + chip(90, '90 ngày') + chip('tuy', 'Tùy chọn') +
+      '<button type="button" data-s2tai="1" class="streload">↻ Tải lại</button></div>' +
+      (S2.kieu === 'tuy' ? '<form id="s2Form" class="s2tuy"><label>Từ <input type="date" id="s2Tu" value="' + esc(S2.tu || k[0]) + '" max="' + s2Ngay(today()) + '"></label><label>Đến <input type="date" id="s2Den" value="' + esc(S2.den || k[1]) + '" max="' + s2Ngay(today()) + '"></label><button type="submit" class="btn">Xem</button></form>' : '');
+    if (S2.loi) return chon + '<div class="note">' + esc(S2.loi) + '</div>';
+    if (!S2.ds || S2.khoa !== k.join('|')) { if (S2.ds !== 'dang') s2Tai(); return chon + '<p class="muted">Đang tính thống kê…</p>'; }
+    if (S2.ds === 'dang') return chon + '<p class="muted">Đang tính thống kê…</p>';
+    var d = S2.ds, t = d.tong || {}, c = d.cong_dong || {}, rong = (($('adBody') && $('adBody').clientWidth) || 640) - 34;
+    var tile = function (lbl, so, phu) { return '<div class="sttile"><span class="stlbl">' + lbl + '</span><b class="num">' + so + '</b><span class="stsub">' + phu + '</span></div>'; };
+    var khoang = d.tu === d.den ? evFmt(new Date(d.tu + 'T00:00:00')) : evFmt(new Date(d.tu + 'T00:00:00')) + ' – ' + evFmt(new Date(d.den + 'T00:00:00'));
+    var tiles = '<p class="muted small" style="margin:0 0 8px">' + khoang + ' · ' + d.so_ngay + ' ngày · so với ' + d.so_ngay + ' ngày liền trước</p><div class="sttiles st4">' +
+      tile('Người xem', fmt(t.u || 0), s2So(t.u || 0, t.u_truoc)) +
+      tile('Lượt xem', fmt(t.v || 0), s2So(t.v || 0, t.v_truoc)) +
+      tile('Lần vào web (phiên)', fmt(t.phien || 0), s2So(t.phien || 0, t.phien_truoc)) +
+      tile('Lượt xem / phiên', t.phien ? (t.v / t.phien).toFixed(1).replace('.', ',') : '0', s2Pt(t.mot_trang, t.phien) + '% phiên chỉ xem 1 trang') +
+      tile('Thời gian / phiên', String(t.phut_tb || 0).replace('.', ',') + ' phút', 'ước tính, phiên xem ≥ 2 trang') +
+      tile('Người mới', fmt(t.moi || 0), s2Pt(t.moi, t.u) + '% người xem lần đầu vào web') +
+      tile('Quay lại nhiều ngày', fmt(t.nhieu_ngay || 0), s2Pt(t.nhieu_ngay, t.u) + '% người xem vào ≥ 2 ngày') +
+      tile('Nhập tủ đồ', fmt(t.nhap || 0), s2So(t.nhap || 0, t.nhap_truoc)) + '</div>';
+    var cd = '<div class="panel stchart"><div class="stchead"><b>Cộng đồng</b><span class="muted small">trong khoảng đã chọn</span></div><div class="sttiles st4 s2cd">' +
+      tile('Sổ mới tạo', fmt(c.so_moi || 0), 'tổng ' + fmt(c.so_tong || 0) + ' sổ') + tile('Sổ có dùng', fmt(c.so_dung || 0), 'có lưu tủ đồ / bộ / KC') +
+      tile('Tin nhắn chat', fmt(c.chat_tin || 0), fmt(c.chat_nguoi || 0) + ' người nhắn') + tile('Báo cáo · Góp ý', fmt(c.chat_bao || 0) + ' · ' + fmt(c.gop_y || 0), 'báo cáo chat · góp ý mới') + '</div></div>';
+    var last = (d.ngay || [])[d.ngay.length - 1] || { d: d.den, u: 0, moi: 0, v: 0 };
+    var bd = (d.ngay || []).length > 1 ? '<div class="panel stchart"><div class="stchead"><b>Người xem mỗi ngày</b><span class="s2chu"><i class="stbar"></i>người mới <i class="s2cu"></i>người cũ</span></div><p class="sttip" aria-live="polite">' +
+      esc(stDM(new Date(last.d + 'T00:00:00')) + ': ' + fmt(last.u) + ' người xem (' + fmt(last.moi) + ' người mới), ' + fmt(last.v) + ' lượt xem') + '</p>' + s2Cot(d.ngay, Math.min(980, rong)) + '</div>' : '';
+    bd += '<div class="panel stchart"><div class="stchead"><b>Giờ vàng trong tuần</b><span class="muted small">lượt xem theo thứ và giờ (giờ Việt Nam), ô càng đậm càng đông</span></div>' + s2Nhiet(d.gio_thu, Math.min(980, rong)) + '</div>';
+    var nhan = function (mp) { return function (x) { return mp[x] || x; }; }, giu = function (x) { return x; };
+    var bamTen = Object.assign({}, ST_BAM, { 'chu-de': 'Chọn chủ đề phối', 'so-tao': 'Tạo sổ', 'so-dang-nhap': 'Đăng nhập sổ', 'chat-gui': 'Gửi tin chat' });
+    var lists = '<div class="stgrid3">' +
+      stHang('Mục được xem nhiều', d.muc, nhan(ST_TEN), 'm1') + stHang('Trang vào đầu tiên', d.vao, nhan(ST_TEN), 'm1', false, 'mỗi lần vào web') +
+      stHang('Tính năng được dùng', d.bam, nhan(bamTen), 'm2') + stHang('Thiết bị', d.thiet_bi, nhan(Object.assign({ '?': 'Không rõ' }, ST_TB)), 'm3', true, 'theo người xem') +
+      stHang('Vào từ đâu', d.nguon, nhan(Object.assign({ '?': 'Không rõ' }, ST_NGUON)), 'm3', true, 'theo người xem') + stHang('Chủ đề Khu Thi Đấu phối nhiều', d.chu_de, giu, 'm4') +
+      stHang('Bộ được thêm vào tủ nhiều', d.bo, giu, 'm4') + stHang('Sự kiện sắp ra mắt được quan tâm', stSap(d.sap || []), giu, 'm4') + stHang('Từ khóa tìm nhiều', d.tim, giu, 'm4', false, 'Kho đồ / Tủ đồ') + '</div>';
+    var bang = '<details class="panel stchart"' + (S2.bang ? ' open' : '') + ' id="s2Bang"><summary><b>Bảng số liệu theo ngày</b> <span class="muted small">(bấm để mở)</span></summary><div class="s2bang"><table class="sttable"><thead><tr><th>Ngày</th><th class="num">Người xem</th><th class="num">Người mới</th><th class="num">Lượt xem</th></tr></thead><tbody>' +
+      (d.ngay || []).slice().reverse().map(function (x) { return '<tr><td>' + evFmt(new Date(x.d + 'T00:00:00')) + '</td><td class="num">' + fmt(x.u) + '</td><td class="num">' + fmt(x.moi) + '</td><td class="num">' + fmt(x.v) + '</td></tr>'; }).join('') +
+      '</tbody></table></div><div class="row" style="margin-top:8px"><button type="button" class="btn" data-s2csv="1">Tải file CSV</button></div></details>';
+    return chon + tiles + cd + bd + lists + bang +
+      '<p class="muted small">"Người xem" đếm theo trình duyệt: một người vào bằng cả điện thoại và máy tính tính là 2. "Phiên" là một lần vào web, các lượt xem cách nhau quá 30 phút tính là phiên mới. Người dùng trình chặn quảng cáo có thể không được đếm. Không lưu tên, email hay địa chỉ IP.</p>';
+  }
+  $('adBody').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-s2],[data-s2tai],[data-s2csv]'); if (!b) return;
+    if (b.hasAttribute('data-s2csv')) { s2Csv(); return; }
+    if (b.hasAttribute('data-s2tai')) { S2.ds = null; S2.loi = ''; adRender(); return; }
+    var v = b.dataset.s2; S2.kieu = v === 'tuy' ? 'tuy' : +v; S2.loi = ''; adRender();
+  });
+  $('adBody').addEventListener('submit', function (e) {
+    if (e.target.id !== 's2Form') return; e.preventDefault();
+    var tu = $('s2Tu').value, den = $('s2Den').value;
+    if (!tu || !den || tu > den) { toast('Ngày bắt đầu phải trước ngày kết thúc'); return; }
+    S2.tu = tu; S2.den = den; S2.ds = null; adRender();
+  });
+  $('adBody').addEventListener('toggle', function (e) { if (e.target.id === 's2Bang') S2.bang = e.target.open; }, true);
   function stHtml() {
     var n = AD.stNgay || 30;
     var chon = '<div class="evyears stchon">' + [[1, 'Hôm nay'], [7, '7 ngày'], [30, '30 ngày'], [90, '90 ngày']].map(function (o) { return '<button type="button" data-stngay="' + o[0] + '" aria-pressed="' + (n === o[0]) + '">' + o[1] + '</button>'; }).join('') +
@@ -3725,6 +3838,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       if (tao && !j.moi) toast('ID này đã có sổ với đúng mã PIN bạn nhập, web đã đăng nhập vào sổ đó.');
       ST.ma = ma; ST.pin = pin; ST.tab = 'vao'; ST.quen = false; if (j.khoi_phuc) ST.kp = j.khoi_phuc;
       stDat(stGop(j.du_lieu || {})); stNho();
+      track('bam', j.moi ? 'so-tao' : 'so-dang-nhap', null);
       return stDay().then(function () { stVe(); toast(j.moi ? 'Đã tạo sổ "' + ma + '". Đồ trên máy này đã được lưu vào sổ.' : 'Đã mở sổ "' + ma + '"'); });
     }).catch(function (e) { ST.busy = false; if (/ten_danh_rieng/.test(e && e.message || '')) ST.loi = stLoi('ten_danh_rieng'); else if (!ST.loi) ST.loi = 'Chưa kết nối được máy chủ. Bạn kiểm tra mạng rồi thử lại nhé.'; stVe(); });
   }
@@ -3898,7 +4012,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     chRpc('chat_gui', { p_ma: ST.ma, p_pin: ST.pin, p_noi_dung: t }).then(function (j) {
       CH.gui = false;
       if (j.loi) { CH.loi = chLoi(j.loi); if (j.loi === 'sai_pin' || j.loi === 'chua_co') stThoat(true); chVe(); return; }
-      o.value = ''; return chTai().then(function () { chVe(true); if ($('chNhap')) $('chNhap').focus(); });
+      o.value = ''; track('bam', 'chat-gui', null); return chTai().then(function () { chVe(true); if ($('chNhap')) $('chNhap').focus(); });
     }).catch(function () { CH.gui = false; CH.loi = 'Chưa gửi được, bạn kiểm tra mạng rồi thử lại nha.'; chVe(); });
   }
   document.addEventListener('submit', function (e) { if (e.target.id === 'chForm') { e.preventDefault(); chGui(); } });
