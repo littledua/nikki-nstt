@@ -762,7 +762,16 @@ body.admin-mode .book::before { display: none; }
 .adfiles > div { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; }
 .efghnote { margin: 10px 0 0; }
 @media (max-width: 600px) { .dsrow { flex-wrap: wrap; } .dsrow > div { flex: 1 1 60% !important; } .dsrow > div + .btn { margin-left: auto; } }
-.modebtn { margin-left: auto; width: 40px; height: 40px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); display: grid; place-items: center; cursor: pointer; flex: none; }
+.bnut { margin-left: auto; display: flex; gap: 8px; align-items: center; flex: none; }
+.stbtn { display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 12px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; font-weight: 700; font-size: .88rem; cursor: pointer; max-width: 46vw; }
+.stbtn span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.stbtn:hover { border-color: var(--accent); color: var(--accent); }
+.stbtn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.stbtn.dang { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+.stbtn.loi { border-color: var(--warn); color: var(--warn); }
+@media (max-width: 480px) { .stbtn:not(.dang) span { display: none; } .stbtn { padding: 0 10px; max-width: 34vw; } }
+.stds { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+.modebtn { width: 40px; height: 40px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); display: grid; place-items: center; cursor: pointer; flex: none; }
 .modebtn:hover { border-color: var(--accent); color: var(--accent); }
 .modebtn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .modes { margin-top: -4px; }
@@ -1156,7 +1165,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   <header class="bhead">
     <a class="brand" href="#chao"><span class="mark"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/><path d="M12.5 6.5l.7 1.6 1.6.7-1.6.7-.7 1.6-.7-1.6-1.6-.7 1.6-.7z"/></svg></span><div><h1>Nikki Diary</h1><small>Sổ tay của người chơi Ngôi Sao Thời Trang</small></div></a>
     <span class="chip-status" id="wardChip" hidden></span>
-    <button type="button" class="modebtn" id="modeBtn" aria-label="Chuyển sang giao diện tối" title="Chuyển sang giao diện tối"></button>
+    <div class="bnut"><button type="button" class="stbtn" id="stBtn" aria-haspopup="dialog" aria-label="Sổ của tôi"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span id="stBtnTxt">Sổ của tôi</span></button>
+    <button type="button" class="modebtn" id="modeBtn" aria-label="Chuyển sang giao diện tối" title="Chuyển sang giao diện tối"></button></div>
   </header>
 
   <nav class="marks" aria-label="Các mục trong sổ">
@@ -1352,6 +1362,10 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   <!-- GÓP Ý: nút tròn nhỏ ở góc, bấm mở khung -->
   <button type="button" class="totop" id="toTop" aria-label="Lên đầu trang" title="Lên đầu trang" hidden><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
   <button type="button" class="gyfab" id="gyOpen" aria-label="Góp ý" title="Góp ý"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 11h7M8.5 14.5h4.5"/></svg></button>
+  <dialog class="gydlg" id="stDlg" aria-labelledby="stTitle">
+    <div class="gyhead"><h2 class="sec" id="stTitle" style="margin:0">Sổ của tôi</h2><button type="button" class="btn" id="stClose" aria-label="Đóng">✕</button></div>
+    <div id="stBody"></div>
+  </dialog>
   <dialog class="gydlg" id="gyDlg" aria-labelledby="gyTitle">
     <div class="gyhead"><h2 class="sec" id="gyTitle" style="margin:0">Góp ý</h2><button type="button" class="btn" id="gyClose" aria-label="Đóng">✕</button></div>
     <p class="muted" style="margin:6px 0 10px">Bạn thấy web sai chỗ nào, muốn thêm gì, hay chỉ muốn nhắn vài lời thì gửi ở đây nhé. Góp ý chỉ chủ web đọc được.</p>
@@ -3516,12 +3530,127 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 
   /* ================= TỦ ĐỒ / KHO ĐỒ ================= */
   function khongDau(t) { return String(t).normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[đĐ]/g, 'd').toLowerCase().trim(); }
+  /* ---------- Sổ của tôi: lưu tủ đồ, bộ đã lưu, Tích KC theo ID + mã PIN (supabase/04-so-tay-theo-id.sql) ----------
+     Không mở sổ vẫn dùng như cũ (lưu trong trình duyệt). Đã mở sổ thì mỗi lần đổi, web tự lưu lên sau 1,5 giây. */
+  var ST = { ma: '', pin: '', busy: false, loi: '', hoi: false, luc: null, hen: null, keo: 0 };
+  (function () { var x = LS.get('sotay', null); if (x && x.ma && x.pin) { ST.ma = x.ma; ST.pin = x.pin; ST.luc = x.luc || null; } })();
+  var ST_KEY = { ward: 1, bo2: 1, kc: 1 };
+  function stRpc(ham, body) {
+    return fetch(SB_URL + '/rest/v1/rpc/' + ham, { method: 'POST', headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY, 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+      .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.message || r.status); return j; }); });
+  }
+  function stLoi(k) {
+    return { chua_co: 'Chưa có sổ nào với ID này.', sai_pin: 'Sai mã PIN.', khoa: 'Nhập sai PIN nhiều lần quá, ID này tạm khóa 15 phút.', ma: 'ID chỉ gồm chữ không dấu, số, dấu . _ - (3 đến 32 ký tự).', pin: 'Mã PIN là 4 đến 8 chữ số.', lon: 'Dữ liệu quá lớn, không lưu được.' }[k] || 'Chưa kết nối được (' + k + '). Bạn thử lại nhé.';
+  }
+  function stGoi() { return { ward: LS.get('ward', null), bo2: LS.get('bo2', []), kc: LS.get('kc', null) }; }
+  function stGop(sv) { /* gộp sổ trên mạng với đồ đang có trên máy: tủ đồ lấy bản mới hơn, bộ đã lưu cộng lại, KC ưu tiên bản trên mạng */
+    var may = stGoi(), w = sv.ward && sv.ward.ids ? (may.ward && may.ward.ids && (may.ward.at || 0) > (sv.ward.at || 0) ? may.ward : sv.ward) : may.ward;
+    var bo = (sv.bo2 || []).slice(), co = {}; bo.forEach(function (b) { co[b.id] = 1; }); (may.bo2 || []).forEach(function (b) { if (!co[b.id]) bo.push(b); });
+    return { ward: w || null, bo2: bo, kc: sv.kc || may.kc || null };
+  }
+  function stDat(d) { /* đưa dữ liệu vào máy và vẽ lại */
+    ST.keo++;
+    if (d.ward && d.ward.ids) LS.set('ward', d.ward); else { try { localStorage.removeItem('nstt.ward'); } catch (e) {} }
+    LS.set('bo2', d.bo2 || []); if (d.kc) LS.set('kc', d.kc);
+    ST.keo--;
+    BO = d.bo2 || []; if (d.kc) KC = d.kc;
+    if (KHO) { datTu(d.ward && d.ward.ids ? String(d.ward.ids).split(',').map(Number) : [], false); veChip(); }
+    var v = (location.hash || '').slice(1);
+    if (CAN_DU_LIEU[v]) moDuLieu(function () { veMuc(v); }); else if (v === 'su-kien' && EV.tab === 'kc' && EV.list) renderEvents();
+  }
+  function stNho() { LS.set('sotay', { ma: ST.ma, pin: ST.pin, luc: ST.luc }); }
+  function stDay() { /* lưu cả sổ lên mạng */
+    if (!ST.ma) return Promise.resolve();
+    clearTimeout(ST.hen); ST.hen = null;
+    return stRpc('so_tay_luu', { p_ma: ST.ma, p_pin: ST.pin, p_du_lieu: stGoi() }).then(function (j) {
+      if (j.loi) { var t = stLoi(j.loi); if (j.loi === 'sai_pin' || j.loi === 'chua_co') stThoat(true); ST.loi = t; stNut(); throw new Error(t); }
+      ST.luc = j.sua_luc; ST.loi = ''; LS.set('sotayCho', false); stNho(); stNut();
+    }, function (e) { ST.loi = 'Chưa lưu lên mạng được, web sẽ thử lại khi bạn đổi gì tiếp.'; stNut(); throw e; });
+  }
+  function stHen() { if (!ST.ma || ST.keo) return; LS.set('sotayCho', true); clearTimeout(ST.hen); ST.hen = setTimeout(function () { stDay().catch(function () {}); }, 1500); stNut(); }
+  /* mỗi lần web lưu tủ đồ / bộ / KC vào máy thì hẹn lưu lên mạng */
+  var lsSet0 = LS.set; LS.set = function (k, v) { lsSet0(k, v); if (ST_KEY[k]) stHen(); };
+  function stMo(tao, ma, pin) {
+    ma = String(ma || '').trim().toLowerCase(); pin = String(pin || '').trim(); ST.go = ma;
+    if (!/^[a-z0-9_.-]{3,32}$/.test(ma)) { ST.loi = stLoi('ma'); return stVe(); }
+    if (!/^[0-9]{4,8}$/.test(pin)) { ST.loi = stLoi('pin'); return stVe(); }
+    ST.busy = true; ST.loi = ''; stVe();
+    stRpc('so_tay_mo', { p_ma: ma, p_pin: pin, p_tao: !!tao }).then(function (j) {
+      ST.busy = false;
+      if (j.loi === 'chua_co') { ST.hoi = { ma: ma, pin: pin }; return stVe(); }
+      if (j.loi) { ST.loi = stLoi(j.loi); return stVe(); }
+      ST.ma = ma; ST.pin = pin; ST.hoi = false;
+      stDat(stGop(j.du_lieu || {})); stNho();
+      return stDay().then(function () { stVe(); toast(j.moi ? 'Đã tạo sổ "' + ma + '". Đồ trên máy này đã được lưu vào sổ.' : 'Đã mở sổ "' + ma + '"'); });
+    }).catch(function () { ST.busy = false; if (!ST.loi) ST.loi = 'Chưa kết nối được máy chủ. Bạn kiểm tra mạng rồi thử lại nhé.'; stVe(); });
+  }
+  function stKeo() { /* lấy bản mới nhất trên mạng (vd vừa sửa ở máy khác) */
+    if (!ST.ma || ST.busy) return Promise.resolve();
+    ST.keoLuc = Date.now();
+    if (LS.get('sotayCho', false)) return stDay().catch(function () {}); /* còn thay đổi chưa lưu lên: đẩy lên trước */
+    return stRpc('so_tay_mo', { p_ma: ST.ma, p_pin: ST.pin }).then(function (j) {
+      if (j.loi) { if (j.loi === 'sai_pin' || j.loi === 'chua_co') { var t = stLoi(j.loi); stThoat(true); ST.loi = t; } stNut(); return; }
+      if (j.sua_luc !== ST.luc && j.du_lieu && Object.keys(j.du_lieu).length) { stDat(j.du_lieu); ST.luc = j.sua_luc; stNho(); }
+      ST.loi = ''; stNut();
+    }).catch(function () {});
+  }
+  function stThoat(giu) {
+    ST.ma = ''; ST.pin = ''; ST.luc = null; ST.hoi = false; clearTimeout(ST.hen);
+    try { localStorage.removeItem('nstt.sotay'); } catch (e) {} LS.set('sotayCho', false);
+    if (!giu) stDat({ ward: null, bo2: [], kc: null });
+    stNut(); stVe();
+  }
+  function stNut() {
+    $('stBtnTxt').textContent = ST.ma ? ST.ma : 'Sổ của tôi'; $('stBtn').setAttribute('aria-label', ST.ma ? 'Sổ của tôi: ' + ST.ma : 'Sổ của tôi');
+    $('stBtn').classList.toggle('dang', !!ST.ma); $('stBtn').classList.toggle('loi', !!(ST.ma && ST.loi));
+    $('stBtn').title = ST.ma ? (ST.loi || (LS.get('sotayCho', false) ? 'Đang lưu…' : 'Đã lưu lên mạng')) : 'Mở sổ để lưu tủ đồ theo ID';
+  }
+  function stVe() {
+    var b = $('stBody'), msg = ST.loi ? '<p class="small" role="alert" style="color:var(--warn);margin:8px 0 0">' + esc(ST.loi) + '</p>' : '';
+    if (ST.ma) {
+      var w = LS.get('ward', null), bo = LS.get('bo2', []);
+      b.innerHTML = '<p style="margin:6px 0 10px">Đang dùng sổ <b>' + esc(ST.ma) + '</b>. Tủ đồ, bộ đã lưu và Tích KC tự lưu lên mạng mỗi khi bạn đổi.</p>' +
+        '<ul class="stds"><li>Tủ đồ: <b>' + (w && w.count ? fmt(w.count) + ' món' : 'chưa nhập') + '</b></li><li>Bộ đã lưu: <b>' + bo.length + '</b></li><li>Lưu lên mạng lúc: <b>' + (ST.luc ? adTime(ST.luc) : '…') + '</b>' + (LS.get('sotayCho', false) ? ' <span class="muted small">(đang chờ lưu)</span>' : '') + '</li></ul>' + msg +
+        '<div class="row" style="margin-top:12px"><button type="button" class="btn" data-st="keo">↻ Lấy bản mới nhất</button><button type="button" class="btn ghost" data-st="thoat">Đóng sổ trên máy này</button></div>' +
+        '<p class="muted small" style="margin:10px 0 0">Sang máy khác: bấm <b>Sổ của tôi</b>, nhập đúng ID và mã PIN này. Quên PIN thì gửi góp ý cho chủ web.</p>' +
+        '<details class="small" style="margin-top:8px"><summary>Đóng sổ và xóa đồ khỏi máy này</summary><p style="margin:6px 0">Dùng khi mượn máy người khác. Đồ vẫn còn trong sổ trên mạng.</p><button type="button" class="btn ghost danger" data-st="xoa">Đóng sổ và xóa khỏi máy</button></details>';
+      return;
+    }
+    if (ST.hoi) {
+      b.innerHTML = '<p style="margin:6px 0 10px">Chưa có sổ nào với ID <b>' + esc(ST.hoi.ma) + '</b>. Tạo sổ mới với mã PIN bạn vừa nhập?</p>' +
+        '<p class="muted small" style="margin:0 0 12px">Nhớ kỹ mã PIN nha: sang máy khác phải nhập đúng ID và PIN mới mở được. Đồ đang có trên máy này sẽ được lưu vào sổ.</p>' +
+        '<div class="row"><button type="button" class="btn primary" data-st="tao"' + (ST.busy ? ' disabled' : '') + '>Tạo sổ mới</button><button type="button" class="btn ghost" data-st="lai">Nhập lại</button></div>' + msg;
+      return;
+    }
+    b.innerHTML = '<p class="muted" style="margin:6px 0 12px">Lưu tủ đồ, bộ đã lưu và Tích KC theo ID để đổi máy vẫn còn, không phải gửi file qua lại. Không cần email.</p>' +
+      '<form id="stForm" class="evform" novalidate style="margin:0">' +
+      '<label class="field wide"><span>ID (vd ID trong game hoặc tên bạn tự đặt)</span><input id="stMa" maxlength="32" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="vd: dua123" value="' + esc(ST.go || '') + '"></label>' +
+      '<label class="field wide"><span>Mã PIN (4 đến 8 số)</span><input id="stPin" type="password" inputmode="numeric" maxlength="8" autocomplete="current-password" placeholder="••••"></label>' +
+      '<div class="wide"><button type="submit" class="btn primary"' + (ST.busy ? ' disabled' : '') + '>' + (ST.busy ? 'Đang mở…' : 'Mở sổ') + '</button></div></form>' + msg +
+      '<p class="muted small" style="margin:10px 0 0">Lần đầu thì nhập ID và mã PIN bạn muốn, web sẽ hỏi tạo sổ mới.</p>';
+  }
+  $('stBtn').addEventListener('click', function () { if (!ST.ma) ST.loi = ''; stVe(); $('stDlg').showModal(); if (!ST.ma && !matchMedia('(pointer: coarse)').matches && $('stMa')) $('stMa').focus(); });
+  $('stClose').addEventListener('click', function () { $('stDlg').close(); });
+  $('stDlg').addEventListener('submit', function (e) { if (e.target.id === 'stForm') { e.preventDefault(); stMo(false, $('stMa').value, $('stPin').value); } });
+  $('stDlg').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-st]'); if (!b) return;
+    var k = b.dataset.st;
+    if (k === 'tao' && ST.hoi) stMo(true, ST.hoi.ma, ST.hoi.pin);
+    if (k === 'lai') { ST.hoi = false; ST.loi = ''; stVe(); }
+    if (k === 'keo') { ST.loi = ''; stKeo().then(stVe); }
+    if (k === 'thoat') { stThoat(true); toast('Đã đóng sổ. Đồ vẫn còn trên máy này.'); }
+    if (k === 'xoa') { stThoat(false); toast('Đã đóng sổ và xóa đồ khỏi máy này.'); }
+  });
+  stNut();
+  if (ST.ma) stKeo();
+  document.addEventListener('visibilitychange', function () { if (!document.hidden && ST.ma && Date.now() - (ST.keoLuc || 0) > 60000) stKeo(); });
+
   var TD = { kho: false, q: '', o: '', own: 'all', pc: '', sort: 'game', page: 0, bo: -1, che: 'bo' }, MOI_TRANG = 48, ganDay = null;
   function veTu(kho) {
     TD.kho = kho; TD.bo = -1;
     $('tdHead').innerHTML = kho
       ? '<p class="eyebrow">Kho đồ chung</p><h2 class="h1">Tra cứu <span class="hl">các bộ đồ</span> trong game.</h2><p class="lede">Gõ tên bộ hoặc tên một món, web hiện bộ có món đó. Bấm "Xem cả bộ" để xem từng món và đánh dấu món đã có.</p>'
-      : '<p class="eyebrow">Tủ đồ cá nhân</p><h2 class="h1">Tủ đồ <span class="hl">của bạn</span>.</h2><p class="lede">Nhập file tủ đồ để mục Phối đồ chỉ gợi ý món bạn có. File chỉ đọc trên máy bạn, không gửi đi đâu.</p>';
+      : '<p class="eyebrow">Tủ đồ cá nhân</p><h2 class="h1">Tủ đồ <span class="hl">của bạn</span>.</h2><p class="lede">Nhập file tủ đồ để mục Phối đồ chỉ gợi ý món bạn có. File chỉ đọc trên máy bạn. Muốn đổi máy vẫn còn tủ đồ thì mở <button type="button" class="linkbtn" onclick="document.getElementById(\'stBtn\').click()">Sổ của tôi</button> (lưu danh sách món theo ID của bạn).</p>';
     $('tdNhap').hidden = kho; $('view-tu-do').classList.toggle('kho', kho);
     $('tdTitle').textContent = kho ? 'Các bộ đồ' : 'Đồ của bạn';
     if (!$('fO').options.length) {
