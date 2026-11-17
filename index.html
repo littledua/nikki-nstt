@@ -909,6 +909,9 @@ html[data-mode="toi"] .evcard.now { border-color: var(--accent); }
 .wbar .tr i { display: block; height: 100%; border-radius: 99px; background: var(--fill); }
 .wbar b { text-align: right; color: var(--accent); }
 .soon-note { font-size: .82rem; color: var(--muted); margin-top: 8px; }
+.aipc { display: flex; flex-wrap: wrap; gap: 6px; }
+.pctag { font-size: .8rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--pc); color: var(--pci); }
+
 .score {
   display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 10px 16px;
   background: var(--accent-soft); border-radius: 16px; padding: 14px 16px; margin-bottom: 12px;
@@ -1252,14 +1255,16 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
         <p class="lbl">Loại ải</p>
         <select id="pdLoai" aria-label="Loại ải">
           <option value="khu-thi-dau">Khu Thi Đấu: phối điểm cao</option>
+          <option value="ai-hoi">Ải hội: phối điểm cao</option>
           <option value="cot-truyen">Ải cốt truyện: món bắt buộc chế</option>
         </select>
+        <div id="pdHoi" hidden></div>
         <div id="pdKtd">
         <p class="lbl" style="margin-top:14px">Chủ đề</p>
         <input type="search" id="pdQ" placeholder="Tìm chủ đề…" aria-label="Tìm chủ đề" style="width:100%">
         <div class="themes-list" id="pdList" role="group" aria-label="Chủ đề"></div>
         <div id="pdW"></div>
-        <p class="soon-note">Phối điểm cho ải cốt truyện sẽ có khi đủ dữ liệu trọng số.</p>
+        <p class="soon-note">Ải hội: chọn ở ô Loại ải phía trên.</p>
         </div>
         <div id="pdCt" hidden>
         <p class="lbl" style="margin-top:14px">Chặng</p>
@@ -1347,6 +1352,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
         <li><b>Điểm món đồ, ô đồ, tên bộ đồ và tên chặng:</b> tổng hợp thủ công từ game. Món còn thiếu bổ sung từ <a href="https://lovenikki.fandom.com" target="_blank" rel="noopener">Love Nikki Wiki</a> theo giấy phép <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a>; điểm chữ đã quy đổi sang số để tính.</li>
         <li><b>Luật trừ điểm trang sức:</b> theo Love Nikki Wiki, trang <a href="https://lovenikki.fandom.com/wiki/Styling_Battle" target="_blank" rel="noopener">Styling Battle</a> (CC BY-SA 3.0).</li>
         <li><b>Trọng số chủ đề Khu Thi Đấu:</b> chép từ thông tin công khai trong game.</li>
+        <li><b>Phong cách và tag ải hội:</b> theo Love Nikki Wiki, trang <a href="https://lovenikki.fandom.com/wiki/Commissions" target="_blank" rel="noopener">Commissions</a> (CC BY-SA 3.0); tên tag dịch tạm. File <code>ai-hoi.json</code> chia sẻ theo CC BY-SA 3.0.</li>
         <li><b>Ải bắt buộc và công thức chế:</b> theo Love Nikki Wiki, trang <a href="https://lovenikki.fandom.com/wiki/Target_Suits" target="_blank" rel="noopener">Target Suits</a> và trang từng món (CC BY-SA 3.0), đã đổi sang tên Việt.</li>
         <li><b>Lịch sự kiện, ảnh banner, cách chơi và tổn thất (chi phí):</b> lấy tham khảo từ các page <b>Ngôi Sao Thời Trang VNG</b>, <b>My Miracle Nikki</b> và <b>Kỳ Tích Noãn Noãn</b>. Phần "Dự đoán theo bản Trung" dựa theo thông tin từ page <b>Kỳ Tích Noãn Noãn</b>, nên tên, giá và ngày khi về bản Việt có thể chênh một chút.</li>
         <li><b>Hình món đồ:</b> icon từ <a href="https://wiki.biligame.com/qjnn/" target="_blank" rel="noopener">奇迹暖暖 BWIKI</a> (bilibili); một số hình chụp từ game.</li>
@@ -1785,7 +1791,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     var sap = du == null ? '<p class="muted small">Đang tải…</p>' : du.length ? '<ul class="chaosap">' + du.slice(0, 3).map(function (e) {
       return '<li><a href="#su-kien" data-chaotab="sap">' + (e.anh ? '<img loading="lazy" alt="" src="dd/' + esc(e.anh) + '" onerror="this.remove()">' : '') + '<span><b>' + esc(e.ten) + '</b><span class="muted small">' + esc(e.loai) + ' · ' + esc(ddNgay(e)) + (e.tong ? ' · ' + ddKC(e) : '') + '</span></span></a></li>';
     }).join('') + '</ul>' : '<p class="muted small">Chưa có dự đoán mới.</p>';
-    var lam = [['phoi-do', 'Phối đồ', 'Gợi ý bộ điểm cao cho Khu Thi Đấu và ải cốt truyện'], ['tu-do', 'Tủ đồ', 'Nhập file clothes_date để chỉ gợi ý đồ bạn có'], ['kho-do', 'Kho đồ', 'Tra mọi bộ đồ, đánh dấu món đã có'],
+    var lam = [['phoi-do', 'Phối đồ', 'Gợi ý bộ điểm cao cho Khu Thi Đấu, ải hội và ải cốt truyện'], ['tu-do', 'Tủ đồ', 'Nhập file clothes_date để chỉ gợi ý đồ bạn có'], ['kho-do', 'Kho đồ', 'Tra mọi bộ đồ, đánh dấu món đã có'],
       ['kc', 'Tích kim cương', 'Tính cần để dành bao nhiêu KC cho sự kiện sắp tới'], ['bo-da-luu', 'Bộ đã lưu', 'Mở lại các bộ phối bạn đã lưu'], ['chat', 'Phòng chat chung', 'Hỏi phối đồ, khoe bộ mới, tám chuyện với mọi người']];
     box.innerHTML = '<div class="phead"><p class="eyebrow">Chào ' + buoi + ' · ' + thu + ', ' + evFmt(now) + '</p><h2 class="h1">Chào mừng đến với <span class="hl">sổ nhật ký của Nikki</span></h2>' +
       '<p class="lede">Nơi bạn có thể theo dõi các sự kiện đã, đang và sắp diễn ra trong game Ngôi Sao Thời Trang.</p></div>' +
@@ -3368,13 +3374,13 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   function trackView(v) {
     if (v === 'admin' || !ST_TAB[v]) return;
     if (v === 'su-kien') v += '/' + ((typeof EV !== 'undefined' && EV && EV_TAB_PATH[EV.tab]) || 'dang-mo');
-    else if (v === 'phoi-do') v += '/' + ((typeof PD !== 'undefined' && PD ? PD.loai : LS.get('loai', '')) === 'cot-truyen' ? 'cot-truyen' : 'khu-thi-dau');
+    else if (v === 'phoi-do') { var lp = (typeof PD !== 'undefined' && PD ? PD.loai : LS.get('loai', '')); v += '/' + (lp === 'cot-truyen' || lp === 'ai-hoi' ? lp : 'khu-thi-dau'); }
     track('xem', v, null);
   }
   var ST_TEN = { 'chao': 'Trang chủ', 'chat': 'Phòng chat', 'su-kien/sap': 'Sự kiện · Sắp ra mắt', 'su-kien/dang-mo': 'Sự kiện · Đang mở', 'su-kien/lich-su': 'Sự kiện · Lịch sử', 'su-kien/tich-kc': 'Sự kiện · Tích KC',
-    'phoi-do/khu-thi-dau': 'Phối đồ · Khu Thi Đấu', 'phoi-do/cot-truyen': 'Phối đồ · Ải cốt truyện', 'tu-do': 'Tủ đồ', 'kho-do': 'Kho đồ', 'bo-da-luu': 'Đã lưu', 'nguon': 'Nguồn',
+    'phoi-do/khu-thi-dau': 'Phối đồ · Khu Thi Đấu', 'phoi-do/cot-truyen': 'Phối đồ · Ải cốt truyện', 'phoi-do/ai-hoi': 'Phối đồ · Ải hội', 'tu-do': 'Tủ đồ', 'kho-do': 'Kho đồ', 'bo-da-luu': 'Đã lưu', 'nguon': 'Nguồn',
     'su-kien': 'Sự kiện (trước khi tách tab)', 'phoi-do': 'Phối đồ (trước khi tách loại)' };
-  var ST_BAM = { 'chi-tiet-sap': 'Xem chi tiết sắp ra mắt', 'chi-tiet-su-kien': 'Xem chi tiết sự kiện', 'de-danh': 'Để dành KC', 'them-ca-bo': '+ Thêm cả bộ', 'them-vao-tu': '+ Thêm từng món', 'luu-bo': 'Lưu bộ phối', 'nhap-tu': 'Nhập tủ đồ', 'gop-y': 'Gửi góp ý', 'so-tao': 'Tạo sổ', 'so-dang-nhap': 'Đăng nhập sổ', 'chat-gui': 'Gửi tin chat' };
+  var ST_BAM = { 'chi-tiet-sap': 'Xem chi tiết sắp ra mắt', 'chi-tiet-su-kien': 'Xem chi tiết sự kiện', 'ai-hoi': 'Chọn ải hội', 'de-danh': 'Để dành KC', 'them-ca-bo': '+ Thêm cả bộ', 'them-vao-tu': '+ Thêm từng món', 'luu-bo': 'Lưu bộ phối', 'nhap-tu': 'Nhập tủ đồ', 'gop-y': 'Gửi góp ý', 'so-tao': 'Tạo sổ', 'so-dang-nhap': 'Đăng nhập sổ', 'chat-gui': 'Gửi tin chat' };
   var ST_NGUON = { facebook: 'Facebook', google: 'Google', zalo: 'Zalo', 'truc-tiep': 'Gõ link / lưu sẵn', khac: 'Trang khác' };
   var ST_TB = { dt: 'Điện thoại', mt: 'Máy tính' };
   function adLoadSt() {
@@ -3672,11 +3678,12 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     }).join('') || '<span class="muted small">Không có chủ đề nào khớp.</span>';
   }
   function vePhoi() {
-    var ct = PD.loai === 'cot-truyen';
-    $('pdKtd').hidden = ct; $('pdCt').hidden = !ct;
+    var ct = PD.loai === 'cot-truyen', hoi = PD.loai === 'ai-hoi';
+    $('pdKtd').hidden = ct || hoi; $('pdCt').hidden = !ct; $('pdHoi').hidden = !hoi;
     if (ct) { veCotTruyen(); return; }
-    var c = chuDe();
-    veDsChuDe();
+    if (hoi && !HOI) { $('pdKq').innerHTML = '<p class="muted">Đang tải dữ liệu ải hội…</p>'; moHoi(vePhoi); return; }
+    if (hoi) veHoiChon(); else veDsChuDe();
+    var c = chuDeHienTai();
     $('pdW').innerHTML = '<div class="wbars">' + c.w.map(function (x, k) { return x ? [x, k] : null; }).filter(Boolean)
       .sort(function (a, b) { return b[0] - a[0]; }).map(function (p) {
         return '<div class="wbar pc' + p[1] + '"><span>' + esc(KHO.pc[p[1]]) + '</span><span class="tr"><i style="width:' + Math.round(p[0] / 20 * 100) + '%"></i></span><b>×' + p[0] + '</b></div>';
@@ -3692,8 +3699,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     var chinh = KHO.o.filter(function (o) { return bo[o] && !bo[o].trangSuc; }), ts = KHO.o.filter(function (o) { return bo[o] && bo[o].trangSuc; });
     var doi = Object.keys(PD.ov).length;
     var html = '<div class="score"><div><div class="lbl">Điểm gốc (ước tính)</div><div class="total num">' + fmt(t.tong) + '</div></div>' +
-      '<div class="sub">' + esc(c.ten) + ' · Khu Thi Đấu<br>' + chinh.length + ' món chính · ' + t.soTrangSuc + ' trang sức' + (t.soTrangSuc > 3 ? ' (×' + String(t.heSoTrangSuc).replace('.', ',') + ')' : '') + '</div></div>' +
-      '<p class="basenote">Gợi ý dựa theo điểm gốc, chưa tính kỹ năng. Số trang sức đã được chọn theo luật trừ điểm trang sức để ra điểm cao nhất.</p>' +
+      '<div class="sub">' + esc(c.loai === 'Ải hội' ? c.ten : c.ten + ' · Khu Thi Đấu') + '<br>' + chinh.length + ' món chính · ' + t.soTrangSuc + ' trang sức' + (t.soTrangSuc > 3 ? ' (×' + String(t.heSoTrangSuc).replace('.', ',') + ')' : '') + '</div></div>' +
+      '<p class="basenote">Gợi ý dựa theo điểm gốc, chưa tính kỹ năng. Số trang sức đã được chọn theo luật trừ điểm trang sức để ra điểm cao nhất.' + (c.uocTinh ? ' Ải này chưa rõ trọng số từng phong cách nên tạm tính 5 phong cách nặng như nhau' + (c.tag && c.tag.length ? ', và chưa cộng điểm tag <b>' + c.tag.map(esc).join(', ') + '</b>' : '') + '.' : '') + '</p>' +
       '<div class="grouphead">Đồ chính <small>bấm để đổi món</small></div><div class="slotgrid">' + chinh.map(oDo).join('') + '</div>' +
       (ts.length ? '<details class="accs"' + (PD.moTs ? ' open' : '') + ' id="pdTs"><summary><div class="grouphead">Trang sức <small>' + ts.length + ' món</small></div></summary><div class="slotgrid">' + ts.map(oDo).join('') + '</div></details>' : '') +
       '<div class="pacts">' +
@@ -3731,11 +3738,41 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   $('pdKq').addEventListener('toggle', function (e) { if (e.target.id === 'pdTs') PD.moTs = e.target.open; }, true);
 
 
+  /* ================= ẢI HỘI (ai-hoi.json, Love Nikki Wiki CC BY-SA 3.0) =================
+     Wiki chỉ ghi ải cần bên nào của 5 cặp phong cách, không ghi trọng số → tạm tính 5 phong cách nặng như nhau.
+     Chưa tính điểm cộng tag (dữ liệu đồ chưa có tag), chỉ hiện tag ải cần. */
+  var HOI = null, hoiTai = false, W_AI = 10;
+  PD.hoiCh = LS.get('hoiCh', 1); PD.hoiAi = LS.get('hoiAi', '1-1');
+  function moHoi(xong) {
+    if (HOI) { xong(); return; }
+    if (hoiTai) return; hoiTai = true;
+    fetch('ai-hoi.json?v=' + BAN).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (j) { HOI = j.ai || []; hoiTai = false; xong(); })
+      .catch(function () { hoiTai = false; $('pdKq').innerHTML = '<div class="empty"><b>Chưa tải được dữ liệu ải hội</b>Bạn kiểm tra mạng rồi tải lại trang nhé.</div>'; });
+  }
+  function wTuPc(pc) { var w = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; pc.forEach(function (k) { w[k] = W_AI; }); return w; }
+  function aiHoi() { return (HOI || []).filter(function (a) { return a.ma === PD.hoiAi; })[0] || (HOI || [])[0]; }
+  /* chủ đề đang phối: Khu Thi Đấu / ải hội → { ten, w, loai, tag } */
+  function chuDeHienTai() {
+    if (PD.loai === 'ai-hoi') { var a = aiHoi(); return a ? { ten: 'Ải hội ' + a.ma, w: wTuPc(a.pc), loai: 'Ải hội', tag: a.tag, uocTinh: true } : null; }
+    var c = chuDe(); return { ten: c.ten, w: c.w, loai: 'Khu Thi Đấu', tag: [] };
+  }
+  function veHoiChon() {
+    var ds = (HOI || []).filter(function (a) { return +a.ma.split('-')[0] === +PD.hoiCh; }), a = aiHoi();
+    var ch = ''; for (var i = 1; i <= 19; i++) ch += '<option value="' + i + '"' + (i === +PD.hoiCh ? ' selected' : '') + '>Chặng ' + i + '</option>';
+    $('pdHoi').innerHTML = '<p class="lbl" style="margin-top:14px">Chặng</p><select id="hoiCh" aria-label="Chặng ải hội" style="width:100%">' + ch + '</select>' +
+      '<p class="lbl" style="margin-top:12px">Ải</p><div class="themes-list" role="group" aria-label="Ải">' + ds.map(function (x) { return '<button type="button" data-hoiai="' + x.ma + '" aria-pressed="' + (a && x.ma === a.ma) + '">' + x.ma + '</button>'; }).join('') + '</div>' +
+      (a ? '<div class="aicho"><p class="lbl" style="margin:12px 0 6px">Ải ' + a.ma + ' cần</p><div class="aipc">' + a.pc.map(function (k) { return '<span class="pctag pc' + k + '">' + esc(KHO.pc[k]) + '</span>'; }).join('') + '</div>' +
+        (a.tag.length ? '<p class="small" style="margin:8px 0 0">🏷 Tag: <b>' + a.tag.map(esc).join(', ') + '</b> <span class="muted">(chưa tính điểm cộng tag, bạn ưu tiên món có tag này nhé)</span></p>' : '') + '</div>' : '');
+  }
+  $('pdHoi').addEventListener('change', function (e) { if (e.target.id !== 'hoiCh') return; PD.hoiCh = +e.target.value; PD.hoiAi = PD.hoiCh + '-1'; LS.set('hoiCh', PD.hoiCh); LS.set('hoiAi', PD.hoiAi); PD.ov = {}; PD.mo = null; vePhoi(); });
+  $('pdHoi').addEventListener('click', function (e) { var b = e.target.closest('[data-hoiai]'); if (!b) return; PD.hoiAi = b.dataset.hoiai; LS.set('hoiAi', PD.hoiAi); PD.ov = {}; PD.mo = null; vePhoi(); track('bam', 'ai-hoi', PD.hoiAi); });
+
+
   /* ================= ẢI CỐT TRUYỆN: MÓN BẮT BUỘC (cot-truyen.json, từ Love Nikki Wiki CC BY-SA 3.0) ================= */
   var CT = null, ctDangTai = false;
-  PD.loai = LS.get('loai', 'khu-thi-dau'); PD.chuong = LS.get('chuong', '');
+  PD.loai = LS.get('loai', 'khu-thi-dau'); if (['khu-thi-dau', 'ai-hoi', 'cot-truyen'].indexOf(PD.loai) < 0) PD.loai = 'khu-thi-dau'; PD.chuong = LS.get('chuong', '');
   $('pdLoai').value = PD.loai;
-  $('pdLoai').addEventListener('change', function () { PD.loai = this.value; LS.set('loai', PD.loai); trackView('phoi-do'); if (PD.loai === 'cot-truyen') vePhoi(); else moDuLieu(vePhoi); });
+  $('pdLoai').addEventListener('change', function () { PD.loai = this.value; PD.ov = {}; PD.mo = null; LS.set('loai', PD.loai); trackView('phoi-do'); if (PD.loai === 'cot-truyen') vePhoi(); else moDuLieu(vePhoi); });
   function moCt(xong) {
     if (CT) { xong(); return; }
     if (ctDangTai) return; ctDangTai = true;
@@ -3798,7 +3835,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   var BO = LS.get('bo2', []), xoaBo = null;
   function luuBo() {
     var k = PD.kq, mon = KHO.o.filter(function (o) { return k.bo[o]; }).map(function (o) { return [o, k.bo[o].ma, k.bo[o].ten]; });
-    BO.unshift({ id: 'b' + Date.now().toString(36), ten: k.c.ten, cd: k.c.ten, tong: k.t.tong, at: Date.now(), mon: mon });
+    BO.unshift({ id: 'b' + Date.now().toString(36), ten: k.c.ten, cd: k.c.ten, loai: k.c.loai, tong: k.t.tong, at: Date.now(), mon: mon });
     LS.set('bo2', BO); toast('Đã lưu vào mục Đã lưu'); track('bam', 'luu-bo', PD.cd || null);
   }
   function veLuu() {
@@ -3807,7 +3844,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     box.innerHTML = '<div class="saved">' + BO.map(function (r) {
       return '<article class="scard pin"><div class="stop">Điểm gốc · <span class="num">' + fmt(r.tong) + '</span></div>' +
         '<input type="text" class="sname" value="' + esc(r.ten) + '" data-doiten="' + r.id + '" aria-label="Tên bộ (bấm để đổi tên)">' +
-        '<div class="smeta">' + esc(r.cd) + ' · Khu Thi Đấu · ' + new Date(r.at).toLocaleDateString('vi-VN') + '</div>' +
+        '<div class="smeta">' + esc(r.loai === 'Ải hội' ? r.cd : r.cd + ' · Khu Thi Đấu') + ' · ' + new Date(r.at).toLocaleDateString('vi-VN') + '</div>' +
         '<div class="sitems">' + r.mon.filter(function (x) { return KHO.o.indexOf(x[0]) < 9; }).map(function (x) { return '<span title="' + esc(x[0]) + '">' + esc(x[2]) + '</span>'; }).join('') + '</div>' +
         '<div class="row">' + (xoaBo === r.id
           ? '<span class="small">Xóa bộ này? Xóa rồi không lấy lại được.</span><button class="btn danger" data-xoa2="' + r.id + '">Xóa bộ</button><button class="btn ghost" data-thoi="1">Giữ lại</button>'
