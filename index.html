@@ -774,7 +774,6 @@ body.admin-mode .book::before { display: none; }
 .stpinmoi { font: 700 1.05rem ui-monospace, Menlo, Consolas, monospace; letter-spacing: .1em; user-select: all; }
 .sttabs { margin: 4px 0 12px; }
 .s2cu { fill: color-mix(in srgb, var(--accent) 30%, var(--surface)); }
-.s2o { fill: var(--accent); }
 .s2chu { display: inline-flex; gap: 6px; align-items: center; font-size: .78rem; color: var(--muted); margin-left: auto; }
 .s2chu i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; background: var(--accent); }
 .s2chu i.s2cu { background: color-mix(in srgb, var(--accent) 30%, var(--surface)); margin-left: 8px; }
@@ -2466,7 +2465,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     var head = function (h, sub) { return '<div class="adhead"><h2>' + h + '</h2>' + (sub ? '<p class="muted small">' + sub + '</p>' : '') + '</div>'; };
     var body = AD.tab === 'su-kien' ? head('Sự kiện', 'Lịch đã mở nằm trong su-kien.txt, sắp ra mắt nằm trong du-doan.txt.') + skHtml()
       : AD.tab === 'gop-y' ? head('Hộp thư', 'Góp ý người chơi gửi từ nút 💬 trên web.') + fbHtml(unseen)
-      : AD.tab === 'thong-ke' ? head('Lượt truy cập') + (S2.cu ? '<div class="note small" style="margin-bottom:10px">Đang dùng bản thống kê cũ. Chạy file <code>supabase/07-thong-ke-chi-tiet.sql</code> trong Supabase để có bản chi tiết (phiên, người mới, giờ vàng, cộng đồng…).</div>' + stHtml() : s2Html())
+      : AD.tab === 'thong-ke' ? head('Lượt truy cập') + (S2.cu ? '<div class="note small" style="margin-bottom:10px">Đang dùng bản thống kê cũ. Chạy file <code>supabase/07-thong-ke-chi-tiet.sql</code> trong Supabase để có bản chi tiết (phiên, người mới, cộng đồng…).</div>' + stHtml() : s2Html())
       : AD.tab === 'cai-dat' ? (AD.cdXem ? '' : head('Cài đặt')) + cdHtml()
       : tqHtml(unseen);
     box.innerHTML = who + '<div class="adshell">' + nav + '<div class="admain" role="tabpanel">' + body + '</div></div>';
@@ -3411,17 +3410,6 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     });
     return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Người xem mỗi ngày">' + s + '</svg>';
   }
-  /* bảng nhiệt: thứ × giờ */
-  function s2Nhiet(ds, rong) {
-    var m = {}, max = 1; (ds || []).forEach(function (x) { m[x.t + '-' + x.h] = x.v; if (x.v > max) max = x.v; });
-    var W = Math.max(300, rong), L = 34, T = 18, cw = (W - L - 4) / 24, ch = Math.min(26, Math.max(16, cw)), H = T + ch * 7 + 4, thu = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'], s = '';
-    for (var h = 0; h < 24; h += (W < 520 ? 3 : 2)) s += '<text x="' + (L + h * cw + cw / 2) + '" y="12" class="stax" text-anchor="middle">' + h + 'h</text>';
-    thu.forEach(function (t, i) {
-      s += '<text x="' + (L - 6) + '" y="' + (T + i * ch + ch / 2 + 4) + '" class="stax" text-anchor="end">' + t + '</text>';
-      for (var h = 0; h < 24; h++) { var v = m[i + '-' + h] || 0; s += '<rect x="' + (L + h * cw + 1) + '" y="' + (T + i * ch + 1) + '" width="' + (cw - 2) + '" height="' + (ch - 2) + '" rx="3" class="s2o" style="fill-opacity:' + (v ? (0.12 + 0.88 * v / max).toFixed(2) : 0.05) + '"><title>' + t + ' ' + h + 'h: ' + fmt(v) + ' lượt xem</title></rect>'; }
-    });
-    return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Lượt xem theo thứ và giờ">' + s + '</svg>';
-  }
   function s2Csv() {
     var d = S2.ds; if (!d || !d.ngay) return;
     var dong = ['Ngày,Người xem,Người mới,Lượt xem'].concat(d.ngay.map(function (x) { return x.d + ',' + x.u + ',' + x.moi + ',' + x.v; }));
@@ -3454,7 +3442,6 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     var last = (d.ngay || [])[d.ngay.length - 1] || { d: d.den, u: 0, moi: 0, v: 0 };
     var bd = (d.ngay || []).length > 1 ? '<div class="panel stchart"><div class="stchead"><b>Người xem mỗi ngày</b><span class="s2chu"><i class="stbar"></i>người mới <i class="s2cu"></i>người cũ</span></div><p class="sttip" aria-live="polite">' +
       esc(stDM(new Date(last.d + 'T00:00:00')) + ': ' + fmt(last.u) + ' người xem (' + fmt(last.moi) + ' người mới), ' + fmt(last.v) + ' lượt xem') + '</p>' + s2Cot(d.ngay, Math.min(980, rong)) + '</div>' : '';
-    bd += '<div class="panel stchart"><div class="stchead"><b>Giờ vàng trong tuần</b><span class="muted small">lượt xem theo thứ và giờ (giờ Việt Nam), ô càng đậm càng đông</span></div>' + s2Nhiet(d.gio_thu, Math.min(980, rong)) + '</div>';
     var nhan = function (mp) { return function (x) { return mp[x] || x; }; }, giu = function (x) { return x; };
     var bamTen = Object.assign({}, ST_BAM, { 'chu-de': 'Chọn chủ đề phối', 'so-tao': 'Tạo sổ', 'so-dang-nhap': 'Đăng nhập sổ', 'chat-gui': 'Gửi tin chat' });
     var lists = '<div class="stgrid3">' +
@@ -3466,7 +3453,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       (d.ngay || []).slice().reverse().map(function (x) { return '<tr><td>' + evFmt(new Date(x.d + 'T00:00:00')) + '</td><td class="num">' + fmt(x.u) + '</td><td class="num">' + fmt(x.moi) + '</td><td class="num">' + fmt(x.v) + '</td></tr>'; }).join('') +
       '</tbody></table></div><div class="row" style="margin-top:8px"><button type="button" class="btn" data-s2csv="1">Tải file CSV</button></div></details>';
     return chon + tiles + cd + bd + lists + bang +
-      '<p class="muted small">Trang chủ tự mở khi vào web nên không tính vào lượt xem và các bảng xếp hạng mục (vẫn tính vào người xem, số lần vào web và giờ vàng). "Người xem" đếm theo trình duyệt: một người vào bằng cả điện thoại và máy tính tính là 2. "Phiên" là một lần vào web, các lượt xem cách nhau quá 30 phút tính là phiên mới. Người dùng trình chặn quảng cáo có thể không được đếm. Không lưu tên, email hay địa chỉ IP.</p>';
+      '<p class="muted small">Trang chủ tự mở khi vào web nên không tính vào lượt xem và các bảng xếp hạng mục (vẫn tính vào người xem và số lần vào web). "Người xem" đếm theo trình duyệt: một người vào bằng cả điện thoại và máy tính tính là 2. "Phiên" là một lần vào web, các lượt xem cách nhau quá 30 phút tính là phiên mới. Người dùng trình chặn quảng cáo có thể không được đếm. Không lưu tên, email hay địa chỉ IP.</p>';
   }
   $('adBody').addEventListener('click', function (e) {
     var b = e.target.closest('[data-s2],[data-s2tai],[data-s2csv]'); if (!b) return;
