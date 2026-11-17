@@ -771,6 +771,7 @@ body.admin-mode .book::before { display: none; }
 .stbtn.loi { border-color: var(--warn); color: var(--warn); }
 @media (max-width: 480px) { .stbtn:not(.dang) span { display: none; } .stbtn { padding: 0 10px; max-width: 34vw; } }
 .stpinmoi { font: 700 1.05rem ui-monospace, Menlo, Consolas, monospace; letter-spacing: .1em; user-select: all; }
+.sttabs { margin: 4px 0 12px; }
 .stkp { font: 700 1.6rem/1.2 ui-monospace, Menlo, Consolas, monospace; letter-spacing: .12em; text-align: center; padding: 14px; border: 2px dashed var(--accent); border-radius: 12px; background: var(--accent-soft); color: var(--ink); user-select: all; }
 .stds { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
 .modebtn { width: 40px; height: 40px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); display: grid; place-items: center; cursor: pointer; flex: none; }
@@ -3622,9 +3623,11 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     ST.busy = true; ST.loi = ''; stVe();
     stRpc('so_tay_mo', { p_ma: ma, p_pin: pin, p_tao: !!tao }).then(function (j) {
       ST.busy = false;
-      if (j.loi === 'chua_co') { ST.hoi = { ma: ma, pin: pin }; return stVe(); }
+      if (j.loi === 'chua_co') { ST.loi = 'Chưa có sổ nào với ID này. Kiểm tra lại ID, hoặc chuyển sang tab Mở sổ mới để tạo.'; return stVe(); }
+      if (j.loi === 'sai_pin' && tao) { ST.loi = 'ID này đã có người dùng. Bạn chọn ID khác, hoặc chuyển sang tab Đăng nhập nếu đây là sổ của bạn.'; return stVe(); }
       if (j.loi) { ST.loi = stLoi(j.loi); return stVe(); }
-      ST.ma = ma; ST.pin = pin; ST.hoi = false; ST.quen = false; if (j.khoi_phuc) ST.kp = j.khoi_phuc;
+      if (tao && !j.moi) toast('ID này đã có sổ với đúng mã PIN bạn nhập, web đã đăng nhập vào sổ đó.');
+      ST.ma = ma; ST.pin = pin; ST.tab = 'vao'; ST.quen = false; if (j.khoi_phuc) ST.kp = j.khoi_phuc;
       stDat(stGop(j.du_lieu || {})); stNho();
       return stDay().then(function () { stVe(); toast(j.moi ? 'Đã tạo sổ "' + ma + '". Đồ trên máy này đã được lưu vào sổ.' : 'Đã mở sổ "' + ma + '"'); });
     }).catch(function () { ST.busy = false; if (!ST.loi) ST.loi = 'Chưa kết nối được máy chủ. Bạn kiểm tra mạng rồi thử lại nhé.'; stVe(); });
@@ -3640,7 +3643,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     }).catch(function () {});
   }
   function stThoat(giu) {
-    ST.ma = ''; ST.pin = ''; ST.luc = null; ST.hoi = false; clearTimeout(ST.hen);
+    ST.ma = ''; ST.pin = ''; ST.luc = null; ST.tab = 'vao'; clearTimeout(ST.hen);
     try { localStorage.removeItem('nstt.sotay'); } catch (e) {} LS.set('sotayCho', false);
     if (!giu) stDat({ ward: null, bo2: [], kc: null });
     stNut(); stVe();
@@ -3662,7 +3665,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       var w = LS.get('ward', null), bo = LS.get('bo2', []);
       b.innerHTML = '<p style="margin:6px 0 10px">Đang dùng sổ <b>' + esc(ST.ma) + '</b>. Tủ đồ, bộ đã lưu và Tích KC tự lưu lên mạng mỗi khi bạn đổi.</p>' +
         '<ul class="stds"><li>Tủ đồ: <b>' + (w && w.count ? fmt(w.count) + ' món' : 'chưa nhập') + '</b></li><li>Bộ đã lưu: <b>' + bo.length + '</b></li><li>Lưu lên mạng lúc: <b>' + (ST.luc ? adTime(ST.luc) : '…') + '</b>' + (LS.get('sotayCho', false) ? ' <span class="muted small">(đang chờ lưu)</span>' : '') + '</li></ul>' + msg +
-        '<div class="row" style="margin-top:12px"><button type="button" class="btn ghost" data-st="keo">↻ Lấy bản mới nhất</button><button type="button" class="btn" data-st="thoat">Đăng xuất</button></div>' +
+        '<div class="row" style="margin-top:12px"><button type="button" class="btn ghost" data-st="keo">↻ Lấy bản mới nhất</button><button type="button" class="btn" data-st="thoat">Đăng xuất</button><button type="button" class="btn ghost" data-st="somoi">Mở sổ mới</button></div>' +
         '<p class="muted small" style="margin:10px 0 0">Sang máy khác: bấm <b>Sổ của tôi</b>, đăng nhập bằng đúng ID và mã PIN này. Quên PIN thì bấm <b>Quên mã PIN?</b> ở màn đăng nhập và dùng mã khôi phục.</p>' +
         '<details class="small" style="margin-top:8px"><summary>Đổi mã PIN / tạo mã khôi phục mới</summary><form id="stDoi" class="evform" novalidate style="margin:8px 0 0">' +
         '<label class="field"><span>PIN mới (4 đến 8 số)</span><input id="stPinMoi" type="password" inputmode="numeric" maxlength="8" autocomplete="new-password"></label>' +
@@ -3680,24 +3683,25 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
         '<p class="muted small" style="margin:10px 0 0">Mất cả mã khôi phục? <button type="button" class="linkbtn" data-st="gopy">Gửi góp ý</button> kèm ID, chủ web sẽ đặt lại PIN giúp.</p>';
       return;
     }
-    if (ST.hoi) {
-      b.innerHTML = '<p style="margin:6px 0 10px">Chưa có sổ nào với ID <b>' + esc(ST.hoi.ma) + '</b>. Tạo sổ mới với mã PIN bạn vừa nhập?</p>' +
-        '<p class="muted small" style="margin:0 0 12px">Nhớ kỹ mã PIN nha: sang máy khác phải nhập đúng ID và PIN mới mở được. Đồ đang có trên máy này sẽ được lưu vào sổ.</p>' +
-        '<div class="row"><button type="button" class="btn primary" data-st="tao"' + (ST.busy ? ' disabled' : '') + '>Tạo sổ mới</button><button type="button" class="btn ghost" data-st="lai">Nhập lại</button></div>' + msg;
-      return;
-    }
-    b.innerHTML = '<p class="muted" style="margin:6px 0 12px">Lưu tủ đồ, bộ đã lưu và Tích KC theo ID để đổi máy vẫn còn, không phải gửi file qua lại. Không cần email.</p>' +
+    var moi = ST.tab === 'moi', tab = function (k, l) { return '<button type="button" role="tab" data-st="tab-' + k + '" aria-selected="' + (ST.tab === k || (!ST.tab && k === 'vao')) + '">' + l + '</button>'; };
+    b.innerHTML = '<div class="tabs evtabs sttabs" role="tablist" aria-label="Đăng nhập hoặc mở sổ mới">' + tab('vao', 'Đăng nhập') + tab('moi', 'Mở sổ mới') + '</div>' +
+      '<p class="muted" style="margin:0 0 12px">' + (moi ? 'Tạo sổ để lưu tủ đồ, bộ đã lưu và Tích KC theo ID. Đổi máy chỉ cần đăng nhập lại, không phải gửi file qua lại. Không cần email.' : 'Đăng nhập bằng ID và mã PIN của sổ bạn đã tạo.') + '</p>' +
       '<form id="stForm" class="evform" novalidate style="margin:0">' +
-      '<label class="field wide"><span>ID (vd ID trong game hoặc tên bạn tự đặt)</span><input id="stMa" maxlength="32" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="vd: dua123" value="' + esc(ST.go || '') + '"></label>' +
-      '<label class="field wide"><span>Mã PIN (4 đến 8 số)</span><input id="stPin" type="password" inputmode="numeric" maxlength="8" autocomplete="current-password" placeholder="••••"></label>' +
-      '<div class="wide"><button type="submit" class="btn primary"' + (ST.busy ? ' disabled' : '') + '>' + (ST.busy ? 'Đang đăng nhập…' : 'Đăng nhập') + '</button></div></form>' + msg +
-      '<p class="muted small" style="margin:10px 0 0">Lần đầu thì nhập ID và mã PIN bạn muốn, web sẽ hỏi tạo sổ mới. <button type="button" class="linkbtn" data-st="quen">Quên mã PIN?</button></p>';
+      '<label class="field wide"><span>' + (moi ? 'Chọn ID (vd ID trong game hoặc tên bạn tự đặt)' : 'ID') + '</span><input id="stMa" maxlength="32" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="vd: dua123" value="' + esc(ST.go || '') + '"></label>' +
+      '<label class="field wide"><span>' + (moi ? 'Đặt mã PIN (4 đến 8 số)' : 'Mã PIN') + '</span><input id="stPin" type="password" inputmode="numeric" maxlength="8" autocomplete="' + (moi ? 'new-password' : 'current-password') + '" placeholder="••••"></label>' +
+      (moi ? '<label class="field wide"><span>Nhập lại mã PIN</span><input id="stPin2" type="password" inputmode="numeric" maxlength="8" autocomplete="new-password" placeholder="••••"></label>' : '') +
+      '<div class="wide"><button type="submit" class="btn primary"' + (ST.busy ? ' disabled' : '') + '>' + (ST.busy ? 'Đang xử lý…' : moi ? 'Mở sổ mới' : 'Đăng nhập') + '</button></div></form>' + msg +
+      (moi ? '<p class="muted small" style="margin:10px 0 0">Đồ đang có trên máy này sẽ được lưu vào sổ mới. Nhớ kỹ ID và PIN; tạo xong web đưa thêm mã khôi phục để phòng khi quên PIN.</p>'
+        : '<p class="muted small" style="margin:10px 0 0"><button type="button" class="linkbtn" data-st="quen">Quên mã PIN?</button> · Chưa có sổ? <button type="button" class="linkbtn" data-st="tab-moi">Mở sổ mới</button></p>');
   }
   $('stBtn').addEventListener('click', function () { if (!ST.ma) ST.loi = ''; stVe(); $('stDlg').showModal(); if (!ST.ma && !matchMedia('(pointer: coarse)').matches && $('stMa')) $('stMa').focus(); });
   $('stClose').addEventListener('click', function () { $('stDlg').close(); });
   $('stDlg').addEventListener('submit', function (e) {
     var id = e.target.id; if (['stForm', 'stQuen', 'stDoi'].indexOf(id) < 0) return; e.preventDefault();
-    if (id === 'stForm') return stMo(false, $('stMa').value, $('stPin').value);
+    if (id === 'stForm') {
+      if (ST.tab === 'moi' && $('stPin').value.trim() !== $('stPin2').value.trim()) { ST.go = $('stMa').value.trim().toLowerCase(); ST.loi = 'Hai lần nhập mã PIN không khớp.'; return stVe(); }
+      return stMo(ST.tab === 'moi', $('stMa').value, $('stPin').value);
+    }
     if (id === 'stQuen') {
       var ma = $('stQMa').value.trim().toLowerCase(), kp = $('stQKp').value, pin = $('stQPin').value.trim(); ST.go = ma;
       if (!/^[0-9]{4,8}$/.test(pin)) { ST.loi = stLoi('pin'); return stVe(); }
@@ -3717,8 +3721,9 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   $('stDlg').addEventListener('click', function (e) {
     var b = e.target.closest('[data-st]'); if (!b) return;
     var k = b.dataset.st;
-    if (k === 'tao' && ST.hoi) stMo(true, ST.hoi.ma, ST.hoi.pin);
-    if (k === 'lai') { ST.hoi = false; ST.quen = false; ST.loi = ''; stVe(); }
+    if (k === 'tab-vao' || k === 'tab-moi') { ST.tab = k.slice(4); ST.quen = false; ST.loi = ''; if ($('stMa')) ST.go = $('stMa').value.trim().toLowerCase(); stVe(); if ($('stMa')) $('stMa').focus(); }
+    if (k === 'somoi') { stThoat(false); ST.tab = 'moi'; ST.go = ''; stVe(); toast('Đã đăng xuất sổ cũ (đồ vẫn còn trong sổ đó). Sổ mới sẽ bắt đầu trống.'); }
+    if (k === 'lai') { ST.quen = false; ST.loi = ''; stVe(); }
     if (k === 'keo') { ST.loi = ''; stKeo().then(stVe); }
     if (k === 'thoat') { stThoat(true); toast('Đã đăng xuất. Đồ vẫn còn trên máy này, nhưng không tự lưu lên mạng nữa.'); }
     if (k === 'xoa') { stThoat(false); toast('Đã đăng xuất và xóa đồ khỏi máy này.'); }
