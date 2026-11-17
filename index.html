@@ -3662,12 +3662,12 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       var w = LS.get('ward', null), bo = LS.get('bo2', []);
       b.innerHTML = '<p style="margin:6px 0 10px">Đang dùng sổ <b>' + esc(ST.ma) + '</b>. Tủ đồ, bộ đã lưu và Tích KC tự lưu lên mạng mỗi khi bạn đổi.</p>' +
         '<ul class="stds"><li>Tủ đồ: <b>' + (w && w.count ? fmt(w.count) + ' món' : 'chưa nhập') + '</b></li><li>Bộ đã lưu: <b>' + bo.length + '</b></li><li>Lưu lên mạng lúc: <b>' + (ST.luc ? adTime(ST.luc) : '…') + '</b>' + (LS.get('sotayCho', false) ? ' <span class="muted small">(đang chờ lưu)</span>' : '') + '</li></ul>' + msg +
-        '<div class="row" style="margin-top:12px"><button type="button" class="btn" data-st="keo">↻ Lấy bản mới nhất</button><button type="button" class="btn ghost" data-st="thoat">Đóng sổ trên máy này</button></div>' +
-        '<p class="muted small" style="margin:10px 0 0">Sang máy khác: bấm <b>Sổ của tôi</b>, nhập đúng ID và mã PIN này. Quên PIN thì gửi góp ý cho chủ web.</p>' +
+        '<div class="row" style="margin-top:12px"><button type="button" class="btn ghost" data-st="keo">↻ Lấy bản mới nhất</button><button type="button" class="btn" data-st="thoat">Đăng xuất</button></div>' +
+        '<p class="muted small" style="margin:10px 0 0">Sang máy khác: bấm <b>Sổ của tôi</b>, đăng nhập bằng đúng ID và mã PIN này. Quên PIN thì bấm <b>Quên mã PIN?</b> ở màn đăng nhập và dùng mã khôi phục.</p>' +
         '<details class="small" style="margin-top:8px"><summary>Đổi mã PIN / tạo mã khôi phục mới</summary><form id="stDoi" class="evform" novalidate style="margin:8px 0 0">' +
         '<label class="field"><span>PIN mới (4 đến 8 số)</span><input id="stPinMoi" type="password" inputmode="numeric" maxlength="8" autocomplete="new-password"></label>' +
         '<div class="wide row"><button type="submit" class="btn">Đổi PIN</button><button type="button" class="btn ghost" data-st="kpmoi">Tạo mã khôi phục mới</button></div></form></details>' +
-        '<details class="small" style="margin-top:8px"><summary>Đóng sổ và xóa đồ khỏi máy này</summary><p style="margin:6px 0">Dùng khi mượn máy người khác. Đồ vẫn còn trong sổ trên mạng.</p><button type="button" class="btn ghost danger" data-st="xoa">Đóng sổ và xóa khỏi máy</button></details>';
+        '<details class="small" style="margin-top:8px"><summary>Đăng xuất và xóa đồ khỏi máy này</summary><p style="margin:6px 0">Dùng khi mượn máy người khác. Đồ vẫn còn trong sổ trên mạng, đăng nhập lại là có.</p><button type="button" class="btn ghost danger" data-st="xoa">Đăng xuất và xóa khỏi máy</button></details>';
       return;
     }
     if (ST.quen) {
@@ -3690,7 +3690,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       '<form id="stForm" class="evform" novalidate style="margin:0">' +
       '<label class="field wide"><span>ID (vd ID trong game hoặc tên bạn tự đặt)</span><input id="stMa" maxlength="32" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="vd: dua123" value="' + esc(ST.go || '') + '"></label>' +
       '<label class="field wide"><span>Mã PIN (4 đến 8 số)</span><input id="stPin" type="password" inputmode="numeric" maxlength="8" autocomplete="current-password" placeholder="••••"></label>' +
-      '<div class="wide"><button type="submit" class="btn primary"' + (ST.busy ? ' disabled' : '') + '>' + (ST.busy ? 'Đang mở…' : 'Mở sổ') + '</button></div></form>' + msg +
+      '<div class="wide"><button type="submit" class="btn primary"' + (ST.busy ? ' disabled' : '') + '>' + (ST.busy ? 'Đang đăng nhập…' : 'Đăng nhập') + '</button></div></form>' + msg +
       '<p class="muted small" style="margin:10px 0 0">Lần đầu thì nhập ID và mã PIN bạn muốn, web sẽ hỏi tạo sổ mới. <button type="button" class="linkbtn" data-st="quen">Quên mã PIN?</button></p>';
   }
   $('stBtn').addEventListener('click', function () { if (!ST.ma) ST.loi = ''; stVe(); $('stDlg').showModal(); if (!ST.ma && !matchMedia('(pointer: coarse)').matches && $('stMa')) $('stMa').focus(); });
@@ -3720,8 +3720,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     if (k === 'tao' && ST.hoi) stMo(true, ST.hoi.ma, ST.hoi.pin);
     if (k === 'lai') { ST.hoi = false; ST.quen = false; ST.loi = ''; stVe(); }
     if (k === 'keo') { ST.loi = ''; stKeo().then(stVe); }
-    if (k === 'thoat') { stThoat(true); toast('Đã đóng sổ. Đồ vẫn còn trên máy này.'); }
-    if (k === 'xoa') { stThoat(false); toast('Đã đóng sổ và xóa đồ khỏi máy này.'); }
+    if (k === 'thoat') { stThoat(true); toast('Đã đăng xuất. Đồ vẫn còn trên máy này, nhưng không tự lưu lên mạng nữa.'); }
+    if (k === 'xoa') { stThoat(false); toast('Đã đăng xuất và xóa đồ khỏi máy này.'); }
     if (k === 'quen') { ST.quen = true; ST.loi = ''; ST.go = ($('stMa') && $('stMa').value.trim().toLowerCase()) || ST.go; stVe(); }
     if (k === 'gopy') { $('stDlg').close(); gyShow(); }
     if (k === 'dalu') { ST.kp = ''; stVe(); }
