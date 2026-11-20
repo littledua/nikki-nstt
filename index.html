@@ -991,12 +991,30 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 .icard .bigpic { position: relative; aspect-ratio: 1 / 1; display: grid; place-items: center; background: var(--sunk);
   background-image: radial-gradient(color-mix(in srgb, var(--fill) 35%, transparent) 1.2px, transparent 1.4px); background-size: 12px 12px; }
 .icard .bigpic img { width: 80%; height: 80%; object-fit: contain; }
-.icard .bigpic.lon { cursor: zoom-in; background: #fbefee; }
-.icard .bigpic.lon img { width: 100%; height: 100%; object-fit: contain; }
-.anhto { position: fixed; inset: 0; z-index: 90; background: rgba(20, 20, 30, .72); display: grid; place-items: center; padding: 16px; cursor: zoom-out; }
-.anhto figure { margin: 0; max-width: min(440px, 100%); background: #fbefee; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,.35); }
-.anhto img { display: block; width: 100%; max-height: 72vh; object-fit: contain; }
-.anhto figcaption { background: var(--surface); color: var(--ink); padding: 10px 14px; font-weight: 700; text-align: center; }
+.icard .bigpic { cursor: zoom-in; }
+.icard .bigpic.lon { background: #fbefee; }
+.icard .bigpic.lon img { width: 100%; height: 100%; object-fit: cover; }
+.icard .nhanh { display: none; }
+/* Điện thoại: 4 món một dòng, thẻ chỉ còn ảnh + tên + nút + nhanh; chi tiết xem khi bấm ảnh */
+@media (max-width: 480px) {
+  #view-tu-do .cards { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+  #view-tu-do .icard { border-radius: 10px; }
+  #view-tu-do .icard .slotlbl, #view-tu-do .icard .body .bolink, #view-tu-do .icard .body .grades, #view-tu-do .icard .body .own, #view-tu-do .icard .body .own2 { display: none; }
+  #view-tu-do .icard .body { padding: 4px 3px 6px; gap: 0; }
+  #view-tu-do .icard .nm { font-size: .68rem; font-weight: 600; line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  #view-tu-do .icard .nhanh { display: grid; place-items: center; position: absolute; top: 3px; right: 3px; width: 24px; height: 24px; padding: 0; border-radius: 50%; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); font: 700 .9rem/1 inherit; box-shadow: 0 1px 3px rgba(0,0,0,.15); }
+  #view-tu-do .icard .nhanh[aria-pressed="true"] { background: var(--own); border-color: var(--own); color: var(--surface); }
+}
+.anhto { position: fixed; inset: 0; z-index: 90; background: rgba(20, 20, 30, .72); display: grid; place-items: center; padding: 16px; overflow-y: auto; }
+.anhto figure { position: relative; margin: 0; width: min(400px, 100%); background: var(--surface); border-radius: 16px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,.35); }
+.anhto .anhkhung { background: #fbefee; aspect-ratio: 1 / 1; display: grid; place-items: center; max-height: 62vh; margin: 0 auto; }
+.anhto .anhkhung img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.anhto .anhkhung.icon { background: var(--sunk); }
+.anhto .anhkhung.icon img { width: 70%; height: 70%; }
+.anhto figcaption { border: 0; border-radius: 0; padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 8px; align-items: stretch; text-align: center; }
+.anhto figcaption .nm { font-weight: 700; font-size: 1.05rem; }
+.anhto figcaption .grades { justify-content: center; }
+.anhto .anhdong { position: absolute; top: 8px; right: 8px; z-index: 1; width: 34px; height: 34px; border-radius: 50%; border: 0; background: rgba(255,255,255,.9); color: #333; font-size: 1rem; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,.2); }
 .icard .slotlbl { position: absolute; top: 8px; left: 8px; font-size: .7rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--surface); color: var(--muted); }
 .icard .body { padding: 10px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
 .icard .nm { font-weight: 700; text-align: center; font-size: .92rem; line-height: 1.3; overflow-wrap: anywhere; }
@@ -4177,28 +4195,41 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   /* Ảnh lớn chưa có thì quay về icon; icon cũng chưa có thì bỏ ảnh */
   window.anhLoi = function (im) {
     var o = im.closest('.bigpic'), ma = o && o.dataset.xem;
-    if (o && o.classList.contains('lon')) { o.classList.remove('lon'); o.removeAttribute('data-xem'); im.src = 'img/' + ma + '.webp'; return; }
+    if (o && o.classList.contains('lon')) { o.classList.remove('lon'); im.src = 'img/' + ma + '.webp'; return; }
     im.remove();
   };
   function xemAnh(ma) {
     var m = KHO.mon[ma]; if (!m) return;
-    var d = document.createElement('div'); d.className = 'anhto'; d.setAttribute('role', 'dialog'); d.setAttribute('aria-label', 'Ảnh ' + m.ten);
-    d.innerHTML = '<figure><img alt="' + esc(m.ten) + '" src="anh/' + ma + '.webp"><figcaption>' + esc(m.ten) + '</figcaption></figure>';
+    var d = document.createElement('div'); d.className = 'anhto'; d.setAttribute('role', 'dialog'); d.setAttribute('aria-modal', 'true'); d.setAttribute('aria-label', m.ten);
+    d.innerHTML = '<figure><button type="button" class="anhdong" aria-label="Đóng">✕</button><div class="anhkhung"><img alt="' + esc(m.ten) + '" src="anh/' + ma + '.webp" onerror="this.onerror=function(){this.remove()};this.src=\'img/' + ma + '.webp\';this.parentNode.classList.add(\'icon\')"></div>' +
+      '<figcaption class="icard">' + chiTietMon(m, 5) + '</figcaption></figure>';
     var dong = function () { d.remove(); document.removeEventListener('keydown', phim); };
     var phim = function (e) { if (e.key === 'Escape') dong(); };
-    d.addEventListener('click', dong); document.addEventListener('keydown', phim);
-    document.body.appendChild(d);
+    d.addEventListener('click', function (e) {
+      if (e.target === d || e.target.closest('.anhdong')) { dong(); return; }
+      var bl = e.target.closest('[data-bo]'); if (bl) { dong(); chonBo(+bl.dataset.bo); return; }
+      var b = e.target.closest('[data-co]'); if (b) { bamTu(b); dong(); }
+    });
+    document.addEventListener('keydown', phim);
+    document.body.appendChild(d); d.querySelector('.anhdong').focus();
   }
-  function theMon(m) {
+  /* Phần chữ của món (tên, bộ, điểm, nút lưu): dùng cho thẻ món và màn xem ảnh lớn */
+  function chiTietMon(m, soDiem) {
     var co = !!(TU && TU.has(m.ma)), cap = m.diem.map(function (d, k) { return [d, k]; }).filter(function (x) { return x[0]; }).sort(function (a, b) { return b[0] - a[0]; });
-    /* ảnh lớn (anh/, Love Nikki Wiki) nếu có, không thì icon (img/); bấm ảnh lớn để phóng to */
-    return '<article class="icard"><div class="bigpic lon" data-xem="' + m.ma + '"><img loading="lazy" decoding="async" alt="" src="anh/' + m.ma + '.webp" onerror="anhLoi(this)"><span class="slotlbl">' + esc(m.o) + '</span></div>' +
-      '<div class="body"><div class="nm">' + esc(m.ten) + '</div>' + ((KHO.boCua[m.ma] || []).slice(0, 1).map(function (k) { return '<button type="button" class="bolink" data-bo="' + k + '">Bộ ' + esc(KHO.bo[k][0]) + '</button>'; }).join('')) + '<div class="grades">' + cap.slice(0, 3).map(function (x, i) {
+    return '<div class="nm">' + esc(m.ten) + '</div>' + ((KHO.boCua[m.ma] || []).slice(0, 1).map(function (k) { return '<button type="button" class="bolink" data-bo="' + k + '">Bộ ' + esc(KHO.bo[k][0]) + '</button>'; }).join('')) + '<div class="grades">' + cap.slice(0, soDiem).map(function (x, i) {
         return '<span class="pc' + x[1] + (i < 2 ? ' top' : '') + '">' + esc(KHO.pc[x[1]]) + ' ' + CHU[m.chu.charAt(x[1])] + '</span>';
       }).join('') + '</div>' +
       (TD.kho ? (co || !KHO.boCua[m.ma] ? '<button type="button" class="own" data-co="' + m.ma + '" aria-pressed="' + co + '">' + (co ? '✓ Đã có trong tủ' : '+ Thêm vào tủ') + '</button>'
         /* món thuộc bộ: lưu riêng món này, hoặc lưu cả bộ (người chơi xin cả hai, 14/11/2026) */
-        : '<div class="own2"><button type="button" class="own" data-co="' + m.ma + '" data-mot="1" aria-pressed="false">+ Món này</button><button type="button" class="own" data-co="' + m.ma + '" aria-pressed="false">+ Cả bộ</button></div>') : '') + '</div></article>';
+        : '<div class="own2"><button type="button" class="own" data-co="' + m.ma + '" data-mot="1" aria-pressed="false">+ Món này</button><button type="button" class="own" data-co="' + m.ma + '" aria-pressed="false">+ Cả bộ</button></div>') : '');
+  }
+  function theMon(m) {
+    var co = !!(TU && TU.has(m.ma));
+    /* ảnh lớn (anh/, Love Nikki Wiki) nếu có, không thì icon (img/); bấm ảnh để xem to + chi tiết.
+       Trên điện thoại thẻ thu nhỏ 4 món/dòng: chỉ còn ảnh, tên và nút + nhanh (lưu riêng món này) */
+    return '<article class="icard' + (co ? ' has' : '') + '"><div class="bigpic lon" data-xem="' + m.ma + '"><img loading="lazy" decoding="async" alt="" src="anh/' + m.ma + '.webp" onerror="anhLoi(this)"><span class="slotlbl">' + esc(m.o) + '</span>' +
+      (TD.kho ? '<button type="button" class="nhanh" data-co="' + m.ma + '" data-mot="1" aria-pressed="' + co + '" aria-label="' + (co ? 'Bỏ ' : 'Lưu ') + esc(m.ten) + (co ? ' khỏi tủ' : ' vào tủ') + '">' + (co ? '✓' : '+') + '</button>' : '') + '</div>' +
+      '<div class="body">' + chiTietMon(m, 3) + '</div></article>';
   }
   function veThe() {
     if (!TD.kho && !TU) { $('tdCards').innerHTML = '<div class="empty" style="grid-column:1/-1"><b>Tủ đồ đang trống</b>Nhập file clothes_date (cách lấy file ở khung bên cạnh) để xem đồ của bạn.</div>'; $('fCount').textContent = ''; $('pInfo').textContent = ''; $('pPrev').disabled = $('pNext').disabled = true; return; }
@@ -4271,9 +4302,11 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   $('pPrev').addEventListener('click', function () { TD.page--; veThe(); window.scrollTo(0, $('tdCards').getBoundingClientRect().top + window.scrollY - 120); });
   $('pNext').addEventListener('click', function () { TD.page++; veThe(); window.scrollTo(0, $('tdCards').getBoundingClientRect().top + window.scrollY - 120); });
   $('tdCards').addEventListener('click', function (e) {
-    var xa = e.target.closest('.bigpic.lon[data-xem]'); if (xa) { xemAnh(+xa.dataset.xem); return; }
+    var b = e.target.closest('[data-co]'); if (b) { bamTu(b); return; }
+    var xa = e.target.closest('.bigpic[data-xem]'); if (xa) { xemAnh(+xa.dataset.xem); return; }
     var bl = e.target.closest('[data-bo]'); if (bl) { chonBo(+bl.dataset.bo); return; }
-    var b = e.target.closest('[data-co]'); if (!b) return;
+  });
+  function bamTu(b) {
     var ma = +b.dataset.co, s = new Set(TU ? Array.from(TU) : []), bk = (KHO.boCua[ma] || [])[0], bo = bk != null ? KHO.bo[bk] : null;
     if (s.has(ma)) { s.delete(ma); datTu(Array.from(s), true); veChip(); veThe(); return; } /* bỏ: chỉ món này */
     /* thêm: lưu cả bộ chứa món này (người dùng xin: có đủ bộ mà lưu từng món mệt) */
@@ -4282,7 +4315,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     datTu(Array.from(s), true); veChip(); veThe();
     if (bo && n > 1) toast('Đã lưu cả bộ ' + bo[0] + ' (' + n + ' món) vào tủ');
     track('bam', bo ? 'them-ca-bo' : 'them-vao-tu', bo ? bo[0] : null);
-  });
+  }
   $('tdInfo').addEventListener('click', function (e) {
     if (e.target.id !== 'tdXoa') return;
     datTu([], true); veChip(); veTuInfo(); veThe(); toast('Đã xóa tủ đồ khỏi máy này');
