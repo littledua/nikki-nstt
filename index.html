@@ -1311,8 +1311,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
         <div id="pdHoi" hidden></div>
         <div id="pdKtd">
         <p class="lbl" style="margin-top:14px">Chủ đề</p>
-        <input type="search" id="pdQ" placeholder="Tìm chủ đề…" aria-label="Tìm chủ đề" style="width:100%">
-        <div class="themes-list" id="pdList" role="group" aria-label="Chủ đề"></div>
+        <select id="pdList" aria-label="Chủ đề" style="width:100%"></select>
         <div id="pdW"></div>
         <p class="soon-note">Ải hội: chọn ở ô Loại ải phía trên.</p>
         </div>
@@ -3723,10 +3722,9 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     return c;
   }
   function veDsChuDe() {
-    var q = PD.q.trim().toLowerCase();
-    $('pdList').innerHTML = KHO.khuThiDau.filter(function (c) { return !q || c.ten.toLowerCase().indexOf(q) >= 0; }).map(function (c) {
-      return '<button type="button" data-cd="' + esc(c.ten) + '" aria-pressed="' + (c.ten === PD.cd) + '">' + esc(c.ten) + '</button>';
-    }).join('') || '<span class="muted small">Không có chủ đề nào khớp.</span>';
+    $('pdList').innerHTML = KHO.khuThiDau.map(function (c) {
+      return '<option value="' + esc(c.ten) + '"' + (c.ten === PD.cd ? ' selected' : '') + '>' + esc(c.ten) + '</option>';
+    }).join('');
   }
   function vePhoi() {
     var ct = PD.loai === 'cot-truyen', hoi = PD.loai === 'ai-hoi';
@@ -3775,11 +3773,9 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     }
     return s;
   }
-  $('pdList').addEventListener('click', function (e) {
-    var b = e.target.closest('[data-cd]'); if (!b) return;
-    PD.cd = b.dataset.cd; PD.ov = {}; PD.mo = null; LS.set('cd', PD.cd); vePhoi(); track('bam', 'chu-de', PD.cd);
+  $('pdList').addEventListener('change', function () {
+    PD.cd = this.value; PD.ov = {}; PD.mo = null; LS.set('cd', PD.cd); vePhoi(); track('bam', 'chu-de', PD.cd);
   });
-  $('pdQ').addEventListener('input', function () { PD.q = this.value; veDsChuDe(); });
   $('pdKq').addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return;
     if (b.dataset.chon) { PD.ov[b.dataset.o2] = +b.dataset.chon; PD.mo = null; vePhoi(); return; }
