@@ -4228,7 +4228,19 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     $('pInfo').textContent = 'Trang ' + (TD.page + 1) + ' / ' + so;
     $('pPrev').disabled = TD.page <= 0; $('pNext').disabled = TD.page >= so - 1;
   }
-  function chonBo(k) { TD.bo = k; TD.page = 0; veThe(); $('tdBo').scrollIntoView({ block: 'start', behavior: 'smooth' }); }
+  /* Vào xem 1 bộ: nhớ trang + vị trí cuộn của danh sách; thoát ra thì quay lại đúng chỗ cũ (người chơi báo bị lướt lại từ đầu, 20/11/2026) */
+  var TD_CU = null;
+  function chonBo(k) {
+    if (k >= 0) {
+      if (TD.bo < 0) TD_CU = { page: TD.page, y: window.scrollY, k: k };
+      TD.bo = k; TD.page = 0; veThe(); $('tdBo').scrollIntoView({ block: 'start', behavior: 'smooth' }); return;
+    }
+    var cu = TD_CU; TD_CU = null; TD.bo = -1; TD.page = cu ? cu.page : 0; veThe();
+    if (!cu) { $('tdBo').scrollIntoView({ block: 'start' }); return; }
+    window.scrollTo(0, cu.y);
+    var the = $('tdCards').querySelector('[data-bo="' + cu.k + '"]'); /* bộ vừa xem vẫn còn trên trang thì đảm bảo nó hiện trong màn hình */
+    if (the) { var r = the.getBoundingClientRect(); if (r.top < 0 || r.bottom > window.innerHeight) the.closest('.bocard').scrollIntoView({ block: 'center' }); }
+  }
   $('tdBo').addEventListener('click', function (e) { var b = e.target.closest('[data-bo]'); if (b) chonBo(+b.dataset.bo); });
   var tdHen;
   var timHen = 0;
