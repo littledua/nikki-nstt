@@ -5,7 +5,7 @@
   'use strict';
 
   // Điểm chữ → số: mỗi bậc gấp đôi bậc dưới (X = SS)
-  var BAC = { C: 1, B: 2, A: 4, S: 8, X: 16 };
+  var BAC = { C: 1, B: 2, A: 4, S: 8, X: 16, Z: 32 }; /* X = SS, Z = SSS */
 
   // Cỡ từng ô so với Tóc (ước tính, chỉnh dần theo điểm đo trong game)
   var CO_O = {

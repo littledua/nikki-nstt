@@ -1439,7 +1439,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       <div class="wide"><button type="submit" class="btn primary" id="gyGo">Gửi góp ý</button> <span class="muted small" id="gyNote" role="status"></span></div>
     </form>
   </dialog>
-<script src="tinh-diem.js?v=20261117a"></script>
+<script src="tinh-diem.js?v=20261121a"></script>
 <script>
 (function () {
   'use strict';
@@ -3626,7 +3626,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 
   /* ================= DỮ LIỆU ĐỒ (du-lieu.json + tinh-diem.js) ================= */
   /* Số bản dữ liệu: đổi mỗi lần cập nhật du-lieu.json / cot-truyen.json để trình duyệt không dùng bản cũ trong bộ nhớ đệm */
-  var BAN = '20261117c';
+  var BAN = '20261121a';
   var KHO = null, TU = null, choDuLieu = [], dangTai = false;
   function moDuLieu(xong) {
     if (KHO) { xong(); return; }
@@ -3663,7 +3663,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     c.hidden = !TU; if (TU) { c.className = 'chip-status ok'; c.textContent = 'Tủ đồ: ' + fmt(TU.size) + ' món'; }
   }
   function hinh(ma) { return '<span class="pic"><img loading="lazy" decoding="async" alt="" src="img/' + ma + '.webp" onerror="this.remove()"></span>'; }
-  var CHU = { C: 'C', B: 'B', A: 'A', S: 'S', X: 'SS' };
+  var CHU = { C: 'C', B: 'B', A: 'A', S: 'S', X: 'SS', Z: 'SSS' };
 
   /* ================= PHỐI ĐỒ ================= */
   var PD = { cd: LS.get('cd', ''), q: '', itTs: true, ov: {}, mo: null, kq: null, moTs: false };
