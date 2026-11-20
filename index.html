@@ -299,10 +299,15 @@ button.crchip { border: 0; background: none; padding: 0; font: inherit; color: v
 #view-tu-do:not(.kho) #fOwn, #view-tu-do:not(.kho) #fChe { display: none; }
 #view-tu-do.theobo #fO, #view-tu-do.theobo #fPc, #view-tu-do.theobo #fSort { display: none; }
 #view-tu-do:not(.theobo) #fTag { display: none; }
+.tagbar { display: flex; gap: 6px; overflow-x: auto; padding: 8px 2px 4px; margin: 0 -2px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.tagbar::-webkit-scrollbar { display: none; }
+.tagbar:empty { display: none; }
+.tagbar button { flex: none; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 6px 13px; font: 600 .82rem/1.2 inherit; cursor: pointer; }
+.tagbar button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--surface); }
 .botags { display: flex; flex-wrap: wrap; gap: 4px; }
 .botags button { font: 700 .74rem/1.2 inherit; padding: 2px 9px; border-radius: 999px; border: 0; background: color-mix(in srgb, var(--accent) 14%, var(--surface)); color: var(--accent); cursor: pointer; }
 .bopics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; }
-.bopics span { aspect-ratio: 1 / 1; border-radius: 10px; background: var(--sunk); display: grid; place-items: center; overflow: hidden; }
+.bopics span { aspect-ratio: 1 / 1; border-radius: 10px; background: #f3ead6; display: grid; place-items: center; overflow: hidden; }
 .bopics span:nth-child(n+5) { display: none; }
 .bopics img { width: 86%; height: 86%; object-fit: contain; }
 .boluoi { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 10px; margin-top: 12px; }
@@ -1170,6 +1175,19 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 .bohead { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; }
 .bohead b { font-family: var(--f-display); font-size: 1.02rem; }
 .boitems { display: flex; flex-wrap: wrap; gap: 4px; }
+.boitems:empty { display: none; }
+.boitems span img { display: none; }
+/* Máy tính: thẻ bộ hiện đủ món, mỗi món có ảnh + tên; không cần 4 ảnh đại diện */
+@media (min-width: 481px) {
+  .bocard .bopics { display: none; }
+  .bocard .boitems { display: grid; grid-template-columns: repeat(auto-fill, minmax(86px, 1fr)); gap: 6px; }
+  .bocard .boitems span { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 4px 7px; border-radius: 12px; text-align: center; line-height: 1.25; font-size: .74rem; white-space: normal; overflow-wrap: anywhere; min-width: 0; }
+  .bocard .boitems span img { display: block; width: 60px; height: 60px; object-fit: contain; }
+}
+/* Điện thoại: thẻ bộ gọn (tag + 4 ảnh), chỉ hiện tên món khớp khi đang tìm; thẻ đang xem vẫn đủ tên */
+@media (max-width: 480px) {
+  .bocard:not(.on) .boitems span:not(.khop) { display: none; }
+}
 .boitems span { font-size: .78rem; padding: 2px 9px; border-radius: 999px; }
 .bocard .btn { align-self: flex-start; min-height: 34px; padding: 5px 12px; font-size: .85rem; }
 .bolink { border: 0; background: none; padding: 0; font: inherit; font-size: .76rem; color: var(--accent); font-weight: 700; cursor: pointer; text-align: center; text-decoration: underline dotted; }
@@ -1350,7 +1368,6 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       <div class="filters">
         <label class="q"><input type="search" id="fQ" placeholder="Tìm tên món hoặc tên bộ…" aria-label="Tìm tên món hoặc tên bộ"></label>
         <select id="fChe" aria-label="Cách xem"><option value="bo">Xem theo bộ</option><option value="le">Món lẻ (không thuộc bộ)</option></select>
-        <select id="fTag" aria-label="Lọc bộ theo tag"><option value="">Tất cả tag</option></select>
         <select id="fO" aria-label="Lọc theo ô đồ"></select>
         <select id="fOwn" aria-label="Lọc theo đã có"><option value="all">Tất cả</option><option value="own">Đã có</option><option value="miss">Chưa có</option></select>
         <select id="fPc" aria-label="Lọc theo phong cách"></select>
@@ -1358,6 +1375,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       </div>
       <div id="tdBo"></div>
       <p class="muted small" id="fCount" style="margin:0"></p>
+      <div class="tagbar" id="fTag" role="group" aria-label="Lọc bộ theo tag"></div>
       <div class="cards" id="tdCards"></div>
       <div class="pager"><button class="btn" id="pPrev">← Trang trước</button><span class="muted small num" id="pInfo"></span><button class="btn" id="pNext">Trang sau →</button></div>
     </div>
@@ -4272,8 +4290,10 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   }
   function veTagChon() {
     if (!TAGM) return;
-    var ds = Object.keys(TAGM.ten).sort(function (a, b) { return TAGM.ten[a].localeCompare(TAGM.ten[b], 'vi'); });
-    $('fTag').innerHTML = '<option value="">Tất cả tag</option>' + ds.map(function (c) { return '<option value="' + c + '"' + (TD.tag === c ? ' selected' : '') + '>' + esc(TAGM.ten[c]) + ' (' + (TAGM.dem[c] || 0) + ' bộ)</option>'; }).join('');
+    var ds = Object.keys(TAGM.ten).sort(function (a, b) { return (TAGM.dem[b] || 0) - (TAGM.dem[a] || 0) || TAGM.ten[a].localeCompare(TAGM.ten[b], 'vi'); });
+    $('fTag').innerHTML = [''].concat(ds).map(function (c) { return '<button type="button" data-tag="' + c + '" aria-pressed="' + (TD.tag === c) + '"' + (c ? ' title="' + (TAGM.dem[c] || 0) + ' bộ"' : '') + '>' + (c ? esc(TAGM.ten[c]) : 'Tất cả') + '</button>'; }).join('');
+    var hb = $('fTag'), on = hb.querySelector('[aria-pressed="true"]'); /* tag đang chọn bị khuất thì cuộn hàng nút tới nó */
+    if (on && on.dataset.tag && (on.offsetLeft + on.offsetWidth > hb.scrollLeft + hb.clientWidth || on.offsetLeft < hb.scrollLeft)) hb.scrollLeft = on.offsetLeft - 40;
   }
   /* 4 ảnh đại diện của bộ: đầm/áo, tóc, giày, rồi phần còn lại, phụ kiện, trang điểm. Lấy dư để món chưa có ảnh thì món sau thế chỗ */
   function anhBo(b) {
@@ -4289,7 +4309,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     var b = KHO.bo[k], co = coBo(b);
     var tg = TAGM && TAGM.bo[k] && TAGM.bo[k].length ? '<div class="botags">' + TAGM.bo[k].map(function (c) { return '<button type="button" data-tag="' + c + '" title="Xem các bộ ' + esc(TAGM.ten[c]) + '">' + esc(TAGM.ten[c]) + '</button>'; }).join('') + '</div>' : '';
     return '<div class="bocard' + (dangXem ? ' on' : '') + '"><div class="bohead"><b>Bộ ' + esc(b[0]) + '</b><span class="muted small">' + b[1].length + ' món' + (TU ? ' · bạn có <b>' + co + '/' + b[1].length + '</b>' : '') + '</span></div>' + tg + anhBo(b) +
-      '<div class="boitems">' + b[1].map(function (i) { var m = KHO.mon[i]; if (!m) return ''; var kh = TD.q && khongDau(m.ten).indexOf(khongDau(TD.q)) >= 0; return '<span class="' + (TU && TU.has(i) ? 'co' : 'chua') + (kh ? ' khop' : '') + '" title="' + esc(m.o) + '">' + esc(m.ten) + '</span>'; }).join('') + '</div>' +
+      '<div class="boitems">' + b[1].map(function (i) { var m = KHO.mon[i]; if (!m) return ''; var kh = TD.q && khongDau(m.ten).indexOf(khongDau(TD.q)) >= 0; return '<span class="' + (TU && TU.has(i) ? 'co' : 'chua') + (kh ? ' khop' : '') + '" title="' + esc(m.o) + '"><img loading="lazy" decoding="async" alt="" src="img/' + i + '.webp" onerror="this.remove()">' + esc(m.ten) + '</span>'; }).join('') + '</div>' +
       (dangXem ? '<button type="button" class="btn ghost" data-bo="-1">✕ Thôi xem bộ này</button>' : '<button type="button" class="btn" data-bo="' + k + '">Xem cả bộ</button>') + '</div>';
   }
   function veBo() {
@@ -4343,15 +4363,15 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   $('fQ').addEventListener('input', function () { var v = this.value; clearTimeout(timHen); timHen = setTimeout(function () { var q = v.trim().toLowerCase(); if (q.length >= 2) track('tim', TD.kho ? 'kho-do' : 'tu-do', q); }, 1500); clearTimeout(tdHen); tdHen = setTimeout(function () { TD.q = v; TD.bo = -1; TD.page = 0; veThe(); }, 200); });
   /* Lọc bộ theo tag: chọn ở ô "Tất cả tag" hoặc bấm tag trên thẻ bộ */
   function chonTag(c) {
-    TD.tag = c || ''; TD.page = 0; TD.bo = -1; $('fTag').value = TD.tag; veThe();
+    TD.tag = c || ''; TD.page = 0; TD.bo = -1; veTagChon(); veThe();
     if (TD.tag && TAGM) track('bam', 'loc-tag', TAGM.ten[TD.tag]);
   }
-  $('fTag').addEventListener('change', function () { chonTag(this.value); });
+  $('fTag').addEventListener('click', function (e) { var b = e.target.closest('[data-tag]'); if (b) chonTag(b.dataset.tag); });
   [['fChe', 'che'], ['fO', 'o'], ['fOwn', 'own'], ['fPc', 'pc'], ['fSort', 'sort']].forEach(function (p) { $(p[0]).addEventListener('change', function () { TD[p[1]] = this.value; TD.page = 0; veThe(); }); });
   $('pPrev').addEventListener('click', function () { TD.page--; veThe(); window.scrollTo(0, $('tdCards').getBoundingClientRect().top + window.scrollY - 120); });
   $('pNext').addEventListener('click', function () { TD.page++; veThe(); window.scrollTo(0, $('tdCards').getBoundingClientRect().top + window.scrollY - 120); });
   $('tdCards').addEventListener('click', function (e) {
-    var tg = e.target.closest('[data-tag]'); if (tg) { chonTag(tg.dataset.tag); window.scrollTo(0, $('fTag').getBoundingClientRect().top + window.scrollY - 120); return; }
+    var tg = e.target.closest('[data-tag]'); if (tg) { chonTag(tg.dataset.tag); window.scrollTo(0, $('fCount').getBoundingClientRect().top + window.scrollY - 120); return; }
     var b = e.target.closest('[data-co]'); if (b) { bamTu(b); return; }
     var xa = e.target.closest('.bigpic[data-xem]'); if (xa) { xemAnh(+xa.dataset.xem); return; }
     var bl = e.target.closest('[data-bo]'); if (bl) { chonBo(+bl.dataset.bo); return; }
