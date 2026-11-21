@@ -309,6 +309,7 @@ button.crchip { border: 0; background: none; padding: 0; font: inherit; color: v
 .bopics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; }
 .bopics span { aspect-ratio: 1 / 1; border-radius: 10px; background: #f3ead6; display: grid; place-items: center; overflow: hidden; }
 .bopics span:nth-child(n+5) { display: none; }
+.bopics span[data-xem], .boitems span[data-xem] { cursor: pointer; }
 .bopics img { width: 86%; height: 86%; object-fit: contain; }
 .boluoi { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 10px; margin-top: 12px; }
 .boitems span.khop { outline: 2px solid var(--accent); font-weight: 800; }
@@ -4296,8 +4297,8 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     var hang = function (i) { var g = i >= 100000 ? 8 : Math.floor(i / 10000); return { 2: 0, 4: 0, 1: 1, 7: 2, 3: 3, 5: 3, 6: 3, 8: 4, 9: 5 }[g]; };
     var xep = b[1].slice().sort(function (x, y) { return hang(x) - hang(y) || x - y; }), dau = [], sau = [], da = {};
     xep.forEach(function (i) { var h = hang(i); if (da[h]) sau.push(i); else { da[h] = 1; dau.push(i); } }); /* mỗi loại 1 món trước (tránh 4 ảnh đều là đầm), rồi mới tới món thứ 2 */
-    return '<div class="bopics" aria-hidden="true">' + dau.concat(sau).slice(0, 10).map(function (i) {
-      return '<span><img loading="lazy" decoding="async" alt="" src="img/' + i + '.webp" onerror="this.parentNode.remove()"></span>'; }).join('') + '</div>';
+    return '<div class="bopics">' + dau.concat(sau).slice(0, 10).map(function (i) {
+      return '<span data-xem="' + i + '"><img loading="lazy" decoding="async" alt="" src="img/' + i + '.webp" onerror="this.parentNode.remove()"></span>'; }).join('') + '</div>';
   }
   /* Tìm theo bộ: gõ tên bộ → hiện thẻ bộ ở đầu danh sách; bấm "Xem cả bộ" để chỉ hiện các món trong bộ */
   function coBo(b) { return TU ? b[1].filter(function (i) { return TU.has(i); }).length : 0; }
@@ -4305,7 +4306,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     var b = KHO.bo[k], co = coBo(b);
     var tg = TAGM && TAGM.bo[k] && TAGM.bo[k].length ? '<div class="botags">' + TAGM.bo[k].map(function (c) { return '<button type="button" data-tag="' + c + '" title="Xem các bộ ' + esc(TAGM.ten[c]) + '">' + esc(TAGM.ten[c]) + '</button>'; }).join('') + '</div>' : '';
     return '<div class="bocard' + (dangXem ? ' on' : '') + '"><div class="bohead"><b>Bộ ' + esc(b[0]) + '</b><span class="muted small">' + b[1].length + ' món' + (TU ? ' · bạn có <b>' + co + '/' + b[1].length + '</b>' : '') + '</span></div>' + tg + anhBo(b) +
-      '<div class="boitems">' + b[1].map(function (i) { var m = KHO.mon[i]; if (!m) return ''; var kh = TD.q && khongDau(m.ten).indexOf(khongDau(TD.q)) >= 0; return '<span class="' + (TU && TU.has(i) ? 'co' : 'chua') + (kh ? ' khop' : '') + '" title="' + esc(m.o) + '"><img loading="lazy" decoding="async" alt="" src="img/' + i + '.webp" onerror="this.remove()">' + esc(m.ten) + '</span>'; }).join('') + '</div>' +
+      '<div class="boitems">' + b[1].map(function (i) { var m = KHO.mon[i]; if (!m) return ''; var kh = TD.q && khongDau(m.ten).indexOf(khongDau(TD.q)) >= 0; return '<span data-xem="' + i + '" class="' + (TU && TU.has(i) ? 'co' : 'chua') + (kh ? ' khop' : '') + '" title="' + esc(m.o) + '"><img loading="lazy" decoding="async" alt="" src="img/' + i + '.webp" onerror="this.remove()">' + esc(m.ten) + '</span>'; }).join('') + '</div>' +
       (dangXem ? '<button type="button" class="btn ghost" data-bo="-1">✕ Thôi xem bộ này</button>' : '<button type="button" class="btn" data-bo="' + k + '">Xem cả bộ</button>') + '</div>';
   }
   function veBo() {
@@ -4352,6 +4353,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   }
   $('tdBo').addEventListener('click', function (e) {
     var tg = e.target.closest('[data-tag]'); if (tg) { chonTag(tg.dataset.tag); return; }
+    var xa = e.target.closest('[data-xem]'); if (xa) { xemAnh(+xa.dataset.xem); return; }
     var b = e.target.closest('[data-bo]'); if (b) chonBo(+b.dataset.bo);
   });
   var tdHen;
@@ -4369,7 +4371,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   $('tdCards').addEventListener('click', function (e) {
     var tg = e.target.closest('[data-tag]'); if (tg) { chonTag(tg.dataset.tag); window.scrollTo(0, $('fCount').getBoundingClientRect().top + window.scrollY - 120); return; }
     var b = e.target.closest('[data-co]'); if (b) { bamTu(b); return; }
-    var xa = e.target.closest('.bigpic[data-xem]'); if (xa) { xemAnh(+xa.dataset.xem); return; }
+    var xa = e.target.closest('[data-xem]'); if (xa) { xemAnh(+xa.dataset.xem); return; }
     var bl = e.target.closest('[data-bo]'); if (bl) { chonBo(+bl.dataset.bo); return; }
   });
   function bamTu(b) {
