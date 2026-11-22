@@ -3712,7 +3712,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     var c = $('wardChip');
     c.hidden = !TU; if (TU) { c.className = 'chip-status ok'; c.textContent = 'Tủ đồ: ' + fmt(TU.size) + ' món'; }
   }
-  function hinh(ma) { return '<span class="pic"><img loading="lazy" decoding="async" alt="" src="img/' + ma + '.webp" onerror="this.remove()"></span>'; }
+  function hinh(ma) { return '<span class="pic"><img loading="lazy" decoding="async" alt="" src="img/' + ma + '.webp" onerror="iconLoi(this)"></span>'; }
   var CHU = { C: 'C', B: 'B', A: 'A', S: 'S', X: 'SS', Z: 'SSS' };
 
   /* ================= PHỐI ĐỒ ================= */
@@ -4216,6 +4216,11 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     return ds;
   }
   /* Ảnh lớn chưa có thì quay về icon; icon cũng chưa có thì bỏ ảnh */
+  /* thiếu icon thì thử ảnh lớn (anh/); cả hai đều thiếu thì bỏ ảnh (xoaCha: bỏ luôn ô chứa) */
+  window.iconLoi = function (im, xoaCha) {
+    if (!im.dataset.thu) { im.dataset.thu = 1; im.src = im.getAttribute('src').replace('img/', 'anh/'); return; }
+    (xoaCha ? im.parentNode : im).remove();
+  };
   window.anhLoi = function (im) {
     var o = im.closest('.bigpic'), ma = o && o.dataset.xem;
     if (o && o.classList.contains('lon')) { o.classList.remove('lon'); im.src = 'img/' + ma + '.webp'; return; }
@@ -4298,7 +4303,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     var xep = b[1].slice().sort(function (x, y) { return hang(x) - hang(y) || x - y; }), dau = [], sau = [], da = {};
     xep.forEach(function (i) { var h = hang(i); if (da[h]) sau.push(i); else { da[h] = 1; dau.push(i); } }); /* mỗi loại 1 món trước (tránh 4 ảnh đều là đầm), rồi mới tới món thứ 2 */
     return '<div class="bopics">' + dau.concat(sau).slice(0, 10).map(function (i) {
-      return '<span data-xem="' + i + '"><img loading="lazy" decoding="async" alt="" src="img/' + i + '.webp" onerror="this.parentNode.remove()"></span>'; }).join('') + '</div>';
+      return '<span data-xem="' + i + '"><img loading="lazy" decoding="async" alt="" src="img/' + i + '.webp" onerror="iconLoi(this, 1)"></span>'; }).join('') + '</div>';
   }
   /* Tìm theo bộ: gõ tên bộ → hiện thẻ bộ ở đầu danh sách; bấm "Xem cả bộ" để chỉ hiện các món trong bộ */
   function coBo(b) { return TU ? b[1].filter(function (i) { return TU.has(i); }).length : 0; }
@@ -4306,7 +4311,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     var b = KHO.bo[k], co = coBo(b);
     var tg = TAGM && TAGM.bo[k] && TAGM.bo[k].length ? '<div class="botags">' + TAGM.bo[k].map(function (c) { return '<button type="button" data-tag="' + c + '" title="Xem các bộ ' + esc(TAGM.ten[c]) + '">' + esc(TAGM.ten[c]) + '</button>'; }).join('') + '</div>' : '';
     return '<div class="bocard' + (dangXem ? ' on' : '') + '"><div class="bohead"><b>Bộ ' + esc(b[0]) + '</b><span class="muted small">' + b[1].length + ' món' + (TU ? ' · bạn có <b>' + co + '/' + b[1].length + '</b>' : '') + '</span></div>' + tg + anhBo(b) +
-      '<div class="boitems">' + b[1].map(function (i) { var m = KHO.mon[i]; if (!m) return ''; var kh = TD.q && khongDau(m.ten).indexOf(khongDau(TD.q)) >= 0; return '<span data-xem="' + i + '" class="' + (TU && TU.has(i) ? 'co' : 'chua') + (kh ? ' khop' : '') + '" title="' + esc(m.o) + '"><img loading="lazy" decoding="async" alt="" src="img/' + i + '.webp" onerror="this.remove()">' + esc(m.ten) + '</span>'; }).join('') + '</div>' +
+      '<div class="boitems">' + b[1].map(function (i) { var m = KHO.mon[i]; if (!m) return ''; var kh = TD.q && khongDau(m.ten).indexOf(khongDau(TD.q)) >= 0; return '<span data-xem="' + i + '" class="' + (TU && TU.has(i) ? 'co' : 'chua') + (kh ? ' khop' : '') + '" title="' + esc(m.o) + '"><img loading="lazy" decoding="async" alt="" src="img/' + i + '.webp" onerror="iconLoi(this)">' + esc(m.ten) + '</span>'; }).join('') + '</div>' +
       (dangXem ? '<button type="button" class="btn ghost" data-bo="-1">✕ Thôi xem bộ này</button>' : '<button type="button" class="btn" data-bo="' + k + '">Xem cả bộ</button>') + '</div>';
   }
   function veBo() {
