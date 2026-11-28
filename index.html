@@ -1047,6 +1047,9 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 .own { margin-top: auto; width: 100%; border: 1px solid var(--line); border-radius: 999px; padding: 6px; font: inherit; font-size: .82rem; font-weight: 700; background: var(--surface); color: var(--ink); cursor: pointer; }
 .own[aria-pressed="true"] { background: var(--own-soft); color: var(--own); border-color: transparent; }
 .pager { display: flex; gap: 8px; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-top: 14px; }
+#pInfo { display: inline-flex; align-items: center; gap: 6px; }
+#pSel { width: auto; min-width: 72px; padding: 6px 28px 6px 10px; margin: 0; font-variant-numeric: tabular-nums; }
+@media (max-width: 480px) { .pager { flex-wrap: nowrap; } .pager .pchu { display: none; } .pager .btn { padding-left: 16px; padding-right: 16px; } }
 
 /* Tích KC */
 .kcwrap { display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: 18px; align-items: start; margin-top: 6px; }
@@ -1377,7 +1380,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       <p class="muted small" id="fCount" style="margin:0"></p>
       <div class="tagbar" id="fTag" role="group" aria-label="Lọc bộ theo tag"></div>
       <div class="cards" id="tdCards"></div>
-      <div class="pager"><button class="btn" id="pPrev">← Trang trước</button><span class="muted small num" id="pInfo"></span><button class="btn" id="pNext">Trang sau →</button></div>
+      <div class="pager"><button class="btn" id="pPrev" aria-label="Trang trước">←<span class="pchu"> Trang trước</span></button><span class="muted small num" id="pInfo"></span><button class="btn" id="pNext" aria-label="Trang sau"><span class="pchu">Trang sau </span>→</button></div>
     </div>
   </section>
 
@@ -3701,7 +3704,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   }
   function veMuc(v) {
     if (v === 'phoi-do') vePhoi();
-    else if (v === 'tu-do' || v === 'kho-do') { TD.page = 0; veTu(v === 'kho-do'); }
+    else if (v === 'tu-do' || v === 'kho-do') { var sv = docTD(v === 'kho-do'); TD.page = 0; if (sv) { ['q', 'o', 'own', 'pc', 'sort', 'page', 'che', 'tag'].forEach(function (k) { if (sv[k] != null) TD[k] = sv[k]; }); TD_KHOI = true; } veTu(v === 'kho-do'); }
     else if (v === 'bo-da-luu') veLuu();
   }
   function datTu(ds, luu) {
@@ -4201,6 +4204,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       $('fO').innerHTML = '<option value="">Mọi ô đồ</option>' + KHO.o.map(function (o) { return '<option>' + esc(o) + '</option>'; }).join('');
       $('fPc').innerHTML = '<option value="">Mọi phong cách</option>' + KHO.pc.map(function (p, k) { return '<option value="' + k + '">' + esc(p) + '</option>'; }).join('');
     }
+    if (TD_KHOI) { TD_KHOI = false; $('fQ').value = TD.q; [['fChe', 'che'], ['fO', 'o'], ['fOwn', 'own'], ['fPc', 'pc'], ['fSort', 'sort']].forEach(function (p) { if ($(p[0])) $(p[0]).value = TD[p[1]]; }); if (typeof veTagChon === 'function' && TAGM) veTagChon(); }
     veTuInfo(); veThe();
   }
   function veTuInfo() {
@@ -4275,6 +4279,20 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       (TD.kho ? '<button type="button" class="nhanh" data-co="' + m.ma + '" data-mot="1" aria-pressed="' + co + '" aria-label="' + (co ? 'Bỏ ' : 'Lưu ') + esc(m.ten) + (co ? ' khỏi tủ' : ' vào tủ') + '">' + (co ? '✓' : '+') + '</button>' : '') + '</div>' +
       '<div class="body">' + chiTietMon(m, 3) + '</div></article>';
   }
+  /* Thanh trang: ô chọn trang để nhảy thẳng; nhớ bộ lọc + trang trong phiên (tải lại trang không phải lật lại từ đầu, người chơi xin 28/11/2026) */
+  function vePager(so) {
+    var o = ''; for (var i = 0; i < so; i++) o += '<option value="' + i + '"' + (i === TD.page ? ' selected' : '') + '>' + (i + 1) + '</option>';
+    $('pInfo').innerHTML = 'Trang <select id="pSel" aria-label="Chọn trang">' + o + '</select> / ' + so;
+    $('pPrev').disabled = TD.page <= 0; $('pNext').disabled = TD.page >= so - 1;
+    luuTD();
+  }
+  var TD_KEY = 'nstt.td.';
+  function luuTD() { try { sessionStorage.setItem(TD_KEY + (TD.kho ? 'kho' : 'tu'), JSON.stringify({ q: TD.q, o: TD.o, own: TD.own, pc: TD.pc, sort: TD.sort, page: TD.page, che: TD.che, tag: TD.tag })); } catch (e) {} }
+  function docTD(kho) { try { return JSON.parse(sessionStorage.getItem(TD_KEY + (kho ? 'kho' : 'tu')) || 'null'); } catch (e) { return null; } }
+  $('pInfo').addEventListener('change', function (e) {
+    if (e.target.id !== 'pSel') return;
+    TD.page = +e.target.value; veThe(); window.scrollTo(0, $('tdCards').getBoundingClientRect().top + window.scrollY - 120);
+  });
   function veThe() {
     if (!TD.kho && !TU) { $('tdCards').innerHTML = '<div class="empty" style="grid-column:1/-1"><b>Tủ đồ đang trống</b>Nhập file clothes_date (cách lấy file ở khung bên cạnh) để xem đồ của bạn.</div>'; $('fCount').textContent = ''; $('pInfo').textContent = ''; $('pPrev').disabled = $('pNext').disabled = true; return; }
     var theoBo = TD.kho && TD.bo < 0 && TD.che === 'bo';
@@ -4287,8 +4305,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     TD.page = Math.min(TD.page, so - 1);
     $('fCount').textContent = fmt(ds.length) + ' món';
     $('tdCards').innerHTML = ds.length ? ds.slice(TD.page * MOI_TRANG, (TD.page + 1) * MOI_TRANG).map(theMon).join('') : '<div class="empty" style="grid-column:1/-1"><b>Không có món nào khớp</b>Bạn thử bỏ bớt bộ lọc nhé.</div>';
-    $('pInfo').textContent = 'Trang ' + (TD.page + 1) + ' / ' + so;
-    $('pPrev').disabled = TD.page <= 0; $('pNext').disabled = TD.page >= so - 1;
+    vePager(so);
   }
   /* Tag bộ (tag-mon.json: tag của từng món theo Love Nikki Wiki + BWIKI). Chỉ tải khi mở Kho đồ.
      Bộ được gắn tag khi ít nhất 30% số món (tối thiểu 2 món) có tag đó; tối đa 3 tag mỗi bộ. */
@@ -4356,11 +4373,10 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     $('fCount').textContent = fmt(kq.length) + ' bộ' + (TD.tag && TAGM ? ' ' + TAGM.ten[TD.tag] : '') + (q ? ' có tên bộ hoặc tên món khớp' : '');
     $('tdCards').innerHTML = kq.length ? kq.slice(TD.page * MOI_TRANG_BO, (TD.page + 1) * MOI_TRANG_BO).map(function (k) { return theBo(k, false); }).join('')
       : '<div class="empty" style="grid-column:1/-1"><b>Không có bộ nào khớp</b>Món không thuộc bộ nào thì chọn "Món lẻ" ở ô cách xem nhé.</div>';
-    $('pInfo').textContent = 'Trang ' + (TD.page + 1) + ' / ' + so;
-    $('pPrev').disabled = TD.page <= 0; $('pNext').disabled = TD.page >= so - 1;
+    vePager(so);
   }
   /* Vào xem 1 bộ: nhớ trang + vị trí cuộn của danh sách; thoát ra thì quay lại đúng chỗ cũ (người chơi báo bị lướt lại từ đầu, 20/11/2026) */
-  var TD_CU = null;
+  var TD_CU = null, TD_KHOI = false;
   function chonBo(k) {
     if (k >= 0) {
       if (TD.bo < 0) TD_CU = { page: TD.page, y: window.scrollY, k: k };
