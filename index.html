@@ -3937,7 +3937,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
   });
 
   /* ================= TỦ ĐỒ / KHO ĐỒ ================= */
-  function khongDau(t) { return String(t).normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[đĐ]/g, 'd').toLowerCase().trim(); }
+  function khongDau(t) { return String(t).normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[đĐ]/g, 'd').toLowerCase().replace(/[-–—]/g, ' ').replace(/\s+/g, ' ').trim(); } /* "Chim Oanh - Lục", "Chim Oanh Lục" đều khớp "Chim Oanh-Lục" */
   /* ---------- Sổ của tôi: lưu tủ đồ, bộ đã lưu, Tích KC theo ID + mã PIN (supabase/04-so-tay-theo-id.sql) ----------
      Không mở sổ vẫn dùng như cũ (lưu trong trình duyệt). Đã mở sổ thì mỗi lần đổi, web tự lưu lên sau 1,5 giây. */
   var ST = { ma: '', pin: '', busy: false, loi: '', hoi: false, luc: null, hen: null, keo: 0 };
