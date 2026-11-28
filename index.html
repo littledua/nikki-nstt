@@ -4415,5 +4415,30 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
 })();
 
 </script>
+<!-- Thông báo bảo trì: tự ẩn sau giờ hết hạn (HET, giờ VN). Lần sau chỉ cần sửa NOI_DUNG, HET, MA. -->
+<style>
+.tbbt { position: fixed; inset: 0; z-index: 120; background: rgba(20, 20, 30, .6); display: grid; place-items: center; padding: 16px; }
+.tbbt > div { background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: var(--r); max-width: 380px; width: 100%; padding: 22px 20px 18px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,.25); }
+.tbbt h3 { margin: 4px 0 8px; font-family: var(--f-display); font-size: 1.25rem; }
+.tbbt p { margin: 0 0 16px; color: var(--muted); line-height: 1.55; }
+.tbbt b { color: var(--hot); }
+.tbbt button { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 999px; padding: 10px 26px; font: inherit; font-weight: 700; cursor: pointer; }
+</style>
+<script>
+(function () {
+  var MA = 'baotri-20261128', HET = new Date('2026-11-28T22:00:00+07:00');
+  var NOI_DUNG = '<div style="font-size:2rem" aria-hidden="true">🛠️</div><h3>Thông báo bảo trì</h3><p>Web sẽ đóng cửa bảo trì <b>từ 20h đến 22h hôm nay (28/11)</b>.<br>Trong thời gian này bạn không vào web được, mong bạn thông cảm nha!</p>';
+  if (new Date() >= HET) return;
+  try { if (localStorage.getItem('tb.' + MA)) return; } catch (e) {}
+  var d = document.createElement('div');
+  d.className = 'tbbt'; d.setAttribute('role', 'dialog'); d.setAttribute('aria-modal', 'true'); d.setAttribute('aria-label', 'Thông báo bảo trì');
+  d.innerHTML = '<div>' + NOI_DUNG + '<button type="button">Đã hiểu</button></div>';
+  function dong() { d.remove(); try { localStorage.setItem('tb.' + MA, '1'); } catch (e) {} }
+  d.addEventListener('click', function (e) { if (e.target === d || e.target.tagName === 'BUTTON') dong(); });
+  document.addEventListener('keydown', function k(e) { if (e.key === 'Escape') { dong(); document.removeEventListener('keydown', k); } });
+  document.body.appendChild(d);
+  d.querySelector('button').focus();
+})();
+</script>
 </body>
 </html>
