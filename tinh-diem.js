@@ -9,14 +9,15 @@
   var BAC = { C: 94, B: 131.5, A: 165, S: 210, X: 270, Z: 330 }; /* X = SS, Z = SSS */
 
   // Cỡ từng ô so với Tóc (ước tính, chỉnh dần theo điểm đo trong game)
+  /* Tỉ lệ theo số đo trong game của Ivan's Workshop (vd bậc SS: tóc ~1250, đầm ~5100, áo/quần ~2725) */
   var CO_O = {
-    'Tóc': 1, 'Đầm': 2, 'Áo khoác': 0.6, 'Áo': 1, 'Quần': 1, 'Vớ': 0.6, 'Phụ kiện chân': 0.6,
-    'Giày': 0.8, 'Trang điểm': 0.4
+    'Tóc': 1, 'Đầm': 4, 'Áo khoác': 0.4, 'Áo': 2, 'Quần': 2, 'Vớ': 0.7, 'Phụ kiện chân': 0.7,
+    'Giày': 0.9, 'Trang điểm': 0.2
   };
   var CO_TRANG_SUC = 0.4;
 
   // Đổi đơn vị nội bộ ra điểm hiển thị gần với điểm trong game (ước tính)
-  var HE_SO_HIEN_THI = 0.37; /* chỉnh theo phản ánh: web ước tính cũ cao hơn điểm thật trong game khoảng 1/3 */
+  var HE_SO_HIEN_THI = 0.062; /* khớp điểm từng món tóc đo trong game (Đẹp Tuyệt Trần, sai số khoảng ±6%) */
 
   // Số trang sức đeo → hệ số nhân cho phần trang sức (Love Nikki Wiki)
   var TRU_TRANG_SUC = { 4: 0.95, 5: 0.9, 6: 0.825, 7: 0.75, 8: 0.7, 9: 0.65, 10: 0.6, 11: 0.55, 12: 0.51, 13: 0.475, 14: 0.45, 15: 0.425 };
@@ -41,12 +42,14 @@
   }
 
   // Điểm một món với bộ trọng số (10 số, phong cách ải không cần = 0)
-  /* trongSo.tagMon (không bắt buộc): { mã món: số tag ải cần mà món có } → cộng trongSo.tagDiem mỗi tag (ước tính) */
+  /* trongSo.tagMon (không bắt buộc): { mã món: số tag ải cần mà món có } → cộng trongSo.tagDiem mỗi tag.
+     tagDiem tính bằng điểm hiển thị (vd Khu Thi Đấu: +10.000), cộng thẳng, không nhân theo ô */
   function chamMon(mon, trongSo) {
     var tong = 0;
     for (var k = 0; k < 10; k++) tong += mon.diem[k] * trongSo[k];
-    if (trongSo.tagMon && trongSo.tagMon[mon.ma]) tong += trongSo.tagMon[mon.ma] * (trongSo.tagDiem || 0);
-    return tong * (mon.trangSuc ? CO_TRANG_SUC : (CO_O[mon.o] || 1));
+    tong *= (mon.trangSuc ? CO_TRANG_SUC : (CO_O[mon.o] || 1));
+    if (trongSo.tagMon && trongSo.tagMon[mon.ma]) tong += trongSo.tagMon[mon.ma] * (trongSo.tagDiem || 0) / HE_SO_HIEN_THI;
+    return tong;
   }
 
   /* Phối bộ điểm cao nhất.

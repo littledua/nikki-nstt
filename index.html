@@ -1490,7 +1490,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       <div class="wide"><button type="submit" class="btn primary" id="gyGo">Gửi góp ý</button> <span class="muted small" id="gyNote" role="status"></span></div>
     </form>
   </dialog>
-<script src="tinh-diem.js?v=20261128a"></script>
+<script src="tinh-diem.js?v=20261128b"></script>
 <script>
 (function () {
   'use strict';
@@ -3793,7 +3793,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
      Wiki chỉ ghi ải cần bên nào của 5 cặp phong cách, không ghi trọng số → tạm tính 5 phong cách nặng như nhau.
      Tag: theo cách cộng đồng hay tính, món có tag ải cần được cộng như thể đạt thêm mức S ở cả 5 phong cách ải cần
      (nhân theo cỡ ô đồ). Wiki không ghi mức từng ải nên dùng mức S cho mọi ải (ước tính). */
-  var HOI = null, HOI_TAG = {}, hoiTai = false, W_AI = 10, TAG_DIEM = 210 * W_AI * 5; /* 1 tag ≈ điểm 1 món bậc S đủ 5 phong cách (210 = bậc S trong tinh-diem.js) */
+  var HOI = null, HOI_TAG = {}, hoiTai = false, W_AI = 10, TAG_DIEM = 10000; /* điểm cộng mỗi tag ải hội (ước tính, lấy bằng tag Khu Thi Đấu) */
   PD.hoiCh = LS.get('hoiCh', 1); PD.hoiAi = LS.get('hoiAi', '1-1');
   function moHoi(xong) {
     if (HOI) { xong(); return; }
@@ -3822,7 +3822,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     return { ten: c.ten, w: w2, loai: 'Khu Thi Đấu', tag: c.tag.map(function (t) { return ((TAG_RAW || {})[t] || {}).ten || t; }), tagMon: tm2 };
   }
   /* tag-mon.json (tag từng món) cho chủ đề Khu Thi Đấu có tag đặc biệt */
-  var TAG_RAW = null, tagRawTai = false, TAG_KTD = 10000 / 0.37; /* +10.000 điểm game ≈ 10000 / hệ số hiển thị trong tinh-diem.js */
+  var TAG_RAW = null, tagRawTai = false, TAG_KTD = 10000; /* game ghi +10.000 mỗi tag */
   function moTagRaw(xong) {
     if (TAG_RAW) { xong(); return; }
     if (tagRawTai) return; tagRawTai = true;
