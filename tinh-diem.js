@@ -1,11 +1,12 @@
 /* Nikki Diary — bộ tính điểm (viết mới).
-   Điểm món dựa trên điểm chữ (C, B, A, S, SS) của 10 phong cách, quy đổi sang số ước tính.
+   Điểm món dựa trên điểm chữ (C, B, A, S, SS, SSS) của 10 phong cách, quy đổi sang số ước tính.
+   Bảng quy đổi bậc → số tham khảo số đo trong game của Ivan's Workshop (nikkistats, bản Trung).
    Luật trừ điểm trang sức theo Love Nikki Wiki, trang "Styling Battle" (CC BY-SA 3.0). */
 (function (goc) {
   'use strict';
 
-  // Điểm chữ → số: mỗi bậc gấp đôi bậc dưới (X = SS)
-  var BAC = { C: 1, B: 2, A: 4, S: 8, X: 16, Z: 32 }; /* X = SS, Z = SSS */
+  // Điểm chữ → số theo số đo trong game: mỗi bậc chỉ hơn bậc dưới khoảng 20–30% (không phải gấp đôi)
+  var BAC = { C: 94, B: 131.5, A: 165, S: 210, X: 270, Z: 330 }; /* X = SS, Z = SSS */
 
   // Cỡ từng ô so với Tóc (ước tính, chỉnh dần theo điểm đo trong game)
   var CO_O = {
@@ -15,7 +16,7 @@
   var CO_TRANG_SUC = 0.4;
 
   // Đổi đơn vị nội bộ ra điểm hiển thị gần với điểm trong game (ước tính)
-  var HE_SO_HIEN_THI = 9;
+  var HE_SO_HIEN_THI = 0.37; /* chỉnh theo phản ánh: web ước tính cũ cao hơn điểm thật trong game khoảng 1/3 */
 
   // Số trang sức đeo → hệ số nhân cho phần trang sức (Love Nikki Wiki)
   var TRU_TRANG_SUC = { 4: 0.95, 5: 0.9, 6: 0.825, 7: 0.75, 8: 0.7, 9: 0.65, 10: 0.6, 11: 0.55, 12: 0.51, 13: 0.475, 14: 0.45, 15: 0.425 };

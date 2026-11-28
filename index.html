@@ -1401,6 +1401,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
     <div class="ngrid">
       <div class="panel pin"><h3>Nguồn dữ liệu</h3><ul>
         <li><b>Điểm món đồ, ô đồ, tên bộ đồ và tên chặng:</b> tổng hợp thủ công từ game. Món còn thiếu bổ sung từ <a href="https://lovenikki.fandom.com" target="_blank" rel="noopener">Love Nikki Wiki</a> theo giấy phép <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a>; điểm chữ đã quy đổi sang số để tính.</li>
+        <li><b>Cách quy đổi bậc chữ ra điểm:</b> tham khảo số đo trong game của <b>Ivan's Workshop</b> (nikkistats, bản Trung).</li>
         <li><b>Luật trừ điểm trang sức:</b> theo Love Nikki Wiki, trang <a href="https://lovenikki.fandom.com/wiki/Styling_Battle" target="_blank" rel="noopener">Styling Battle</a> (CC BY-SA 3.0).</li>
         <li><b>Trọng số chủ đề Khu Thi Đấu:</b> chép từ thông tin công khai trong game.</li>
         <li><b>Phong cách, tag ải hội và món theo tag:</b> theo Love Nikki Wiki, trang <a href="https://lovenikki.fandom.com/wiki/Commissions" target="_blank" rel="noopener">Commissions</a> và các trang tag (CC BY-SA 3.0); tên tag theo server Việt Nam ghi trên wiki. File <code>ai-hoi.json</code> chia sẻ theo CC BY-SA 3.0.</li>
@@ -1489,7 +1490,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
       <div class="wide"><button type="submit" class="btn primary" id="gyGo">Gửi góp ý</button> <span class="muted small" id="gyNote" role="status"></span></div>
     </form>
   </dialog>
-<script src="tinh-diem.js?v=20261121a"></script>
+<script src="tinh-diem.js?v=20261128a"></script>
 <script>
 (function () {
   'use strict';
@@ -3791,7 +3792,7 @@ details.accs[open] > summary .grouphead::after { transform: rotate(90deg); }
      Wiki chỉ ghi ải cần bên nào của 5 cặp phong cách, không ghi trọng số → tạm tính 5 phong cách nặng như nhau.
      Tag: theo cách cộng đồng hay tính, món có tag ải cần được cộng như thể đạt thêm mức S ở cả 5 phong cách ải cần
      (nhân theo cỡ ô đồ). Wiki không ghi mức từng ải nên dùng mức S cho mọi ải (ước tính). */
-  var HOI = null, HOI_TAG = {}, hoiTai = false, W_AI = 10, TAG_DIEM = 8 * W_AI * 5;
+  var HOI = null, HOI_TAG = {}, hoiTai = false, W_AI = 10, TAG_DIEM = 210 * W_AI * 5; /* 1 tag ≈ điểm 1 món bậc S đủ 5 phong cách (210 = bậc S trong tinh-diem.js) */
   PD.hoiCh = LS.get('hoiCh', 1); PD.hoiAi = LS.get('hoiAi', '1-1');
   function moHoi(xong) {
     if (HOI) { xong(); return; }
